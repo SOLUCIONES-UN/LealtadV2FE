@@ -438,23 +438,30 @@
                                         <div class="form-group col-md-6">
                                             <label class="form-label" for="nombre">Campaña</label>
                                             <input type="text" id="nombre" class="form-control" placeholder="Ingresa el Nombre" />
+                                            <span id="error-message" style="color: red; display: none;">Ingresa un nombre de campaña</span>
                                         </div>
-                                        <div class="form-group form-password-toggle col-md-6">
-                                            <label class="form-label" for="descripcionCampania">Descripción</label>
-                                            <textarea type="password" id="descripcionCampania" class="form-control" placeholder="Ingrese la descripcion" rows="2"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="form-group form-password-toggle col-md-6">
                                             <label class="form-label" for="tituloNotificacion">Título de la
                                                 Notificación</label>
                                             <input type="text" id="tituloNotificacion" class="form-control" placeholder="Ingrese el titulo">
                                             </input>
+                                            <span id="error-message2" style="color: red; display: none;">Ingresa el Título de la
+                                                Notificación</span>
                                         </div>
+                                       
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group form-password-toggle col-md-6">
+                                            <label class="form-label" for="descripcionCampania">Descripción</label>
+                                            <textarea type="password" id="descripcionCampania" class="form-control" placeholder="Ingrese la descripcion" rows="2"></textarea>
+                                            <span id="error-message3" style="color: red; display: none;">Ingresa una Descripción</span>
+                                        </div>
+                                       
                                         <div class="form-group form-password-toggle col-md-6">
                                             <label class="form-label" for="descripcion">Descripción De La
                                                 Notificación</label>
                                             <textarea type="password" id="descripcionNotificacion" class="form-control" placeholder="Ingrese la descripcion" rows="2"></textarea>
+                                            <span id="error-message4" style="color: red; display: none;">Ingresa una Descripción de la Notificación</span>
                                         </div>
 
                                     </div>
@@ -463,23 +470,65 @@
                                             <label class="form-label" for="limiteParticipacion">Límite
                                                 Participación</label>
                                             <input type="number" id="limiteParticipacion" class="form-control" />
+                                            <span id="error-message5" style="color: red; display: none;">Ingresa un Límite
+                                                Participación</span>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="form-label" for="correosElectrónicos">Correo Electrónico</label>
                                             <input type="email" id="correosElectrónicos" class="form-control" placeholder="Ingresa el Correo Electrónico" />
+                                            <span id="error-message6" style="color: red; display: none;">Ingresa un Correo Electronico</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label class="form-label" for="nombre">Edad Inicial</label>
+                                            <input type="number" subtype="age" id="edadIni" class="form-control" placeholder="Ingresa la edad inicial" />
+                                            <span id="error-message7" style="color: red; display: none;">Ingresa una Edad Inicial</span>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label class="form-label" for="edadFini">Edad Final</label>
+                                            <input type="number" subtype="age" id="edadFini" class="form-control" placeholder="Ingresa la edad Final" />
+                                            <span id="error-message8" style="color: red; display: none;">Ingresa una Edad Final</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label class="form-label" for="tipoUsuario">Tipo De Usuario</label>
+                                            <select type="text" id="tipoUsuario" class="form-control" placeholder="Tipo De Usuario">
+                                                <option value="0" selected disabled>Seleccione una Opcion</option>
+                                                <option value="1">Final</option>
+                                            </select>
+                                            <span id="error-message9" style="color: red; display: none;">Seleccione una Opcion</span>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="form-label" for="sexo">Sexo</label>
+                                            <select type="text" id="sexo" class="form-control" placeholder="Sexo">
+                                                <option value="0" selected disabled>Seleccione una Opcion</option>
+                                                <option value="1">Cualquiera</option>
+                                                <option value="2">Hombre</option>
+                                                <option value="3">Mujer</option>
+                                            </select>
+                                            <span id="error-message10" style="color: red; display: none;">Seleccione una Opcion</span>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="imgAkisi">imagen  de la campaña</label>
+                                                <div class="form-group form-password-toggle">
+                                                    <label for="imgAkisi">imagen  de la campaña</label>
                                                 <input type="file" class="form-control" id="imgAkisi" autocomplete="off" style="min-height: 70px;">
+                                                    <span id="error-message11" style="color: red; display: none;">Imagen es requerida</span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="imgPush">Imagen de Notificación</label>
-                                                <input type="file" class="form-control" id="imgPush" autocomplete="off" style="min-height: 70px;">
+                                                <div class="form-group form-password-toggle">
+                                                    <label for="imgPush">Imagen de Notificación</label>
+                                                    <input type="file" class="form-control" id="imgPush" autocomplete="off" style="min-height: 70px;">
+                                                    <span id="error-message12" style="color: red; display: none;">Imagen es requerida</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -487,7 +536,7 @@
 
                                         <div class="form-group col-md-6">
 
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalFechas">
+                                            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalFechas">
                                                 Automatizar reporte
                                             </button>
                                         </div>
@@ -533,37 +582,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label class="form-label" for="nombre">Edad Inicial</label>
-                                            <input type="number" subtype="age" id="edadIni" class="form-control" placeholder="Ingresa la edad inicial" />
-                                        </div>
+                                    
 
-                                        <div class="form-group col-md-6">
-                                            <label class="form-label" for="edadFini">Edad Final</label>
-                                            <input type="number" subtype="age" id="edadFini" class="form-control" placeholder="Ingresa la edad Final" />
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label class="form-label" for="tipoUsuario">Tipo De Usuario</label>
-                                            <select type="text" id="tipoUsuario" class="form-control" placeholder="Tipo De Usuario">
-                                                <option value="0" selected disabled>Seleccione una Opcion</option>
-                                                <option value="1">Final</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="form-label" for="sexo">Sexo</label>
-                                            <select type="text" id="sexo" class="form-control" placeholder="Sexo">
-                                                <option value="0" selected disabled>Seleccione una Opcion</option>
-                                                <option value="1">Cualquiera</option>
-                                                <option value="2">Hombre</option>
-                                                <option value="3">Mujer</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex justify-content-between">
+                                    <div class="d-flex justify-content-between pt-2">
                                         <div>
                                             <button class="btn btn-outline-secondary btn-prev" disabled>
                                                 <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
@@ -575,7 +596,7 @@
                                                 <span class="align-middle d-sm-inline-block d-none">Borrador</span>
                                                 <i data-feather="trash-2" class="align-middle ml-sm-25 ml-0"></i>
                                             </button>
-                                            <button onclick="saveLocal()" class="btn btn-primary btn-next">
+                                            <button onclick="saveLocal()" id="nextOne" class="btn btn-primary">
                                                 <span class="align-middle d-sm-inline-block d-none">Siguiente</span>
                                                 <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
                                             </button>
@@ -1484,6 +1505,129 @@
                     width: 14,
                     height: 14
                 });
+            }
+        });
+    </script>
+    <script>
+        document.getElementById('nombre').addEventListener('blur', function() {
+            var valor = this.value.trim();
+            var errorMessage = document.getElementById('error-message');
+            
+            if (valor === '') {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        });
+        document.getElementById('tituloNotificacion').addEventListener('blur', function() {
+            var valor = this.value.trim();
+            var errorMessage = document.getElementById('error-message2');
+            
+            if (valor === '') {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        });
+        document.getElementById('descripcionCampania').addEventListener('blur', function() {
+            var valor = this.value.trim();
+            var errorMessage = document.getElementById('error-message3');
+            
+            if (valor === '') {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        });
+        document.getElementById('descripcionNotificacion').addEventListener('blur', function() {
+            var valor = this.value.trim();
+            var errorMessage = document.getElementById('error-message4');
+            
+            if (valor === '') {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        });
+      
+        document.getElementById('limiteParticipacion').addEventListener('blur', function() {
+            var valor = this.value.trim();
+            var errorMessage = document.getElementById('error-message5');
+            
+            if (valor === '') {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        });
+        document.getElementById('correosElectrónicos').addEventListener('blur', function() {
+            var valor = this.value.trim();
+            var errorMessage = document.getElementById('error-message6');
+            
+            if (valor === '') {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        });
+        document.getElementById('edadIni').addEventListener('blur', function() {
+            var valor = this.value.trim();
+            var errorMessage = document.getElementById('error-message7');
+            
+            if (valor === '') {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        });
+        document.getElementById('edadFini').addEventListener('blur', function() {
+            var valor = this.value.trim();
+            var errorMessage = document.getElementById('error-message8');
+            
+            if (valor === '') {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        });
+        document.getElementById('tipoUsuario').addEventListener('blur', function() {
+            var valor = this.value.trim();
+            var errorMessage = document.getElementById('error-message9');
+            
+            if (valor === '') {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        });
+        document.getElementById('sexo').addEventListener('blur', function() {
+            var valor = this.value.trim();
+            var errorMessage = document.getElementById('error-message10');
+            
+            if (valor === '') {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        });
+        document.getElementById('imgAkisi').addEventListener('blur', function() {
+            var valor = this.value.trim();
+            var errorMessage = document.getElementById('error-message11');
+            
+            if (valor === '') {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        });
+        document.getElementById('imgPush').addEventListener('blur', function() {
+            var valor = this.value.trim();
+            var errorMessage = document.getElementById('error-message12');
+            
+            if (valor === '') {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
             }
         });
     </script>
