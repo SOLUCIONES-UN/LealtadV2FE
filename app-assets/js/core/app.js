@@ -1025,6 +1025,7 @@ window.colors = {
       mainMenu.removeClass('menu-light').addClass('menu-dark');
       navbar.removeClass('navbar-light').addClass('navbar-dark');
       navLinkStyle.find('.ficon').replaceWith(feather.icons['sun'].toSvg({ class: 'ficon' }));
+      document.querySelectorAll('.ag-theme-quartz').forEach((element) => element.className = 'ag-theme-quartz-dark')
     } else if (switchToLayout === 'bordered-layout') {
       $html.addClass('bordered-layout');
       mainMenu.removeClass('menu-dark').addClass('menu-light');
@@ -1040,6 +1041,7 @@ window.colors = {
       mainMenu.removeClass('menu-dark').addClass('menu-light');
       navbar.removeClass('navbar-dark').addClass('navbar-light');
       navLinkStyle.find('.ficon').replaceWith(feather.icons['moon'].toSvg({ class: 'ficon' }));
+      document.querySelectorAll('.ag-theme-quartz-dark').forEach((element) => element.className = 'ag-theme-quartz')
     }
     // Set radio in customizer if we have
     if ($('input:radio[data-layout=' + switchToLayout + ']').length > 0) {

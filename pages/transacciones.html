@@ -7,11 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
   <meta name="description"
-    content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    content="Plataforma de lealtad a usuarios.">
   <meta name="keywords"
-    content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
-  <meta name="author" content="PIXINVENT">
-  <title>Invoice List - Vuexy - Bootstrap HTML admin template</title>
+    content="Lealtad, fidelidad, préstamos.">
+  <meta name="author" content="SOLUCIONES-UN">
+  <title>Invoice List - Lealtad V2</title>
   <link rel="apple-touch-icon" href="../app-assets/images/ico/apple-icon-120.png">
   <link rel="shortcut icon" type="image/x-icon" href="../app-assets/images/ico/favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600"
@@ -72,7 +72,7 @@
       <ul class="nav navbar-nav align-items-center ml-auto">
         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
               data-feather="moon"></i></a></li>
-        <li class="nav-item dropdown dropdown-notification mr-25"><a class="nav-link" href="javascript:void(0);"
+        <!-- <li class="nav-item dropdown dropdown-notification mr-25"><a class="nav-link" href="javascript:void(0);"
             data-toggle="dropdown"><i class="ficon" data-feather="bell"></i><span
               class="badge badge-pill badge-danger badge-up">5</span></a>
           <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
@@ -164,7 +164,7 @@
             <li class="dropdown-menu-footer"><a class="btn btn-primary btn-block" href="javascript:void(0)">Read all
                 notifications</a></li>
           </ul>
-        </li>
+        </li> -->
         <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link"
             id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -182,7 +182,7 @@
                 class="mr-50" data-feather="settings"></i> Settings</a><a class="dropdown-item"
               href="page-pricing.html"><i class="mr-50" data-feather="credit-card"></i> Pricing</a><a
               class="dropdown-item" href="page-faq.html"><i class="mr-50" data-feather="help-circle"></i> FAQ</a><a
-              class="dropdown-item" href="page-auth-login-v2.html"><i class="mr-50" data-feather="power"></i> Logout</a>
+              class="dropdown-item" href="login.html"><i class="mr-50" data-feather="power"></i> Logout</a>
           </div>
         </li>
       </ul>
@@ -200,7 +200,7 @@
     <div class="navbar-header">
       <ul class="nav navbar-nav flex-row">
         <li class="nav-item mr-auto"><a class="navbar-brand"
-            href="../../../html/ltr/vertical-menu-template/index.html"><span class="brand-logo">
+            href="./dashboard.html"><span class="brand-logo">
               <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
                 <defs>
@@ -243,45 +243,7 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
       <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-        <li class=" nav-item"><a class="d-flex align-items-center" href="index.html"><i data-feather="home"></i><span
-              class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span><span
-              class="badge badge-light-warning badge-pill ml-auto mr-1">2</span></a>
-          <ul class="menu-content">
-            <li><a class="d-flex align-items-center" href="dashboard-analytics.html"><i data-feather="circle"></i><span
-                  class="menu-item text-truncate" data-i18n="Analytics">Analytics</span></a>
-            </li>
-            <li><a class="d-flex align-items-center" href="dashboard-ecommerce.html"><i data-feather="circle"></i><span
-                  class="menu-item text-truncate" data-i18n="eCommerce">eCommerce</span></a>
-            </li>
-          </ul>
-        </li>
-        <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Administración</span><i
-            data-feather="more-horizontal"></i>
-        </li>
-        <li class="nav-item">
-          <a class="d-flex align-items-center" href="categorias.html">
-            <i data-feather="award"></i><span class="menu-title text-truncate"
-              data-i18n="categorias">Categorias</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="d-flex align-items-center" href="transacciones.html">
-            <i data-feather="dollar-sign"></i><span class="menu-title text-truncate"
-              data-i18n="Transacciones">Transacciones</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="d-flex align-items-center" href="columnas.html">
-            <i data-feather="database"></i><span class="menu-title text-truncate" data-i18n="Columnas">Columnas</span>
-          </a>
-        </li>
-        <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Configuración</span><i
-            data-feather="more-horizontal"></i>
-        </li>
-        <li class="nav-item">
-          <a class="d-flex align-items-center" href="promociones.html">
-            <i data-feather="gift"></i><span class="menu-title text-truncate" data-i18n="Columnas">Promociones</span>
-          </a>
-        </li>
+        
       </ul>
     </div>
   </div>
@@ -304,7 +266,7 @@
                     <th>#</th>
                     <th>Nombre</th>
                     <th>Puntos</th>
-                    <th>Action</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
               </table>
@@ -326,18 +288,18 @@
         <div class="modal-body flex-grow-1">
           <div class="form-group">
             <label class="form-label" for="nombre">Nombre</label>
-            <input type="text" class="form-control " id="nombre" placeholder="Nombre de la Transaccion" name="nombre"
-              required />
-          </div>
+            <input type="text" class="form-control nombre" id="nombre" placeholder="Nombre de la Transacción" name="nombre" required />
+            <div class="invalid-feedback nombre-error"></div>
+        </div>
           <div class="form-group">
             <label class="form-label" for="botton">Boton App</label>
             <input type="number" class="form-control " id="botton" placeholder="# de botton" name="botton" required />
           </div>
           <div class="form-group">
-            <label class="form-label" for="descripcion">Descripcion</label>
-            <textarea type="text" class="form-control " id="descripcion" placeholder="Descripcion de La Transaccion"
-              name="descripcion" required rows="3"></textarea>
-          </div>
+            <label class="form-label" for="descripcion">Descripción</label>
+            <textarea class="form-control descripcion" id="descripcion" placeholder="Descripción de la Transacción" name="descripcion" required rows="3"></textarea>
+            <div class="invalid-feedback descripcion-error"></div>
+        </div>
           <div class="form-group">
             <label class="form-label" for="columna">Columna</label>
             <select type="text" class="form-control" id="columna" name="columna" required></select>
@@ -364,19 +326,19 @@
           <input type="hidden" id="id">
           <div class="form-group">
             <label class="form-label" for="nombreEdit">Nombre</label>
-            <input type="text" class="form-control " id="nombreEdit" placeholder="Nombre de la Transaccion"
-              name="nombreEdit" required />
-          </div>
+            <input type="text" class="form-control nombre" id="nombreEdit" placeholder="Nombre de la Transacción" name="nombreEdit" required />
+            <div class="invalid-feedback nombre-error"></div>
+        </div>
           <div class="form-group">
             <label class="form-label" for="bottonEdit">Boton App</label>
             <input type="number" class="form-control " id="bottonEdit" placeholder="# de botton" name="bottonEdit"
               required />
           </div>
           <div class="form-group">
-            <label class="form-label" for="descripcionEdit">Descripcion</label>
-            <textarea type="text" class="form-control" id="descripcionEdit" placeholder="Descripcion de La Transaccion"
-              name="descripcion" required rows="3"></textarea>
-          </div>
+            <label class="form-label" for="descripcionEdit">Descripción</label>
+            <textarea class="form-control descripcion" id="descripcionEdit" placeholder="Descripción de la Transacción" name="descripcion" required rows="3"></textarea>
+            <div class="invalid-feedback descripcion-error"></div>
+        </div>
           <div class="form-group">
             <label class="form-label" for="columnaEdit">Columna</label>
             <select type="text" class="form-control" id="columnaEdit" name="columna" required></select>
@@ -416,10 +378,10 @@
   <!-- End: Customizer-->
   <!-- BEGIN: Footer-->
   <footer class="footer footer-static footer-light">
-    <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2022<a
-          class="ml-25" href="https://1.envato.market/pixinvent_portfolio" target="_blank">LEALTAD</a><span
-          class="d-none d-sm-inline-block">, All rights Reserved</span></span><span
-        class="float-md-right d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>
+    <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">&copy; 2024<a
+          class="ml-25" href="#" target="_blank">LEALTAD</a><span
+          class="d-none d-sm-inline-block">, Reservados todos los derechos.</span></span><span
+        class="float-md-right d-none d-md-block">Desarrollado por: SOLUCIONES-UN<i data-feather="code"></i></span></p>
   </footer>
   <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
   <!-- END: Footer-->
@@ -446,6 +408,7 @@
 
   <!-- BEGIN: Page JS-->
   <script src="../js/transaccion.js"></script>
+  <script src="../js/menuDinamico.js"></script>
   <!-- END: Page JS-->
 
   <script>
