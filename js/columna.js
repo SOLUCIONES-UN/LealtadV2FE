@@ -293,3 +293,22 @@ const OpenDelete = (id) => {
     $('#modalDelete').modal('toggle');
 
 }
+
+
+
+const getProyecto =()=>{
+    var requestOptions ={
+        method: 'GET',
+        redirect: 'follow',
+        headers: headers   
+    }
+
+    fetch(`${url}projects`,requestOptions)
+        .then(response => response.json())
+        .then(result =>{
+            result.forEach(element =>{
+                var option = `<option value="${element.id}">${element.descripcion}</option>`;
+                $('#')
+            })
+        })
+}

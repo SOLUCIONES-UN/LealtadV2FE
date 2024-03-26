@@ -284,13 +284,40 @@
         </div>
         <div class="modal-body flex-grow-1">
           <div class="form-group">
+            <label class="form-label" for="proyecto">Proyecto</label>
+            <select type="text" class="form-control proyecto" id="proyecto" name="proyecto" required></select>
+            <div id="proyectoError" class="invalid-feedback proyecto-error"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="tabla">TablaDB</label>
+            <select type="text" class="form-control tabla" id="tabla" name="tabla" required></select>
+            <div id="tablaError" class="invalid-feedback tabla-error"></div>
+          </div>
+          <div class=" d-flex align-items-center ">
+            <div class="form-group "> 
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input fInsertada" type="checkbox" id="fInsertada" value="1"/>
+                <label class="custom-control-label mr-4" for="fInsertada">
+                  Fila insertada
+                </label>
+              </div>
+            </div>
+            <div class="form-group ">
+              <div class="custom-control custom-checkbox ">
+                <input class="custom-control-input  fActualizada" type="checkbox" id="fActualizada" value="1" />
+                <label class="custom-control-label " for="fActualizada">
+                  Fila actualizada
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
             <label class="form-label" for="basic-icon-default-fullname">Nombre</label>
             <input type="text" class="form-control dt-full-name nombre" id="nombre" placeholder="Nombre de la Columna"
               name="nombre" aria-label="" aria-describedby="nombreError" required />
             <div id="nombreError" class="invalid-feedback nombre-error"></div>
           </div>
-
-
+  
           <button id="btnSubmit" type="submit" class="btn btn-primary mr-1 data-submit">Agregar </button>
           <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
         </div>
