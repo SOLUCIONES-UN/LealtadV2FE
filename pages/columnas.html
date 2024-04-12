@@ -6,12 +6,10 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
-  <meta name="description"
-    content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
-  <meta name="keywords"
-    content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
-  <meta name="author" content="PIXINVENT">
-  <title>Invoice List - Vuexy - Bootstrap HTML admin template</title>
+  <meta name="description" content="Plataforma de lealtad a usuarios.">
+  <meta name="keywords" content="Lealtad, fidelidad, préstamos.">
+  <meta name="author" content="SOLUCIONES-UN">
+  <title>Invoice List - Lealtad V2</title>
   <link rel="apple-touch-icon" href="../app-assets/images/ico/apple-icon-120.png">
   <link rel="shortcut icon" type="image/x-icon" href="../app-assets/images/ico/favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600"
@@ -72,7 +70,7 @@
       <ul class="nav navbar-nav align-items-center ml-auto">
         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
               data-feather="moon"></i></a></li>
-        <li class="nav-item dropdown dropdown-notification mr-25"><a class="nav-link" href="javascript:void(0);"
+        <!-- <li class="nav-item dropdown dropdown-notification mr-25"><a class="nav-link" href="javascript:void(0);"
             data-toggle="dropdown"><i class="ficon" data-feather="bell"></i><span
               class="badge badge-pill badge-danger badge-up">5</span></a>
           <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
@@ -164,7 +162,7 @@
             <li class="dropdown-menu-footer"><a class="btn btn-primary btn-block" href="javascript:void(0)">Read all
                 notifications</a></li>
           </ul>
-        </li>
+        </li> -->
         <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link"
             id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -182,7 +180,7 @@
                 class="mr-50" data-feather="settings"></i> Settings</a><a class="dropdown-item"
               href="page-pricing.html"><i class="mr-50" data-feather="credit-card"></i> Pricing</a><a
               class="dropdown-item" href="page-faq.html"><i class="mr-50" data-feather="help-circle"></i> FAQ</a><a
-              class="dropdown-item" href="page-auth-login-v2.html"><i class="mr-50" data-feather="power"></i> Logout</a>
+              class="dropdown-item" href="login.html"><i class="mr-50" data-feather="power"></i> Logout</a>
           </div>
         </li>
       </ul>
@@ -200,7 +198,7 @@
     <div class="navbar-header">
       <ul class="nav navbar-nav flex-row">
         <li class="nav-item mr-auto"><a class="navbar-brand"
-            href="../../../html/ltr/vertical-menu-template/index.html"><span class="brand-logo">
+            href="./dashboard.html"><span class="brand-logo">
               <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
                 <defs>
@@ -243,46 +241,7 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
       <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-        <li class=" nav-item"><a class="d-flex align-items-center" href="index.html"><i data-feather="home"></i><span
-              class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span><span
-              class="badge badge-light-warning badge-pill ml-auto mr-1">2</span></a>
-          <ul class="menu-content">
-            <li><a class="d-flex align-items-center" href="dashboard-analytics.html"><i data-feather="circle"></i><span
-                  class="menu-item text-truncate" data-i18n="Analytics">Analytics</span></a>
-            </li>
-            <li><a class="d-flex align-items-center" href="dashboard-ecommerce.html"><i data-feather="circle"></i><span
-                  class="menu-item text-truncate" data-i18n="eCommerce">eCommerce</span></a>
-            </li>
-          </ul>
-        </li>
-        <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Administración</span><i
-            data-feather="more-horizontal"></i>
-        </li>
-        <li class="nav-item">
-          <a class="d-flex align-items-center" href="categorias.html">
-            <i data-feather="award"></i><span class="menu-title text-truncate"
-              data-i18n="categorias">Categorias</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="d-flex align-items-center" href="transacciones.html">
-            <i data-feather="dollar-sign"></i><span class="menu-title text-truncate"
-              data-i18n="Transacciones">Transacciones</span>
-          </a>
-        </li>
-        <li class="nav-item active">
-          <a class="d-flex align-items-center" href="columnas.html">
-            <i data-feather="database"></i><span class="menu-title text-truncate" data-i18n="Columnas">Columnas</span>
-          </a>
-        </li>
-        <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Configuración</span><i
-            data-feather="more-horizontal"></i>
-        </li>
-        <li class="nav-item">
-          <a class="d-flex align-items-center" href="promociones.html">
-            <i data-feather="gift"></i><span class="menu-title text-truncate"
-              data-i18n="Columnas">Promociones</span>
-          </a>
-        </li>
+
       </ul>
     </div>
   </div>
@@ -303,8 +262,9 @@
                 <thead>
                   <tr>
                     <th>#</th>
+                    <th>TablaDB</th>
                     <th>Nombre</th>
-                    <th>Action</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
               </table>
@@ -325,10 +285,45 @@
         </div>
         <div class="modal-body flex-grow-1">
           <div class="form-group">
-            <label class="form-label" for="basic-icon-default-fullname">Nombre</label>
-            <input type="text" class="form-control dt-full-name" id="nombre" placeholder="Nombre de la Columna"
-              name="nombre" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
+            <input id="id" type="hidden">
+            <label class="form-label" for="proyecto">Proyecto</label>
+            <select type="text" class="form-control proyecto" id="proyecto" name="proyecto" required>
+              <option selected disabled>Selecciona una Opcion</option>
+            </select>
+            <div id="proyectoEditError" class="invalid-feedback proyecto-error"></div>
           </div>
+          <div class="form-group">
+            <label class="form-label" for="tabla">TablaDB</label>
+            <select type="text" class="form-control tabla" id="tabla" name="tabla" required>
+              <option selected disabled>Selecciona una Opcion</option>
+            </select>
+            <div id="tablaError" class="invalid-feedback tabla-error"></div>
+          </div>
+          <div class=" d-flex align-items-center ">
+            <div class="form-group "> 
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input fInsertada" type="checkbox" id="fInsertada" />
+                <label class="custom-control-label mr-4" for="fInsertada">
+                  Fila insertada
+                </label>
+              </div>
+            </div>
+            <div class="form-group ">
+              <div class="custom-control custom-checkbox ">
+                <input class="custom-control-input  fActualizada" type="checkbox" id="fActualizada"  />
+                <label class="custom-control-label " for="fActualizada">
+                  Fila actualizada
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="basic-icon-default-fullname">Nombre</label>
+            <input type="text" class="form-control dt-full-name nombre" id="nombre" placeholder="Nombre de la Columna"
+              name="nombre" aria-label="" aria-describedby="nombreError" required />
+            <div id="nombreError" class="invalid-feedback nombre-error"></div>
+          </div>
+  
           <button id="btnSubmit" type="submit" class="btn btn-primary mr-1 data-submit">Agregar </button>
           <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
         </div>
@@ -345,11 +340,40 @@
         </div>
         <div class="modal-body flex-grow-1">
           <div class="form-group">
-            <input id="id" type="hidden">
-            <label class="form-label" for="basic-icon-default-fullname">Nombre</label>
-            <input type="text" class="form-control dt-full-name" id="nombreEdit" placeholder="Nombre de la Columna"
-              name="nombreEdit" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
+            <label class="form-label" for="proyectoEdit">Proyecto</label>
+            <select type="text" class="form-control proyectoEdit" id="proyectoEdit" name="proyectoEdit" required></select>
+            <div id="proyectoEditError" class="invalid-feedback proyectoEdit-error"></div>
           </div>
+          <div class="form-group">
+            <label class="form-label" for="tablaEdit">TablaDB</label>
+            <select type="text" class="form-control tablaEdit" id="tablaEdit" name="tablaEdit" required></select>
+            <div id="tablaEditError" class="invalid-feedback tablaEdit-error"></div>
+          </div>
+          <div class=" d-flex align-items-center ">
+            <div class="form-group "> 
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input fInsertadaEdit" type="checkbox" id="fInsertadaEdit"/>
+                <label class="custom-control-label mr-4" for="fInsertadaEdit">
+                  Fila insertada
+                </label>
+              </div>
+            </div>
+            <div class="form-group ">
+              <div class="custom-control custom-checkbox ">
+                <input class="custom-control-input  fActualizadaEdit" type="checkbox" id="fActualizadaEdit" />
+                <label class="custom-control-label " for="fActualizadaEdit">
+                  Fila actualizada
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="basic-icon-default-fullname">Nombre</label>
+            <input type="text" class="form-control dt-full-name nombreEdit" id="nombreEdit" placeholder="Nombre de la Columna"
+              name="nombreEdit" aria-label="" aria-describedby="nombreEditError" required />
+            <div id="nombreEditError" class="invalid-feedback nombreEdit-error"></div>
+          </div>      
+
           <button id="btnSubmitEdit" type="submit" class="btn btn-primary mr-1 data-submit">Agregar </button>
           <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
         </div>
@@ -380,10 +404,10 @@
   <!-- End: Customizer-->
   <!-- BEGIN: Footer-->
   <footer class="footer footer-static footer-light">
-    <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2022<a
-          class="ml-25" href="https://1.envato.market/pixinvent_portfolio" target="_blank">LEALTAD</a><span
-          class="d-none d-sm-inline-block">, All rights Reserved</span></span><span
-        class="float-md-right d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>
+    <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">&copy; 2024<a class="ml-25"
+          href="#" target="_blank">LEALTAD</a><span class="d-none d-sm-inline-block">, Reservados todos los
+          derechos.</span></span><span class="float-md-right d-none d-md-block">Desarrollado por: SOLUCIONES-UN<i
+          data-feather="code"></i></span></p>
   </footer>
   <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
   <!-- END: Footer-->
@@ -410,6 +434,7 @@
 
   <!-- BEGIN: Page JS-->
   <script src="../js/columna.js"></script>
+  <script src="../js/menuDinamico.js"></script>
   <!-- END: Page JS-->
 
   <script>

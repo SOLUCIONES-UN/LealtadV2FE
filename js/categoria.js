@@ -1,12 +1,59 @@
+let token = localStorage.getItem("token");
 const url = 'http://localhost:3000/'
+
 
 $(function () {
     let tabla = getCategorias();
+    Usuario();
+    function validarNombre(nombre) {
+        const nombreValido = /^[a-zA-Z0-9\s]+$/.test(nombre.trim());
 
-    //evento submit del formulario
+        if (!nombreValido) {
+            $('.nombre').addClass('is-invalid');
+            $('.nombre-error').text('El nombre no admite caracteres especiales ni espacios en blanco').addClass('text-danger');
+            return false;
+        }
+        return true;
+    }
+
+    $('#modalNew').on('show.bs.modal', function () {
+        limpiarFormulario();
+    });
+
+$('#modalEdit').on('show.bs.modal', function () {
+ 
+});
+
+$('#modalNew').on('hidden.bs.modal', function () {
+    limpiarFormulario();
+});
+
+
+$('#modalEdit').on('hidden.bs.modal', function () {
+    limpiarFormulario();
+});
+
+
+$('#modalNew').find('[data-dismiss="modal"]').click(function () {
+    limpiarFormulario();
+});
+
+
+$('#modalEdit').find('[data-dismiss="modal"]').click(function () {
+    limpiarFormulario();
+});
+
     $('#formNew').submit(function () {
+        $('#btnSubmit').prop('disabled', true);
+        const nombre = $('#nombre').val();
+
+        if (!validarNombre(nombre)) {
+            $('#btnSubmit').prop('disabled', false);
+            return false;
+        }
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", token);
 
         var raw = JSON.stringify({
             "nombre": $('#nombre').val()
@@ -19,13 +66,16 @@ $(function () {
             redirect: 'follow'
         };
 
-        fetch(`${url}Categoria`, requestOptions)
+        fetch(`${url}categoria`, requestOptions)
             .then(response => response.json())
             .then(result => {
+                $('#btnSubmit').prop('disabled', false);
+
+
 
 
                 if (result.code == "ok") {
-                    limpiarForm();
+                    limpiarFormulario();
                     tabla._fnAjaxUpdate();
                     $('#modalNew').modal('toggle');
                     Alert(result.message, 'success')
@@ -34,15 +84,23 @@ $(function () {
                 }
 
             })
-            .catch(error => { Alert(error.errors, 'error') });
+            .catch(error => {
+         
+                $('#btnSubmit').prop('disabled', false);
+                Alert(error.errors, 'error');
+            });
         return false;
     });
 
-
     $('#formEdit').submit(function () {
+        const nombre = $('#nombreEdit').val();
+
+        if (!validarNombre(nombre)) {
+            return false;
+        }
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-
+        myHeaders.append("Authorization", token);
 
         const id = $('#id').val();
 
@@ -63,7 +121,7 @@ $(function () {
 
 
                 if (result.code == "ok") {
-                    limpiarForm();
+                    limpiarFormulario();
                     tabla._fnAjaxUpdate();
                     $('#modalEdit').modal('toggle');
                     Alert(result.message, 'success')
@@ -81,7 +139,7 @@ $(function () {
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-
+        myHeaders.append("Authorization", token);
 
         const id = $('#idDelete').val();
         var requestOptions = {
@@ -96,7 +154,7 @@ $(function () {
 
 
                 if (result.code == "ok") {
-                    limpiarForm();
+                    limpiarFormulario();
                     tabla._fnAjaxUpdate();
                     $('#modalDelete').modal('toggle');
                     Alert(result.message, 'success')
@@ -109,19 +167,35 @@ $(function () {
     })
 });
 
+// const Usuario = () => {
 
-//obtiene las categorias
+//     let usuario = JSON.parse(localStorage.getItem('infoUsuario'));
+//     console.log(usuario.nombre)
+//     $('.user-name').text(usuario.nombre);
+//     $('.user-status').text(usuario.rol.descripcion);
+// }
+
 const getCategorias = () => {
     return $('#tableData').dataTable({
         ajax: {
             url: `${url}Categoria`,
             type: "GET",
             datatype: "json",
-            dataSrc: ""
+            dataSrc: "",
+            headers: { "Authorization": token }
         },
         columns: [
-            { data: "id" },
+            {
+                data: null, render: function (data, type, row, meta) {
+
+                    if (type === 'display') {
+                        return meta.row + 1;
+                    }
+                    return meta.row + 1;
+                }
+            },
             { data: "nombre" },
+
             {
                 data: "id", render: function (data) {
                     return `
@@ -178,10 +252,13 @@ const getCategorias = () => {
     });
 }
 
-
-const limpiarForm = () => {
+function limpiarFormulario() {
     $('#formNew').trigger("reset");
+    $('.nombre').removeClass('is-invalid');
+    $('.nombre-error').empty().removeClass('text-danger');
 }
+
+
 
 
 const Alert = function (message, status) // si se proceso correctamente la solicitud

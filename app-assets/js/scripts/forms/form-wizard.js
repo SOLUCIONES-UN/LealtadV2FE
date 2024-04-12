@@ -22,6 +22,7 @@ $(function () {
     for (var el = 0; el < bsStepper.length; ++el) {
       bsStepper[el].addEventListener('show.bs-stepper', function (event) {
         var index = event.detail.indexStep;
+        console.log(event.detail.indexStep);
         var numberOfSteps = $(event.target).find('.step').length - 1;
         var line = $(event.target).find('.step');
 
