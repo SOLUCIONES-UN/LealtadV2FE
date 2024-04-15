@@ -295,10 +295,7 @@ const OpenDelete = (id) => {
 }
 
 
-const getSelect = ()=>{
-    // $('#ruta').empty();
-    // $('#rutaEdit').empty();
-    // limpiarFormulario();
+const getSelect = ()=>{ 
     var requestOptions ={
         method: 'GET',
         redirect: 'follow',
