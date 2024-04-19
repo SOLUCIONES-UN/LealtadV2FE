@@ -28,7 +28,7 @@ $(function () {
   });
 
   $("#PantallaInfo").on("click", function () {
-    if (datosObtenidos) {
+    if (datosObtenidos !== undefined && datosObtenidos !== null) {
       mostrarDatosEnTabla(datosObtenidos);
     } else {
       Alert("Primero debes obtener los datos", "error");
@@ -93,8 +93,7 @@ const getReport = () => {
       console.log("Datos del informe de promociones:", result);
       datosObtenidos = result;
       $("#btnDescargarExcel, #PantallaInfo").show(); // Mostrar botones después de obtener los datos
-    })
-    .catch((error) => {
+    }).catch((error) => {
       console.error("Error al obtener el informe de promociones:", error);
       alert(error, "error");
     });
@@ -102,35 +101,75 @@ const getReport = () => {
 
 function mostrarDatosEnTabla(datos) {
   console.log("Datos para mostrar en la tabla:", datos);
-  $("#TablaReportePromo").empty();
+  
+  // Inicializa la tabla con DataTables
+  let table = $('.datatables-basic').DataTable({
+      order: [[0, 'asc']],
+      ordering: true,
+      language: {
+          search: "Buscar:",
+          searchPlaceholder: "Buscar",
+          lengthMenu: "Mostrar _MENU_",
+      },
+  });
+  
+  // Limpia cualquier dato existente en la tabla
+  table.clear().draw();
+  
   datos.forEach((element) => {
     const fecha = formatearFechaHora(element.fecha);
-    const { valor, } =
-      element.detallepromocion.premiopromocion;
-    const monto = parseFloat(
-      element.detallepromocion.premiopromocion.valor
-    ).toFixed(2);
-    const montoTransaccion =
-      element.detallepromocion.premiopromocion.cantidad * monto;
+    const { valor, } = element.detallepromocion.premiopromocion;
+    const monto = parseFloat(element.detallepromocion.premiopromocion.valor).toFixed(2);
+    const montoTransaccion = element.detallepromocion.premiopromocion.cantidad * monto;
 
-    const fila = `
-      <tr> 
-
-        <td>${element.descripcion}</td>
-        <td>${element.numeroTelefono}</td>
-        <td>${element.detallepromocion.premiopromocion.premio.premiocampania && element.detallepromocion.premiopromocion.premio.premiocampania[0] ? element.detallepromocion.premiopromocion.premio.premiocampania[0].etapa.campanium.nombre : ''}</td>
-        <td>${element.detallepromocion.premiopromocion.premio.descripcion}</td>
-        <td>${monto}</td>
-        <td></td>
-        <td>${element.detallepromocion.cupon}</td>
-        <td>-</td>
-        <td>${fecha}</td>
-        <td>${fecha}</td>
-      </tr>
-    `;
-    $("#TablaReportePromo").append(fila);
+    // Agrega una fila a la tabla
+    table.row.add([
+      element.descripcion,
+      element.numeroTelefono,
+      element.detallepromocion.premiopromocion.premio.premiocampania && element.detallepromocion.premiopromocion.premio.premiocampania[0] ? element.detallepromocion.premiopromocion.premio.premiocampania[0].etapa.campanium.nombre : '',
+      element.detallepromocion.premiopromocion.premio.descripcion,
+      monto,
+      '',
+      element.detallepromocion.cupon,
+      '-',
+      fecha,
+      fecha
+    ]).draw();
   });
 }
+
+
+// function mostrarDatosEnTabla(datos) {
+//   console.log("Datos para mostrar en la tabla:", datos);
+//   $("#TablaReportePromo").empty();
+//   datos.forEach((element) => {
+//     const fecha = formatearFechaHora(element.fecha);
+//     const { valor, } =
+//       element.detallepromocion.premiopromocion;
+//     const monto = parseFloat(
+//       element.detallepromocion.premiopromocion.valor
+//     ).toFixed(2);
+//     const montoTransaccion =
+//       element.detallepromocion.premiopromocion.cantidad * monto;
+
+//     const fila = `
+//       <tr> 
+
+//         <td>${element.descripcion}</td>
+//         <td>${element.numeroTelefono}</td>
+//         <td>${element.detallepromocion.premiopromocion.premio.premiocampania && element.detallepromocion.premiopromocion.premio.premiocampania[0] ? element.detallepromocion.premiopromocion.premio.premiocampania[0].etapa.campanium.nombre : ''}</td>
+//         <td>${element.detallepromocion.premiopromocion.premio.descripcion}</td>
+//         <td>${monto}</td>
+//         <td></td>
+//         <td>${element.detallepromocion.cupon}</td>
+//         <td>-</td>
+//         <td>${fecha}</td>
+//         <td>${fecha}</td>
+//       </tr>
+//     `;
+//     $("#TablaReportePromo").append(fila);
+//   });
+// }
 
 document.getElementById("btnDescargarExcel").addEventListener("click", function () {
   console.log("Descargar Excel");
