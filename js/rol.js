@@ -222,7 +222,7 @@ const getRoles = () => {
         language: {
             sLengthMenu: 'Show _MENU_',
             search: 'Buscar',
-            // searchPlaceholder: 'Buscar...',
+            searchPlaceholder: 'Buscar...',
         },
 
         //Buttons with Dropdown

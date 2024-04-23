@@ -62,24 +62,12 @@
         </ul>
         <ul class="nav navbar-nav">
           <li class="nav-item" style="margin-right: 20px;">
-              <div style="text-align: center; margin-left: 350px;">
-                  <div><b style="font-size: 20px;">Reporte de Promociones</b></div>
-                  <div><b>Reporte de participantes de todas las promociones (solo ganadores)</b></div>
-              </div>
-          </li>
-      </ul>
-        <!-- <ul class="nav navbar-nav">
-          <li class="nav-item">
-            <div>
-            <a class="nav-link menu-toggle " href="javascript:void(0);">
-              <h1><b>Reporte de Promociones</b></h1>
-            </a>
-            <a class="nav-link menu-toggle" href="javascript:void(0);" >
-              <b>Reporte de participantes de todas las promociones (solo ganadores)</b>
-            </a>
-          </div>
-          </li>
-        </ul> -->
+            <div style="text-align: center; margin-left: 350px;">
+                <div><b style="font-size: 20px;">Reporte de Promociones</b></div>
+                <div><b>Reporte de participantes de todas las promociones (solo ganadores)</b></div>
+            </div>
+        </li>
+        </ul>
       </div>
       <ul class="nav navbar-nav align-items-center ml-auto">
         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
@@ -173,10 +161,11 @@
     <div class="header-navbar-shadow"></div>
     <div class="content-wrapper container-xxl p-0">
       <div class="content-header row">
+        
       </div>
       <div class="content-body">
         <section class="card">
-          <div class="row p-2 invoice-list-wrapper">
+          <div class="row p-2">
 
             <div class="form-group col-12 col-md-8 col-lg-8">
               <label for="selectpromo">Promoción</label>
@@ -198,35 +187,16 @@
             </div>
             <div class="col-md-2">
               <button class="btn btn-primary mt-2 btn-block" id="btnDescargarExcel"> Excel </button>
-
+              
             </div>
             <div class="col-md-2">
               <button class="btn btn-primary mt-2 btn-block" id="PantallaInfo"> Mostar en Pantalla </button>
             </div>
           </div>
-          <!-- <div class="card-datatable table-responsive">
-            <table class="datatables-basic table" id="tableData">
+          <div class="card-datatable table-responsive p-2">
+            <table class="datatables-basic table p-2" id="tableData">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Telefono</th>
-                  <th>Campaña</th>
-                  <th>Premio</th>
-                  <th>Monto</th>
-                  <th>Transaccion</th>
-                  <th>Codigo</th>
-                  <th>Monto Transaccion</th>
-                  <th>Fecha Acreditacion</th>
-                  <th>Fecha Participación</th>
-                </tr>
-              </thead>
-            </table>
-          </div> -->
-          <div class="card-datatable table-responsive">
-            <table class="datatables-basic table" id="tableData">
-              <thead>
-                <tr>
-
                   <th>Nombre</th>
                   <th>Telefono</th>
                   <th>Campaña</th>
@@ -244,9 +214,9 @@
               </tbody>
             </table>
           </div>
+        </section>
       </div>
-      </section>
-
+    </div>
     </div>
   </div>
   </div>
