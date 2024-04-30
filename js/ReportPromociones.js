@@ -139,7 +139,6 @@ function mostrarDatosEnTabla(datos) {
   });
 }
 
-
 document.getElementById("btnDescargarExcel").addEventListener("click", function () {
   console.log("Descargar Excel");
 
@@ -165,7 +164,7 @@ document.getElementById("btnDescargarExcel").addEventListener("click", function 
     { v: '', t: 's', s: { font: { sz: 18 }, alignment: { horizontal: 'center' } } },
     { v: '', t: 's', s: { font: { sz: 18 }, alignment: { horizontal: 'center' } } },
     { v: '', t: 's', s: { font: { sz: 18 }, alignment: { horizontal: 'center' } } },
-    { v: 'REPORTE DE PROMOCIONES', t: 's', s: { font: { sz: 18 }, alignment: { horizontal: 'center' } } },
+    { v: 'REPORTE DE CÓDIGOS PROMOCIONALES', t: 's', s: { font: { sz: 18 }, alignment: { horizontal: 'center' } } },
   ];
   const headerRow2 = [
     { v: '', t: 's', s: { font: { name: 'Courier', sz: 12 } } },
