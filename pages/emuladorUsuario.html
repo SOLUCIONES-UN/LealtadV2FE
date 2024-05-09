@@ -61,11 +61,27 @@
             </a>
           </li>
         </ul>
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav align-items-center ml-auto">
           <li class="nav-item" style="margin-right: 20px;">
-            <div style="text-align: center; margin-left: 350px;">
-                <div><b style="font-size: 20px;">Emulador de Usuarios</b></div>
+            <div style=" margin-left: 350px;">
+                <div><b style="font-size: 20px;"></b></div>
                 <div><b></b></div>
+            </div>
+        </li>
+        </ul>
+      </div>
+      <div class="bookmark-wrapper d-flex align-items-center">
+        <ul class="nav navbar-nav d-xl-none">
+          <li class="nav-item">
+            <a class="nav-link menu-toggle" href="javascript:void(0);">
+              <i class="ficon" data-feather="menu"></i>
+            </a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav align-items-center ml-auto">
+          <li class="nav-item text-center " style="margin-right: 20px; ">
+            <div class="text-center">
+                <div><b style="font-size: 20px;">Usuarios en Campañas</b></div>
             </div>
         </li>
         </ul>
@@ -261,10 +277,10 @@
         <section class="card">
             <div class="row p-2">
                 <div class="modal-body flex-grow-1">
-                    <div class="col-md-12">
+                    <div class="col-md-8">
                       <label for="selectNumber">NUMERO*: (EJEMPLO: 50254145890)</label>
                       <div class="input-group">
-                        <input type="text" class="form-control dt-full-name numero" id="numero"
+                        <input type="text" class="form-control dt-full-name numero input-group-append col-md-7" id="numero"
                             placeholder="Ingrese el Numero a consultar" name="numero" aria-label=""
                             aria-describedby="basic-icon-default-fullname2" required  />
                         <div class="input-group-append col-md-7">
@@ -273,21 +289,6 @@
                     </div>
                     </div>
                 </div>
-                
-                <!-- <div class="card-datatable table-responsive">
-                    <table class="datatables-basic table" id="tableData">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>CAMPAÑAS</th> 
-                                <th>Cantidad</th>
-                            </tr>
-                        </thead>
-                        <tbody id="TablaReportePromo">
-        
-                        </tbody>
-                    </table>
-                </div> -->
             </div>
             
         </section>
