@@ -261,8 +261,10 @@
               <table class="datatables-basic table" id="tableData">
                 <thead>
                   <tr>
+                    <th>Usuario</th>
                     <th>Nombre</th>
                     <th>Rol</th>
+                    <th>Tipo</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -279,11 +281,11 @@
       <form id="formNew" class="add-new-user modal-content pt-0" autocomplete="off">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
         <div class="modal-header mb-1">
-          <h5 class="modal-title" id="exampleModalLabel">Agregar Nuevo Usuario</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Agregar  Usuario</h5>
         </div>
         <div class="modal-body flex-grow-1">
           <div class="form-group">
-            <label class="form-label" for="username">Nombre Usuario</label>
+            <label class="form-label" for="username">Usuario</label>
             <input type="text" class="form-control " id="username" placeholder="Nombre del usuario" name="username"
               required />
             <div id="usernameError" class="invalid-feedback"></div>
@@ -341,7 +343,7 @@
         </div>
         <div class="modal-body flex-grow-1">
           <div class="form-group">
-            <label class="form-label" for="usernameEdit">Nombre Usuario</label>
+            <label class="form-label" for="usernameEdit">Usuario</label>
             <input type="text" class="form-control" id="usernameEdit" placeholder="Nombre del usuario"
               name="usernameEdit" required readonly/>
             <div id="usernameEditError" class="invalid-feedback"></div>

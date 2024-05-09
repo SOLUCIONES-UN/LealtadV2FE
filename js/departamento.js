@@ -3,6 +3,7 @@ let token = localStorage.getItem("token");
 
 $(function () {
   let tabla = getDepartamentos();
+  GetProjects();
   Usuario();
   function validarNombre(nombre) {
     const nombreValido = /^[a-zA-Z0-9\s]+$/.test(nombre.trim());
@@ -14,6 +15,16 @@ $(function () {
     }
     return true;
   }
+  function validaIdLocal(IdLocal) {
+    const IdLocalValido = /^\d+$/.test(IdLocal.trim());
+
+    if (!IdLocalValido) {
+        $('#IdLocal').addClass('is-invalid'); // Aquí cambiamos de .IdLocal a #IdLocal
+        $('#IdLocal-error').text('El ID local solo puede contener números y no puede estar vacío').addClass('text-danger'); // Aquí cambiamos de .IdLocal-error a #IdLocal-error
+        return false;
+    }
+    return true;
+}
 
   $('#modalNew').on('show.bs.modal', function () {
     limpiarFormulario();
@@ -22,9 +33,9 @@ $(function () {
   });
 
   $('#modalEdit').on('show.bs.modal', function () {
-    $("#btnSubmitEdit").attr("disabled", false);
+    $("#btnSubmitEdit").prop("disabled", false);
   });
-
+  
   $('#modalNew').on('hidden.bs.modal', function () {
     limpiarFormulario();
     $("#btnSubmit").attr("disabled", false);
@@ -32,7 +43,7 @@ $(function () {
 
   $('#modalEdit').on('hidden.bs.modal', function () {
     limpiarFormulario();
-    $("#btnSubmitEdit").attr("disabled", false);
+    $("#btnSubmitEdit").prop("disabled", false);
   });
 
 
@@ -45,18 +56,22 @@ $(function () {
 
   $('#modalEdit').find('[data-dismiss="modal"]').click(function () {
     limpiarFormulario();
-    ("#btnSubmitEdit").attr("disabled", false);
+    $("#btnSubmitEdit").prop("disabled", false);
   });
 
   //evento submit del formulairo
   $("#formNew").submit(function () {
     const nombre = $('#nombre').val();
-    
+    const IdLocal = $('#IdLocal').val();
+
     if (!validarNombre(nombre)) {
       
       return false;
     }
-    
+     if (!validarIdLocal(IdLocal)) {
+      
+      return false;
+    }
     $("#btnSubmit").attr("disabled", true);
 
     var myHeaders = new Headers();
@@ -66,6 +81,7 @@ $(function () {
 
     var raw = JSON.stringify({
       nombre: $("#nombre").val(),
+      nombre: $("#IdLocal").val(),
     });
 
     var requestOptions = {
@@ -99,12 +115,18 @@ $(function () {
   $("#formEdit").submit(function () {
 
     const nombre = $('#nombreEdit').val();
-    
+    const IdLocal = $('#IdLocal').val();
+
     if (!validarNombre(nombre)) {
       
       return false;
     }
-    
+    if (!validarIdLocal(IdLocal)) {
+      
+      return false;
+    }
+ 
+
     $("#btnSubmitEdit").attr("disabled", true);
 
     var myHeaders = new Headers();
@@ -114,7 +136,8 @@ $(function () {
     const id = $("#id").val();
 
     var raw = JSON.stringify({
-      "nombre": $('#nombreEdit').val()
+      "nombre": $('#nombreEdit').val(),
+      "IdColumna": $('#IdLocalEdit').val()
     });
 
 
@@ -174,13 +197,6 @@ $(function () {
       });
   });
 });
-
-// const Usuario = () => {
-//   let usuario = JSON.parse(localStorage.getItem("infoUsuario"));
-//   console.log(usuario);
-//   $(".user-name").text(usuario.nombre);
-//   $(".user-status").text(usuario.rol.descripcion);
-// };
 
 const getDepartamentos = () => {
   return $("#tableData").dataTable({
@@ -269,6 +285,9 @@ function limpiarFormulario() {
   $('#nombre').val('');
   $('.nombre').removeClass('is-invalid');
   $('.nombre-error').empty().removeClass('text-danger');
+  $('#IdLocal').val('');
+  $('.IdLocal').removeClass('is-invalid');
+  $('.IdLocal-error').empty().removeClass('text-danger');
 }
 
 
@@ -306,7 +325,34 @@ const OpenEdit = (id) => {
     })
     .catch((error) => console.log("error", error));
 };
+const GetProjects = (isEdit = false) => {
+  $("#proyecto").html(null);
+  $("#proyectoEdit").html(null);
 
+  var requestOptions = {
+    method: "GET",
+    redirect: "follow",
+    headers: { Authorization: token },
+  };
+
+  $("#proyecto").html(
+    '<option value="0" selected disabled>Selecciona una Opcion</option>'
+  );
+  fetch(`${url}projects`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      result.forEach((element) => {
+        var option = `<option value="${element.id}">${element.descripcion}</option>`;
+        $("#proyecto").append(option);
+        $("#proyectoEdit").append(option);
+      });
+      var selectProyecto = document.getElementById("proyecto");
+      var selectProyectoEdit = document.getElementById("proyectoEdit");
+
+      
+    })
+    .catch((err) => console.log("error", err));
+};
 const OpenDelete = (id) => {
   $("#idDelete").val(id);
   $("#modalDelete").modal("toggle");

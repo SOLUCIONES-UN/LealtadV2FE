@@ -234,9 +234,12 @@ const getUsuarios = () => {
         },
 
         columns: [
-
+            { data: "username" },
             { data: "nombre" },
-            { data: "rol.descripcion" },
+             { data: "rol.descripcion" },
+            { data: "tipoUsuario" },
+       
+        
             {
                 data: "username", render: function (data) {
 
@@ -297,7 +300,7 @@ const getUsuarios = () => {
 }
 
 
-
+// console.log (data);
 
 const limpiarForm = () => {
     $('#formNew').trigger("reset");

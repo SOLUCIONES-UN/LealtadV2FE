@@ -12,102 +12,102 @@ $(function () {
   getAllPromocionesActivasLastWeek();
   getAllPromocionesActivas();
   getAllCampanasActivas();
-  mostrarGraficaCampañas();
-});
-
-//boton para volver a pagina anterior
-$("#btnRegresar").click(function () {
-  $('#datosGrafica').hide();
-  
-  $("#dataDashboard").show('low');
-
-})
-
-$("#ver-detalles-btn").click(function () {
-  // var myModal = new bootstrap.Modal(document.getElementById("graficaModal"));
   // mostrarGraficaCampañas();
-
-  $('#dataDashboard').hide();
-
-  $('#datosGrafica').show();
-  mostrarGraficaCampañas();
-  // mostrarGraficaCampañas1();
-  // $('#datosGrafica1').show();
-  // mostrarGraficaCampañas2();
-  // $('#datosGrafica2').show();
-  // myModal.show();
 });
 
-
-function mostrarGraficaCampañas() {
-  // Obtener el canvas
+// //boton para volver a pagina anterior
+// $("#btnRegresar").click(function () {
+//   $('#datosGrafica').hide();
   
-  const canvas = document.getElementById("graficaCampanas");
-  
-  const token = localStorage.getItem("token");
-  // const token = localStorage.getItem("token");
-  const headers = {
-    Authorization: token,
-    "Content-Type": "application/json",
-  };
+//   $("#dataDashboard").show('low');
 
-  var requestOptions = {
-    method: "GET",
-    headers: headers,
+// })
+
+// $("#ver-detalles-btn").click(function () {
+//   // var myModal = new bootstrap.Modal(document.getElementById("graficaModal"));
+//   // mostrarGraficaCampañas();
+
+//   $('#dataDashboard').hide();
+
+//   $('#datosGrafica').show();
+// //   mostrarGraficaCampañas();
+// //   // mostrarGraficaCampañas1();
+// //   // $('#datosGrafica1').show();
+// //   // mostrarGraficaCampañas2();
+// //   // $('#datosGrafica2').show();
+// //   // myModal.show();
+// // });
+
+
+// function mostrarGraficaCampañas() {
+//   // Obtener el canvas
+  
+//   const canvas = document.getElementById("graficaCampanas");
+  
+//   const token = localStorage.getItem("token");
+//   // const token = localStorage.getItem("token");
+//   const headers = {
+//     Authorization: token,
+//     "Content-Type": "application/json",
+//   };
+
+//   var requestOptions = {
+//     method: "GET",
+//     headers: headers,
     
-    redirect: "follow",
+//     redirect: "follow",
 
-  };
+//   };
 
-  fetch(`${url}Campania`, requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      if (!data) {
-        console.error("La respuesta de la solicitud fetch es nula");
-        return;
-      }
-      console.log("Datos de campañas:", data);
+//   fetch(`${url}Campania`, requestOptions)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       if (!data) {
+//         console.error("La respuesta de la solicitud fetch es nula");
+//         return;
+//       }
+//       console.log("Datos de campañas:", data);
 
-      const labels = data.map((campana) => campana.nombre);
-      const numClientes = data.map((campana) => campana.numero_Clientes);
+//       const labels = data.map((campana) => campana.nombre);
+//       const numClientes = data.map((campana) => campana.numero_Clientes);
    
-      const chartData = {
-        labels: labels,
-        datasets: [
-          {
-            label: "Número de clientes",
-            data: numClientes,
-            backgroundColor: "rgba(54, 162, 235, 0.2)",
-            borderColor: "rgba(54, 162, 235, 1)",
-            borderWidth: 1,
-          },
-        ],
-      };
-      const chartOptions = {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true // Esto asegura que la escala comience en cero
-            }
-          }]
-        }
-      };
-      console.log("Labels:", labels);
-      console.log("NumClientes:", numClientes);
+//       const chartData = {
+//         labels: labels,
+//         datasets: [
+//           {
+//             label: "Número de clientes",
+//             data: numClientes,
+//             backgroundColor: "rgba(54, 162, 235, 0.2)",
+//             borderColor: "rgba(54, 162, 235, 1)",
+//             borderWidth: 1,
+//           },
+//         ],
+//       };
+//       const chartOptions = {
+//         scales: {
+//           yAxes: [{
+//             ticks: {
+//               beginAtZero: true // Esto asegura que la escala comience en cero
+//             }
+//           }]
+//         }
+//       };
+//       console.log("Labels:", labels);
+//       console.log("NumClientes:", numClientes);
 
-      const ctx = canvas.getContext("2d");
-      new Chart(ctx, {
-        type: "bar",
-        data: chartData,
-        options: chartOptions,
-      });
+//       const ctx = canvas.getContext("2d");
+//       new Chart(ctx, {
+//         type: "bar",
+//         data: chartData,
+//         options: chartOptions,
+//       });
 
 
-    })
-    .catch((error) =>
-      console.error("Error al obtener datos de campañas:", error)
-    );
-}
+//     })
+//     .catch((error) =>
+//       console.error("Error al obtener datos de campañas:", error)
+//     );
+// }
 
 // function mostrarGraficaCampañas1() {
 //   // Obtener el canvas
@@ -249,13 +249,13 @@ function mostrarGraficaCampañas() {
 
 const cerrarModalBtn = document.getElementById("cerrar-modal-btn");
 
-cerrarModalBtn.addEventListener("click", () => {
+// cerrarModalBtn.addEventListener("click", () => {
 
-  const modalInstance = new bootstrap.Modal(
-    document.getElementById("graficaModal")
-  );
-  modalInstance.hide();
-});
+//   const modalInstance = new bootstrap.Modal(
+//     document.getElementById("graficaModal")
+//   );
+//   modalInstance.hide();
+// });
 
 function displayNumCampanas(numCampanas) {
   const numCampanasElement = document.getElementById("num-campanas");

@@ -6,10 +6,14 @@ const headers = {
     'Content-Type': 'application/json'
 };
 
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", token);
 
 $(function () {
     let tabla = getTablaDb();
     getSelect();
+
     function validarDescripcion(descripcion) {
         const descripcionValida = /^[a-zA-Z0-9\s_\-<>()!.,;:;"']+$/g.test(descripcion);
         if (!descripcionValida) {
@@ -29,7 +33,7 @@ $(function () {
     });
 
     $('#modalEdit').on('show.bs.modal', function () {
-        limpiarFormulario();
+       
     });
 
     $('#modalNew').on('hidden.bs.modal', function () {
@@ -75,10 +79,6 @@ $(function () {
 
         $("#btnSubmit").attr("disabled",true);
 
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", token);
-
         var raw = JSON.stringify({
             "nombre_tabla": $('#descripcion').val(),
             "idProyectos": $('#ruta').val()
@@ -119,10 +119,6 @@ $(function () {
         }
         $("#btnSubmitEdit").attr("disabled", true);
 
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", token);
-
         const id = $('#id').val();
         
         var raw = JSON.stringify({
@@ -155,11 +151,6 @@ $(function () {
 
     //eventos para la inhabilitacion de un proyecto
     $('#BtnDelete').click(function () {
-
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", token);
-
         const id = $('#idDelete').val();
         var requestOptions = {
             method: 'DELETE',
@@ -174,17 +165,13 @@ $(function () {
                     limpiarFormulario();
                     tabla._fnAjaxUpdate();
                     $('#modalDelete').modal('toggle');
-                    Alert(result.message, 'success')
+                    Alert(result.message, 'success');
                 } else {
-                    console.log("Result",result);
-
-                    Alert(result.message, 'error')
+                    Alert(result.message, 'error');
                 }
 
             })
-            .catch(error => { 
-                console.log("Error",error);
-                Alert(error.errors, 'error') });            
+            .catch(error => { Alert(error.errors, 'error') });            
     })
 });
 
@@ -283,45 +270,36 @@ const Alert = function (message, status) // si se proceso correctamente la solic
 }
 
 const OpenEdit = (id) => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", token);
 
     var requestOptions = {
         method: 'GET',
         redirect: 'follow', 
         headers: myHeaders
     };
-
     fetch(`${url}tabladb/${id}`, requestOptions)
-        .then(response => response.json())
-        .then(result =>{
-            console.log(result);
+        .then(response =>  response.json())
+        .then(result => {
+            // Procesar la respuesta exitosa
             $('#id').val(id);
             $('#descripcionEdit').val(result.nombre_tabla);
             $('#rutaEdit').val(result.idProyectos);
             $('#modalEdit').modal('toggle');
-
         })
-        .catch(err => console.log('error', err))
+        .catch(error => { Alert(error.message, 'error');});
 }
-
 
 const OpenDelete = (id) => { 
     limpiarFormulario();
     $("#idDelete").val(id);
-  $("#modalDelete").modal("toggle");
+    $("#modalDelete").modal("toggle");
 }
 
 
-const getSelect = ()=>{
-    // $('#ruta').empty();
-    // $('#rutaEdit').empty();
-    // limpiarFormulario();
+const getSelect = ()=>{ 
     var requestOptions ={
         method: 'GET',
         redirect: 'follow',
-        headers: {"Authorization":token}
+        headers: myHeaders
     };
     $('#ruta').html('<option value="0" selected disabled>Selecciona una Opcion</option>');
     fetch(`${url}projects`,requestOptions)
@@ -338,6 +316,6 @@ const getSelect = ()=>{
                 $('#rutaEdit').append(opc);
             });
         })
-        .catch(err => console.log('error', err))
+        .catch(err => Alert(err.message, 'error'))
 }
 

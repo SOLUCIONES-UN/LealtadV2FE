@@ -1,14 +1,15 @@
 .circle-progress {
     width: 80px;
     height: 80px !important;
-    float: left; 
+    float: left;
     line-height: 50px;
     background: none;
     margin: 20px;
     box-shadow: none;
     position: relative;
-  }
-  .circle-progress:after {
+}
+
+.circle-progress:after {
     content: "";
     width: 5%;
     height: 5%;
@@ -17,19 +18,22 @@
     position: absolute;
     top: 0;
     left: 0;
-  }
-  .circle-progress>span {
+}
+
+.circle-progress>span {
     width: 50%;
     height: 100%;
     overflow: hidden;
     position: absolute;
     top: 0;
     z-index: 1;
-  }
-  .circle-progress .circle-progress-left {
+}
+
+.circle-progress .circle-progress-left {
     left: 0;
-  }
-  .circle-progress .circle-progress-bar {
+}
+
+.circle-progress .circle-progress-bar {
     width: 100%;
     height: 100%;
     background: none;
@@ -37,19 +41,22 @@
     border-style: solid;
     position: absolute;
     top: 0;
-  }
-  .circle-progress .circle-progress-left .circle-progress-bar {
+}
+
+.circle-progress .circle-progress-left .circle-progress-bar {
     left: 100%;
     border-top-right-radius: 80px;
     border-bottom-right-radius: 80px;
     border-left: 0;
     -webkit-transform-origin: center left;
     transform-origin: center left;
-  }
-  .circle-progress .circle-progress-right {
+}
+
+.circle-progress .circle-progress-right {
     right: 0;
-  }
-  .circle-progress .circle-progress-right .circle-progress-bar {
+}
+
+.circle-progress .circle-progress-right .circle-progress-bar {
     left: -100%;
     border-top-left-radius: 80px;
     border-bottom-left-radius: 80px;
@@ -57,8 +64,9 @@
     -webkit-transform-origin: center right;
     transform-origin: center right;
     animation: loading-1 1.8s linear forwards;
-  }
-  .circle-progress .circle-progress-value {
+}
+
+.circle-progress .circle-progress-value {
     width: 90%;
     height: 90%;
     border-radius: 50%;
@@ -70,46 +78,54 @@
     position: absolute;
     top: 5%;
     left: 5%;
-  }
-  .circle-progress.blue .circle-progress-bar {
+}
+
+.circle-progress.blue .circle-progress-bar {
     border-color: #049dff;
-  }
-  .circle-progress.blue .circle-progress-left .circle-progress-bar {
+}
+
+.circle-progress.blue .circle-progress-left .circle-progress-bar {
     animation: loading-2 1.5s linear forwards 1.8s;
-  }
-  .circle-progress.yellow .circle-progress-bar {
+}
+
+.circle-progress.yellow .circle-progress-bar {
     border-color: #fdba04;
-  }
-  .circle-progress.yellow .circle-progress-right .circle-progress-bar {
+}
+
+.circle-progress.yellow .circle-progress-right .circle-progress-bar {
     animation: loading-3 1.8s linear forwards;
-  }
-  .circle-progress.yellow .circle-progress-left .circle-progress-bar {
+}
+
+.circle-progress.yellow .circle-progress-left .circle-progress-bar {
     animation: none;
-  }
-  @keyframes loading-1 {
+}
+
+@keyframes loading-1 {
     0% {
-      -webkit-transform: rotate(0deg);
-      transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
     }
     100% {
-      -webkit-transform: rotate(180deg);
-      transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
     }
-  }
-  @keyframes loading-2 {
+}
+
+@keyframes loading-2 {
     0% {
-      -webkit-transform: rotate(0deg);
-      transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
     }
     100% {
-      -webkit-transform: rotate(144deg);
-      transform: rotate(144deg);
+        -webkit-transform: rotate(144deg);
+        transform: rotate(144deg);
     }
-  }
-  @keyframes loading-3 {
+}
+
+@keyframes loading-3 {
     0% {
-      -webkit-transform: rotate(0deg);
-      transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
     }
     100% {
       -webkit-transform: rotate(135deg);
@@ -120,3 +136,4 @@
     width: 400px;
     height: 400px;
 }
+

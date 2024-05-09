@@ -1,5 +1,5 @@
 const url = 'http://localhost:3000/'
-let token = localStorage.getItem("token");
+let tokenMenu = localStorage.getItem("token");
 
 
 $(function () {
@@ -55,7 +55,7 @@ $(function () {
         }
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", token);
+        myHeaders.append("Authorization", tokenMenu);
 
         var raw = JSON.stringify({
             "descripcion": $('#descripcion').val(),
@@ -104,7 +104,7 @@ $(function () {
         }
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", token);
+        myHeaders.append("Authorization", tokenMenu);
 
         const id = $('#id').val();
         
@@ -192,7 +192,7 @@ const getMenus = () => {
             type: "GET",
             datatype: "json",
             dataSrc: "",
-            headers: { "Authorization": token }
+            headers: { "Authorization": tokenMenu }
         },
         columns: [
             {
@@ -205,7 +205,7 @@ const getMenus = () => {
                 }
             },
             { data: "descripcion" },
-            { data: "icono" },
+        //    { data: "icono" }, 
 
 
             
@@ -314,3 +314,4 @@ const OpenDelete = (id) => {
     $('#idDelete').val(id);
     $('#modalDelete').modal('toggle');
 }
+

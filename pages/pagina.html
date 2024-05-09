@@ -5,7 +5,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-Xui">
   <meta name="description" content="Plataforma de lealtad a usuarios.">
   <meta name="keywords" content="Lealtad, fidelidad, préstamos.">
   <meta name="author" content="SOLUCIONES-UN">
@@ -262,9 +262,9 @@
                 <thead>
                   <tr>
                     <th>#</th>
+               
                     <th>Descripcion</th>
-                    <th>No. Menu</th>
-                    <th>Path</th>
+                    <th>Encabezado</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -283,9 +283,16 @@
       <form id="formNew" class="add-new-user modal-content pt-0" autocomplete="off">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
         <div class="modal-header mb-1">
-          <h5 class="modal-title" id="exampleModalLabel">Agregar Nueva Pagina</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Agregar Pagina</h5>
         </div>
         <div class="modal-body flex-grow-1">
+
+          <div class="form-group">
+            <label class="form-label" for="Menu">Id_menu:</label>
+            <select type="text" class="form-control" id="Menu" name="Menu" required>
+              <option value="0" default selected disabled>Selecciona una opcion</option>
+            </select>
+          </div>
           <div class="form-group">
             <label class="form-label" for="basic-icon-default-fullname">Descripción:</label>
             <input type="text" class="form-control dt-full-name descripcion" id="descripcion"
@@ -294,19 +301,14 @@
             <div id="descripcionError" class="descripcion-error invalid-feedback"></div>
           </div>
 
+        
           <div class="form-group">
-            <label class="form-label" for="Menu">Menu</label>
-            <select type="text" class="form-control" id="Menu" name="Menu" required>
-              <option value="0" default selected disabled>Selecciona una opcion</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="basic-icon-default-fullname">Path</label>
-            <input type="text" class="form-control dt-full-name" id="path" placeholder="path de la pagina" name="path"
+            <label class="form-label" for="basic-icon-default-fullname">Dirección:</label>
+            <input type="text" class="form-control dt-full-name" id="path" placeholder="Direccion de la pagina" name="path"
               aria-label="" aria-describedby="basic-icon-default-fullname2" required />
           </div>
           <div class="form-group">
-            <label class="form-label" for="Icono">Icono</label>
+            <label class="form-label" for="Icono">Icono:</label>
             <input type="text" class="form-control dt-full-name" id="Icono" placeholder="Icono de la pagina"
               name="Icono" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
           </div>
@@ -340,16 +342,16 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label" for="basic-icon-default-fullname">Path</label>
-            <input type="text" class="form-control dt-full-name" id="PathEdit" placeholder="Nuevo path de la pagina"
+            <label class="form-label" for="basic-icon-default-fullname">Dirección:</label>
+            <input type="text" class="form-control dt-full-name" id="PathEdit" placeholder="Nueva direccion de la pagina"
               name="PathEdit" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
           </div>
           <div class="form-group">
-            <label class="form-label" for="IconoEdith">Icono</label>
+            <label class="form-label" for="IconoEdith">Icono:</label>
             <input type="text" class="form-control dt-full-name" id="IconoEdith" placeholder="Icono de la pagina"
               name="Icono" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
           </div>
-          <button id="btnSubmitEdit" type="submit" class="btn btn-primary mr-1 data-submit">Agregar</button>
+          <button id="btnSubmitEdit" type="submit" class="btn btn-primary mr-1 data-submit">Actualizar</button>
           <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
         </div>
       </form>

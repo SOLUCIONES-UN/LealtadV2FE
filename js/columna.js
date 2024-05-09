@@ -1,9 +1,10 @@
 const url = 'http://localhost:3000/'
 let token = localStorage.getItem("token");
 
+let isPageOpen = true;
+
 $(function () {
     let tabla = getColumnas();
-    Usuario();
     getSelect();
     // funcion para validar el nombre
     function validarNombre(nombre) {
@@ -17,38 +18,29 @@ $(function () {
         return true;
     }
 
-$('#modalNew').on('show.bs.modal', function () {
-    limpiarFormulario();
-    $("#btnSubmit").attr("disabled", false);
-});  
+    // Eventos para el modal New
+    $('#modalNew').on('hidden.bs.modal', function () {
+        limpiarFormulario();
+        $("#btnSubmit").attr("disabled", false);
+    });
 
-$('#modalEdit').on('show.bs.modal', function () {
-    $("#btnSubmitEdit").attr("disabled", false);
-});
+    // Eventos para el modal Edit
+    $('#modalEdit').on('hidden.bs.modal', function () {
+        limpiarFormulario();
+        $("#btnSubmitEdit").attr("disabled", false);
+    });
 
-$('#modalNew').on('hidden.bs.modal', function () {
-    limpiarFormulario();
-    $("#btnSubmit").attr("disabled", false);
-});
+    // Evento para el botón de cerrar el modal New
+    $('#modalNew').find('[data-dismiss="modal"]').click(function () {
+        limpiarFormulario();
+        $("#btnSubmit").attr("disabled", false);
+    });
 
-
-$('#modalEdit').on('hidden.bs.modal', function () {
-    limpiarFormulario();
-    $("#btnSubmitEdit").attr("disabled", false);
-});
-
-
-$('#modalNew').find('[data-dismiss="modal"]').click(function () {
-    limpiarFormulario();
-    $("#btnSubmit").attr("disabled", false);
-});
-
-
-$('#modalEdit').find('[data-dismiss="modal"]').click(function () {
-    limpiarFormulario();
-    $("#btnSubmitEdit").attr("disabled", false);
-});
-
+    // Evento para el botón de cerrar el modal Edit
+    $('#modalEdit').find('[data-dismiss="modal"]').click(function () {
+        limpiarFormulario();
+        $("#btnSubmitEdit").attr("disabled", false);
+    });
 
     //evento submit del formulario
     $('#formNew').submit(function () {
@@ -83,10 +75,12 @@ $('#modalEdit').find('[data-dismiss="modal"]').click(function () {
         };
 
         fetch(`${url}Columna`, requestOptions)
-            .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();})
             .then(result => {
-
-
                 if (result.code == "ok") {
                     limpiarFormulario();
                     tabla._fnAjaxUpdate();
@@ -110,7 +104,6 @@ $('#modalEdit').find('[data-dismiss="modal"]').click(function () {
             return false;
         }
 
-        $("#btnSubmitEdit").attr("disabled", true);
 
         $('#fInsertadaEdit').val($('#fInsertadaEdit').prop('checked') ? 1 : 0);
         $('#fActualizadaEdit').val($('#fActualizadaEdit').prop('checked') ? 1 : 0);
@@ -138,7 +131,11 @@ $('#modalEdit').find('[data-dismiss="modal"]').click(function () {
         };
 
         fetch(`${url}Columna/${id}`, requestOptions)
-            .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();})
             .then(result => {
                 if (result.code == "ok") {
                     limpiarFormulario();
@@ -162,6 +159,7 @@ $('#modalEdit').find('[data-dismiss="modal"]').click(function () {
         myHeaders.append("Authorization", token);
 
         const id = $('#idDelete').val();
+
         var requestOptions = {
             method: 'DELETE',
             headers: myHeaders,
@@ -169,7 +167,11 @@ $('#modalEdit').find('[data-dismiss="modal"]').click(function () {
         };
 
         fetch(`${url}Columna/${id}`, requestOptions)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();})
             .then(result => {
                 if (result.code == "ok") {
                     limpiarFormulario();
@@ -182,16 +184,10 @@ $('#modalEdit').find('[data-dismiss="modal"]').click(function () {
 
             })
             .catch(error => { Alert(error.errors, 'error') });
+        return false;
     })
 });
 
-// const Usuario = () => {
-
-//     let usuario = JSON.parse(localStorage.getItem('infoUsuario'));
-//     console.log(usuario.nombre)
-//     $('.user-name').text(usuario.nombre);
-//     $('.user-status').text(usuario.rol.descripcion);
-// }
 
 
 //obtiene las Columnas
@@ -239,7 +235,6 @@ const getColumnas = () => {
                 }
             }
         ],
-        // order: [[1, 'asc']],
         dom:
             '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
             '<"col-lg-12 col-xl-6" l>' +
@@ -293,9 +288,12 @@ const Alert = function (message, status) // si se proceso correctamente la solic
     });
 }
 
-
+window.addEventListener('beforeunload', () => {
+    isPageOpen = false;
+  });
 
 const OpenEdit = (id) => {
+    if (!isPageOpen) return;
     var requestOptions = {
         method: 'GET',
         redirect: 'follow',
@@ -303,9 +301,15 @@ const OpenEdit = (id) => {
     };
 
     fetch(`${url}Columna/${id}`, requestOptions)
-        .then(response => response.json())
-        .then(result => {
-            console.log(result)
+    .then(response => {
+        if (!isPageOpen) return; // Salir de la promesa si la página está cerrada
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(result => {
+        if (!isPageOpen) return;
             $('#id').val(id);
             $('#proyectoEdit').val(result.idProyectos);
             $('#tablaEdit').val(result.idTablas);
@@ -327,6 +331,7 @@ const OpenEdit = (id) => {
             $('#modalEdit').modal('toggle');
             })
         .catch(error => console.log('error', error));
+        return false;
 
 }
 
@@ -347,7 +352,11 @@ const getSelect = () => {
     };
     $('#proyecto').html('<option value="0" selected disabled>Selecciona una Opcion</option>');
     fetch(`${url}projects`, requestOptions)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();})
         .then(result => {
             result.forEach(element => {
                 var option = `<option value="${element.id}">${element.descripcion}</option>`;
@@ -359,8 +368,8 @@ const getSelect = () => {
             var selectProyectoEdit = document.getElementById('proyectoEdit');
 
             selectProyecto.addEventListener('change', function() {
-                var selectedId = this.value; // Obtener el valor seleccionado del elemento select
-                getTablaDB(selectedId); // Llamar a la función getTablaDB con el ID seleccionado
+                var selectedId = this.value; 
+                getTablaDB(selectedId); 
             });
 
             selectProyectoEdit.addEventListener('change', function() {
@@ -369,6 +378,7 @@ const getSelect = () => {
             });
         })
         .catch(err => console.log('error', err));
+        return false;
 }
 
 
@@ -387,9 +397,12 @@ const getTablaDB = (id) => {
     $('#tabla').append('<option value="0" selected disabled>Selecciona una Opción</option>');
 
     fetch(`${url}tabla/${id}`, requestOptions)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();})
         .then(result => {
-            console.log("resultado", result);
             result.forEach(element => {
                 var opc = `<option value="${element.id}">${element.nombre_tabla}</option>`;
                 $('#tabla').append(opc);
@@ -397,4 +410,5 @@ const getTablaDB = (id) => {
             });
         })
         .catch(err => console.log('error', err));
+        return false;
 }

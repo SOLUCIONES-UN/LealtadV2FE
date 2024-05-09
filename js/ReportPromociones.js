@@ -139,6 +139,7 @@ function mostrarDatosEnTabla(datos) {
   });
 }
 
+
 document.getElementById("btnDescargarExcel").addEventListener("click", function () {
   console.log("Descargar Excel");
 
