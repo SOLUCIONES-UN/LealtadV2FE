@@ -405,17 +405,41 @@ function initStepper() {
   });
 
   // Stepp de los parametros de la campaña segun esta una etapa
-  $('#add-step-btn').click(function() {
+  $(document).ready(function() {
+    // Evento para manejar cambios en el selector de 'RangoTiempo'
+    $('#RangoTiempo').change(function() {
+        // Ocultar todos los campos de intervalo primero
+        $('#intervalo').hide();
+        $('#intervaloSemanal').hide();
+        $('#intervaloMensual').hide();
 
-      var NombreEtapa = $('#NombreEtapa').val();
-      var orden = $('#orden').val();
-      var descripcionEtapa = $('#descripcionEtapa').val();
-      var tipoParticipacion = $('#tipoParticipacion').val();
-      var intervalo =parseInt( $('#intervalo').val());
-      var rangoTiempo = parseInt($('#RangoTiempo').val())
-      var minimoTransaccion = parseFloat($('minimoTransaccion').val());
-      var TotalMinimo = parseFloat($('#totalMinimo').val());
-  
+        // Mostrar el campo de intervalo correspondiente al valor seleccionado
+        var rangoTiempo = $(this).val();
+        if (rangoTiempo === 'diaria') {
+            $('#intervalo').show();
+        } else if (rangoTiempo === 'semanal') {
+            $('#intervaloSemanal').show();
+        } else if (rangoTiempo === 'mensual') {
+            $('#intervaloMensual').show();
+        }
+    });
+
+    // Iniciar el cambio una vez al cargar la página si hay un valor seleccionado por defecto
+    $('#RangoTiempo').trigger('change');
+
+    // Evento click para agregar una nueva etapa
+    $('#add-step-btn').click(function() {
+        var NombreEtapa = $('#NombreEtapa').val();
+        var orden = $('#orden').val();
+        var descripcionEtapa = $('#descripcionEtapa').val();
+        var tipoParticipacion = $('#tipoParticipacion').val();
+        var intervalo = parseInt($('#intervalo').val());
+        var intervaloSemanal = parseInt($('#intervaloSemanal').val());
+        var intervaloMensual = parseInt($('#intervaloMensual').val());
+        var rangoTiempo = $('#RangoTiempo').val();
+        var minimoTransaccion = parseFloat($('#minimoTransaccion').val());
+        var TotalMinimo = parseFloat($('#totalMinimo').val());
+
 
       if(validarCamposStep(actualStep)){
         getDepartamento();
@@ -607,6 +631,8 @@ function initStepper() {
           orden: orden,
           tipoParticipacion: tipoParticipacion,
           intervalo: intervalo,
+          intervaloSemanal: intervaloSemanal,
+          intervaloMensual: intervaloMensual,
           periodo: rangoTiempo,
           valorAcumulado: null,
           minimoTransaccion: minimoTransaccion,
@@ -622,6 +648,8 @@ function initStepper() {
         $('#tipoParticipacion').val('');
         $('#RangoTiempo').val('');
         $('#intervalo').val('');
+        $('#intervaloSemanal').val('');
+        $('#intervaloMensual').val('');
         $('#minimoTransaccion').val('');
         $('#TotalMinimo').val('');
 
@@ -630,6 +658,8 @@ function initStepper() {
         Alert('No se pudo crear la etapa, por falta de datos', 'error');
       }
   });
+
+});
 
   function addStep(content) {
     $('.step-progress').addClass('blocked');
@@ -1566,6 +1596,8 @@ function initStepperEdit() {
         etapa.descripcion = descripcion;
         etapa.tipoParticipacion = tipoParticipacion;
         etapa.intervalo = intervalo;
+        etapa.intervaloSemanal = intervaloSemanal;
+        etapa.intervaloMensual = intervaloMensual;
   
         // Buscar la etapa editada en el arreglo dataEditEtapa
         var etapaIndex = dataEditEtapa.findIndex(function(item) {
@@ -3019,6 +3051,8 @@ function validarCamposStep(stepIndex) {
         'descripcionEtapa',
         'tipoParticipacion',
         'intervalo',
+        'intervaloSemanal',
+        'intervaloMensual',
       ];
       var isValid = true;
       if(DataEtapa.length == 0){
