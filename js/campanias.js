@@ -1683,7 +1683,7 @@ function initStepperEdit() {
           etapa.parametros.splice(parametroIndex, 1);
     
           // Mostrar los datos del registro seleccionado en los inputs
-          $('#idParemetros').val(parametro.id);
+          $('#idParametros').val(parametro.id);
           $('#limiteParticipacionEdit').val(parametro.limiteParticipacion);
           $('#transaccionEdit').val(parametro.idTransaccion);
           $('#valorMinimoEdit').val(parametro.ValorMinimo);
@@ -1698,7 +1698,7 @@ function initStepperEdit() {
     
     // Event listener para el botón de guardar parámetro editado
     $('#addParamasEdit').click(function() {
-      var id = $('#idParemetros').val();
+      var id = $('#idParametros').val();
       var limiteParticipacion = $('#limiteParticipacionEdit').val();
       var idTransaccion = $('#transaccionEdit').val();
       var ValorMinimo = $('#valorMinimoEdit').val();
@@ -1729,22 +1729,22 @@ function initStepperEdit() {
         });
       });
 
-      // Validar ValorMinimo y ValorMaximo
-      var errorValorMinimo = $('#valorMinimoEditError');
-      var errorValorMaximo = $('#valorMaximoEditError');
+      // // Validar ValorMinimo y ValorMaximo
+      // var errorValorMinimo = $('#valorMinimoEditError');
+      // var errorValorMaximo = $('#valorMaximoEditError');
 
-      if (ValorMinimo > ValorMaximo) {
-        $('#valorMinimoEdit').addClass('is-invalid');
-        $('#valorMaximoEdit').addClass('is-invalid');
-        errorValorMinimo.text('El valor mínimo debe ser menor al valor máximo.');
-        errorValorMaximo.text('El valor máximo debe ser mayor al valor mínimo.');
-        isValid = false;
-      } else {
-        $('#valorMinimoEdit').removeClass('is-invalid');
-        $('#valorMaximoEdit').removeClass('is-invalid');
-        errorValorMinimo.text('');
-        errorValorMaximo.text('');
-      }
+      // if (ValorMinimo > ValorMaximo) {
+      //   $('#valorMinimoEdit').addClass('is-invalid');
+      //   $('#valorMaximoEdit').addClass('is-invalid');
+      //   errorValorMinimo.text('El valor mínimo debe ser menor al valor máximo.');
+      //   errorValorMaximo.text('El valor máximo debe ser mayor al valor mínimo.');
+      //   isValid = false;
+      // } else {
+      //   $('#valorMinimoEdit').removeClass('is-invalid');
+      //   $('#valorMaximoEdit').removeClass('is-invalid');
+      //   errorValorMinimo.text('');
+      //   errorValorMaximo.text('');
+      // }
 
       
       if(isValid){
@@ -3111,11 +3111,13 @@ function resetSteps() {
   // Eliminar los steps adicionales
   $('#stepper .step:not(:first)').remove();
 
-  // Mostrar el primer step
-  steps.first().show();
-  $('.step-progress').removeClass('active');
-  $('.step-btn-1').addClass('active');
-  $('.step-progress').removeClass('disabled').prop('disabled', false);
+  // Mostrar el primer step después de una pequeña pausa
+  setTimeout(function() {
+    steps.first().show();
+    $('.step-progress').removeClass('active');
+    $('.step-btn-1').addClass('active');
+    $('.step-progress').removeClass('disabled').prop('disabled', false);
+  }, 100);
 }
 
 function resetStepsEdit() {
@@ -3180,6 +3182,23 @@ function limpiarFormulario() {
   $('#restriccionUsuarios').val('');
   $('#Archivo').val('');
   $('#usuarioBloqueo').val('');
+
+  // Limpiar las imágenes
+  imgPush = null;
+  imgAkisi = null;
+  imgPushEdit = null;
+  imgAkisiEdit = null;
+
+  // Limpiar las previews de las imágenes
+  $('#previewImg').attr('src', '').hide();
+  $('#requerimientos').show();
+  $('#previewNotificacion').attr('src', '').hide();
+  $('#requerimientosNotificacion').show();
+  $('#previewImgEdit').attr('src', '').hide();
+  $('#requerimientosEdit').show();
+  $('#previewNotificacionEdit').attr('src', '').hide();
+  $('#requerimientosNotificacionEdit').show();
+  
 
   // Limpiar las tablas
   $('#TablaEtapa').DataTable().clear().destroy();
