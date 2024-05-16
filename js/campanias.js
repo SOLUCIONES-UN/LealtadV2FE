@@ -404,43 +404,46 @@ function initStepper() {
     }
   });
 
-  // Stepp de los parametros de la campaña segun esta una etapa
+
   $(document).ready(function() {
-    // Evento para manejar cambios en el selector de 'RangoTiempo'
+  
     $('#RangoTiempo').change(function() {
-        // Ocultar todos los campos de intervalo primero
+     
         $('#intervaloDiarioDiv').hide();
         $('#intervaloSemanalDiv').hide();
         $('#intervaloMensualDiv').hide();
 
-        // Mostrar el campo de intervalo correspondiente al valor seleccionado
         var rangoTiempo = $(this).val();
         if (rangoTiempo === 'diaria') {
             $('#intervaloDiarioDiv').show();
         } else if (rangoTiempo === 'semanal') {
             $('#intervaloSemanalDiv').show();
+         
+            $('#intervaloMensual').val('');
         } else if (rangoTiempo === 'mensual') {
             $('#intervaloMensualDiv').show();
+      
+            $('#intervaloSemanal').val('');
         }
     });
 
-  // Evento para ajustar los días automáticamente según el intervalo ingresado
-  $('#intervaloSemanal').on('input', function() {
-    var semanas = $(this).val();
-    var dias = semanas * 7;
-    $('#intervaloSemanal').val(dias);
-});
 
-$('#intervaloMensual').on('input', function() {
+    $('#intervaloSemanal').on('input', function() {
+      var semanas = $(this).val();
+      var dias = semanas * 7;
+      console.log("Días semanales:", dias);
+      $('#intervaloMensual').val(''); 
+  });
+
+  $('#intervaloMensual').on('input', function() {
     var meses = $(this).val();
     var dias = meses * 30;
-    $('#intervaloMensual').val(dias);
+    console.log("Días mensuales:", dias);
+    $('#intervaloSemanal').val(''); 
 });
-
-    // Iniciar el cambio una vez al cargar la página si hay un valor seleccionado por defecto
+   
     $('#RangoTiempo').trigger('change');
 
-    // Evento click para agregar una nueva etapa
     $('#add-step-btn').click(function() {
         var NombreEtapa = $('#NombreEtapa').val();
         var orden = $('#orden').val();
