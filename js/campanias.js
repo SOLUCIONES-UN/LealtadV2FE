@@ -409,20 +409,33 @@ function initStepper() {
     // Evento para manejar cambios en el selector de 'RangoTiempo'
     $('#RangoTiempo').change(function() {
         // Ocultar todos los campos de intervalo primero
-        $('#intervalo').hide();
-        $('#intervaloSemanal').hide();
-        $('#intervaloMensual').hide();
+        $('#intervaloDiarioDiv').hide();
+        $('#intervaloSemanalDiv').hide();
+        $('#intervaloMensualDiv').hide();
 
         // Mostrar el campo de intervalo correspondiente al valor seleccionado
         var rangoTiempo = $(this).val();
         if (rangoTiempo === 'diaria') {
-            $('#intervalo').show();
+            $('#intervaloDiarioDiv').show();
         } else if (rangoTiempo === 'semanal') {
-            $('#intervaloSemanal').show();
+            $('#intervaloSemanalDiv').show();
         } else if (rangoTiempo === 'mensual') {
-            $('#intervaloMensual').show();
+            $('#intervaloMensualDiv').show();
         }
     });
+
+  // Evento para ajustar los días automáticamente según el intervalo ingresado
+  $('#intervaloSemanal').on('input', function() {
+    var semanas = $(this).val();
+    var dias = semanas * 7;
+    $('#intervaloSemanal').val(dias);
+});
+
+$('#intervaloMensual').on('input', function() {
+    var meses = $(this).val();
+    var dias = meses * 30;
+    $('#intervaloMensual').val(dias);
+});
 
     // Iniciar el cambio una vez al cargar la página si hay un valor seleccionado por defecto
     $('#RangoTiempo').trigger('change');
