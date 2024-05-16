@@ -433,9 +433,9 @@ function initStepper() {
         var orden = $('#orden').val();
         var descripcionEtapa = $('#descripcionEtapa').val();
         var tipoParticipacion = $('#tipoParticipacion').val();
-        var intervalo = parseInt($('#intervalo').val());
-        var intervaloSemanal = parseInt($('#intervaloSemanal').val());
-        var intervaloMensual = parseInt($('#intervaloMensual').val());
+        var intervalo = $('#intervalo').val();
+        var intervaloSemanal = $('#intervaloSemanal').val();
+        var intervaloMensual = $('#intervaloMensual').val();
         var rangoTiempo = $('#RangoTiempo').val();
         var minimoTransaccion = parseFloat($('#minimoTransaccion').val());
         var TotalMinimo = parseFloat($('#totalMinimo').val());
@@ -1589,6 +1589,8 @@ function initStepperEdit() {
         var descripcion = $('#descripcionEtapaEdit').val();
         var tipoParticipacion = $('#tipoParticipacionEdit').val();
         var intervalo = $('#intervaloEdit').val();
+        var intervaloSemanal = $('#intervaloEdit').val();
+        var intervaloMensual = $('#intervaloEdit').val();
   
         // Actualizar los datos de la etapa
         etapa.nombre = nombre;
@@ -3043,7 +3045,6 @@ function validarCamposStep(stepIndex) {
 
       return isValid;
     }
-
     case 'step3':{
       var fields = [
         'NombreEtapa',
@@ -3055,24 +3056,19 @@ function validarCamposStep(stepIndex) {
         'intervaloMensual',
       ];
       var isValid = true;
+    
+      // No se realiza ninguna validación si DataEtapa está vacío
       if(DataEtapa.length == 0){
-        fields.forEach(function(field) {
-          var value = $('#' + field).val();
-          var errorDiv = $('#' + field + 'Error');
-          if (!value) {
-            $('#' + field).addClass('is-invalid');
-            errorDiv.text('Este campo no puede estar vacío.');
-            isValid = false;
-          } else {
-            $('#' + field).removeClass('is-invalid');
-            errorDiv.text('');
-          }
-        });
+        isValid = true;
       }
-
+    
       fields.forEach(function(field) {
         var value = $('#' + field).val();
         var errorDiv = $('#' + field + 'Error');
+    
+        // Console log para verificar que se está ejecutando la validación
+        console.log("Validando campo:", field, "con valor:", value);
+    
         // Validar que no haya números negativos
         if (/^-\d+/.test(value)) {
           $('#' + field).addClass('is-invalid');
@@ -3094,29 +3090,20 @@ function validarCamposStep(stepIndex) {
             errorDiv.text('Este campo no puede contener caracteres especiales.');
             isValid = false;
           }
-        }
-        else if (!value) {
-          $('#' + field).addClass('is-invalid');
-          errorDiv.text('Este campo no puede estar vacío.');
-          isValid = false;
         } else {
           $('#' + field).removeClass('is-invalid');
           errorDiv.text('');
         }
-
+    
         // Agregar evento input para quitar el error cuando el usuario comience a escribir
         $('#' + field).on('input', function() {
           $(this).removeClass('is-invalid');
           errorDiv.text('');
         });
       });
-      
-     
-
+    
       return isValid;
-
     }
-
   }
 
 
