@@ -169,20 +169,22 @@ $(function () {
     };
 
     fetch(`${url}Campania`, requestOptions)
-    .then(response => response.json())
-    .then(result => {
+      .then(response => response.json())
+      .then(result => {
         if (result.code == "ok") {
+          actualStep = 0;
+          initStepper();
           limpiarFormulario();
           getAllCampanias();
-          $('#modalNew').modal('toggle'); // Mover esta línea aquí
+          $('#modalNew').modal('toggle');
           Alert(result.message, 'success');
           console.log(result);
         } else {
           console.log("Verifica datos");
           Alert(result.message, 'error');
         }
-    })
-    .catch(error => { Alert(error.errors, 'error') });
+      })
+      .catch(error => { Alert(error.errors, 'error') });
     return false;
   });
 
@@ -290,10 +292,18 @@ $(function () {
 
 //Funcion del stepper
 function initStepper() {
-  actualStep=0;
-  var steps = $('#stepper').children(); // Obtener todos los elementos hijos del contenedor #stepper
+  // Reiniciar el estado al inicio de la función
+  actualStep = 0;
+  var steps = $('#stepper').children();
+  steps.hide();
+  DataEtapa = [];
+  TEMP = [];
+  datosTablaParametro = [];
+  datosTablaLocalidad = [];
+  datosTablaPremio = [];
+  nombresMunicipios = {};
+  // $('#stepper .step:not(:first)').remove();
   var totalSteps = steps.length;
-  DataEtapa =[];
   var visitedSteps = [];
   const containerBloqueo = document.querySelector('#Bloqueo');
   containerBloqueo.style.display = 'none';
@@ -3125,68 +3135,6 @@ function validarCamposStep(stepIndex) {
 
 }
 
-function resetSteps() {
-  // Reiniciar los stepps
-  actualStep = 0;
-  var steps = $('#stepper .step');
-  steps.hide();
-  
-  // Limpiar los arreglos y datos relacionados con los steps
-  TEMP = [];
-  DataEtapa = [];
-  bloqueadosUsuarios = [];
-  permitidoUsuario = [];
-  datosTablaLocalidad = [];
-  datosTablaPremio = [];
-  datosTablaParametro = [];
-  nombresMunicipios = {};
-
-  // Limpiar las tablas relacionadas con los steps
-  $('#TablaEtapa').DataTable().clear().destroy();
-  $('#tablaBloqueo').DataTable().clear().destroy();
-
-  // Eliminar los steps adicionales
-  $('#stepper .step:not(:first)').remove();
-
-  // Mostrar el primer step después de una pequeña pausa
-  setTimeout(function() {
-    steps.first().show();
-    $('.step-progress').removeClass('active');
-    $('.step-btn-1').addClass('active');
-    $('.step-progress').removeClass('disabled').prop('disabled', false);
-  }, 100);
-}
-
-function resetStepsEdit() {
-  // Reiniciar los stepps
-  actualStepEdit = 0;
-  var stepsEdits = $('#stepperEdit .step');
-  stepsEdits.hide();
-
-  // Limpiar los arreglos y datos relacionados con los steps de edición
-  dataEditEtapa = [];
-
-
-  // Reiniciar las variables relacionadas con los pasos
-  totalStepsEdits = 0; // Inicializar totalStepsEdits a 0
-  previousStep = null; // Reiniciar previousStep a null
-
-  // Limpiar las tablas relacionadas con los steps de edición
-  $('#TablaEtapaEdit').DataTable().clear().destroy();
-  $('#tablaBloqueoEdit').DataTable().clear().destroy();
-
-  // Eliminar los steps adicionales
-  $('#stepperEdit .step:not(:first)').remove();
-
-  // Mostrar el primer step
-  stepsEdits.first().show();
-  $('.step-progressEdit').removeClass('active');
-  $('.step-btn-1-edit').addClass('active');
-  $('.step-progressEdit').removeClass('disabled').prop('disabled', false);
-}
-
-
-//limpiar el form
 function limpiarFormulario() {
  
   // Limpiar los steps y reiniciar los datos relacionados
@@ -3286,6 +3234,184 @@ function limpiarFormulario() {
     // datosTablaPremio = [];
     // datosTablaParametro = [];
     // datosTablaParticipacion= [];
+    //permitidoUsuario =[];
+
+    // datosBloqueados = [];
+    TEMP =[];
+    etapasData=[]
+    //variables de imagenes
+    //bloqueadosUsuarios =[];
+    DataEtapa =[];
+    nombresMunicipios = {};
+
+    //data edit
+    dataMunicipiosView=[]
+    dataDeptoView=[]
+    dataPremioView=[]
+    datatransaccionView=[]
+
+}
+
+
+function resetSteps() {
+  // Reiniciar los stepps
+  actualStep = 0;
+  var steps = $('#stepper .step');
+  steps.hide();
+  
+  // Limpiar los arreglos y datos relacionados con los steps
+  TEMP = [];
+  DataEtapa = [];
+  bloqueadosUsuarios = [];
+  permitidoUsuario = [];
+  datosTablaLocalidad = [];
+  datosTablaPremio = [];
+  datosTablaParametro = [];
+  nombresMunicipios = {};
+
+  // Limpiar las tablas relacionadas con los steps
+  $('#TablaEtapa').DataTable().clear().destroy();
+  $('#tablaBloqueo').DataTable().clear().destroy();
+
+  // Mostrar el primer step después de una pequeña pausa
+  setTimeout(function() {
+    steps.first().show();
+    $('.step-progress').removeClass('active');
+    $('.step-btn-1').addClass('active');
+    $('.step-progress').removeClass('disabled').prop('disabled', false);
+  }, 100);
+}
+
+function resetStepsEdit() {
+  // Reiniciar los stepps
+  actualStepEdit = 0;
+  var stepsEdits = $('#stepperEdit .step');
+  stepsEdits.hide();
+
+  // Limpiar los arreglos y datos relacionados con los steps de edición
+  dataEditEtapa = [];
+
+
+  // Reiniciar las variables relacionadas con los pasos
+  totalStepsEdits = 0; // Inicializar totalStepsEdits a 0
+  previousStep = null; // Reiniciar previousStep a null
+
+  // Limpiar las tablas relacionadas con los steps de edición
+  $('#TablaEtapaEdit').DataTable().clear().destroy();
+  $('#tablaBloqueoEdit').DataTable().clear().destroy();
+
+  // Eliminar los steps adicionales
+  $('#stepperEdit .step:not(:first)').remove();
+
+  // Mostrar el primer step
+  stepsEdits.first().show();
+  $('.step-progressEdit').removeClass('active');
+  $('.step-btn-1-edit').addClass('active');
+  $('.step-progressEdit').removeClass('disabled').prop('disabled', false);
+}
+
+
+//limpiar el form
+function limpiarFormulario() {
+ 
+  // Limpiar los steps y reiniciar los datos relacionados
+  resetSteps();
+  resetStepsEdit();
+  $('#campania').val('');
+  $('#descripcionCampania').val('');
+  $('#fechaRegistro').val('');
+  $('#fechaInicial').val('');
+  $('#fechaFinal').val('');
+  $('#HoraRecordatorio').val('');
+  $('#correo').val('');
+  $('#edadInicial').val('');
+  $('#edadFinal').val('');
+  $('#sexo').val('');
+  $('#tipoUsuarios').val('');
+  $('#notificacion').val('');
+  $('#descripcionNotificacion').val('');
+  $('#imgCampania').val('');
+  $('#imgNotificacion').val('');
+  $('#maximoParticipantes').val('');
+  $('#tercerosCampania').val('');
+  $('#allday').prop('checked', false);
+  $('#repeat').prop('checked', false);
+  $('#FechaIniRecordatorio').val('');
+  $('#FechaFinRecordatorio').val('');
+  $('#terminosCondiciones').val('');
+  $('#Observaciones').val('');
+  $('#proyecto').val('');
+  $('#restriccionUsuarios').val('');
+  $('#Archivo').val('');
+  $('#usuarioBloqueo').val('');
+
+  // Limpiar las imágenes
+  imgPush = null;
+  imgAkisi = null;
+  imgPushEdit = null;
+  imgAkisiEdit = null;
+
+  // Limpiar las previews de las imágenes
+  $('#previewImg').attr('src', '').hide();
+  $('#requerimientos').show();
+  $('#previewNotificacion').attr('src', '').hide();
+  $('#requerimientosNotificacion').show();
+  $('#previewImgEdit').attr('src', '').hide();
+  $('#requerimientosEdit').show();
+  $('#previewNotificacionEdit').attr('src', '').hide();
+  $('#requerimientosNotificacionEdit').show();
+  $('#requerimientosNotificacionEdit').show();
+  
+
+  // Limpiar las tablas
+  $('#TablaEtapa').DataTable().clear().destroy();
+  $('#tablaBloqueo').DataTable().clear().destroy();
+  $('#formNew').trigger("reset");
+
+  $('#campaniaEdit').val('');
+  $('#descripcionCampaniaEdit').val('');
+  $('#fechaRegistroEdit').val('');
+  $('#fechaInicialEdit').val('');
+  $('#fechaFinalEdit').val('');
+  $('#HoraRecordatorioEdit').val('');
+  $('#correoEdit').val('');
+  $('#edadInicialEdit').val('');
+  $('#edadFinalEdit').val('');
+  $('#sexoEdit').val('');
+  $('#tipoUsuariosEdit').val('');
+  $('#notificacionEdit').val('');
+  $('#descripcionNotificacionEdit').val('');
+  $('#imgCampaniaEdit').val('');
+  $('#imgNotificacionEdit').val('');
+  $('#maximoParticipantesEdit').val('');
+  $('#tercerosCampaniaEdit').val('');
+  $('#alldayEdit').prop('checked', false);
+  $('#repeatEdit').prop('checked', false);
+  $('#FechaIniRecordatorioEdit').val('');
+  $('#FechaFinRecordatorioEdit').val('');
+  $('#terminosCondicionesEdit').val('');
+  $('#ObservacionesEdit').val('');
+  $('#proyectoEdit').val('');
+  $('#restriccionUsuariosEdit').val('');
+  $('#ArchivoEdit').val('');
+  $('#usuarioBloqueoEdit').val('');
+
+  // Limpiar las tablas
+  $('#TablaEtapaEdit').DataTable().clear().destroy();
+  $('#tablaBloqueoEdit').DataTable().clear().destroy();
+
+  // Limpiar los arreglos
+  // TEMP = [];
+  // DataEtapa = [];
+  // bloqueadosUsuarios = [];
+  // dataEditEtapa=[]
+
+    saveDataParams = [];
+    // Arreglo para almacenar los datos guardados de la tabla
+    // datosTablaLocalidad = [];
+    // datosTablaPremio = [];
+    // datosTablaParametro = [];
+    // datosTablaParticipacion= [];
     permitidoUsuario =[];
 
     // datosBloqueados = [];
@@ -3328,28 +3454,15 @@ const OpenEdit = (id) => {
       var stepsEdits = $('#stepperEdit').children();
       stepsEdits.hide();
       stepsEdits.eq(0).show();
-        // Ocultar el spinner y mostrar el contenido del modal
+
+      // Ocultar el spinner y mostrar el contenido del modal
       $('#modalEdit .modal-body').css('opacity', '1');
       $('#modalEdit .spinner-container').hide();
 
-        // Ocultar el indicador de carga
-        $('#modalEdit .spinner-container').hide();
-
-        // Mostrar el primer paso del stepper
-        var stepsEdits = $('#stepperEdit').children();
-        stepsEdits.hide();
-        stepsEdits.eq(0).show();
-
-        
-
-        // Mostrar el modal solo si los datos han sido cargados
-        if (isDataLoaded) {
-          $('#modalEdit').modal('show');
-        }
-
-      // Mostrar el modal
-      $('#modalEdit').modal('toggle');
-      console.log('Resultados', result);
+      // Mostrar el modal solo si los datos han sido cargados
+      if (isDataLoaded) {
+        $('#modalEdit').modal('show');
+      }
 
       // Asignar los datos del registro a los campos del formulario
       $('#idCampania').val(id);
@@ -3365,23 +3478,13 @@ const OpenEdit = (id) => {
       $('#tipoUsuariosEdit').val(result.tipoUsuario);
       $('#notificacionEdit').val(result.tituloNotificacion);
       $('#descripcionNotificacionEdit').val(result.descripcionNotificacion);
-      $('#estadoCampania').val(result.estado)
+      $('#estadoCampania').val(result.estado);
+
       // Llamar a la función userValidator con el valor de restriccionUsuarios
       const event = {
         target: document.getElementById('restriccionUsuariosEdit')
       };
       userValidator(event, 'containerArchivoEdit');
-
-
-      // Asignar las imágenes si existen
-      // if (result.imgPush) {
-      //   $('#previewImgEdit').attr('src', `ruta/a/la/imagen/${result.imgPush}`);
-      //   $('#previewImgEdit').show();
-      // }
-      // if (result.imgAkisi) {
-      //   $('#previewNotificacionEdit').attr('src', `ruta/a/la/imagen/${result.imgAkisi}`);
-      //   $('#previewNotificacionEdit').show();
-      // }
 
       $('#maximoParticipantesEdit').val(result.maximoParticipaciones);
       $('#tercerosCampaniaEdit').val(result.campaniaTerceros);
@@ -3390,22 +3493,21 @@ const OpenEdit = (id) => {
       $('#ObservacionesEdit').val(result.observaciones);
       $('#proyectoEdit').val(result.idProyecto);
       $('#restriccionUsuariosEdit').val(result.restriccionUser);
-      
-      bloqueadosUsuarios = result.bloqueados
-      permitidoUsuario = result.participantes
+
+      bloqueadosUsuarios = result.bloqueados;
+      permitidoUsuario = result.participantes;
       dataEditEtapa = result.etapas;
-      console.log(dataEditEtapa, "asignacion")
-      
+      console.log(dataEditEtapa, "asignacion");
+
       // Mostrar las etapas en la tabla
       mostrarDatosTabla("#TablaEtapaEdit");
-      // Mostrar el modal
-      $('#modalEdit').modal('toggle');
-      console.log('Resultados',result)
+      console.log('Resultados', result);
     })
-    .catch(error => {console.log('error', error)
+    .catch(error => {
+      console.log('error', error);
       $('#modalEdit .modal-body').css('opacity', '1');
       $('#modalEdit .spinner-container').hide();
-      });
+    });
 };
 
 const OpenDelete = (id) =>{
