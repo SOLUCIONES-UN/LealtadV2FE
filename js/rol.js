@@ -14,7 +14,7 @@ $(function () {
         }
         return true;
     }
-
+  
     $('#modalNew').on('show.bs.modal', function () {
         limpiarFormulario();
     });

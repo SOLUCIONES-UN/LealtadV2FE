@@ -31,6 +31,7 @@
   <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/bordered-layout.min.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/semi-dark-layout.min.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/toastr.min.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/js/multipleselect/multiple-select.css">
 
   <!-- BEGIN: Page CSS-->
   <link rel="stylesheet" type="text/css" href="../app-assets/css/core/menu/menu-types/vertical-menu.min.css">
@@ -60,109 +61,17 @@
           </li>
         </ul>
         <ul class="nav navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link menu-toggle" href="javascript:void(0);">
-              <b>Reporte de Promociones</b>
-            </a>
-          </li>
+          <li class="nav-item" style="margin-right: 20px;">
+            <div style="text-align: center; margin-left: 350px;">
+                <div><b style="font-size: 20px;">Reporte de Promociones</b></div>
+                <div><b>Reporte de participantes de todas las promociones (solo ganadores)</b></div>
+            </div>
+        </li>
         </ul>
       </div>
       <ul class="nav navbar-nav align-items-center ml-auto">
         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
               data-feather="moon"></i></a></li>
-        <!-- <li class="nav-item dropdown dropdown-notification mr-25"><a class="nav-link" href="javascript:void(0);"
-            data-toggle="dropdown"><i class="ficon" data-feather="bell"></i><span
-              class="badge badge-pill badge-danger badge-up">5</span></a>
-          <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
-            <li class="dropdown-menu-header">
-              <div class="dropdown-header d-flex">
-                <h4 class="notification-title mb-0 mr-auto">Notifications</h4>
-                <div class="badge badge-pill badge-light-primary">6 New</div>
-              </div>
-            </li>
-            <li class="scrollable-container media-list"><a class="d-flex" href="javascript:void(0)">
-                <div class="media d-flex align-items-start">
-                  <div class="media-left">
-                    <div class="avatar"><img src="../../../app-assets/images/portrait/small/avatar-s-15.jpg"
-                        alt="avatar" width="32" height="32"></div>
-                  </div>
-                  <div class="media-body">
-                    <p class="media-heading"><span class="font-weight-bolder">Congratulation Sam 🎉</span>winner!</p>
-                    <small class="notification-text"> Won the monthly best seller badge.</small>
-                  </div>
-                </div>
-              </a><a class="d-flex" href="javascript:void(0)">
-                <div class="media d-flex align-items-start">
-                  <div class="media-left">
-                    <div class="avatar"><img src="../../../app-assets/images/portrait/small/avatar-s-3.jpg" alt="avatar"
-                        width="32" height="32"></div>
-                  </div>
-                  <div class="media-body">
-                    <p class="media-heading"><span class="font-weight-bolder">New message</span>&nbsp;received</p><small
-                      class="notification-text"> You have 10 unread messages</small>
-                  </div>
-                </div>
-              </a><a class="d-flex" href="javascript:void(0)">
-                <div class="media d-flex align-items-start">
-                  <div class="media-left">
-                    <div class="avatar bg-light-danger">
-                      <div class="avatar-content">MD</div>
-                    </div>
-                  </div>
-                  <div class="media-body">
-                    <p class="media-heading"><span class="font-weight-bolder">Revised Order 👋</span>&nbsp;checkout</p>
-                    <small class="notification-text"> MD Inc. order updated</small>
-                  </div>
-                </div>
-              </a>
-              <div class="media d-flex align-items-center">
-                <h6 class="font-weight-bolder mr-auto mb-0">System Notifications</h6>
-                <div class="custom-control custom-control-primary custom-switch">
-                  <input class="custom-control-input" id="systemNotification" type="checkbox" checked="">
-                  <label class="custom-control-label" for="systemNotification"></label>
-                </div>
-              </div><a class="d-flex" href="javascript:void(0)">
-                <div class="media d-flex align-items-start">
-                  <div class="media-left">
-                    <div class="avatar bg-light-danger">
-                      <div class="avatar-content"><i class="avatar-icon" data-feather="x"></i></div>
-                    </div>
-                  </div>
-                  <div class="media-body">
-                    <p class="media-heading"><span class="font-weight-bolder">Server down</span>&nbsp;registered</p>
-                    <small class="notification-text"> USA Server is down due to hight CPU usage</small>
-                  </div>
-                </div>
-              </a><a class="d-flex" href="javascript:void(0)">
-                <div class="media d-flex align-items-start">
-                  <div class="media-left">
-                    <div class="avatar bg-light-success">
-                      <div class="avatar-content"><i class="avatar-icon" data-feather="check"></i></div>
-                    </div>
-                  </div>
-                  <div class="media-body">
-                    <p class="media-heading"><span class="font-weight-bolder">Sales report</span>&nbsp;generated</p>
-                    <small class="notification-text"> Last month sales report generated</small>
-                  </div>
-                </div>
-              </a><a class="d-flex" href="javascript:void(0)">
-                <div class="media d-flex align-items-start">
-                  <div class="media-left">
-                    <div class="avatar bg-light-warning">
-                      <div class="avatar-content"><i class="avatar-icon" data-feather="alert-triangle"></i></div>
-                    </div>
-                  </div>
-                  <div class="media-body">
-                    <p class="media-heading"><span class="font-weight-bolder">High memory</span>&nbsp;usage</p><small
-                      class="notification-text"> BLR Server using high memory</small>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li class="dropdown-menu-footer"><a class="btn btn-primary btn-block" href="javascript:void(0)">Read all
-                notifications</a></li>
-          </ul>
-        </li> -->
         <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link"
             id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -252,15 +161,18 @@
     <div class="header-navbar-shadow"></div>
     <div class="content-wrapper container-xxl p-0">
       <div class="content-header row">
+        
       </div>
-      <div class="content-body p-1">
+      <div class="content-body">
         <section class="card">
           <div class="row p-2">
-            <div class="col-md-4">
+
+            <div class="form-group col-12 col-md-8 col-lg-8">
               <label for="selectpromo">Promoción</label>
-              <select id="selectpromo" class="form-control">
+              <select id="selectpromo" multiple="multiple" class="form-control">
               </select>
             </div>
+
             <div class="col-md-2">
               <label for="FechaInicio">Fecha Inicio</label>
               <input id="FechaInicio" class="form-control" type="date">
@@ -269,26 +181,31 @@
               <label for="FechaFin">Fecha Final</label>
               <input id="FechaFin" class="form-control" type="date">
             </div>
-            <div class="col-md-2">
+
+            <div class="form-group col-8">
               <button id="ConsultarPromo" class="btn btn-info mt-2 btn-block"> Consultar </button>
             </div>
             <div class="col-md-2">
-              <button class="btn btn-success mt-2 btn-block" id="btnDescargarExcel"> Excel </button>
+              <button class="btn btn-primary mt-2 btn-block" id="btnDescargarExcel"> Excel </button>
+              
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-primary mt-2 btn-block" id="PantallaInfo"> Mostar en Pantalla </button>
             </div>
           </div>
-          <div class="card-datatable table-responsive">
-            <table class="datatables-basic table" id="tableData">
+          <div class="card-datatable table-responsive p-2">
+            <table class="datatables-basic table p-2" id="tableData">
               <thead>
                 <tr>
-                  <th>Fecha Acreditacion</th>
-                  <th>Telefono</th>
                   <th>Nombre</th>
+                  <th>Telefono</th>
                   <th>Campaña</th>
                   <th>Premio</th>
                   <th>Monto</th>
                   <th>Transaccion</th>
                   <th>Codigo</th>
                   <th>Monto Transaccion</th>
+                  <th>Fecha Acreditacion</th>
                   <th>Fecha Participación</th>
                 </tr>
               </thead>
@@ -297,9 +214,9 @@
               </tbody>
             </table>
           </div>
+        </section>
       </div>
-      </section>
-
+    </div>
     </div>
   </div>
   </div>
@@ -323,7 +240,9 @@
   <!-- BEGIN Vendor JS-->
 
   <!-- Agrega este enlace antes de tu script JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script> -->
+  <script src="../assets/js/jszip.js"></script>
+  <script src="../assets/js/xlsx.js"></script>
 
   <!-- BEGIN: Page Vendor JS-->
   <script src="../app-assets/vendors/js/extensions/moment.min.js"></script>
@@ -332,6 +251,7 @@
   <script src="../app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
   <script src="../app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
   <script src="../app-assets/vendors/js/tables/datatable/responsive.bootstrap4.min.js"></script>
+  <script src="../app-assets/vendors/js/multipleselect/multiple-select.js"></script>
   <!-- END: Page Vendor JS-->
   <script src="../app-assets/vendors/js/extensions/toastr.min.js"></script>
   <!-- BEGIN: Theme JS-->

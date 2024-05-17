@@ -1,16 +1,16 @@
 // const url = "http://localhost:3000/";
 let usuario = JSON.parse(localStorage.getItem("infoUsuario"));
+let addListeners = false;
+let tokenMenuMenu;
 
 $(function () {
   getMenuAccesible();
-  verifyToken();
+  verifytoken();
   validateSesion();
   Usuario();
 });
 
-// document.addEventListener('DOMContentLoaded', () => {
-//   validateSesion();
-// });
+
 
 const Usuario = () => {
   let usuario = JSON.parse(localStorage.getItem('infoUsuario'));
@@ -24,13 +24,13 @@ const Usuario = () => {
   }
 }
 
-const verifyToken = () => {
-  var token = localStorage.getItem('token');
+const verifytoken = () => {
+  tokenMenu = localStorage.getItem('token');
 
-  if (token == null) {
+  if (tokenMenu == null) {
     window.location.href = 'login.html';
   } else {
-    const partes = token.split('.');
+    const partes = tokenMenu.split('.');
     if (partes.length !== 3) {
       window.location.href = 'login.html';
     }
@@ -40,14 +40,14 @@ const verifyToken = () => {
 
 const verifyLogin = () => {
 
-  var token = localStorage.getItem('token');
+  tokenMenu = localStorage.getItem('token');
 
-  if (token == null) {
+  if (tokenMenu == null) {
     window.location.href = 'login.html';
   } 
   else{
 
-    const partes = token.split('.');
+    const partes = tokenMenu.split('.');
 
     // Decodificar el payload (parte intermedia en base64)
     const payloadBase64 = partes[1];
@@ -59,6 +59,19 @@ const verifyLogin = () => {
       const currentTime = new Date();
 
       let tiempoRestante = ((expiracion - currentTime) / 1000) / 60;
+
+      console.log(tiempoRestante);
+      if (tiempoRestante <= 4 && !addListeners ) 
+      {
+        AlertSession('Su sesión está a punto de caducar', 'warning');
+        addListeners = true;
+
+        $(document).on("mousedown", scrollHandler);
+        $(document).on("keydown", scrollHandler);
+        $(document).on("scroll", scrollHandler);
+          
+      }
+
 
       if (tiempoRestante <= 1) {
 
@@ -72,20 +85,52 @@ const verifyLogin = () => {
         return;
       }
     } else {
-      throw new Error('El token no tiene una fecha de expiración');
+      throw new Error('El tokenMenu no tiene una fecha de expiración');
     }
   }
 
 }
-
-
-
 
 const validateSesion = () => {
 
   setInterval(() => {
       verifyLogin();
   }, 1000 * 10); 
+
+}
+
+
+
+
+
+function scrollHandler() {
+  console.log("scroll");
+  refreshSession(tokenMenu);
+}
+
+const refreshSession = async (tokenMenu) => {
+
+
+  $(document).off("mousedown", scrollHandler);
+  $(document).off("keydown", scrollHandler);
+  $(document).off("scroll", scrollHandler);
+  addListeners = false;
+
+  var requestOptions = {
+    method: "GET",
+    redirect: "follow",
+    headers: { "Authorization": tokenMenu }
+  };
+
+  fetch(`${url}loggin/getSession`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+      localStorage.setItem('token', result.token);
+    })
+    .catch((error) => {
+      console.log("error", error)
+    });
 
 }
 
@@ -105,11 +150,11 @@ const AlertSession = function (message, status) {
 const getMenuAccesible = () => {
   let menu;
   let pagina;
-  let token = localStorage.getItem("token");
+  let tokenMenu = localStorage.getItem("token");
   var requestOptions = {
     method: "GET",
     redirect: "follow",
-    headers: { "Authorization": token }
+    headers: { "Authorization": tokenMenu }
   };
 
   fetch(`${url}permisosUsuario/${usuario.username}`, requestOptions)
