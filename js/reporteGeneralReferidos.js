@@ -26,7 +26,7 @@ const getParticipacionesFechasGeneral = (fecha1, fecha2) => {
     var requestOptions = {
         method: "GET",
         headers: {
-            "Authorization": token
+            "Authorization": tokenGeneral
         }
     };
 

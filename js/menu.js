@@ -2,9 +2,10 @@ const url = 'http://localhost:3000/'
 let tokenMenu = localStorage.getItem("token");
 
 
-$(function () {
+$(function() {
     let tabla = getMenus();
     Usuario();
+
     function validarDescripcion(descripcion) {
         const descripcionValida = /^[a-zA-Z0-9\s]+$/.test(descripcion.trim());
 
@@ -16,39 +17,39 @@ $(function () {
         return true;
     }
 
-    $('#modalNew').on('show.bs.modal', function () {
+    $('#modalNew').on('show.bs.modal', function() {
         limpiarFormulario();
     });
 
-    $('#modalEdit').on('show.bs.modal', function () {
+    $('#modalEdit').on('show.bs.modal', function() {
         limpiarFormulario();
     });
 
-    $('#modalNew').on('hidden.bs.modal', function () {
+    $('#modalNew').on('hidden.bs.modal', function() {
         limpiarFormulario();
     });
 
-    $('#modalEdit').on('hidden.bs.modal', function () {
+    $('#modalEdit').on('hidden.bs.modal', function() {
         limpiarFormulario();
     });
 
-    $('#modalNew').find('[data-dismiss="modal"]').click(function () {
+    $('#modalNew').find('[data-dismiss="modal"]').click(function() {
         limpiarFormulario();
     });
 
-    $('#modalEdit').find('[data-dismiss="modal"]').click(function () {
+    $('#modalEdit').find('[data-dismiss="modal"]').click(function() {
         limpiarFormulario();
     });
 
     //evento submit del formulario
-    $('#formNew').submit(function (event) {
+    $('#formNew').submit(function(event) {
 
         event.preventDefault();
         $('#btnSubmit').prop('disabled', true);
         const descripcion = $('#descripcion').val();
-       
-        
-        
+
+
+
 
         if (!validarDescripcion(descripcion)) {
             return false;
@@ -72,7 +73,7 @@ $(function () {
         fetch(`${url}Menu`, requestOptions)
             .then(response => response.json())
             .then(result => {
-               
+
                 if (result.code == "ok") {
                     limpiarFormulario();
                     tabla._fnAjaxUpdate();
@@ -83,21 +84,22 @@ $(function () {
                 }
             })
             .catch(error => {
-                Alert(error.errors, 'error') });
+                Alert(error.errors, 'error')
+            });
         return false;
     });
 
     //eventos de edicion para un menu
-    $('#formEdit').submit(function (event) {
+    $('#formEdit').submit(function(event) {
 
         event.preventDefault();
         $('#btnSubmitEdit').prop('disabled', true);
         const descripcion = $('#descripcionEdit').val();
-        
-       
-        
-        
-        
+
+
+
+
+
 
         if (!validarDescripcion(descripcion)) {
             return false;
@@ -107,7 +109,7 @@ $(function () {
         myHeaders.append("Authorization", tokenMenu);
 
         const id = $('#id').val();
-        
+
         console.log("ID del menú:", id);
 
         var raw = JSON.stringify({
@@ -127,7 +129,7 @@ $(function () {
         fetch(`${url}Menu/${id}`, requestOptions)
             .then(response => response.json())
             .then(result => {
-              
+
                 if (result.code == "ok") {
                     limpiarFormulario();
                     tabla._fnAjaxUpdate();
@@ -137,15 +139,16 @@ $(function () {
                     Alert(result.message, 'error')
                 }
             })
-            
-            .catch(error => { 
-                
-                Alert(error.errors, 'error') });
+
+        .catch(error => {
+
+            Alert(error.errors, 'error')
+        });
         return false;
     });
 
     //eventos para la inhabilitacion de un menu
-    $('#BtnDelete').click(function () {
+    $('#BtnDelete').click(function() {
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -194,9 +197,9 @@ const getMenus = () => {
             dataSrc: "",
             headers: { "Authorization": tokenMenu }
         },
-        columns: [
-            {
-                data: null, render: function (data, type, row, meta) {
+        columns: [{
+                data: null,
+                render: function(data, type, row, meta) {
 
                     if (type === 'display') {
                         return meta.row + 1;
@@ -205,12 +208,13 @@ const getMenus = () => {
                 }
             },
             { data: "descripcion" },
-        //    { data: "icono" }, 
+            //    { data: "icono" }, 
 
 
-            
+
             {
-                data: "id", render: function (data) {
+                data: "id",
+                render: function(data) {
 
                     return `
               <div class="btn-group">
@@ -234,8 +238,7 @@ const getMenus = () => {
             }
         ],
         // order: [[1, 'asc']],
-        dom:
-            '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
+        dom: '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
             '<"col-lg-12 col-xl-6" l>' +
             '<"col-lg-12 col-xl-6 pl-xl-75 pl-0"<"dt-action-buttons text-xl-right text-lg-left text-md-right text-left d-flex align-items-center justify-content-lg-end align-items-center flex-sm-nowrap flex-wrap mr-1"<"mr-1"f>B>>' +
             '>t' +
@@ -249,20 +252,18 @@ const getMenus = () => {
             searchPlaceholder: 'Buscar...',
         },
         // Buttons with Dropdown
-        buttons: [
-            {
-                text: 'Nuevo',
-                className: 'add-new btn btn-primary mt-50',
-                attr: {
-                    'data-toggle': 'modal',
-                    'data-target': '#modalNew',
-                },
-                init: function (api, node, config) {
-                    $(node).removeClass('btn-secondary');
-                    //Metodo para agregar un nuevo usuario
-                },
+        buttons: [{
+            text: 'Nuevo',
+            className: 'add-new btn btn-primary mt-50',
+            attr: {
+                'data-toggle': 'modal',
+                'data-target': '#modalNew',
             },
-        ],
+            init: function(api, node, config) {
+                $(node).removeClass('btn-secondary');
+                //Metodo para agregar un nuevo usuario
+            },
+        }, ],
     });
 }
 
@@ -279,15 +280,15 @@ function limpiarFormulario(formNew = false) {
 
 
 
-const Alert = function (message, status) // si se proceso correctamente la solicitud
-{
-    toastr[`${status}`](message, `${status}`, {
-        closeButton: true,
-        tapToDismiss: false,
-        positionClass: 'toast-top-right',
-        rtl: false
-    });
-}
+const Alert = function(message, status) // si se proceso correctamente la solicitud
+    {
+        toastr[`${status}`](message, `${status}`, {
+            closeButton: true,
+            tapToDismiss: false,
+            positionClass: 'toast-top-right',
+            rtl: false
+        });
+    }
 
 
 const OpenEdit = (id) => {
@@ -314,4 +315,3 @@ const OpenDelete = (id) => {
     $('#idDelete').val(id);
     $('#modalDelete').modal('toggle');
 }
-

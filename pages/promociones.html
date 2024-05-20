@@ -407,356 +407,383 @@
                     </div>
 
 
-                    <div class="col-md-12">
-                        <div class="bs-stepper vertical vertical-wizard-example">
-                            
-                            <div class="bs-stepper-header">
-                                <div class="step" data-target="#account-details-vertical">
-                                    <button type="button" class="step-trigger">
-                                        <span class="bs-stepper-box">1</span>
-                                        <span class="bs-stepper-label">
-                                            <span class="bs-stepper-title">Configuracion de Promoción</span>
-                                            <span class="bs-stepper-subtitle">datos de la promoción</span>
-                                        </span>
-                                    </button>
-                                </div>
-                                <div class="step" data-target="#personal-info-vertical">
-                                    <button type="button" class="step-trigger">
-                                        <span class="bs-stepper-box">2</span>
-                                        <span class="bs-stepper-label">
-                                            <span class="bs-stepper-title">Configuración de Codigos</span>
-                                            <span class="bs-stepper-subtitle">Genera o Carga tus Codigos</span>
-                                        </span>
-                                    </button>
-                                </div>
-                                <div class="step" data-target="#address-step-vertical">
-                                    <button type="button" class="step-trigger">
-                                        <span class="bs-stepper-box">3</span>
-                                        <span class="bs-stepper-label">
-                                            <span class="bs-stepper-title">Premios</span>
-                                            <span class="bs-stepper-subtitle">Configura los Premios</span>
-                                        </span>
-                                    </button>
-                                </div>
-                                <div class="step" data-target="#social-links-vertical">
-                                    <button type="button" class="step-trigger">
-                                        <span class="bs-stepper-box">4</span>
-                                        <span class="bs-stepper-label">
-                                            <span class="bs-stepper-title">Resumen</span>
-                                            <span class="bs-stepper-subtitle">Add Social Links</span>
-                                        </span>
-                                    </button>
-                                </div>
-                             </div>
-                            
-                            <div class="bs-stepper-content">
 
 
-                                <div id="account-details-vertical" class="content" style="height: 650px;">
-                                    <div class="content-header">
-                                        <h5 class="mb-0">Configuración de Promoción</h5>
-                                        <small class="text-muted">Ingresa los datos basicos de la Promoción.</small>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label class="form-label" for="nemonico">Nemonico</label>
-                                            <input type="text" id="nemonico" class="form-control"
-                                                placeholder="Nemonico" />
+
+                    <div class="modal modal-slide-in new-user-modal fade" id="modalNew">
+                        <div id="focusElement" tabindex="-1"></div>
+                        <div class="modal-dialog">
+                            <form id="formNew" class="add-new-user modal-content pt-0" autocomplete="off">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                                <div class="modal-header mb-1">
+                                    <h5 class="modal-title" id="exampleModalLabel">Agregar Promociones</h5>
+                                </div>
+                                <div class="modal-body flex-grow-1">
+                                    
+                                  
+                                    <div class= "bs-stepper horizontal vertical-wizard-example">
+                                        <div class="bs-stepper-header">
+                                            <div class="step" data-target="#account-details-vertical">
+                                                <button type="button" class="step-trigger">
+                                                    <span class="bs-stepper-box">1</span>
+                                                    <span class="bs-stepper-label">
+                                                        <span class="bs-stepper-title">Configuracion de Promoción</span>
+                                                        <span class="bs-stepper-subtitle">datos de la promoción</span>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="step" data-target="#personal-info-vertical">
+                                                <button type="button" class="step-trigger">
+                                                    <span class="bs-stepper-box">2</span>
+                                                    <span class="bs-stepper-label">
+                                                        <span class="bs-stepper-title">Configuración de Codigos</span>
+                                                        <span class="bs-stepper-subtitle">Genera o Carga tus Codigos</span>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="step" data-target="#address-step-vertical">
+                                                <button type="button" class="step-trigger">
+                                                    <span class="bs-stepper-box">3</span>
+                                                    <span class="bs-stepper-label">
+                                                        <span class="bs-stepper-title">Premios</span>
+                                                        <span class="bs-stepper-subtitle">Configura los Premios</span>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="step" data-target="#social-links-vertical">
+                                                <button type="button" class="step-trigger">
+                                                    <span class="bs-stepper-box">4</span>
+                                                    <span class="bs-stepper-label">
+                                                        <span class="bs-stepper-title">Resumen</span>
+                                                        <span class="bs-stepper-subtitle">Add Social Links</span>
+                                                    </span>
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="form-label" for="nombre">Nombre</label>
-                                            <input type="text" id="nombre" class="form-control"
-                                                placeholder="Ingresa el Nombre" />
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group form-password-toggle col-md-12">
-                                            <label class="form-label" for="descripcion">Descripción</label>
-                                            <textarea type="password" id="descripcion" class="form-control"
-                                                placeholder="Ingrese la descripcion" rows="2"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group form-password-toggle col-md-6">
-                                            <label class="form-label" for="successaMessage">Mensaje Exito</label>
-                                            <textarea type="password" id="successaMessage" class="form-control"
-                                                placeholder="Ingrese la descripcion" rows="2"></textarea>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="newImagen">Imagen de codigo valido</label>
-                                                <input type="file" class="form-control" id="newImagen"
-                                                    autocomplete="off" style="min-height: 70px;">
+                                        <div class="bs-stepper-content">
+            
+                                            <div id="account-details-vertical" class="content" style="height: 650px;">
+                                                <div class="content-header">
+                                                    <h5 class="mb-0">Configuración de Promoción</h5>
+                                                    <small class="text-muted">Ingresa los datos basicos de la Promoción.</small>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label class="form-label" for="nemonico">Nemonico</label>
+                                                        <input type="text" id="nemonico" class="form-control"
+                                                            placeholder="Nemonico" />
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label class="form-label" for="nombre">Nombre</label>
+                                                        <input type="text" id="nombre" class="form-control"
+                                                            placeholder="Ingresa el Nombre" />
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group form-password-toggle col-md-12">
+                                                        <label class="form-label" for="descripcion">Descripción</label>
+                                                        <textarea type="password" id="descripcion" class="form-control"
+                                                            placeholder="Ingrese la descripcion" rows="2"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group form-password-toggle col-md-6">
+                                                        <label class="form-label" for="successaMessage">Mensaje Exito</label>
+                                                        <textarea type="password" id="successaMessage" class="form-control"
+                                                            placeholder="Ingrese la descripcion" rows="2"></textarea>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="newImagen">Imagen de codigo valido</label>
+                                                            <input type="file" class="form-control" id="newImagen"
+                                                                autocomplete="off" style="min-height: 70px;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group form-password-toggle col-md-6">
+                                                        <label class="form-label" for="failMessage">Mensaje Codigo No Valido</label>
+                                                        <textarea type="password" id="failMessage" class="form-control"
+                                                            placeholder="Ingrese la descripcion" rows="2"></textarea>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="newImagen1">Imagen de codigo no valido</label>
+                                                            <input type="file" class="form-control" id="newImagen1"
+                                                                autocomplete="off" style="min-height: 70px;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label class="form-label" for="fechaInicio">Fecha Inicio</label>
+                                                        <input type="date" id="fechaInicio" class="form-control"
+                                                            placeholder="Nemonico" />
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label class="form-label" for="fechaFin">Fecha Fin</label>
+                                                        <input type="date" id="fechaFin" class="form-control" required
+                                                            placeholder="Ingresa el Nombre" />
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label class="form-label" for="premioxCampana">Entrega Premios</label>
+                                                        <select class="form-control" id="premioxCampana" required>
+                                                            <option selected>NO</option>
+                                                            <option>SI</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <button class="btn btn-outline-secondary btn-prev" disabled>
+                                                            <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                                                            <span class="align-middle d-sm-inline-block d-none">Atras</span>
+                                                        </button>
+                                                    </div>
+                                                    <div>
+                                                        <button class="btn btn-warning BtnBottador">
+                                                            <span class="align-middle d-sm-inline-block d-none">Borrador</span>
+                                                            <i data-feather="trash-2" class="align-middle ml-sm-25 ml-0"></i>
+                                                        </button>
+                                                        <button class="btn btn-primary btn-next">
+                                                            <span class="align-middle d-sm-inline-block d-none">Siguiente</span>
+                                                            <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="personal-info-vertical" class="content" style="height: 650px;">
+                                                <div class="content-header">
+                                                    <h5 class="mb-0">Configuración de Codigos</h5>
+                                                    <small>Genera o Carga tus Codigos.</small>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label class="form-label" for="tipo">Tipo Generacion</label>
+                                                        <select id="tipo" onchange="tipoConfigCodigos()" class="form-control w-75">
+                                                            <option value="0" selected>Seleccione una opcion</option>
+                                                            <option value="1">Generar Automaticamente</option>
+                                                            <option value="2">Cargar Mediante excel</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div id="tipoCodigo">
+                                                    <div class="row autoGenerar" id="panelGenerar">
+                                                        <div class="col-md-3">
+                                                            <label for="tamanio">Tamaño</label>
+                                                            <input type="number" class="form-control" id="tamanio" />
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label for="cantidad">Cantidad</label>
+                                                            <input type="number" class="form-control" id="cantidad" />
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label for="tipogeneracion">Tipo de Codigo</label>
+                                                            <select class="form-control" id="tipogeneracion">
+                                                                <option value="1">Mumeros & Letras</option>
+                                                                <option value="2">Solo Mumeros</option>
+                                                                <option value="3">Solo Letras</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <button class="btn btn-outline-success mt-2 btn-block" type="button"
+                                                                id="btnGenerar">Generar</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cargarExcel">
+                                                        <div class="mt-2 row col-md-6" id="container-tipo-participante">
+                                                            <input class="form-control" type="file" id="formFile"
+                                                                style="margin-left: 15px;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+            
+                                                <div class=" mt-5">
+                                                    <div style="height:200px; width:auto;overflow-y: scroll;">
+                                                        <table class="table table-bordered table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>CODIGO</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="PreviewCodigo"></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between mt-5">
+                                                    <div>
+                                                        <button class="btn btn-primary btn-prev">
+                                                            <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                                                            <span class="align-middle d-sm-inline-block d-none">Atras</span>
+                                                        </button>
+                                                    </div>
+                                                    <div>
+                                                        <button class="btn btn-warning BtnBottador">
+                                                            <span class="align-middle d-sm-inline-block d-none">Borrador</span>
+                                                            <i data-feather="trash-2" class="align-middle ml-sm-25 ml-0"></i>
+                                                        </button>
+                                                        <button class="btn btn-primary btn-next">
+                                                            <span class="align-middle d-sm-inline-block d-none">Siguiente</span>
+                                                            <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="address-step-vertical" class="content" style="height: 650px;">
+                                                <div class="content-header">
+                                                    <h5 class="mb-0">Premios</h5>
+                                                    <small>Configura los premios </small>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label class="form-label" for="cantidaPremio">Cantidad</label>
+                                                        <input type="number" id="cantidaPremio" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label class="form-label" for="Premio">Premio</label>
+                                                        <select class="form-control" id="premio">
+                                                            <option>Seleccione Un Premio</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label class="form-label" for="valor">Valor</label>
+                                                        <input type="number" id="valorPremio" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <br />
+                                                        <button class="btn btn-success" type="button"
+                                                            id="BtnPremios">AGREGAR</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12" style="height: 400px;">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Cantidad</th>
+                                                                <th>Premio</th>
+                                                                <th>Valor</th>
+                                                                <th>&nbsp;</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="detallePremios"></tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <button class="btn btn-primary btn-prev">
+                                                            <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                                                            <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                                                        </button>
+                                                    </div>
+                                                    <div>
+                                                        <button class="btn btn-warning BtnBottador">
+                                                            <span class="align-middle d-sm-inline-block d-none">Borrador</span>
+                                                            <i data-feather="trash-2" class="align-middle ml-sm-25 ml-0"></i>
+                                                        </button>
+                                                        <button class="btn btn-primary btn-next">
+                                                            <span class="align-middle d-sm-inline-block d-none">Next</span>
+                                                            <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="social-links-vertical" class="content" style="height: 650px;">
+                                                <div class="content-header">
+                                                    <h5 class="mb-0">Resumen</h5>
+                                                    <small>Resumen de la Promoción.</small>
+                                                    <hr />
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <p><b>Nombre: </b><small id="text-nemonico"></small> - <small
+                                                                id="text-nombre"></small></p>
+                                                        <p><b>Descripcion: </b> <small id="text-descripcion"></small></p>
+                                                        <p><b>Mensaje Codigo valido: <small id="text-success"></small></b></p>
+                                                        <p><b>Mensaje Codigo No valido: <small id="text-fail"></small></b></p>
+                                                        <p><b>Del <span id="text-fechaInicio"></span> Al <span
+                                                                    id="text-fechaFin"></span></b></p>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <h3>Premios Designados</h3>
+                                                        <hr>
+                                                        <br />
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Cantidad</th>
+                                                                    <th>Premio</th>
+                                                                    <th>Valor</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="detallePremioRes"></tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <button class="btn btn-primary btn-prev">
+                                                            <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                                                            <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                                                        </button>
+                                                    </div>
+                                                    <div>
+                                                        <button class="btn btn-success BtnExcel">
+                                                            <span class="align-middle d-sm-inline-block d-none">Codigos en
+                                                                Excel</span>
+                                                            <i data-feather="download" class="align-middle ml-sm-25 ml-0"></i>
+                                                        </button>
+                                                        <button class="btn btn-danger BtnPDF">
+                                                            <span class="align-middle d-sm-inline-block d-none">Boton en PDF</span>
+                                                            <i data-feather="download" class="align-middle ml-sm-25 ml-0"></i>
+                                                        </button>
+                                                        <button class="btn btn-primary btn-next btn-submit">
+                                                            <span class="align-middle d-sm-inline-block d-none">Guardar</span>
+                                                            <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group form-password-toggle col-md-6">
-                                            <label class="form-label" for="failMessage">Mensaje Codigo No Valido</label>
-                                            <textarea type="password" id="failMessage" class="form-control"
-                                                placeholder="Ingrese la descripcion" rows="2"></textarea>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="newImagen1">Imagen de codigo no valido</label>
-                                                <input type="file" class="form-control" id="newImagen1"
-                                                    autocomplete="off" style="min-height: 70px;">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label class="form-label" for="fechaInicio">Fecha Inicio</label>
-                                            <input type="date" id="fechaInicio" class="form-control"
-                                                placeholder="Nemonico" />
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="form-label" for="fechaFin">Fecha Fin</label>
-                                            <input type="date" id="fechaFin" class="form-control" required
-                                                placeholder="Ingresa el Nombre" />
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label class="form-label" for="premioxCampana">Entrega Premios</label>
-                                            <select class="form-control" id="premioxCampana" required>
-                                                <option selected>NO</option>
-                                                <option>SI</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <button class="btn btn-outline-secondary btn-prev" disabled>
-                                                <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
-                                                <span class="align-middle d-sm-inline-block d-none">Atras</span>
-                                            </button>
-                                        </div>
-                                        <div>
-                                            <button class="btn btn-warning BtnBottador">
-                                                <span class="align-middle d-sm-inline-block d-none">Borrador</span>
-                                                <i data-feather="trash-2" class="align-middle ml-sm-25 ml-0"></i>
-                                            </button>
-                                            <button class="btn btn-primary btn-next">
-                                                <span class="align-middle d-sm-inline-block d-none">Siguiente</span>
-                                                <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
-                                            </button>
-                                        </div>
-                                    </div>
+
+
+                                    <button id="btnSubmit" type="submit" class="btn btn-primary mr-1 data-submit">Agregar </button>
+                                    <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
                                 </div>
-
-
-
-                                <div id="personal-info-vertical" class="content" style="height: 650px;">
-                                    <div class="content-header">
-                                        <h5 class="mb-0">Configuración de Codigos</h5>
-                                        <small>Genera o Carga tus Codigos.</small>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label class="form-label" for="tipo">Tipo Generacion</label>
-                                            <select id="tipo" onchange="tipoConfigCodigos()" class="form-control w-75">
-                                                <option value="0" selected>Seleccione una opcion</option>
-                                                <option value="1">Generar Automaticamente</option>
-                                                <option value="2">Cargar Mediante excel</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div id="tipoCodigo">
-                                        <div class="row autoGenerar" id="panelGenerar">
-                                            <div class="col-md-3">
-                                                <label for="tamanio">Tamaño</label>
-                                                <input type="number" class="form-control" id="tamanio" />
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label for="cantidad">Cantidad</label>
-                                                <input type="number" class="form-control" id="cantidad" />
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label for="tipogeneracion">Tipo de Codigo</label>
-                                                <select class="form-control" id="tipogeneracion">
-                                                    <option value="1">Mumeros & Letras</option>
-                                                    <option value="2">Solo Mumeros</option>
-                                                    <option value="3">Solo Letras</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <button class="btn btn-outline-success mt-2 btn-block" type="button"
-                                                    id="btnGenerar">Generar</button>
-                                            </div>
-                                        </div>
-                                        <div class="cargarExcel">
-                                            <div class="mt-2 row col-md-6" id="container-tipo-participante">
-                                                <input class="form-control" type="file" id="formFile"
-                                                    style="margin-left: 15px;">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class=" mt-5">
-                                        <div style="height:200px; width:auto;overflow-y: scroll;">
-                                            <table class="table table-bordered table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>CODIGO</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="PreviewCodigo"></tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between mt-5">
-                                        <div>
-                                            <button class="btn btn-primary btn-prev">
-                                                <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
-                                                <span class="align-middle d-sm-inline-block d-none">Atras</span>
-                                            </button>
-                                        </div>
-                                        <div>
-                                            <button class="btn btn-warning BtnBottador">
-                                                <span class="align-middle d-sm-inline-block d-none">Borrador</span>
-                                                <i data-feather="trash-2" class="align-middle ml-sm-25 ml-0"></i>
-                                            </button>
-                                            <button class="btn btn-primary btn-next">
-                                                <span class="align-middle d-sm-inline-block d-none">Siguiente</span>
-                                                <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                <div id="address-step-vertical" class="content" style="height: 650px;">
-                                    <div class="content-header">
-                                        <h5 class="mb-0">Premios</h5>
-                                        <small>Configura los premios </small>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label class="form-label" for="cantidaPremio">Cantidad</label>
-                                            <input type="number" id="cantidaPremio" class="form-control" />
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="form-label" for="Premio">Premio</label>
-                                            <select class="form-control" id="premio">
-                                                <option>Seleccione Un Premio</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label class="form-label" for="valor">Valor</label>
-                                            <input type="number" id="valorPremio" class="form-control" />
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <br />
-                                            <button class="btn btn-success" type="button"
-                                                id="BtnPremios">AGREGAR</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12" style="height: 400px;">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>Cantidad</th>
-                                                    <th>Premio</th>
-                                                    <th>Valor</th>
-                                                    <th>&nbsp;</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="detallePremios"></tbody>
-                                        </table>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <button class="btn btn-primary btn-prev">
-                                                <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
-                                                <span class="align-middle d-sm-inline-block d-none">Previous</span>
-                                            </button>
-                                        </div>
-                                        <div>
-                                            <button class="btn btn-warning BtnBottador">
-                                                <span class="align-middle d-sm-inline-block d-none">Borrador</span>
-                                                <i data-feather="trash-2" class="align-middle ml-sm-25 ml-0"></i>
-                                            </button>
-                                            <button class="btn btn-primary btn-next">
-                                                <span class="align-middle d-sm-inline-block d-none">Next</span>
-                                                <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                <div id="social-links-vertical" class="content" style="height: 650px;">
-                                    <div class="content-header">
-                                        <h5 class="mb-0">Resumen</h5>
-                                        <small>Resumen de la Promoción.</small>
-                                        <hr />
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <p><b>Nombre: </b><small id="text-nemonico"></small> - <small
-                                                    id="text-nombre"></small></p>
-                                            <p><b>Descripcion: </b> <small id="text-descripcion"></small></p>
-                                            <p><b>Mensaje Codigo valido: <small id="text-success"></small></b></p>
-                                            <p><b>Mensaje Codigo No valido: <small id="text-fail"></small></b></p>
-                                            <p><b>Del <span id="text-fechaInicio"></span> Al <span
-                                                        id="text-fechaFin"></span></b></p>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <h3>Premios Designados</h3>
-                                            <hr>
-                                            <br />
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Cantidad</th>
-                                                        <th>Premio</th>
-                                                        <th>Valor</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="detallePremioRes"></tbody>
-                                            </table>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <br />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <button class="btn btn-primary btn-prev">
-                                                <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
-                                                <span class="align-middle d-sm-inline-block d-none">Previous</span>
-                                            </button>
-                                        </div>
-                                        <div>
-                                            <button class="btn btn-success BtnExcel">
-                                                <span class="align-middle d-sm-inline-block d-none">Codigos en
-                                                    Excel</span>
-                                                <i data-feather="download" class="align-middle ml-sm-25 ml-0"></i>
-                                            </button>
-                                            <button class="btn btn-danger BtnPDF">
-                                                <span class="align-middle d-sm-inline-block d-none">Boton en PDF</span>
-                                                <i data-feather="download" class="align-middle ml-sm-25 ml-0"></i>
-                                            </button>
-                                            <button class="btn btn-primary btn-next btn-submit">
-                                                <span class="align-middle d-sm-inline-block d-none">Guardar</span>
-                                                <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                
-                            </div>
+                            </form>
                         </div>
                     </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        
+                    
                 </section>
 
                 <!--Panel Edicion-->

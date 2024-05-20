@@ -35,7 +35,7 @@ $(function () {
         $("#tableData").show(); // Mostrar la tabla con el ID correcto
         mostrarDatosEnTabla(datosObtenidos.participantesCamp, datosObtenidos.infoCustom);
       } else {
-        // alert("Primero debes obtener los datos");
+        // alert("Primero debes obtener los datos");  
       }
     });
   
@@ -83,6 +83,7 @@ $(function () {
     const fechaInicio = $("#FechaInicio").val();
     const fechaFin = $("#FechaFin").val();
     const campanias = $("#selecCampania").val();
+    const archivadas = $("#checkboxArchivadas").val();
   
     if (!fechaInicio || !fechaFin) {
       console.error("Las fechas de inicio y fin son obligatorias.");
@@ -234,7 +235,7 @@ document.getElementById("btnDescargarExcel").addEventListener("click", function 
   XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
   // Descargar el archivo Excel
-  XLSX.writeFile(wb, "Reporte_Referidos.xlsx");
+  XLSX.writeFile(wb, "Reporte_Participantes.xlsx");
 });
 
 function formatearFechaHora(fechaHora) {

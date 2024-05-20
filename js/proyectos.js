@@ -6,11 +6,12 @@ const headers = {
     'Content-Type': 'application/json'
 };
 
-$(function () {
+$(function() {
     let tabla = getProyectos();
     Usuario();
+
     function validarDescripcion(descripcion) {
-        const descripcionValida =/^[a-zA-Z]+(?:\s[a-zA-Z]+)*$/.test(descripcion);
+        const descripcionValida = /^[a-zA-Z]+(?:\s[a-zA-Z]+)*$/.test(descripcion);
         if (!descripcionValida) {
             $('.descripcion').addClass('is-invalid');
             $('.descripcion-error').text('La descripción no admite caracteres especiales ni espacios en blanco solo debe contener letras').addClass('text-danger');
@@ -18,8 +19,9 @@ $(function () {
         }
         return true;
     }
-    function validarRuta(ruta){
-        console.log("Imprimir",ruta);
+
+    function validarRuta(ruta) {
+        console.log("Imprimir", ruta);
         const rutaValida = /^[a-zA-Z\s!@#$%^/&*(),.?":{}|<>]+(?:\s[a-zA-Z\s!@#$%^/&*(),.?":{}|<>]+)*$/.test(ruta);
         if (!rutaValida) {
             $('.ruta').addClass('is-invalid');
@@ -30,57 +32,57 @@ $(function () {
     }
 
 
-    $('#modalNew').on('show.bs.modal', function () {
+    $('#modalNew').on('show.bs.modal', function() {
         limpiarFormulario();
-        $("#btnSubmit").attr("disabled",false);
+        $("#btnSubmit").attr("disabled", false);
 
     });
 
-    $('#modalEdit').on('show.bs.modal', function () {
-        limpiarFormulario();  
-        $("#btnSubmEdit").attr("disabled",false);
-
-    });
-
-    $('#modalNew').on('hidden.bs.modal', function () {
-        limpiarFormulario();     
-        $("#btnSubmit").attr("disabled",false);
-
-    });
-
-    $('#modalEdit').on('hidden.bs.modal', function () {
+    $('#modalEdit').on('show.bs.modal', function() {
         limpiarFormulario();
-        $("#btnSubmEdit").attr("disabled",false);
+        $("#btnSubmEdit").attr("disabled", false);
 
     });
 
-    $('#modalNew').find('[data-dismiss="modal"]').click(function () {
+    $('#modalNew').on('hidden.bs.modal', function() {
         limpiarFormulario();
-        $("#btnSubmit").attr("disabled",false);
+        $("#btnSubmit").attr("disabled", false);
 
     });
 
-    $('#modalEdit').find('[data-dismiss="modal"]').click(function () {
+    $('#modalEdit').on('hidden.bs.modal', function() {
         limpiarFormulario();
-        $("#btnSubmEdit").attr("disabled",false);
+        $("#btnSubmEdit").attr("disabled", false);
 
     });
 
-    $('#modalNew').find('[data-dismiss="modal"]').click(function () {
+    $('#modalNew').find('[data-dismiss="modal"]').click(function() {
         limpiarFormulario();
-        $("#btnSubmit").attr("disabled",false);
+        $("#btnSubmit").attr("disabled", false);
 
     });
 
-    $('#modalEdit').find('[data-dismiss="modal"]').click(function () {
+    $('#modalEdit').find('[data-dismiss="modal"]').click(function() {
         limpiarFormulario();
-        $("#btnSubmEdit").attr("disabled",false);
+        $("#btnSubmEdit").attr("disabled", false);
+
+    });
+
+    $('#modalNew').find('[data-dismiss="modal"]').click(function() {
+        limpiarFormulario();
+        $("#btnSubmit").attr("disabled", false);
+
+    });
+
+    $('#modalEdit').find('[data-dismiss="modal"]').click(function() {
+        limpiarFormulario();
+        $("#btnSubmEdit").attr("disabled", false);
 
     });
     //evento submit del formulario
     // let formSubmitted = false;
 
-    $('#formNew').submit(function () {
+    $('#formNew').submit(function() {
         // if (formSubmitted) {
         //     // Si el formulario ya se envió, evitar envíos múltiples
         //     event.preventDefault();
@@ -90,15 +92,15 @@ $(function () {
         console.log("Datos", $('#descripcion').val());
         const descripcion = $('#descripcion').val();
         const ruta = $('#ruta').val();
-        
+
         if (!validarDescripcion(descripcion)) {
             return false;
         }
-        if (!validarRuta(ruta)){
+        if (!validarRuta(ruta)) {
             return false;
         }
 
-        $("#btnSubmit").attr("disabled",true);
+        $("#btnSubmit").attr("disabled", true);
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -130,13 +132,13 @@ $(function () {
                 }
             })
             .catch(error => { Alert(error.errors, 'error') });
-           
+
         return false;
     });
 
     //eventos de edicion para un 
 
-    $('#formEdit').submit(function () {
+    $('#formEdit').submit(function() {
 
         const descripcion = $('#descripcionEdit').val();
         const ruta = $('#rutaEdit').val();
@@ -147,7 +149,7 @@ $(function () {
         if (!validarRuta(ruta)) {
             return false;
         }
-        
+
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", token);
@@ -183,7 +185,7 @@ $(function () {
     });
 
     //eventos para la inhabilitacion de un proyecto
-    $('#BtnDelete').click(function () {
+    $('#BtnDelete').click(function() {
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -205,16 +207,17 @@ $(function () {
                     $('#modalDelete').modal('toggle');
                     Alert(result.message, 'success')
                 } else {
-                    console.log("Result",result);
+                    console.log("Result", result);
 
                     Alert(result.message, 'error')
                 }
 
             })
-            .catch(error => { 
-                console.log("Error",error);
-                Alert(error.errors, 'error') });
-            
+            .catch(error => {
+                console.log("Error", error);
+                Alert(error.errors, 'error')
+            });
+
     })
 });
 
@@ -237,10 +240,9 @@ const getProyectos = () => {
             dataSrc: "",
             headers: headers,
         },
-        columns: [
-            {
+        columns: [{
                 data: null,
-                render: function (data, type, row, meta) {
+                render: function(data, type, row, meta) {
                     if (type === 'display') {
                         return meta.row + 1;
                     }
@@ -248,10 +250,10 @@ const getProyectos = () => {
                 }
             },
             { data: "descripcion" },
-            { data: "ruta"},
+            { data: "ruta" },
             {
                 data: "id",
-                render: function (data) {
+                render: function(data) {
                     return '<div class="btn-group">' +
                         '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
                         feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
@@ -269,8 +271,7 @@ const getProyectos = () => {
             }
         ],
         // order: [[1, 'asc']],
-        dom:
-            '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
+        dom: '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
             '<"col-lg-12 col-xl-6" l>' +
             '<"col-lg-12 col-xl-6 pl-xl-75 pl-0"<"dt-action-buttons text-xl-right text-lg-left text-md-right text-left d-flex align-items-center justify-content-lg-end align-items-center flex-sm-nowrap flex-wrap mr-1"<"mr-1"f>B>>' +
             '>t' +
@@ -284,23 +285,22 @@ const getProyectos = () => {
             searchPlaceholder: 'Buscar...',
         },
         // Buttons with Dropdown
-        buttons: [
-            {
-                text: 'Nuevo',
-                className: 'add-new btn btn-primary mt-50',
-                attr: {
-                    'data-toggle': 'modal',
-                    'data-target': '#modalNew',
-                },
-                init: function (api, node, config) {
-                    $(node).removeClass('btn-secondary');
-                    //Metodo para agregar un nuevo proyecto
-                },
+        buttons: [{
+            text: 'Nuevo',
+            className: 'add-new btn btn-primary mt-50',
+            attr: {
+                'data-toggle': 'modal',
+                'data-target': '#modalNew',
             },
-        ],
+            init: function(api, node, config) {
+                $(node).removeClass('btn-secondary');
+                //Metodo para agregar un nuevo proyecto
+            },
+        }, ],
     });
-    
+
 }
+
 function limpiarFormulario() {
     $('#descripcion').val('');
     $('#ruta').val('');
@@ -309,20 +309,20 @@ function limpiarFormulario() {
     $('.ruta').removeClass('is-invalid');
     $('.ruta-error').empty().removeClass('text-danger');
 
-  
+
 }
 
 
 
-const Alert = function (message, status) // si se proceso correctamente la solicitud
-{
-    toastr[`${status}`](message, `${status}`, {
-        closeButton: true,
-        tapToDismiss: false,
-        positionClass: 'toast-top-right',
-        rtl: false
-    });
-}
+const Alert = function(message, status) // si se proceso correctamente la solicitud
+    {
+        toastr[`${status}`](message, `${status}`, {
+            closeButton: true,
+            tapToDismiss: false,
+            positionClass: 'toast-top-right',
+            rtl: false
+        });
+    }
 
 const OpenEdit = (id) => {
     var requestOptions = {
@@ -333,7 +333,7 @@ const OpenEdit = (id) => {
         redirect: 'follow'
     };
 
-    
+
     fetch(`${url}projects/${id}`, requestOptions)
         .then(response => {
             if (!response.ok) {
@@ -359,7 +359,7 @@ const OpenEdit = (id) => {
 }
 
 
-const OpenDelete = (id) => { 
+const OpenDelete = (id) => {
     $("#idDelete").val(id);
-  $("#modalDelete").modal("toggle");
+    $("#modalDelete").modal("toggle");
 }
