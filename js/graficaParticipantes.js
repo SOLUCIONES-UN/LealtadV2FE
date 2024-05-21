@@ -1,75 +1,38 @@
 const url = "http://localhost:3000/";
-
 $(function () {
-  getAnios();
+  
 });
-
-function getAnios() {
-  fetch(`${url}ReporteParticipantes/aniosValidos`)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Datos de años:", data);
-      let options = `<option value="0">AÑO</option>`;
-      data.forEach((d) => {
-        options += `<option value="${d.anioValido}">${d.anioValido}</option>`;
-      });
-
-      $("#anoCampanas").html(options);
-    })
-    .catch((error) => console.error("Error al obtener los anios:", error));
-}
-
-function getMeses(event) {
-  const headers = {
-    "Content-Type": "application/json",
-  };
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-
-  var raw = JSON.stringify({
-    anioValido: event.target.value,
-  });
-
-  var requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: raw,
-    redirect: "follow",
-  };
-
-  fetch(`${url}ReporteParticipantes/mesesValidos`, requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Datos de aios:", data);
-      const meses = [
-        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
-        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-    ];
-    let options = `<option value="0">MES</option>`;
-    data.forEach((d) => {
-        const nombreMes = meses[d.mesValido - 1]; // Restamos 1 porque los índices de array comienzan en 0
-        options += `<option value="${d.mesValido}">${nombreMes}</option>`;
-    });
-
-      $("#mesCampana").html(options);
-    })
-    .catch((error) => console.error("Error al obtener los anios:", error));
-}
 
 $("#btnConsultar").click(function () {
   const headers = {
     "Content-Type": "application/json",
   };
 
+  
+  const fechaInicio = $("#fechaInicio").val();
+  const fechaFin = $("#fechaFin").val();
+
+
+  if (!fechaInicio || fechaInicio === "0") {
+    alert("Seleccione una fecha de inicio");
+    return; 
+  }
+
+  if (!fechaFin || fechaFin === "0") {
+    alert("Seleccione una fecha de fin");
+    return; 
+  }
+
+  
   var raw = JSON.stringify({
-    anio: $("#anoCampanas").val(),
-    mes: $("#mesCampana").val(),
+    fechaInicio: fechaInicio,
+    fechaFin: fechaFin,
   });
 
-  if ($("#anoCampanas").val() == "0") {
-    alert("Seleccione un año");
-  } else if ($("#mesCampana").val() == "0") {
-    alert("Seleccione un mes");
+  if ($("#fechaInicio").val() == "0") {
+    alert("Seleccione una fecha de inicio");
+  } else if ($("#fechaFin").val() == "0") {
+    alert("Seleccione una fecha de fin");
   } else {
     var requestOptions = {
       method: "POST",
@@ -78,29 +41,24 @@ $("#btnConsultar").click(function () {
       redirect: "follow",
     };
 
-    fetch(
-      `${url}ReporteParticipantes/ObtenerParticipacionesByFecha`,
-      requestOptions
-    )
+    fetch(`${url}ReporteParticipantes/ObtenerParticipacionesByFecha`,requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        
         console.log("Datos de campañas:", data);
 
-        // Obtener el canvas y su contexto
+   
         
         const canvas = document.getElementById("graficaParticipantes");
-        // canvas.width = 600; // Ancho fijo
-        // canvas.height = 600; 
+       ; 
         const ctx = canvas.getContext("2d");
 
-        // Destruir el gráfico existente si existe
+        
         if (window.myChart) {
           window.myChart.destroy();
         }
 
         // Obtener datos para el gráfico
-        const dataLabels = data.map((p) => `${p.nombre} - ${p.fechaRegistro}`); // Combinar nombre y fecha como etiquetas
+        const dataLabels = data.map((p) => `${p.nombre} - ${p.fecha}`); // Combinar nombre y fecha como etiquetas
         const participantes = data.map((p) => p.participantes);
         
         // Configuración del gráfico

@@ -8,7 +8,7 @@ $(function () {
   $('#selectcampana').multipleSelect({
     filter: true,
     selectAll: true, // Habilitar la opción de seleccionar todos los elementos
-    placeholder: "Elige una Campaña",
+    placeholder: "",
   });
 
   getCampaniasActivas();
@@ -26,9 +26,12 @@ $(function () {
       $("#btnDescargarExcel, #PantallaInfo").show();
       
     } else {
-      alert("Debe llenar todos los campos");
+      alert("Necesita completar todos los campos.");
     }
+    
   });
+  
+ 
 
 
   $("#PantallaInfo").click(function () {
@@ -39,6 +42,7 @@ $(function () {
       alert("Primero debes obtener los datos"); 
     }
   });
+  
 });
 
 const getCampaniasActivas = () => {
@@ -67,7 +71,7 @@ const getCampaniasActivas = () => {
     })
     .catch((error) => {
       console.error("Error al obtener campañas:", error);
-      alert("Error al obtener campañas.", "error");
+      Alert("Error al obtener campañas.", "error");
     });
 };
 
@@ -109,7 +113,7 @@ const getReport = () => {
     })
     .catch((error) => {
       console.error("Error al obtener reporte de referidos:", error);
-      alert("Error al obtener reporte de referidos.", "error");
+      Alert("Error al obtener reporte de referidos.", "error");
     });
 };
 

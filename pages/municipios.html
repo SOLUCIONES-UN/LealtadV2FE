@@ -283,27 +283,29 @@
         </div>
         <div class="modal-body flex-grow-1">
      
-          <div class="form-group">
-            <label class="form-label" for="departamento">Departamento</label>
-            <select type="text" class="form-control departamento" id="departamento" name="departamento" required></select>
-            <div id="depaError" class="invalid-feedback depa-error"></div>
-          </div>
 
           <div class="form-group">
             <label class="form-label" for="basic-icon-default-fullname">Proyecto</label>
          
-              <select type="text" class="form-control ruta" id="ruta" name="ruta" required></select>
+            <label class="form-label" for="proyecto">Proyecto:</label>
+            <select type="text" class="form-control" id="proyecto" name="proyecto" required></select>
+          
         
+             
+                <label class="form-label" for="departamento">Departamento</label>
+                <select type="text" class="form-control departamento" id="departamento" name="departamento" required></select>
+                <div id="depaError" class="invalid-feedback depa-error"></div>
+           
  
-          <div class="form-group">
+         
             <label class="form-label" for="basic-icon-default-fullname">Id Local:</label>
-            <input type="text" class="form-control dt-full-name idlocal" id="idlocal"
-              placeholder="Id local" name="idlocal" aria-label=""
+            <input type="text" class="form-control dt-full-name IdLocal" id="IdLocal"
+              placeholder="Id local" name="IdLocal" aria-label=""
               aria-describedby="basic-icon-default-fullname2" required />
             
-          </div>
+       
 
-          <div class="form-group">
+        
             <label class="form-label" for="basic-icon-default-fullname">Descripcion:</label>
             <input type="text" class="form-control dt-full-name nombre" id="nombre"
               placeholder="Descripcion del departamento" name="nombre" aria-label=""
@@ -327,10 +329,24 @@
         <div class="modal-body flex-grow-1">
          
           <div class="form-group">
+            <label class="form-label" for="basic-icon-default-fullname">Proyecto</label>
+         
+            <select type="text" class="form-control proyectoEdit" id="proyectoEdit" name="proyectoEdit" required></select>
+      
+           
+         
             <label class="form-label" for="departamentoActualizar">Departamento</label>
             <select type="text" class="form-control" id="departamentoActualizar" name="departamentoActualizar"
               required></select>
           </div>
+       
+          <label class="form-label" for="basic-icon-default-fullname">Id Local:</label>
+          <input type="text" class="form-control dt-full-name IdLocalEdit" id="IdLocalEdit"
+            placeholder="Id local" name="IdLocalEdit" aria-label=""
+            aria-describedby="basic-icon-default-fullname2" required />
+          
+     
+           
           <div class="form-group">
             <input id="id" type="hidden">
             <label class="form-label" for="basic-icon-default-fullname">Descripcion:</label>

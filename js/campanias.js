@@ -32,9 +32,12 @@ let imgPushEdit = null;
 let imgAkisiEdit = null;
 
 let actualStepEdit = 0;
+let previousStep = null;
 
 //valor para poder editar etapas
 var dataEditEtapa =[];
+
+isDataLoaded = true;
 
 $(function () {
 
@@ -70,9 +73,11 @@ $(function () {
   
     // Enviar el formulario
     $('#formEdit').submit();
+
   });
 
   $('#modalNew').on('show.bs.modal', function () {
+    resetSteps();
     limpiarFormulario();
   });
 
@@ -92,7 +97,16 @@ $(function () {
   });
 
   $('#modalEdit').on('show.bs.modal', function() {
+    resetStepsEdit()
     limpiarFormulario()
+      // Verificar si los datos han sido cargados
+      if (isDataLoaded) {
+        // Mostrar el modal
+        return true;
+      } else {
+        // Evitar que se muestre el modal
+        return false;
+      }
   });
 
   $('#modalEdit').on('hidden.bs.modal', function () {
@@ -200,7 +214,7 @@ $(function () {
       descripcionNotificacion:  $('#descripcionNotificacionEdit').val(),
       imgPush: 'valor.png',
       imgAkisi: 'valor.png',
-      estado: 1,
+      estado: parseInt($('#estadoCampania').val()),
       maximoParticipaciones:  parseInt($('#maximoParticipantesEdit').val()),
       campaniaTerceros: parseInt($('#tercerosCampaniaEdit').val()),
       terminosCondiciones: $('#terminosCondicionesEdit').val(),
@@ -228,6 +242,7 @@ $(function () {
             if (result.code == "ok") {
                 $('#modalEdit').modal('toggle');
                 getAllCampanias();
+                limpiarFormulario();
                 Alert(result.message, 'success')
             } else {
 
@@ -397,6 +412,7 @@ function initStepper() {
       var descripcionEtapa = $('#descripcionEtapa').val();
       var tipoParticipacion = $('#tipoParticipacion').val();
       var intervalo =parseInt( $('#intervalo').val());
+      var rangoTiempo = parseInt($('#RangoTiempo').val())
       var minimoTransaccion = parseFloat($('minimoTransaccion').val());
       var TotalMinimo = parseFloat($('#totalMinimo').val());
   
@@ -591,7 +607,7 @@ function initStepper() {
           orden: orden,
           tipoParticipacion: tipoParticipacion,
           intervalo: intervalo,
-          periodo: 0,
+          periodo: rangoTiempo,
           valorAcumulado: null,
           minimoTransaccion: minimoTransaccion,
           totalMinimo: TotalMinimo,
@@ -1115,7 +1131,7 @@ function initStepper() {
 //Función del stepper
 function initStepperEdit() {
   // Reiniciar los stepps
-  let actualStepEdit = 0;
+  actualStepEdit = 0;
   var stepsEdits = $('#stepperEdit').children();
   stepsEdits.hide();
   
@@ -1196,6 +1212,19 @@ function initStepperEdit() {
     handleTipoParticipacionChange('tipoParticipacionEdit', 'inputsContainerEdit');
   });
 
+  function handleTipoParticipacionChange(selectId, inputsContainerId) {
+    const tipoSeleccionado = $(`#${selectId}`).val();
+    const inputsContainer = $(`#${inputsContainerId}`);
+  
+    inputsContainer.find('#inputsTipo0').css('display', 'none');
+    inputsContainer.find('#inputsTipo1').css('display', 'none');
+  
+    if (tipoSeleccionado === '2' || tipoSeleccionado === '3') {
+      inputsContainer.find('#inputsTipo0').css('display', 'block');
+    } else if (tipoSeleccionado === '4') {
+      inputsContainer.find('#inputsTipo1').css('display', 'block');
+    }
+  }
 
  $('#TablaEtapaEdit').on('click', '.btn_edit', function(event) {
    var id = $(this).data('id');
@@ -1244,49 +1273,47 @@ function initStepperEdit() {
        </div>
      </div>
      <div class="row">
+         <div class="form-group col-md-6">
+            <label class="form-label" for="RangoTiempoEdit">Rango de tiempo</label>
+            <select name="RangoTiempo" aria-describedby="RangoTiempoEditError" id="RangoTiempoEdit" class="form-control">
+                <option disabled selected>Selecciona una opción</option>
+                <option value="0">Diaria</option>
+                <option value="1">Semanal</option>
+                <option value="2">Anual</option>
+            </select>
+            <div id="RangoTiempoEditError" class="invalid-feedback RangoTiempoEdit-error"></div>
+        </div>
         <div class="form-group col-md-6">
             <label class="form-label" for="intervaloEdit">Intervalo de Dias</label>
             <input type="number" id="intervaloEdit" class="form-control" aria-describedby="intervaloEditError" />
             <div id="intervaloEditError" class="invalid-feedback intervaloEdit-error"></div>
         </div>
-        <div class="form-group col-md-6">
-        <div id="inputsContainer">
-            <div id="inputsTipo0" style="display: none;">
-            <!-- Inputs para Acumuladas -->
-            <label class="form-label" for="minimoTransaccion">Mínimo Transacción</label>
-            <input type="text" id="minimoTransaccion" class="form-control" />
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div id="inputsContainer">
+            <div id="inputsTipo0Edit" class="hidden">
+              <!-- Inputs para Acumuladas -->
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label class="form-label" for="minimoTransaccionEdit">Mínimo Transacción</label>
+                  <input type="text" id="minimoTransaccion" class="form-control" />
+                </div>
+              </div>
             </div>
-            <div id="inputsTipo1" style="display: none;">
-            <!-- Inputs para Acumuladas -->
-            <label class="form-label" for="TotalMinimo">Total Mínimo</label>
-            <input type="text" id="TotalMinimo" class="form-control" />
+            <div id="inputsTipo1Edit" >
+              <!-- Inputs para Acumuladas -->
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label class="form-label" for="TotalMinimoEdit">Total Mínimo</label>
+                  <input type="text" id="TotalMinimoEdit" class="form-control" />
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-        </div>
-    </div>
-     <div class="row">
-       <div class="col-md-12">
-         <div id="inputsContainer">
-           <div id="inputsTipo0" style="display: none;">
-             <!-- Inputs para Acumuladas -->
-             <div class="row">
-               <div class="form-group col-md-6">
-                 <label class="form-label" for="minimoTransaccionEdit">Mínimo Transacción</label>
-                 <input type="text" id="minimoTransaccion" class="form-control" />
-               </div>
-             </div>
-           </div>
-           <div id="inputsTipo1" style="display: none;">
-             <!-- Inputs para Acumuladas -->
-             <div class="row">
-               <div class="form-group col-md-6">
-                 <label class="form-label" for="TotalMinimo">Total Mínimo</label>
-                 <input type="text" id="TotalMinimo" class="form-control" />
-               </div>
-             </div>
-           </div>
-         </div>
-       </div>
+      </div>
+     </div>
      </div>
      <div class="form-step">
        <div class="content-header mt-2 mb-1">
@@ -1298,28 +1325,33 @@ function initStepperEdit() {
            <input id="idParametros" type="hidden">
            <label class="form-label" for="limiteParticipacionEdit">Límite de Participaciones</label>
            <input type="number" id="limiteParticipacionEdit" class="form-control" />
+           <div id="limiteParticipacionEditError" class="invalid-feedback departamento-error"></div>
          </div>
          <div class="form-group col-md-6">
            <label class="form-label" for="transaccionEdit">Transacción</label>
            <select name="" id="transaccionEdit" class="form-control">
              <option disabled selected>Selecciona una opción</option>
            </select>
+           <div id="transaccionEditError" class="invalid-feedback transaccionEdit-error"></div>
          </div>
        </div>
        <div class="row">
          <div class="form-group col-md-6">
            <label class="form-label" for="valorMinimoEdit">Valor Mínimo</label>
            <input type="number" id="valorMinimoEdit" class="form-control" />
+           <div id="valorMinimoEditError" class="invalid-feedback valorMinimoEdit-error"></div>
          </div>
          <div class="form-group col-md-6">
            <label class="form-label" for="valorMaximoEdit">Valor Máximo</label>
            <input type="number" id="valorMaximoEdit" class="form-control" />
+           <div id="valorMaximoEditError" class="invalid-feedback valorMaximoEdit-error"></div>
          </div>
        </div>
        <div class="row">
          <div class="form-group col-md-6">
            <label class="form-label" for="limiteDiarioEdit">Límite Diario</label>
            <input type="number" id="limiteDiarioEdit" class="form-control" />
+           <div id="limiteDiarioEditError" class="invalid-feedback limiteDiarioEdit-error"></div>
          </div>
         <div class="form-group col-md-6">
           <div class="btn-crear d-flex justify-content-end mt-1" >
@@ -1351,26 +1383,26 @@ function initStepperEdit() {
            <select name="" id="departamentoEdit" aria-describedby="departamentoError" required class="form-control">
              <option disabled selected>Selecciona una opción</option>
            </select>
-           <div id="departamentoError" class="invalid-feedback departamento-error"></div>
+           <div id="departamentoEditError" class="invalid-feedback departamento-error"></div>
          </div>
          <div class="form-group col-md-6">
            <label class="form-label" for="municipioEdit">Municipio</label>
            <select name="municipioEdit" id="municipioEdit" aria-describedby="municipioError" required class="form-control">
              <option disabled selected>Selecciona una opción</option>
            </select>
-           <div id="municipioError" class="invalid-feedback municipio-error"></div>
+           <div id="municipioEditError" class="invalid-feedback municipio-error"></div>
          </div>
        </div>
        <div class="row">
          <div class="form-group col-md-6">
            <label class="form-label" for="limiteGanadorEdit">Límite de Ganadores</label>
            <input type="text" id="limiteGanadorEdit" aria-describedby="limiteGanadorError" required class="form-control" />
-           <div id="limiteGanadorErrorEdit" class="invalid-feedback limiteGanador-error"></div>
+           <div id="limiteGanadorEditError" class="invalid-feedback limiteGanador-error"></div>
          </div>
          <div class="form-group col-md-6">
            <label class="form-label" for="presupuestoEdit">Presupuesto</label>
            <input type="text" id="presupuestoEdit" aria-describedby="presupuestoError" required class="form-control" />
-           <div id="presupuestoError" class="invalid-feedback presupuesto-error"></div>
+           <div id="presupuestoEditError" class="invalid-feedback presupuesto-error"></div>
          </div>
       </div>
       <div class="row">
@@ -1414,7 +1446,7 @@ function initStepperEdit() {
              <option value="1">Premio Random</option>
              <option value="2">Todos los Premios</option>
            </select>
-           <div id="tipoPremioErrorEdit" class="invalid-feedback tipoPremio-error"></div>
+           <div id="tipoPremioEditError" class="invalid-feedback tipoPremio-error"></div>
          </div>
          <div class="form-group col-md-6">
            <label class="form-label" for="linkPremioEdit">Links de Premio</label>
@@ -1423,7 +1455,7 @@ function initStepperEdit() {
              <option value="1">Sí</option>
              <option value="0">No</option>
            </select>
-           <div id="linkPremioErrorEdit" class="invalid-feedback linkPremio-error"></div>
+           <div id="linkPremioEditError" class="invalid-feedback linkPremio-error"></div>
          </div>
        </div>
        <div class="row">
@@ -1432,20 +1464,20 @@ function initStepperEdit() {
            <select name="premioEdit" id="premioEdit" aria-describedby="premioError" class="form-control">
              <option disabled selected>Selecciona una opción</option>
            </select>
-           <div id="premioErrorEdit" class="invalid-feedback premio-error"></div>
+           <div id="premioEditError" class="invalid-feedback premio-error"></div>
          </div>
          <div class="form-group col-md-6">
            <label class="form-label" for="valorEdit">Valor</label>
            <input type="number" id="valorEdit"
            aria-describedby="valorError" class="form-control" />
-          <div id="valorErrorEdit" class="invalid-feedback valor-error"></div>
+          <div id="valorEditError" class="invalid-feedback valor-error"></div>
         </div>
       </div>
       <div class="row">
         <div class="form-group col-md-6">
           <label class="form-label" for="porcentajePremioEdit">Porcentaje de Premio</label>
           <input type="number" id="porcentajePremioEdit" aria-describedby="porcentajePremioError" class="form-control" />
-          <div id="porcentajePremioError" class="invalid-feedback porcentajePremio-error"></div>
+          <div id="porcentajePremioEditError" class="invalid-feedback porcentajePremio-error"></div>
         </div>
         <div class="form-group col-md-6">
           <div class="btn-crear d-flex justify-content-end mt-2">
@@ -1482,7 +1514,7 @@ function initStepperEdit() {
       newStep = $(`<div class="step"></div>`).html(content);
     $('#stepperEdit').append(newStep);
     totalStepsEdits++;
-      previousStep = actualStepEdit; // Guardar el valor actual de actualStepEdit
+    previousStep = actualStepEdit; // Guardar el valor actual de actualStepEdit
     hideStep(actualStepEdit);
     actualStepEdit = totalStepsEdits - 1;
     showStep(actualStepEdit);
@@ -1490,26 +1522,13 @@ function initStepperEdit() {
 
   // Función para editar una etapa
   function editarEtapa(id) {
+
     var etapa = dataEditEtapa.find(function(item) {
       return item.id === id;
     });
 
     if (etapa) {
       console.log(etapa, 'la etapa es')
-
-      function handleTipoParticipacionChange(selectId, inputsContainerId) {
-        const tipoSeleccionado = $(`#${selectId}`).val();
-        const inputsContainer = $(`#${inputsContainerId}`);
-      
-        inputsContainer.find('#inputsTipo0').css('display', 'none');
-        inputsContainer.find('#inputsTipo1').css('display', 'none');
-      
-        if (tipoSeleccionado === '2' || tipoSeleccionado === '3') {
-          inputsContainer.find('#inputsTipo0').css('display', 'block');
-        } else if (tipoSeleccionado === '4') {
-          inputsContainer.find('#inputsTipo1').css('display', 'block');
-        }
-      }
       
       // Para el stepIniEdit
       $('#tipoParticipacionEdit').change(function() {
@@ -1566,9 +1585,11 @@ function initStepperEdit() {
            stepData = null;
             $('.step-progress').removeClass('blocked');
           Alert('Etapa actualizada correctamente', 'success');
+         
         } else {
           Alert('No se pudo encontrar la etapa editada', 'error');
         }
+         
       });
 
 
@@ -1579,9 +1600,28 @@ function initStepperEdit() {
       $('#descripcionEtapaEdit').val(etapa.descripcion);
       $('#tipoParticipacionEdit').val(etapa.tipoParticipacion);
       $('#intervaloEdit').val(etapa.intervalo);
-      $('#idParemetros').val(etapa.parametros.id);
+      $('#RangoTiempoEdit').val(etapa.periodo)
+      // $('#idParemetros').val(etapa.parametros.id);
+        
+      // Lógica para mostrar u ocultar los campos según el tipo de participación
+      var tipoParticipacion = $('#tipoParticipacionEdit').val(); // Obtener el valor del campo de selección
+      var inputsTipo0 = document.getElementById('inputsTipo0Edit');
+      var inputsTipo1 = document.getElementById('inputsTipo1Edit');
 
-      Promise.all([getDepartamento(), getTransaccion(), getPremio()])
+      if (tipoParticipacion === '2' || tipoParticipacion === '3') {
+        inputsTipo0.style.display = 'block';
+        inputsTipo1.style.display = 'none';
+        $('#minimoTransaccionEdit').val(etapa.minimoTransaccion);
+      } else if (tipoParticipacion === '4') {
+        inputsTipo0.style.display = 'none';
+        inputsTipo1.style.display = 'block';
+        $('#TotalMinimoEdit').val(etapa.totalMinimo);
+      } else {
+        inputsTipo0.style.display = 'none';
+        inputsTipo1.style.display = 'none';
+      }
+
+      Promise.all([getDepartamento(), getTransaccion(), getPremio(), getMunicipios()])
       .then(() => {
         mostrarDatosEdit('#TablaParametrosEdit', etapa);
         mostrarDatosEdit('#tableLocalidadEdit', etapa);
@@ -1596,43 +1636,37 @@ function initStepperEdit() {
       mostrarDatosEdit('#TablaPremioEdit', etapa);
 
 
-      // Event listeners para los botones de editar y eliminar de la tabla
-      $('#TablaParametrosEdit tbody').on('click', '.btn_edit_parametro', function () {
+      // Event listeners para los botones de editar y eliminar de la tabla de parámetros
+      $('#TablaParametrosEdit tbody').off('click', '.btn_edit_parametro').on('click', '.btn_edit_parametro', function() {
         var id = $(this).data('id');
-        console.log(id, 'edit Parametros')
-        editarParametro(id, etapa); // Pasar etapa como argumento
+        editarParametro(id, etapa);
       });
 
-      $('#TablaParametrosEdit tbody').on('click', '.btn_delete_parametro', function() {
+      $('#TablaParametrosEdit tbody').off('click', '.btn_delete_parametro').on('click', '.btn_delete_parametro', function() {
         var id = $(this).data('id');
-        console.log(id, 'delete Parametros')
         eliminarParametro(id, etapa);
       });
 
-      $('#tableLocalidadEdit tbody').on('click', '.btn_edit_localidad', function() {
-        //event.preventDefault();
+      // Event listeners para los botones de editar y eliminar de la tabla de localidades
+      $('#tableLocalidadEdit tbody').off('click', '.btn_edit_localidad').on('click', '.btn_edit_localidad', function() {
         var id = $(this).data('id');
-        console.log(id, 'edit localidades')
         editarLocalidad(id);
       });
 
-      $('#tableLocalidadEdit tbody').on('click', '.btn_delete_localidad', function() {
-        //event.preventDefault();
+      $('#tableLocalidadEdit tbody').off('click', '.btn_delete_localidad').on('click', '.btn_delete_localidad', function() {
         var id = $(this).data('id');
-        console.log(id, 'delete localidades')
-        eliminarLocalidad(id);
+        eliminarLocalidad(id, etapa);
       });
 
-      $('#TablaPremioEdit tbody').on('click', '.btn_edit_premio', function() {
-        // event.preventDefault();
+      // Event listeners para los botones de editar y eliminar de la tabla de premios
+      $('#TablaPremioEdit tbody').off('click', '.btn_edit_premio').on('click', '.btn_edit_premio', function() {
         var id = $(this).data('id');
         editarPremio(id);
       });
 
-      $('#TablaPremioEdit tbody').on('click', '.btn_delete_premio', function() {
-        // event.preventDefault();
+      $('#TablaPremioEdit tbody').off('click', '.btn_delete_premio').on('click', '.btn_delete_premio', function() {
         var id = $(this).data('id');
-        eliminarPremio(id);
+        eliminarPremio(id, etapa);
       });
     }
 
@@ -1645,7 +1679,7 @@ function initStepperEdit() {
         if (parametroIndex !== -1) {
           var parametro = etapa.parametros[parametroIndex];
     
-          // Eliminar el registro del arreglo datosTablaParametro
+          // Eliminar el registro del arreglo etapa.parametros
           etapa.parametros.splice(parametroIndex, 1);
     
           // Mostrar los datos del registro seleccionado en los inputs
@@ -1655,6 +1689,7 @@ function initStepperEdit() {
           $('#valorMinimoEdit').val(parametro.ValorMinimo);
           $('#valorMaximoEdit').val(parametro.ValorMaximo);
           $('#limiteDiarioEdit').val(parametro.limiteDiario);
+    
           // Actualizar la tabla de parámetros
           mostrarDatosEdit('#TablaParametrosEdit', etapa);
         }
@@ -1671,41 +1706,88 @@ function initStepperEdit() {
       var limiteDiario = $('#limiteDiarioEdit').val();
       var parametro = {}
 
-      if(id === null || id === ''){
-        parametro = {
-          limiteParticipacion: limiteParticipacion,
-          idTransaccion: idTransaccion,
-          tipoTransaccion: 0,
-          ValorMinimo: ValorMinimo,
-          ValorMaximo: ValorMaximo,
-          valorAnterior: 0,
-          limiteDiario: limiteDiario,
-          estado:1
-        };
-      }else{
-        parametro = {
-          id: id,
-          limiteParticipacion: limiteParticipacion,
-          idTransaccion: idTransaccion,
-          tipoTransaccion: 0,
-          ValorMinimo: ValorMinimo,
-          ValorMaximo: ValorMaximo,
-          valorAnterior: 0,
-          limiteDiario: limiteDiario,
-          estado:1
-        };
+      // Validar campos y aplicar clases y mensajes de error
+      var fields = ['limiteParticipacionEdit', 'transaccionEdit', 'valorMinimoEdit', 'valorMaximoEdit'];
+      var isValid = true;
+
+      fields.forEach(function(field) {
+        var value = $('#' + field).val();
+        var errorDiv = $('#' + field + 'Error');
+        if (!value) {
+          $('#' + field).addClass('is-invalid');
+          errorDiv.text('Este campo no puede estar vacío.');
+          isValid = false;
+        } else {
+          $('#' + field).removeClass('is-invalid');
+          errorDiv.text('');
+        }
+
+        // Agregar evento input para quitar el error cuando el usuario comience a escribir
+        $('#' + field).on('input', function() {
+          $(this).removeClass('is-invalid');
+          errorDiv.text('');
+        });
+      });
+
+      // Validar ValorMinimo y ValorMaximo
+      var errorValorMinimo = $('#valorMinimoEditError');
+      var errorValorMaximo = $('#valorMaximoEditError');
+
+      if (ValorMinimo > ValorMaximo) {
+        $('#valorMinimoEdit').addClass('is-invalid');
+        $('#valorMaximoEdit').addClass('is-invalid');
+        errorValorMinimo.text('El valor mínimo debe ser menor al valor máximo.');
+        errorValorMaximo.text('El valor máximo debe ser mayor al valor mínimo.');
+        isValid = false;
+      } else {
+        $('#valorMinimoEdit').removeClass('is-invalid');
+        $('#valorMaximoEdit').removeClass('is-invalid');
+        errorValorMinimo.text('');
+        errorValorMaximo.text('');
       }
 
-      // Agregar el parámetro actualizado al arreglo datosTablaParametro
-      etapa.parametros.push(parametro);
+      
+      if(isValid){
+        if(id === null || id === ''){
+          parametro = {
+            limiteParticipacion: limiteParticipacion,
+            idTransaccion: idTransaccion,
+            tipoTransaccion: 0,
+            ValorMinimo: ValorMinimo,
+            ValorMaximo: ValorMaximo,
+            valorAnterior: 0,
+            limiteDiario: limiteDiario,
+            estado:1
+          };
+        }else{
+          parametro = {
+            id: id,
+            limiteParticipacion: limiteParticipacion,
+            idTransaccion: idTransaccion,
+            tipoTransaccion: 0,
+            ValorMinimo: ValorMinimo,
+            ValorMaximo: ValorMaximo,
+            valorAnterior: 0,
+            limiteDiario: limiteDiario,
+            estado:1
+          };
+        }
+        // Agregar el parámetro actualizado al arreglo datosTablaParametro
+        etapa.parametros.push(parametro);
+        // Actualizar la tabla de parámetros
+        mostrarDatosEdit('#TablaParametrosEdit', etapa);
+        // Limpiar los inputs después de guardar
+        $('#idParemetros').val('');
+        $('#limiteParticipacionEdit').val('');
+        $('#transaccionEdit').val('');
+        $('#valorMinimoEdit').val('');
+        $('#valorMaximoEdit').val('');
+        $('#limiteDiarioEdit').val('');
+        parametro={}
+      }
+      
 
-      // Limpiar los inputs después de guardar
-      $('#idParemetros').val('');
-      $('#limiteParticipacionEdit').val('');
-      $('#transaccionEdit').val('');
-      $('#valorMinimoEdit').val('');
-      $('#valorMaximoEdit').val('');
-      $('#limiteDiarioEdit').val('');
+      
     });
 
     //Funcion asociada
@@ -1714,57 +1796,23 @@ function initStepperEdit() {
         var presupuestosIndex = etapa.presupuestos.findIndex(function(item) {
           return item.id === id;
         });
-
-        console.log(presupuestosIndex, 'valor');
-
+    
         if (presupuestosIndex !== -1) {
           var presupuesto = etapa.presupuestos[presupuestosIndex];
-
-          // Eliminar el registro del arreglo datosTablaParametro
+    
+          // Eliminar el registro del arreglo etapa.presupuestos
           etapa.presupuestos.splice(presupuestosIndex, 1);
-
-          console.log(etapa.presupuestos, 'presupuesto INDEX')
-
+    
           // Mostrar los datos del registro seleccionado en los inputs
           $('#idPresupuesto').val(presupuesto.id);
           $('#departamentoEdit').val(presupuesto.idDepartamento);
           $('#municipioEdit').val(presupuesto.idMunicipio);
-          getMunicipioByDepto(presupuesto.idDepartamento)
+          getMunicipioByDepto(presupuesto.idDepartamento);
           $('#limiteGanadorEdit').val(presupuesto.limiteGanadores);
           $('#presupuestoEdit').val(presupuesto.valor);
           $('#presupuestoDiarioEdit').val(presupuesto.presupuestoDiario);
-
-          $('#GuardarEtapaEdit').click(function(e) {
-            e.preventDefault();
-      
-            // Obtener los datos actualizados de la etapa desde los campos de entrada
-            var nombre = $('#NombreEtapaEdit').val();
-            var orden = $('#ordenEdit').val();
-            var descripcion = $('#descripcionEtapaEdit').val();
-            var tipoParticipacion = $('#tipoParticipacionEdit').val();
-      
-            // Actualizar los datos de la etapa
-            etapa.nombre = nombre;
-            etapa.orden = orden;
-            etapa.descripcion = descripcion;
-            etapa.tipoParticipacion = tipoParticipacion;
-      
-            // Buscar la etapa editada en el arreglo dataEditEtapa
-            var etapaIndex = dataEditEtapa.findIndex(function(item) {
-              return item.id === id;
-            });
-      
-            if (etapaIndex !== -1) {
-              // Actualizar la etapa editada en el arreglo dataEditEtapa
-              dataEditEtapa[etapaIndex] = etapa;
-      
-              Alert('Etapa actualizada correctamente', 'success');
-            } else {
-              Alert('No se pudo encontrar la etapa editada', 'error');
-            }
-          })
-
-          // Actualizar la tabla de parámetros
+    
+          // Actualizar la tabla de localidades
           mostrarDatosEdit('#tableLocalidadEdit', etapa);
         }
       }
@@ -1778,38 +1826,64 @@ function initStepperEdit() {
       var valor = $('#presupuestoEdit').val();
       var presupuestoDiario = $('#presupuestoDiarioEdit').val();
       var presupuestoActualizado = {};
+
+      var fields = ['departamentoEdit', 'municipioEdit', 'limiteGanadorEdit', 'presupuestoDiarioEdit','presupuestoEdit'];
+      var isValid = true;
+      
+      fields.forEach(function(field) {
+        var value = $('#' + field).val();
+        var errorDiv = $('#' + field + 'Error')
+        if (!value) {
+          $('#' + field).addClass('is-invalid');
+          errorDiv.text('Este campo no puede estar vacío.');
+          isValid = false;
+        } else {
+          $('#' + field).removeClass('is-invalid');
+          errorDiv.text('');
+        }
+
+        // Agregar evento input para quitar el error cuando el usuario comience a escribir
+        $('#' + field).on('input', function() {
+          $(this).removeClass('is-invalid');
+          errorDiv.text('');
+        });
+      });
     
-      if (id === null || id === '') {
-        presupuestoActualizado = {
-          idDepartamento: idDepartamento,
-          idMunicipio: idMunicipio,
-          limiteGanadores: limiteGanadores,
-          valor: valor,
-          presupuestoDiario: presupuestoDiario,
-          estado: 1
-        };
-      } else {
-        presupuestoActualizado = {
-          id: id,
-          idDepartamento: idDepartamento,
-          idMunicipio: idMunicipio,
-          limiteGanadores: limiteGanadores,
-          valor: valor,
-          presupuestoDiario: presupuestoDiario,
-          estado: 1
-        };
+      if(isValid){
+        if (id === null || id === '') {
+          presupuestoActualizado = {
+            idDepartamento: idDepartamento,
+            idMunicipio: idMunicipio,
+            limiteGanadores: limiteGanadores,
+            presupuestoDiario: presupuestoDiario,
+            valor: valor,
+            estado: 1
+          };
+        } else {
+          presupuestoActualizado = {
+            id:id,
+            idDepartamento: idDepartamento,
+            idMunicipio: idMunicipio,
+            limiteGanadores: limiteGanadores,
+            valor: valor,
+            presupuestoDiario: presupuestoDiario,
+            estado: 1
+          };
+        }
+        // Agregar el presupuesto actualizado al arreglo etapa.presupuestos
+        etapa.presupuestos.push(presupuestoActualizado);
+        // Actualizar la tabla de parámetros
+        mostrarDatosEdit('#tableLocalidadEdit', etapa);
+      
+        // Limpiar los inputs después de guardar
+        $('#idPresupuesto').val('');
+        $('#departamentoEdit').val('');
+        $('#municipioEdit').val('');
+        $('#limiteGanadorEdit').val('');
+        $('#presupuestoEdit').val('');
+        $('#presupuestoDiarioEdit').val('');
+        presupuestoActualizado={}
       }
-    
-      // Agregar el presupuesto actualizado al arreglo etapa.presupuestos
-      etapa.presupuestos.push(presupuestoActualizado);
-    
-      // Limpiar los inputs después de guardar
-      $('#idPresupuesto').val('');
-      $('#departamentoEdit').val('');
-      $('#municipioEdit').val('');
-      $('#limiteGanadorEdit').val('');
-      $('#presupuestoEdit').val('');
-      $('#presupuestoDiarioEdit').val('');
     });
     //Funcion asociada
     function editarPremio(id) {
@@ -1821,104 +1895,127 @@ function initStepperEdit() {
         if (premioIndex !== -1) {
           var premio = etapa.premiocampania[premioIndex];
     
-          // Eliminar el registro del arreglo datosTablaParametro
+          // Eliminar el registro del arreglo etapa.premiocampania
           etapa.premiocampania.splice(premioIndex, 1);
     
           // Mostrar los datos del registro seleccionado en los inputs
           $('#idPremio').val(premio.id);
           $('#valorEdit').val(premio.valor);
           $('#linkPremioEdit').val(premio.linkPremio);
-          $('#premioEdit').val(premio.idPremio); // Asignar el valor del premio al select
-          $('#porcentajePremioEdit').val(premio.porcentajePremio); //verificar si se va a poner
+          $('#premioEdit').val(premio.idPremio);
+          $('#porcentajePremioEdit').val(premio.porcentajePremio);
           $('#tipoPremioEdit').val(premio.tipoPremio);
-          // Actualizar la tabla de parámetros
+    
+          // Actualizar la tabla de premios
           mostrarDatosEdit('#TablaPremioEdit', etapa);
         }
       }
-    }    
+    }
     
     $('#addPremioEdit').click(function() {
-      var id = $('#idPremioEdit').val();
+      var id = $('#idPremio').val();
       var tipoPremio = $('#tipoPremioEdit').val();
       var linkPremio = parseInt($('#linkPremioEdit').val());
       var premio = parseInt($('#premioEdit').val());
       var valor = parseFloat($('#valorEdit').val());
       var porcentaje = $('#porcentajePremioEdit').val();
       var premioActualizado = {};
-    
-      if (id === null || id === '') {
-        premioActualizado = {
-          idPremio: premio,
-          linkPremio: linkPremio,
-          tipoPremio: tipoPremio,
-          valor: valor,
-          porcentajePremio: porcentaje,
-          estado: 1
-        };
-      } else {
-        premioActualizado = {
-          id: id,
-          idPremio: premio,
-          linkPremio: linkPremio,
-          tipoPremio: tipoPremio,
-          valor: valor,
-          porcentajePremio: porcentaje,
-          estado: 1
-        };
-      }
-    
-      // Agregar el premio actualizado al arreglo etapa.premiocampania
-      etapa.premiocampania.push(premioActualizado);
-    
-      // Limpiar los inputs después de guardar
-      $('#idPremio').val('');
-      $('#valorEdit').val('');
-      $('#linkPremioEdit').val('');
-      $('#premioEdit').val('');
-      $('#porcentajePremioEdit').val('');
-    });
 
+      var fields = ['tipoPremioEdit', 'linkPremioEdit', 'premioEdit', 'valorEdit', 'porcentajePremioEdit'];
+      var isValid = true;
 
+      fields.forEach(function(field) {
+        var value = $('#' + field).val();
+        var errorDiv = $('#' + field + 'Error')
+        if (!value) {
+          $('#' + field).addClass('is-invalid');
+          errorDiv.text('Este campo no puede estar vacío.');
+          isValid = false;
+        } else {
+          $('#' + field).removeClass('is-invalid');
+          errorDiv.text('');
+        }
 
-function eliminarLocalidad(id) {
-  if (etapa) {
-    var presupuestoIndex = etapa.presupuestos.findIndex(function(item) {
-      return item.id === id;
-    });
-    
-    if (presupuestoIndex !== -1) {
-      etapa.presupuestos[presupuestoIndex].estado = 0; // Cambiar el estado a 0
-      
-      // Guardar los cambios en dataEditEtapa o en la base de datos
-      var etapaIndex = dataEditEtapa.findIndex(function(item) {
-        return item.id === etapa.id;
-      });
-      
-      if (etapaIndex !== -1) {
-        dataEditEtapa[etapaIndex] = etapa;
-      }
-      
-      mostrarDatosEdit('#tableLocalidadEdit', etapa); // Actualizar la tabla
-    }
-  }
-}
-
-  
-    function eliminarPremio(id) {
-      if (etapa) {
-        var premioIndex = etapa.premiocampania.findIndex(function(item) {
-          return item.id === id;
+        // Agregar evento input para quitar el error cuando el usuario comience a escribir
+        $('#' + field).on('input', function() {
+          $(this).removeClass('is-invalid');
+          errorDiv.text('');
         });
+      });
+    
+      if(isValid){
+        if (id === null || id === '') {
+          premioActualizado = {
+            idPremio: premio,
+            linkPremio: linkPremio,
+            tipoPremio: tipoPremio,
+            valor: valor,
+            porcentajePremio: porcentaje,
+            estado: 1
+          };
+        } else {
+          premioActualizado = {
+            id: id,
+            idPremio: premio,
+            linkPremio: linkPremio,
+            tipoPremio: tipoPremio,
+            valor: valor,
+            porcentajePremio: porcentaje,
+            estado: 1
+          };
+        }
+        // Agregar el premio actualizado al arreglo etapa.premiocampania
+        etapa.premiocampania.push(premioActualizado);
+        console.log('premio actualizado', etapa.premiocampania)
+        mostrarDatosEdit('#TablaPremioEdit', etapa);
+        // Limpiar los inputs después de guardar
+        $('#idPremio').val('');
+        $('#valorEdit').val('');
+        $('#linkPremioEdit').val('');
+        $('#premioEdit').val('');
+        $('#porcentajePremioEdit').val('');
+        $('#tipoPremioEdit').val('')
+        premioActualizado={}
+      }
+    });
+
+    function eliminarParametro(id, etapa) {
+      if (etapa) {
+        const parametro = etapa.parametros.find(item => item.id === id);
+    
+        if (parametro) {
+          parametro.estado = 0;
+          mostrarDatosEdit('#TablaParametrosEdit', etapa);
+        }
+      }
+    }
+    
+    function eliminarLocalidad(id, etapa) {
+      if (etapa) {
+        const presupuestoIndex = etapa.presupuestos.findIndex(item => item.id === id);
+    
+        if (presupuestoIndex !== -1) {
+          etapa.presupuestos[presupuestoIndex].estado = 0;
+          mostrarDatosEdit('#tableLocalidadEdit', etapa);
+        }
+      }
+    }
+    
+    function eliminarPremio(id, etapa) {
+      console.log('etapa premio', etapa)
+      if (etapa) {
+        const premioIndex = etapa.premiocampania.findIndex(item => item.id === id);
     
         if (premioIndex !== -1) {
-          etapa.premiocampania[premioIndex].estado = 0; // Cambiar el estado a 0
-          mostrarDatosEdit('#TablaPremioEdit', etapa); // Actualizar la tabla
+          etapa.premiocampania[premioIndex].estado = 0;
+          console.log(etapa.premiocampania, 'estado')
+          mostrarDatosEdit('#TablaPremioEdit', etapa);
         }
       }
     }
 
-    console.log('data depto', dataDeptoView)
     function mostrarDatosEdit(tabla, etapa) {
+
       switch (tabla) {
         case '#tableLocalidadEdit':
           // Filtro
@@ -1961,9 +2058,11 @@ function eliminarLocalidad(id) {
               {
                 data: 'idMunicipio',
                 render: function (data, type, row) {
+                  console.log('municipio', dataMunicipiosView)
                   if (dataMunicipiosView.length > 0) {
                     const municipioActual = dataMunicipiosView.find(municipio => municipio.id == data);
                     if (municipioActual) {
+                      console.log('encontro id', municipioActual)
                       return municipioActual.nombre;
                     }
                   }
@@ -1982,16 +2081,16 @@ function eliminarLocalidad(id) {
               {
                 data: "id",
                 render: function (data) {
-                  return `<div>
+                  return `<div  style="display: flex; justify-content:space-around">
                     <a href="#" data-id="${data}" class="btn_edit_localidad dropdown-item">
-                    ${feather.icons["archive"].toSvg({ class: "font-small-4 mr-50" })} 
+                    ${feather.icons["edit"].toSvg({ class: "font-small-4 mr-50" })} 
                     </a>
                     <a href="#" data-id="${data}" class="btn_delete_localidad dropdown-item">
                       ${feather.icons['trash-2'].toSvg({ class: 'font-small-4 mr-50' })} 
                     </a> 
                   </div>`;
                 },
-                width: '15%'
+                width: '20%'
               }
             ]
           });
@@ -1999,7 +2098,7 @@ function eliminarLocalidad(id) {
     
         case '#TablaParametrosEdit':
         console.log('entra')
-          const parametro = etapa.parametros.filter(item => item.estado === 1);
+          const parametro = etapa.parametros.filter(item => item.estado == 1);
           // Limpiar la tabla antes de insertar nuevas filas
           $('#TablaParametrosEdit').DataTable().clear().destroy();
     
@@ -2036,23 +2135,23 @@ function eliminarLocalidad(id) {
               {
                 data: "id",
                 render: function (data) {
-                  return `<div>
+                  return `<div  style="display: flex; justify-content:space-around">
                     <a href="#" data-id="${data}" class="btn_edit_parametro dropdown-item">
-                    ${feather.icons["archive"].toSvg({ class: "font-small-4 mr-50" })} 
+                    ${feather.icons["edit"].toSvg({ class: "font-small-4 mr-50" })} 
                     </a>
                     <a href="#" data-id="${data}" class="btn_delete_parametro dropdown-item">
                       ${feather.icons['trash-2'].toSvg({ class: 'font-small-4 mr-50' })} 
                     </a> 
                   </div>`;
                 },
-                width: '15%'
+                width: '20%'
               }
             ]
           });
           break;
     
         case '#TablaPremioEdit':
-          const premiosActivos = etapa.premiocampania.filter(item => item.estado === 1);
+          const premiosActivos = etapa.premiocampania.filter(item => item.estado == 1);
           // Limpiar la tabla antes de insertar nuevas filas
           $('#TablaPremioEdit').DataTable().clear().destroy();
     
@@ -2381,7 +2480,7 @@ function mostrarDatosTabla(tabla) {
                 '</a>' +
                 '<div class="dropdown-menu dropdown-menu-right">' +
                 '<a href="#" data-id="' + data + '" class="btn_edit dropdown-item">' +
-                feather.icons['archive'].toSvg({ class: 'font-small-4 mr-50' }) + ' Actualizar' +
+                feather.icons['edit'].toSvg({ class: 'font-small-4 mr-50' }) + ' Actualizar' +
                 '</a>' +
                 '<a href="#" onclick="OpenDelete(' + data + ')" class="btn_delete dropdown-item">' +
                 feather.icons['trash-2'].toSvg({ class: 'font-small-4 mr-50' }) + ' Inhabilitar' +
@@ -2683,11 +2782,16 @@ const getTransaccion = () => {
       .then(response => response.json())
       .then(result => {
         datatransaccionView = result;
-        result.forEach(element => {
-          var opc  = `<option value="${element.id}">${element.descripcion}</option>`;
-          $('#transaccion').append(opc);
-          $('#transaccionEdit').append(opc);
-        });
+        // Verificar si result es un array antes de iterar
+        if (Array.isArray(result)) {
+          result.forEach(element => {
+            var opc = `<option value="${element.id}">${element.descripcion}</option>`;
+            $('#transaccion').append(opc);
+            $('#transaccionEdit').append(opc);
+          });
+        } else {
+          console.warn('La respuesta no es un array:', result);
+        }
         resolve(); // Resuelve la promesa cuando los datos se hayan cargado
       })
       .catch(error => {
@@ -2698,7 +2802,7 @@ const getTransaccion = () => {
 };
 
 //Funcion para traer los Premios
-const getPremio = () =>{
+const getPremio = () => {
   var requestOptions = {
     method: 'GET',
     redirect: 'follow',
@@ -2707,15 +2811,21 @@ const getPremio = () =>{
 
   fetch(`${url}Premio`, requestOptions)
     .then(response => response.json())
-    .then(result =>{
-      dataPremioView=result;
-      result.forEach(element => {
-        var opc  = `<option value="${element.id}">${element.descripcion}</option>`;
-        $('#premio').append(opc);
-        $('#premioEdit').append(opc);
-      });
+    .then(result => {
+      dataPremioView = result;
+      // Verificar si result es un array antes de iterar
+      if (Array.isArray(result)) {
+        result.forEach(element => {
+          var opc = `<option value="${element.id}">${element.descripcion}</option>`;
+          $('#premio').append(opc);
+          $('#premioEdit').append(opc);
+        });
+      } else {
+        console.warn('La respuesta no es un array:', result);
+      }
     })
-}
+    .catch(error => console.log('error', error));
+};
 
 //Funcion para traer municipios
 const getMunicipios = () => {
@@ -2978,9 +3088,71 @@ function validarCamposStep(stepIndex) {
 
 }
 
+function resetSteps() {
+  // Reiniciar los stepps
+  actualStep = 0;
+  var steps = $('#stepper .step');
+  steps.hide();
+  
+  // Limpiar los arreglos y datos relacionados con los steps
+  TEMP = [];
+  DataEtapa = [];
+  bloqueadosUsuarios = [];
+  permitidoUsuario = [];
+  datosTablaLocalidad = [];
+  datosTablaPremio = [];
+  datosTablaParametro = [];
+  nombresMunicipios = {};
+
+  // Limpiar las tablas relacionadas con los steps
+  $('#TablaEtapa').DataTable().clear().destroy();
+  $('#tablaBloqueo').DataTable().clear().destroy();
+
+  // Eliminar los steps adicionales
+  $('#stepper .step:not(:first)').remove();
+
+  // Mostrar el primer step
+  steps.first().show();
+  $('.step-progress').removeClass('active');
+  $('.step-btn-1').addClass('active');
+  $('.step-progress').removeClass('disabled').prop('disabled', false);
+}
+
+function resetStepsEdit() {
+  // Reiniciar los stepps
+  actualStepEdit = 0;
+  var stepsEdits = $('#stepperEdit .step');
+  stepsEdits.hide();
+
+  // Limpiar los arreglos y datos relacionados con los steps de edición
+  dataEditEtapa = [];
+
+
+  // Reiniciar las variables relacionadas con los pasos
+  totalStepsEdits = 0; // Inicializar totalStepsEdits a 0
+  previousStep = null; // Reiniciar previousStep a null
+
+  // Limpiar las tablas relacionadas con los steps de edición
+  $('#TablaEtapaEdit').DataTable().clear().destroy();
+  $('#tablaBloqueoEdit').DataTable().clear().destroy();
+
+  // Eliminar los steps adicionales
+  $('#stepperEdit .step:not(:first)').remove();
+
+  // Mostrar el primer step
+  stepsEdits.first().show();
+  $('.step-progressEdit').removeClass('active');
+  $('.step-btn-1-edit').addClass('active');
+  $('.step-progressEdit').removeClass('disabled').prop('disabled', false);
+}
+
+
 //limpiar el form
 function limpiarFormulario() {
-
+ 
+  // Limpiar los steps y reiniciar los datos relacionados
+  resetSteps();
+  resetStepsEdit();
   $('#campania').val('');
   $('#descripcionCampania').val('');
   $('#fechaRegistro').val('');
@@ -3012,7 +3184,7 @@ function limpiarFormulario() {
   // Limpiar las tablas
   $('#TablaEtapa').DataTable().clear().destroy();
   $('#tablaBloqueo').DataTable().clear().destroy();
-
+  $('#formNew').trigger("reset");
 
   $('#campaniaEdit').val('');
   $('#descripcionCampaniaEdit').val('');
@@ -3047,21 +3219,45 @@ function limpiarFormulario() {
   $('#tablaBloqueoEdit').DataTable().clear().destroy();
 
   // Limpiar los arreglos
-  TEMP = [];
-  DataEtapa = [];
-  bloqueadosUsuarios = [];
-  dataEditEtapa=[]
+  // TEMP = [];
+  // DataEtapa = [];
+  // bloqueadosUsuarios = [];
+  // dataEditEtapa=[]
 
-  // initStepper()
-  //initStepperEdit()
+    saveDataParams = [];
+    // Arreglo para almacenar los datos guardados de la tabla
+    // datosTablaLocalidad = [];
+    // datosTablaPremio = [];
+    // datosTablaParametro = [];
+    // datosTablaParticipacion= [];
+    permitidoUsuario =[];
+
+    // datosBloqueados = [];
+    TEMP =[];
+    etapasData=[]
+    //variables de imagenes
+    bloqueadosUsuarios =[];
+    DataEtapa =[];
+    nombresMunicipios = {};
+
+    //data edit
+    dataMunicipiosView=[]
+    dataDeptoView=[]
+    dataPremioView=[]
+    datatransaccionView=[]
 
 }
 
 const OpenEdit = (id) => {
-  bloqueadosUsuarios = []
-  permitidoUsuario = []
-  dataEditEtapa = []
+  bloqueadosUsuarios = [];
+  permitidoUsuario = [];
+  dataEditEtapa = [];
   limpiarFormulario();
+  resetStepsEdit(); // Agregar esta línea para reiniciar los pasos correctamente
+
+  // Ocultar el contenido del modal y mostrar el spinner
+  $('#modalEdit .modal-body').css('opacity', '0.5');
+  $('#modalEdit .spinner-container').show();
 
   var requestOptions = {
     method: 'GET',
@@ -3072,7 +3268,33 @@ const OpenEdit = (id) => {
   fetch(`${url}Campania/${id}`, requestOptions)
     .then(response => response.json())
     .then(result => {
-      
+      // Mostrar manualmente el primer paso
+      var stepsEdits = $('#stepperEdit').children();
+      stepsEdits.hide();
+      stepsEdits.eq(0).show();
+        // Ocultar el spinner y mostrar el contenido del modal
+      $('#modalEdit .modal-body').css('opacity', '1');
+      $('#modalEdit .spinner-container').hide();
+
+        // Ocultar el indicador de carga
+        $('#modalEdit .spinner-container').hide();
+
+        // Mostrar el primer paso del stepper
+        var stepsEdits = $('#stepperEdit').children();
+        stepsEdits.hide();
+        stepsEdits.eq(0).show();
+
+        
+
+        // Mostrar el modal solo si los datos han sido cargados
+        if (isDataLoaded) {
+          $('#modalEdit').modal('show');
+        }
+
+      // Mostrar el modal
+      $('#modalEdit').modal('toggle');
+      console.log('Resultados', result);
+
       // Asignar los datos del registro a los campos del formulario
       $('#idCampania').val(id);
       $('#campaniaEdit').val(result.nombre);
@@ -3087,7 +3309,7 @@ const OpenEdit = (id) => {
       $('#tipoUsuariosEdit').val(result.tipoUsuario);
       $('#notificacionEdit').val(result.tituloNotificacion);
       $('#descripcionNotificacionEdit').val(result.descripcionNotificacion);
-
+      $('#estadoCampania').val(result.estado)
       // Llamar a la función userValidator con el valor de restriccionUsuarios
       const event = {
         target: document.getElementById('restriccionUsuariosEdit')
@@ -3096,14 +3318,14 @@ const OpenEdit = (id) => {
 
 
       // Asignar las imágenes si existen
-      if (result.imgPush) {
-        $('#previewImgEdit').attr('src', `ruta/a/la/imagen/${result.imgPush}`);
-        $('#previewImgEdit').show();
-      }
-      if (result.imgAkisi) {
-        $('#previewNotificacionEdit').attr('src', `ruta/a/la/imagen/${result.imgAkisi}`);
-        $('#previewNotificacionEdit').show();
-      }
+      // if (result.imgPush) {
+      //   $('#previewImgEdit').attr('src', `ruta/a/la/imagen/${result.imgPush}`);
+      //   $('#previewImgEdit').show();
+      // }
+      // if (result.imgAkisi) {
+      //   $('#previewNotificacionEdit').attr('src', `ruta/a/la/imagen/${result.imgAkisi}`);
+      //   $('#previewNotificacionEdit').show();
+      // }
 
       $('#maximoParticipantesEdit').val(result.maximoParticipaciones);
       $('#tercerosCampaniaEdit').val(result.campaniaTerceros);
@@ -3124,7 +3346,10 @@ const OpenEdit = (id) => {
       $('#modalEdit').modal('toggle');
       console.log('Resultados',result)
     })
-    .catch(error => console.log('error', error));
+    .catch(error => {console.log('error', error)
+      $('#modalEdit .modal-body').css('opacity', '1');
+      $('#modalEdit .spinner-container').hide();
+      });
 };
 
 const OpenDelete = (id) =>{
