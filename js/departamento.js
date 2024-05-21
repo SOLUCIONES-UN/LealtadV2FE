@@ -3,27 +3,28 @@ let token = localStorage.getItem("token");
 
 $(function () {
   let tabla = getDepartamentos();
-  GetProjects();
+ 
   Usuario();
+  
   function validarNombre(nombre) {
-    const nombreValido = /^[a-zA-Z0-9\s]+$/.test(nombre.trim());
-
-    if (!nombreValido) {
-      $('.nombre').addClass('is-invalid');
-      $('.nombre-error').text('El nombre no admite caracteres especiales ni espacios en blanco').addClass('text-danger');
-      return false;
-    }
-    return true;
-  }
-  function validaIdLocal(IdLocal) {
-    const IdLocalValido = /^\d+$/.test(IdLocal.trim());
-
-    if (!IdLocalValido) {
-        $('#IdLocal').addClass('is-invalid'); // Aquí cambiamos de .IdLocal a #IdLocal
-        $('#IdLocal-error').text('El ID local solo puede contener números y no puede estar vacío').addClass('text-danger'); // Aquí cambiamos de .IdLocal-error a #IdLocal-error
+    const descripcionValida =/^[a-zA-Z]+(?:\s[a-zA-Z]+)*$/.test(nombre);
+    if (!descripcionValida) {
+        $('.nombre').addClass('is-invalid');
+        $('.nombre-error').text('La descripción no admite caracteres especiales ni espacios en blanco solo debe contener letras').addClass('text-danger');
         return false;
     }
     return true;
+}
+  
+function validaIdLocal(IdLocal) {
+  const IdLocalValido = /^\d+$/.test(IdLocal.trim());
+
+  if (!IdLocalValido) {
+      $('#IdLocal').addClass('is-invalid');
+      $('#IdLocal-error').text('El ID local solo puede contener números y no puede estar vacío').addClass('text-danger');
+      return false;
+  }
+  return true;
 }
 
   $('#modalNew').on('show.bs.modal', function () {
@@ -64,11 +65,12 @@ $(function () {
     const nombre = $('#nombre').val();
     const IdLocal = $('#IdLocal').val();
 
+
     if (!validarNombre(nombre)) {
       
       return false;
     }
-     if (!validarIdLocal(IdLocal)) {
+    if (!validaIdLocal(IdLocal)) {
       
       return false;
     }
@@ -81,7 +83,8 @@ $(function () {
 
     var raw = JSON.stringify({
       nombre: $("#nombre").val(),
-      nombre: $("#IdLocal").val(),
+      IdLocal: $("#IdLocal").val(),
+      idProyecto: $('#proyecto').val(),
     });
 
     var requestOptions = {
@@ -115,13 +118,13 @@ $(function () {
   $("#formEdit").submit(function () {
 
     const nombre = $('#nombreEdit').val();
-    const IdLocal = $('#IdLocal').val();
+    const IdLocal = $('#IdLocalEdit').val();
 
     if (!validarNombre(nombre)) {
       
       return false;
     }
-    if (!validarIdLocal(IdLocal)) {
+    if (!validaIdLocal(IdLocal)) {
       
       return false;
     }
@@ -137,7 +140,8 @@ $(function () {
 
     var raw = JSON.stringify({
       "nombre": $('#nombreEdit').val(),
-      "IdColumna": $('#IdLocalEdit').val()
+      "IdLocal": $('#IdLocalEdit').val(),
+      
     });
 
 
@@ -288,6 +292,7 @@ function limpiarFormulario() {
   $('#IdLocal').val('');
   $('.IdLocal').removeClass('is-invalid');
   $('.IdLocal-error').empty().removeClass('text-danger');
+  $('#IdLocalEdit').val('');
 }
 
 
@@ -321,6 +326,8 @@ const OpenEdit = (id) => {
       console.log(result);
       $("#id").val(id);
       $("#nombreEdit").val(result.nombre);
+      $("#IdLocalEdit").val(result.IdLocal);
+      $("#proyectoEdit").val(result.idProyecto); 
       $("#modalEdit").modal("toggle");
     })
     .catch((error) => console.log("error", error));

@@ -7,7 +7,7 @@ $(function () {
     let tabla = GetProfecion();
     Usuario();
     function validarDescripcion(descripcion) {
-        const descripcionValida = /^[a-zA-Z0-9\s]+$/.test(descripcion.trim());
+        const descripcionValida = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+$/.test(descripcion.trim());
 
         if (!descripcionValida) {
             $('.descripcion').addClass('is-invalid');
@@ -43,14 +43,9 @@ $(function () {
 
     //evento submit del formulario
     $('#formNew').submit(function () {
-
-       
         $('#btnSubmit').prop('disabled', true);
         const descripcion = $('#descripcion').val();
-       
-        
-        
-
+    
         if (!validarDescripcion(descripcion)) {
             $('#btnSubmit').prop('disabled', false);
             return false;
@@ -100,11 +95,7 @@ $(function () {
 
         const descripcion = $('#descripcionEdit').val();
         
-       
-        
-        
-        
-
+    
         if (!validarDescripcion(descripcion)) {
             $('#btnSubmitEdit').prop('disabled', false);
 
@@ -187,16 +178,6 @@ $(function () {
     })
 });
 
-// const Usuario = () => {
-
-//     let usuario = JSON.parse(localStorage.getItem('infoUsuario'));
-//     console.log(usuario.nombre)
-//     $('.user-name').text(usuario.nombre);
-//     $('.user-status').text(usuario.rol.descripcion);
-// }
-
-
-//obtiene la lista de menus
 const GetProfecion = () => {
     return $('#tableData').dataTable({
         ajax: {
@@ -289,7 +270,7 @@ function limpiarFormulario() {
 
 
 
-const Alert = function (message, status) // si se proceso correctamente la solicitud
+const Alert = function (message, status)
 {
     toastr[`${status}`](message, `${status}`, {
         closeButton: true,

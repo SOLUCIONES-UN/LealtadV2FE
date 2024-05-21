@@ -5,7 +5,7 @@ $(function () {
     getDepartamentos();
     GetProjects();
     let tabla = getMunicipios();
-    getSelect();
+    
     Usuario()
     function validarNombre(nombre) {
         const nombreValido = /^[a-zA-Z\s]+$/.test(nombre.trim());
@@ -15,8 +15,20 @@ $(function () {
           $('.nombre-error').text('El nombre no admite caracteres especiales ni espacios en blanco').addClass('text-danger');
           return false;
         }
+
         return true;
-      }
+    }
+
+       function validaIdLocal(IdLocal) {
+  const IdLocalValido = /^\d+$/.test(IdLocal.trim());
+
+  if (!IdLocalValido) {
+      $('#IdLocal').addClass('is-invalid');
+      $('#IdLocal-error').text('El ID local solo puede contener números y no puede estar vacío').addClass('text-danger');
+      return false;
+  }
+  return true;
+}
     
       $('#modalNew').on('show.bs.modal', function () {
         limpiarFormulario();
@@ -53,13 +65,17 @@ $(function () {
     $('#formNew').submit(function () {
         const idDepartamento = $('#departamento').val();
         const nombre = $('#nombre').val();
-
+        const IdLocal = $('#IdLocal').val();
 
         
 
         if (!validarNombre(nombre)) {
             return false;
         }
+        if (!validaIdLocal(IdLocal)) {
+      
+            return false;
+          }
 
         if (idDepartamento == 0 || idDepartamento == null) {
             
@@ -76,6 +92,7 @@ $(function () {
 
         var raw = JSON.stringify({
             "nombre": $('#nombre').val(),
+            "IdLocal": $("#IdLocal").val(),
             "departamento":idDepartamento,
          
          
@@ -110,11 +127,15 @@ $(function () {
 
     $('#formEdit').submit(function () {
         const nombre = $('#nombreEdit').val();
+        const IdLocal = $('#IdLocalEdit').val();
 
         if (!validarNombre(nombre)) {
         return false;
         }
-
+        if (!validaIdLocal(IdLocal)) {
+      
+            return false;
+          }
         $("#btnSubmitEdit").attr("disabled", true);
 
         var myHeaders = new Headers();
@@ -126,7 +147,7 @@ $(function () {
         var raw = JSON.stringify({
             "departamento": $('#departamentoActualizar').val(),
             "nombre": $('#nombreEdit').val(),
-     
+            "IdLocal": $('#IdLocalEdit').val(),
         });
 
 
@@ -316,7 +337,7 @@ const OpenEdit = (id) => {
             $('#id').val(id);
             $('#departamentoActualizar').val(result.idDepartamento);
             $('#nombreEdit').val(result.nombre);
-          
+            $('#IdLocalEdit').val(result.IdLocal);
             $('#modalEdit').modal('toggle');
         })
         .catch(error => console.log('error', error));
@@ -356,11 +377,22 @@ const GetProjects = (isEdit = false) => {
         var selectProyecto = document.getElementById("proyecto");
         var selectProyectoEdit = document.getElementById("proyectoEdit");
   
-        
+        selectProyecto.addEventListener('change', function() {
+            var selectedId = this.value; 
+            getDepartamentos(selectedId); 
+        });
+
+        selectProyectoEdit.addEventListener('change', function() {
+            var selectedId = this.value;
+            getDepartamentos(selectedId); 
+        });
+    
       })
       .catch((err) => console.log("error", err));
   };
-const getDepartamentos = () => {
+  const getDepartamentos = (idProyecto) => {
+    $("#departamento").html(null);
+    $("#departamentoActualizar").html(null);
     var requestOptions = {
         method: 'GET',
         redirect: 'follow',
@@ -368,7 +400,7 @@ const getDepartamentos = () => {
     };
 
     $('#departamento').html('<option value="0" selected disabled>Selecciona una Opcion</option>');
-    fetch(`${url}Departamento`, requestOptions)
+    fetch(`${url}Departamentobyproyecto/${idProyecto}`, requestOptions)
         .then(response => response.json())
         .then(result => {
             result.forEach(element => {
@@ -378,29 +410,5 @@ const getDepartamentos = () => {
             });
         })
         .catch(error => console.log('error', error));
-
-}
-const getSelect =()=>{ 
-    var requestOptions ={
-        method: 'GET',
-        redirect: 'follow',
-        headers: {"Authorization": token}
-    };
-    // $('#ruta').html('<option value="0" selected disabled>Selecciona una Opcion</option>');
-    fetch(`${url}projects`,requestOptions)
-        .then(response => response.json())
-        .then(result =>{
-            console.log(result);
-      
-    
-            result.forEach(element=>{
-                 
-                var  opc = `<option value="${element.id}">${element.descripcion}</option>`; 
-    
-                $('#ruta').append(opc);
-                $('#rutaEdit').append(opc);
-            });
-        })
-        .catch(err => Alert(err.message, 'error'))
 }
 
