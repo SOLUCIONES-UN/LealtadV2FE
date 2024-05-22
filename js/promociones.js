@@ -313,7 +313,6 @@ $(function () {
   // });
 
 
-
   $("#formNew").submit(function (event) {
     event.preventDefault();
   
@@ -327,8 +326,6 @@ $(function () {
       return;
     }
   
-    const id = $("#id").val();
-    
     // Función para convertir una imagen a base64
     function getBase64(file) {
       return new Promise((resolve, reject) => {
@@ -346,12 +343,12 @@ $(function () {
     // Convertir las imágenes a base64 y luego enviar el formulario
     Promise.all([getBase64(imgSuccessFile), getBase64(imgFailFile)])
       .then(([imgSuccessBase64, imgFailBase64]) => {
-        var raw = JSON.stringify({
+        const data = {
           nemonico: $("#nemonico").val(),
           nombre: $("#nombre").val(),
           descripcion: $("#descripcion").val(),
-          mesajeExito: $("#successaMessage").val(),
-          mesajeFail: $("#failMessage").val(),
+          mesajeExito: $("#successMessage").val() || "Mensaje de éxito", // Valor por defecto si está vacío
+          mesajeFail: $("#failMessage").val() || "Mensaje de fallo", // Valor por defecto si está vacío
           fechaInicio: $("#fechaInicio").val(),
           fechaFin: $("#fechaFin").val(),
           imgSuccess: imgSuccessBase64,
@@ -367,21 +364,24 @@ $(function () {
             nombre: premio.premioDescripcion,
             cantidad: premio.cantidad
           }))
-        });
+        };
   
-        console.log("Datos del formulario a enviar:", raw); // Agrega este console.log
+        console.log("Datos del formulario a enviar:", data); // Verificar los datos
   
-        var requestOptions = {
+        const requestOptions = {
           method: "POST",
-          headers: headers,
-          body: raw,
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data),
           redirect: "follow"
         };
   
-        fetch(`${url}Promocion/${id}`, requestOptions)
-          .then((response) => response.json())
-          .then((result) => {
-            if (result.code == "ok") {
+        fetch(`${url}Promocion`, requestOptions) // Asegúrate de que la URL sea correcta
+          .then(response => response.json())
+          .then(result => {
+            console.log("Respuesta del servidor:", result); // Verificar la respuesta
+            if (result.code === "ok") {
               getAllPromociones();
               $("#modalNew").modal("toggle");
               Alert(result.message, "success");
@@ -389,18 +389,19 @@ $(function () {
               Alert(result.message, "error");
             }
           })
-          .catch((error) => {
+          .catch(error => {
+            console.error("Error en la solicitud:", error); // Verificar errores
             Alert(error.errors, "error");
           });
       })
       .catch(error => {
+        console.error("Error al procesar las imágenes", error); // Verificar errores
         Alert("Error al procesar las imágenes", "error");
       });
   
     return false;
   });
   
-
 
 
 
