@@ -16,6 +16,7 @@ const inputFile = document.getElementById("formFile");
 
 
 $('#modalNew').on('show.bs.modal', function () {
+
   console.log("Modal nuevo abierto"); // Agregar este console.log para verificar si se activa correctamente
 
 });
@@ -117,10 +118,36 @@ $(function () {
         verticalStepper.previous();
       });
 
-    $(verticalWizard)
-      .find(".btn-submit")
-      .on("click", function () {
-        var data = {
+    // $(verticalWizard)
+    //   .find(".btn-submit")
+    //   .on("click", function () {
+    //     var data = {
+    //       nemonico: $("#nemonico").val(),
+    //       nombre: $("#nombre").val(),
+    //       descripcion: $("#descripcion").val(),
+    //       mesajeExito: $("#successaMessage").val(),
+    //       mesajeFail: $("#failMessage").val(),
+    //       imgSuccess: newImagen,
+    //       imgFail: newImagen1,
+    //       fechaInicio: $("#fechaInicio").val(),
+    //       fechaFin: $("#fechaFin").val(),
+    //       PremioXcampania: 0,
+    //       estado: 1,
+    //       codigos: codigos,
+    //       premios: premios,
+    //     };
+        
+    //     console.log(data);
+    //     saveData(data);
+    //     Limpiar();
+    //   });
+
+
+
+    $(verticalWizard).find(".btn-submit").on("click", function () {
+      console.log("Codigos antes de enviar:", codigos);
+      console.log("Premios antes de enviar:", premios);
+      var data = {
           nemonico: $("#nemonico").val(),
           nombre: $("#nombre").val(),
           descripcion: $("#descripcion").val(),
@@ -130,16 +157,34 @@ $(function () {
           imgFail: newImagen1,
           fechaInicio: $("#fechaInicio").val(),
           fechaFin: $("#fechaFin").val(),
-          PremioXcampania: 0,
+          PremioXcampania: 1,
           estado: 1,
-          codigos: codigos,
-          premios: premios,
-        };
-        
-        console.log(data);
-        saveData(data);
-        Limpiar();
-      });
+          codigos: codigos.map((codigo, index) => ({
+              codigo: `CODE${index + 1}`,
+              esPremio: 0,
+              cupon: codigo.cupon
+          })),
+          premios: premios.map(premio => ({
+              nombre: premio.premioDescripcion,
+              cantidad: premio.cantidad,
+              valor: premio.valor // Asegúrate de incluir el valor aquí
+          }))
+      };
+      console.log(data);
+      saveData(data);
+      Limpiar();
+  });
+  
+
+
+
+
+
+
+
+
+
+
   }
 
   //Inicializacion de Navs
@@ -187,6 +232,25 @@ $(function () {
     Limpiar();
   });
 
+  // $("#btnGenerar").click(function () {
+  //   const cantidad = $("#cantidad").val();
+  //   const tamanio = $("#tamanio").val();
+  //   const tipo = $("#tipogeneracion").val();
+  //   const nemonico = $("#nemonico").val();
+  //   codigos = [];
+  //   for (let index = 0; index < cantidad; index++) {
+  //     var newCode = nemonico + generaCupon(tamanio, tipo);
+  //     codigos.push({ cupon: newCode, estado: 1, esPremio: 0 });
+  //   }
+  //   DrawCodigos();
+
+  //   $("#cantidad").val(null);
+  //   $("#tamanio").val(null);
+  //   $("#tipogeneracion").val(1);
+  // });
+
+
+
   $("#btnGenerar").click(function () {
     const cantidad = $("#cantidad").val();
     const tamanio = $("#tamanio").val();
@@ -195,14 +259,151 @@ $(function () {
     codigos = [];
     for (let index = 0; index < cantidad; index++) {
       var newCode = nemonico + generaCupon(tamanio, tipo);
-      codigos.push({ cupon: newCode, estado: 1, esPremio: 0 });
+      codigos.push({ cupon: newCode });
     }
+    console.log("Codigos generados:", codigos);
     DrawCodigos();
-
     $("#cantidad").val(null);
     $("#tamanio").val(null);
     $("#tipogeneracion").val(1);
   });
+  
+
+
+
+
+
+
+  // $("#formNew").submit(function () {
+
+  //   const id = $("#id").val();
+
+  //   var raw = JSON.stringify({
+  //     nemonico: $("#nemonico").val(),
+  //     nombre: $("#nombre").val(),
+  //     descripcion: $("#descripcion").val(),
+  //     mesajeExito: $("#successaMessage").val(),
+  //     mesajeFail: $("#failMessage").val(),
+  //     fechaInicio: $("#fechaInicio").val(),
+  //     fechaFin: $("#fechaFin").val(),
+  //   });
+
+  //   var requestOptions = {
+  //     method: "POST",
+  //     headers: headers,
+  //     body: raw,
+  //     redirect: "follow"
+  //   };
+
+  //   fetch(`${url}Promocion/${id}`, requestOptions)
+  //     .then((response) => response.json())
+  //     .then((result) => {
+  //       if (result.code == "ok") {
+  //         getAllPromociones();
+  //         $("#modalEdit").modal("toggle");
+  //         Alert(result.message, "success");
+  //       } else {
+  //         Alert(result.message, "error");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       Alert(error.errors, "error");
+  //     });
+  //   return false;
+  // });
+
+
+
+  $("#formNew").submit(function (event) {
+    event.preventDefault();
+  
+    if (codigos.length === 0) {
+      Alert("Debe generar al menos un código.", "error");
+      return;
+    }
+  
+    if (premios.length === 0) {
+      Alert("Debe agregar al menos un premio.", "error");
+      return;
+    }
+  
+    const id = $("#id").val();
+    
+    // Función para convertir una imagen a base64
+    function getBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
+  
+    // Obtener las imágenes
+    const imgSuccessFile = document.getElementById("newImagen").files[0];
+    const imgFailFile = document.getElementById("newImagen1").files[0];
+  
+    // Convertir las imágenes a base64 y luego enviar el formulario
+    Promise.all([getBase64(imgSuccessFile), getBase64(imgFailFile)])
+      .then(([imgSuccessBase64, imgFailBase64]) => {
+        var raw = JSON.stringify({
+          nemonico: $("#nemonico").val(),
+          nombre: $("#nombre").val(),
+          descripcion: $("#descripcion").val(),
+          mesajeExito: $("#successaMessage").val(),
+          mesajeFail: $("#failMessage").val(),
+          fechaInicio: $("#fechaInicio").val(),
+          fechaFin: $("#fechaFin").val(),
+          imgSuccess: imgSuccessBase64,
+          imgFail: imgFailBase64,
+          PremioXcampania: 1,
+          estado: 1,
+          codigos: codigos.map((codigo, index) => ({
+            codigo: `CODE${index + 1}`,
+            esPremio: 0,
+            cupon: codigo.cupon
+          })),
+          premios: premios.map(premio => ({
+            nombre: premio.premioDescripcion,
+            cantidad: premio.cantidad
+          }))
+        });
+  
+        console.log("Datos del formulario a enviar:", raw); // Agrega este console.log
+  
+        var requestOptions = {
+          method: "POST",
+          headers: headers,
+          body: raw,
+          redirect: "follow"
+        };
+  
+        fetch(`${url}Promocion/${id}`, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            if (result.code == "ok") {
+              getAllPromociones();
+              $("#modalNew").modal("toggle");
+              Alert(result.message, "success");
+            } else {
+              Alert(result.message, "error");
+            }
+          })
+          .catch((error) => {
+            Alert(error.errors, "error");
+          });
+      })
+      .catch(error => {
+        Alert("Error al procesar las imágenes", "error");
+      });
+  
+    return false;
+  });
+  
+
+
+
+
 
   $("#formEdit").submit(function () {
 
@@ -366,19 +567,40 @@ $(function () {
     return false;
   });
 
+  // $("#BtnPremios").click(function () {
+  //   var cantidad = $("#cantidaPremio").val();
+  //   var premio = $("#premio").val();
+  //   var valor = $("#valorPremio").val();
+  //   var premioDescripcion = $("#premio option:selected").text();
+  //   var data = { cantidad, idPremio: premio, valor, premioDescripcion };
+  //   premios = [...premios, data];
+  //   DrawPremios();
+
+  //   $("#cantidaPremio").val(null);
+  //   $("#premio").val(0);
+  //   $("#valorPremio").val(null);
+  // });
+  
   $("#BtnPremios").click(function () {
     var cantidad = $("#cantidaPremio").val();
-    var premio = $("#premio").val();
-    var valor = $("#valorPremio").val();
+    var premio = $("#premio option:selected").val();
     var premioDescripcion = $("#premio option:selected").text();
-    var data = { cantidad, idPremio: premio, valor, premioDescripcion };
-    premios = [...premios, data];
-    DrawPremios();
-
-    $("#cantidaPremio").val(null);
-    $("#premio").val(0);
-    $("#valorPremio").val(null);
+    var valor = $("#valorPremio").val();
+  
+    if (cantidad && premio !== "0" && valor) {
+        var data = { cantidad, premioDescripcion, idPremio: premio, valor };
+        premios.push(data);
+        console.log("Premios agregados:", premios); // Agrega este console.log
+        DrawPremios();
+        $("#cantidaPremio").val(null);
+        $("#premio").val("0");
+        $("#valorPremio").val(null);
+    } else {
+        Alert("Todos los campos deben ser llenados", "error");
+    }
   });
+  
+
 
   //Para eliminar una promocion
   $("#BtnDelete").click(function () {
@@ -409,7 +631,7 @@ $(function () {
 });
 
 const limpiarForm = () => {
-  $("#formNew").trigger("reset");
+  $("New#form").trigger("reset");
 };
 
 /*const Usuario = () => {
@@ -577,10 +799,10 @@ const OpenDelete = (id) => {
 
 const ChangePanel = (estado) => {
   if (estado === 1) {
-    $("#panelCreacion").hide();
+    $("#panelCreacion").show();
     $("#panelListado").show();
   } else {
-    $("#panelListado").hide();
+    // $("#panelListado").hide();
     $("#panelCreacion").show();
   }
 };
@@ -681,47 +903,49 @@ const DrawPremios = () => {
   $("#detallePremios").html(null);
   $("#detallePremioRes").html(null);
   premios.forEach((element, index) => {
-    var tr = `<tr>
-        <td>${element.cantidad}</td>
-        <td>${element.premioDescripcion}</td>
-        <td>${element.valor}</td>
-        <td><span class="btn-sm btn btn-outline-danger" onclick="removePremio(${index})">Eliminar</span></td>
+      var tr = `<tr>
+          <td>${element.cantidad}</td>
+          <td>${element.premioDescripcion}</td>
+          <td>${element.valor}</td>
+          <td><span class="btn-sm btn btn-outline-danger" onclick="removePremio(${index})">Eliminar</span></td>
       </tr>`;
-    var tr2 = `<tr>
-      <td>${element.cantidad}</td>
-      <td>${element.premioDescripcion}</td>
-      <td>${element.valor}</td>
-    </tr>`;
-    $("#detallePremios").append(tr);
-    $("#detallePremioRes").append(tr2);
+      var tr2 = `<tr>
+          <td>${element.cantidad}</td>
+          <td>${element.premioDescripcion}</td>
+          <td>${element.valor}</td>
+      </tr>`;
+      $("#detallePremios").append(tr);
+      $("#detallePremioRes").append(tr2);
   });
 };
 
 const getPremios = () => {
   var requestOptions = {
-    method: "GET",
-    redirect: "follow",
-    headers: headers
+      method: "GET",
+      headers: headers,
+      redirect: "follow"
   };
 
-  $("#premio").html(
-    '<option value="0" selected disabled>Selecciona una opcion</option>'
-  );
+  $("#premio").html('<option value="0" selected>Seleccione Un Premio</option>');
   fetch(`${url}Premio`, requestOptions)
-    .then((response) => response.json())
-    .then((result) => {
-      result.forEach((element) => {
-        var opc = `<option value="${element.id}">${element.nombre}</option>`;
-        $("#premio").append(opc);
-      });
-    })
-    .catch((error) => console.log("error", error));
+      .then((response) => response.json())
+      .then((result) => {
+          console.log("Datos de premios recibidos:", result); // Agrega este console.log
+          result.forEach((element) => {
+              var opc = `<option value="${element.id}">${element.descripcion}</option>`; // Cambiar nombre a descripcion
+              $("#premio").append(opc);
+          });
+      })
+      .catch((error) => console.log("error", error));
 };
+
+
 
 const removePremio = (index) => {
   premios.splice(index, 1);
   DrawPremios();
 };
+
 
 const loadMenuEdit = () => {
   var bsStepper = document.querySelectorAll(".bs-stepper"),
@@ -878,6 +1102,49 @@ inputFile.addEventListener("change", function () {
     });
   }
 });
+
+// function activateStep(button) {
+//   document.querySelectorAll('.step-trigger').forEach(btn => {
+//       btn.classList.remove('bg-blue-500', 'text-white');
+//       btn.classList.add('bg-gray-200', 'text-gray-500');
+//   });
+//   button.classList.add('bg-blue-500');
+//   button.classList.add('bg-purple-700');
+//   button.classList.remove('bg-gray-200');
+// }
+
+// // Initialize the first step as active
+// document.addEventListener('DOMContentLoaded', (event) => {
+//   const firstButton = document.querySelector('.step-trigger');
+//   firstButton.classList.add('bg-blue-500 ');
+//   button.classList.add('bg-purple-700');
+//   firstButton.classList.remove('bg-gray-200');
+// });
+
+
+// function activateStep(clickedButton) {
+//   const buttons = document.querySelectorAll('.step-trigger');
+// console.log('prueba boton puto');
+//   // Desactivar todos los botones
+//   buttons.forEach(button => {
+//     button.classList.remove('active-button');
+//     button.classList.add('desactivabutton');
+//   });
+
+//   // Activar el botón clicado
+//   clickedButton.classList.add('active-button');
+//   button.classList.remove('desactivabutton');
+// }
+
+function activateStep(element) {
+  // Remover el estado activo de todos los botones
+  document.querySelectorAll('.step-trigger').forEach(btn => {
+    btn.classList.remove('active');
+  });
+
+  // Añadir el estado activo al botón seleccionado
+  element.classList.add('active');
+}
 
 const UpdatePromocion = (id, type) => {
   //OpenEdit(id)
