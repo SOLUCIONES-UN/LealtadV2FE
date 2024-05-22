@@ -32,6 +32,10 @@
     <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/bordered-layout.min.css">
     <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/semi-dark-layout.min.css">
     <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/vendors/js/materializeicon/material-icons.css" />
+    <link rel="stylesheet" href="../app-assets/vendors/css/animate/animate.css" />
+
+    <link rel="stylesheet" href="../app-assets/vendors/js/bootstrap-daterangepicker-master/daterangepicker.css" />
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../app-assets/css/core/menu/menu-types/vertical-menu.min.css">
@@ -184,13 +188,13 @@
                 <section class="card">
                     <div class="row p-2">
                         <div class="col-md-6">
-                            <button id="consultar-campa" class="btn btn-info mt-2 btn-block"> Consultar </button>
+                            <button id="btnConsultarInfo" class="btn btn-info mt-2 btn-block"> Consultar </button>
                         </div>
                         <div class="col-md-3">
-                            <button id="ExportarInfo" class="btn btn-primary mt-2 btn-block"> Excel </button>
+                            <button id="btnExportarInfo" class="btn btn-primary mt-2 btn-block"> Excel </button>
                         </div>
                         <div class="col-md-3">
-                            <button id="PantallaInfo" class="btn btn-primary mt-2 btn-block"> Mostar en Pantalla </button>
+                            <button id="btnPantallaInfo" class="btn btn-primary mt-2 btn-block"> Mostar en Pantalla </button>
                         </div>
                     </div>
                     <div class="card-datatable table-responsive p-2">
@@ -233,6 +237,8 @@
     <script src="../app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
 
+    <script src="../app-assets/vendors/js/bootstrap-daterangepicker-master/daterangepicker.js"></script>
+
     <!-- BEGIN: Page Vendor JS-->
     <script src="../app-assets/vendors/js/extensions/moment.min.js"></script>
     <script src="../app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
@@ -247,7 +253,10 @@
     <script src="../app-assets/js/core/app.min.js"></script>
     <script src="../app-assets/js/scripts/customizer.min.js"></script>
     <!-- END: Theme JS-->
-    <script src="../js/reporteCampanias.js"></script>
+    <script src="../app-assets/css/"></script>
+    <script src="../assets/js/jszip.js"></script>
+    <script src="../assets/js/xlsx.js"></script>
+    <script src="../js/reporteClientesContraCampanias.js"></script>
     <!-- BEGIN: Page JS-->
     <script src="../js/menuDinamico.js"></script>
     <!-- END: Page JS-->
