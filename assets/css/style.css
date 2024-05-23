@@ -258,7 +258,13 @@ textarea {
 	resize: none;
 }
 
-
-
-
+.navbar-content {
+	margin-left: 300px;
+	text-align: center;
+}
+@media (max-width: 1080px) {
+	.navbar-content {
+		margin-left: 0;
+	}
+}
 

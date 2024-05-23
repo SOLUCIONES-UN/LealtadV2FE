@@ -1,30 +1,39 @@
+
+
 const url = "http://localhost:3000/";
 let tokenOfercraft = localStorage.getItem("token");
 let datosObtenidos = null; // Variable global para almacenar los datos obtenidos
 
-$(function() {
-    $("#btnDescargarExcel, #PantallaInfo, #Reenviar, #tableData").hide(); // Ocultar botones al inicio
+$(document).ready(function() {
+    // Ocultar botones y tabla al inicio
+    $("#btnDescargarExcel, #PantallaInfo, #Reenviar, .datatables-basic").hide();
 
+    // Evento al hacer clic en "Consultar"
     $("#ConsultaParticipacion").on("click", function() {
         if ($("#fechaInicio").val() !== "" && $("#fechaFin").val() !== "") {
-            // Mostrar los botones al hacer clic en "Consultar"
-            $("#btnDescargarExcel, #PantallaInfo, #Reenviar").show();
-            getReport();
+            getReport(); // Obtener datos al hacer clic en "Consultar"
         } else {
             Alert("Debe llenar todos los campos", "error");
         }
     });
 
+    // Evento al hacer clic en "PantallaInfo"
     $("#PantallaInfo").on("click", function() {
         if (datosObtenidos) {
             mostrarDatosEnTabla(datosObtenidos);
-              $("#tableData").show(); 
+            $(".datatables-basic").show(); // Mostrar tabla después de obtener datos
         } else {
             Alert("Primero debes obtener los datos", "error");
         }
     });
-});
 
+    // Evento al hacer clic en "Descargar Excel"
+    $('#btnDescargarExcel').on("click", function() {
+        descargarExcel(); // Descargar datos en Excel
+    });
+}); 
+
+// Función para obtener el reporte de la API
 const getReport = () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -54,10 +63,10 @@ const getReport = () => {
             console.log("Datos del informe de oferCraft:", result);
             if (result.queryNotificaciones && result.customerinfo) {
                 datosObtenidos = [...result.queryNotificaciones, ...result.customerinfo];
-                $("#btnDescargarExcel, #PantallaInfo").show(); // Mostrar botones después de obtener los datos
+                $("#btnDescargarExcel, #PantallaInfo, #Reenviar").show(); // Mostrar botones después de obtener los datos
             } else {
                 console.error("El formato de los datos obtenidos no es correcto", result);
-                // Alert("El formato de los datos obtenidos no es correcto", "error");
+                Alert("El formato de los datos obtenidos no es correcto", "error");
             }
         })
         .catch((error) => {
@@ -66,137 +75,133 @@ const getReport = () => {
         });
 };
 
+
 function mostrarDatosEnTabla(datos) {
-    console.log("Datos para mostrar en la tabla:", datos);
-    $('#tableData').DataTable({
-        data: datos,
+  console.log("Datos para mostrar en la tabla:", datos);
+  if (!Array.isArray(datos)) {
+    console.error("Los datos no son un array:", datos);
+    return;
+  }
+
+  // Inicializa la tabla si no está inicializada
+  if (!$.fn.DataTable.isDataTable('#tableData')) {
+    let tabla = $('.datatables-basic').DataTable({
+
         columnDefs: [
-            { "defaultContent": "-", "targets": "_all" }
-        ],
-        order: [[0, 'asc']],
-        ordering: true,
-        language: {
-            search: "Buscar:",
-            searchPlaceholder: "Buscar",
-            lengthMenu: "Mostrar _MENU_",
-        },
-        scrollX: true,
-    
+        { "defaultContent": "-", "targets": "_all" }
+      ],
+      order: [[1, 'asc']], // Ajuste para ordenar por la segunda columna (No.)
+            ordering: true,
+            language: {
+        search: "Buscar:",
+        searchPlaceholder: "Buscar",
+        lengthMenu: "Mostrar _MENU_",
+      },
+      scrollX: true,
+      columns: [
+        { width: "5%" },   // Ancho de la columna de checkboxes
+        { width: "20%" },   // Ancho de la columna de números
+        { width: "20%" },  // Ancho de la columna de teléfono
+        { width: "40%" },  // Ancho de la columna de cliente
+        { width: "50%" },  // Ancho de la columna de campaña
+        { width: "40%" },  // Ancho de la columna de fecha
+        { width: "40%" }
+    ]
+
     });
+  
+// 
+//   let tabla = $('#tableData').DataTable();
+//   console.log(tabla);
 
-      
-    let tabla = '';
-    let contador = 1; // Contador para la columna de número
+  // Limpia cualquier dato existente en la tabla
+  tabla.clear().draw();
 
-    datos.forEach((element) => {
-        const telefono = element.telefono || "Desconocido";
-        const nombre = element.nombre || "Sin nombre";
-        const campana = element.campana || "Sin campaña";
-        const fecha = element.fecha || "Sin fecha";
-        const premio = element.premio || "Sin premio";
 
-        tabla += `
-            <tr>
-                <td><input type="checkbox" class="selectRow"></td>
-                <td>${contador++}</td>
-                <td>${telefono}</td>
-                <td>${nombre}</td>
-                <td>${campana}</td>
-                <td>${fecha}</td>
-                <td>${premio}</td>
-            </tr>
-        `;
-    });
+datos.forEach((element, index) => {
+    const telefonoFormateado = formatTelefonoGuatemala(element.telefono);
+    const nombreCompleto = element.nombre || "Sin nombre";
+    const campana = element.campana || "Sin campaña";
+    const fecha = element.fecha || "Sin fecha";
+    const premio = element.premio || "Sin premio";
 
-    $('#TbPararticipantes').html(tabla);
-
-    // Manejar la selección de todas las filas
-    $('#selectAll').on('click', function () {
-        const rows = $('#tableData').DataTable().rows({ 'search': 'applied' }).nodes();
-        $('input[type="checkbox"]', rows).prop('checked', this.checked);
-    });
-
-    // Manejar la selección de filas individualess
-    $('#TbPararticipantes').on('click', '.selectRow', function () {
-        if (!this.checked) {
-            const el = $('#selectAll').get(0);
-            if (el && el.checked && ('indeterminate' in el)) {
-                el.indeterminate = true;
-            }
-        }
-    });
-
-    // Evento para mostrar la cantidad de filas seleccionadas
-    $('#Reenviar').on('click', function () {
-        const selectedRows = $('#tableData').DataTable().rows('.selected').data().length;
-        alert(selectedRows + ' fila(s) seleccionada(s)');
-    });
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    $('#tableData').DataTable(); // Inicializar DataTable
-
-    document.getElementById("btnDescargarExcel").addEventListener("click", function() {
-        console.log("Descargar Excel");
-
-        const table = document.getElementById("TbPararticipantes");
-        const wb = XLSX.utils.book_new();
-
-        // Obtener los datos de la tabla sin la columna de checkboxes
-        const data = [];
-        let lineNumber = 1;
-
-        for (let i = 0; i < table.rows.length; i++) {
-            const row = [];
-            row.push(lineNumber++);
-            for (let j = 1; j < table.rows[i].cells.length; j++) {
-                row.push(table.rows[i].cells[j].innerText);
-            }
-            data.push(row);
-        }
-
-        // Agregar el encabezado
-        const headerRow1 = [
-            { v: '', t: 's', s: { font: { name: 'Courier', sz: 18} } },
-            { v: '', t: 's', s: { font: { sz: 18 }, alignment: { horizontal: 'center' } } },
-            { v: '', t: 's', s: { font: { sz: 18 }, alignment: { horizontal: 'center' } } },
-            { v: '', t: 's', s: { font: { sz: 18 }, alignment: { horizontal: 'center' } } },
-            { v: ' REPORTE DE NOTIFICACIONES', t: 's', s: { font: { sz: 18}, alignment: { horizontal: 'center' } } },
-        ];
-        const headerRow2 = [
-            { v: '', t: 's', s: { font: { name: 'Courier', sz: 12 } } },
-            { v: '', t: 's', s: { font: { sz: 12 }, alignment: { horizontal: 'center' } } },
-        ];
-        const headerRow3 = [''];
-        const headerRow4 = [
-            { v: '#', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-            { v: 'No.', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-            { v: 'Telefono', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-            { v: 'Cliente', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-            { v: 'Campaña', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-            { v: 'Fecha', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-            { v: 'Premio', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-        ];
-        data.unshift(headerRow1, headerRow2, headerRow3, headerRow4);
-
-        const ws = XLSX.utils.aoa_to_sheet(data);
-
-        // Ajustar el ancho de las columnas al contenido
-        ws['!cols'] = [
-            { wch: 5 }, // Número columna
-            { wch: 20 },
-            { wch: 20 }, // Teléfono columna
-            { wch: 40 }, // Cliente columna
-            { wch: 40 }, // Campaña columna
-            { wch: 25 }, // Fecha columna
-            { wch: 25 }, // Premio columna
-        ];
-
-        XLSX.utils.book_append_sheet(wb, ws, 'Reporte');
-        XLSX.writeFile(wb, 'reporte_notificaciones.xlsx');
-    });
+    tabla += `
+    <tr> 
+      <td><input type="checkbox" class="selectAll"></td>
+      <td>${index + 1 }</td>
+      <td>${telefonoFormateado}</td>
+      <td>${nombreCompleto}</td>
+      <td>${campana}</td>
+      <td>${fecha}</td>
+      <td>${premio}</td>
+    </tr>
+  `;
 });
+$('.datatables-basic tbody').html(tabla);
 
+}
+}
+const formatTelefonoGuatemala = (telefono) => {
+    const codigoPais = telefono.slice(0, 3); // Código de país (502)
+    const parte1 = telefono.slice(3, 7);    // Primeros 4 dígitos
+    const parte2 = telefono.slice(7);       // Últimos 4 dígitos
+    return `(${codigoPais}) ${parte1}-${parte2}`; // Formato (502) 1234-5678
+};
+
+function descargarExcel() {
+    const tabla = document.getElementById("TbPararticipantes");
+    const wb = XLSX.utils.book_new();
+
+    const data = [];
+    let lineNumber = 1;
+
+    for (let i = 0; i < tabla.rows.length; i++) {
+        const row = [];
+        row.push(lineNumber++);
+        for (let j = 1; j < tabla.rows[i].cells.length; j++) {
+            row.push(tabla.rows[i].cells[j].innerText);
+        }
+        data.push(row);
+    }
+
+    const headerRow1 = [
+        { v: '', t: 's', s: { font: { name: 'Courier', sz: 18} } },
+        { v: '', t: 's', s: { font: { sz: 18 }, alignment: { horizontal: 'center' } } },
+        { v: '', t: 's', s: { font: { sz: 18 }, alignment: { horizontal: 'center' } } },
+        { v: '', t: 's', s: { font: { sz: 18 }, alignment: { horizontal: 'center' } } },
+        { v: ' REPORTE DE NOTIFICACIONES', t: 's', s: { font: { sz: 18}, alignment: { horizontal: 'center' } } },
+    ];
+    const headerRow2 = [
+        { v: '', t: 's', s: { font: { name: 'Courier', sz: 12 } } },
+        { v: '', t: 's', s: { font: { sz: 12 }, alignment: { horizontal: 'center' } } },
+    ];
+    const headerRow3 = [''];
+    const headerRow4 = [
+        { v: '#', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+        { v: 'No.', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+        { v: 'TELÉFONO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+        { v: 'CLIENTE', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+        { v: 'CAMPAÑA', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+        { v: 'FECHA', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+        { v: 'PREMIO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+    ];
+    data.unshift(headerRow1, headerRow2, headerRow3, headerRow4);
+
+    const ws = XLSX.utils.aoa_to_sheet(data);
+
+    ws['!cols'] = [
+        { wch: 5 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 40 },
+        { wch: 40 },
+        { wch: 25 },
+        { wch: 25 },
+    ];
+
+    XLSX.utils.book_append_sheet(wb, ws, 'Reporte');
+    XLSX.writeFile(wb, 'reporte_notificaciones.xlsx');
+}
 
 function formatearFechaHora(fechaHora) {
     const fecha = new Date(fechaHora);
@@ -207,12 +212,14 @@ function formatearFechaHora(fechaHora) {
     const minutos = fecha.getMinutes().toString().padStart(2, "0");
     return `${dia}/${mes}/${año} ${horas}:${minutos}`;
 }
-
-const Alert = function(message, status) {
+const Alert = function (
+    message,
+    status // si se proceso correctamente la solicitud
+  ) {
     toastr[`${status}`](message, `${status}`, {
-        closeButton: true,
-        tapToDismiss: false,
-        positionClass: "toast-top-right",
-        rtl: false,
+      closeButton: true,
+      tapToDismiss: false,
+      positionClass: "toast-top-right",
+      rtl: false,
     });
-};
+  };
