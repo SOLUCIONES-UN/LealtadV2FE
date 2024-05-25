@@ -446,6 +446,7 @@
                     </div>
 
 
+              
 
                     <div class="modal modal-slide-in new-user-modal fade modal-transparent" id="modalNew">
                         <div id="focusElement" tabindex="-1"></div>
@@ -518,8 +519,8 @@
                                     </div>
                                     <div class="row">
                                       <div class="form-group form-password-toggle col-md-6">
-                                        <label class="form-label" for="successaMessage">Mensaje Éxito</label>
-                                        <textarea id="successaMessage" class="form-control" placeholder="Ingrese la descripción" rows="2"></textarea>
+                                        <label class="form-label" for="mensajeExito">Mensaje Éxito</label>
+                                        <textarea id="mensajeExito" class="form-control" placeholder="Ingrese la descripción" rows="2"></textarea>
                                       </div>
                                       <div class="col-md-6">
                                         <div class="form-group">
@@ -654,27 +655,30 @@
                                       <small>Configura los premios </small>
                                     </div>
                                     <div class="row">
-                                      <div class="form-group col-md-6">
-                                        <label class="form-label" for="cantidaPremio">Cantidad</label>
-                                        <input type="number" id="cantidaPremio" class="form-control" />
+                                        <div class="form-group col-md-4">
+                                          <label class="form-label" for="cantidaPremio">Cantidad</label>
+                                          <input type="number" id="cantidaPremio" class="form-control" />
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="form-label" for="premio">Premio</label>
+                                          <select class="form-control" id="premio">
+                                            <option>Seleccione Un Premio</option>
+                                          </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="form-label" for="valorPremio">Valor</label>
+                                          <input type="number" id="valorPremio" class="form-control" />
+                                        </div>
                                       </div>
-                                      <div class="form-group col-md-6">
-                                        <label class="form-label" for="Premio">Premio</label>
-                                        <select class="form-control" id="premio">
-                                          <option>Seleccione Un Premio</option>
-                                        </select>
+                                      <div class="row">
+                                        <div class="form-group col-md-6">
+                                          <label class="form-label" for="porcentaje">% Premio</label>
+                                          <input type="number" id="porcentaje" class="form-control" />
+                                        </div>
+                                        <div class="form-group col-md-6 d-flex align-items-end">
+                                          <button class="btn btn-success w-50" type="button" id="BtnPremios">AGREGAR</button>
+                                        </div>
                                       </div>
-                                    </div>
-                                    <div class="row">
-                                      <div class="form-group col-md-6">
-                                        <label class="form-label" for="valor">Valor</label>
-                                        <input type="number" id="valorPremio" class="form-control" />
-                                      </div>
-                                      <div class="form-group col-md-6">
-                                        <br />
-                                        <button class="btn btn-success" type="button" id="BtnPremios">AGREGAR</button>
-                                      </div>
-                                    </div>
                                     <div class="col-md-12" style="height: 400px;">
                                       <table class="table table-bordered">
                                         <thead>
@@ -682,32 +686,41 @@
                                             <th>Cantidad</th>
                                             <th>Premio</th>
                                             <th>Valor</th>
+                                            <th>%</th>
                                             <th>&nbsp;</th>
                                           </tr>
                                         </thead>
                                         <tbody id="detallePremios"></tbody>
                                       </table>
                                     </div>
-                                    <div class="d-flex justify-content-between">
-                                      <div>
-                                        <button class="btn btn-primary btn-prev">
-                                          <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
-                                          <span class="align-middle d-sm-inline-block d-none">Anterior</span>
-                                        </button>
+                                    <div class="d-flex justify-content-between" style="margin-top: -200px;">
+                                        <div class="form-group col-md-4">
+                                          <label class="form-label" for="cupon">Cupón</label>
+                                          <input type="number" id="cupon" class="form-control" />
+                                        </div>
                                       </div>
-                                      <div>
-                                        <button class="btn btn-warning BtnBottador">
-                                          <span class="align-middle d-sm-inline-block d-none">Borrador</span>
-                                          <i data-feather="trash-2" class="align-middle ml-sm-25 ml-0"></i>
-                                        </button>
-                                        <button class="btn btn-primary btn-next">
-                                          <span class="align-middle d-sm-inline-block d-none">Siguiente</span>
-                                          <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
-                                        </button>
+                                      <div class="d-flex justify-content-between" style="margin-top: 100px;">
+                                        <div>
+                                          <button class="btn btn-primary btn-prev">
+                                            <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                                            <span class="align-middle d-sm-inline-block d-none">Anterior</span>
+                                          </button>
+                                        </div>
+                                        <div>
+                                          <button class="btn btn-warning BtnBottador">
+                                            <span class="align-middle d-sm-inline-block d-none">Borrador</span>
+                                            <i data-feather="trash-2" class="align-middle ml-sm-25 ml-0"></i>
+                                          </button>
+                                          <button class="btn btn-primary btn-next">
+                                            <span class="align-middle d-sm-inline-block d-none">Siguiente</span>
+                                            <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                                          </button>
+                                        </div>
                                       </div>
-                                    </div>
                                   </div>
-                      
+
+
+    
                                   <div id="social-links-vertical" class="content" style="height: 650px;">
                                     <div class="content-header">
                                       <h5 class="mb-0">Resumen</h5>
@@ -718,7 +731,7 @@
                                       <div class="col-md-12">
                                         <p><b>Nombre: </b><small id="text-nemonico"></small> - <small id="text-nombre"></small></p>
                                         <p><b>Descripción: </b> <small id="text-descripcion"></small></p>
-                                        <p><b>Mensaje Código válido: <small id="text-success"></small></b></p>
+                                        <p><b>Mensaje Código válido: <small id="text-mensajeExito"></small></b></p>
                                         <p><b>Mensaje Código No válido: <small id="text-fail"></small></b></p>
                                         <p><b>Del <span id="text-fechaInicio"></span> Al <span id="text-fechaFin"></span></b></p>
                                       </div>
@@ -732,6 +745,7 @@
                                               <th>Cantidad</th>
                                               <th>Premio</th>
                                               <th>Valor</th>
+                                              <th>%</th>
                                             </tr>
                                           </thead>
                                           <tbody id="detallePremioRes"></tbody>
@@ -774,26 +788,6 @@
                       </div>
                       
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        
                     
                 </section>
 
@@ -956,6 +950,7 @@
                                                     <th>CODIGO</th>
                                                 </tr>
                                             </thead>
+                                            <input type="file" id="inputFile" />
                                             <tbody id="PreviewCodigoEdit"></tbody>
                                         </table>
                                     </div>

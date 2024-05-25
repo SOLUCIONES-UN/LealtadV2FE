@@ -106,7 +106,7 @@ $(function () {
         $("#text-nemonico").text($("#nemonico").val());
         $("#text-nombre").text($("#nombre").val());
         $("#text-descripcion").text($("#descripcion").val());
-        $("#text-success").text($("#successaMessage").val());
+        $("#text-mensajeExito").text($("#mensajeExito").val());
         $("#text-fail").text($("#failMessage").val());
         $("#text-fechaInicio").text($("#fechaInicio").val());
         $("#text-fechaFin").text($("#fechaFin").val());
@@ -151,7 +151,7 @@ $(function () {
           nemonico: $("#nemonico").val(),
           nombre: $("#nombre").val(),
           descripcion: $("#descripcion").val(),
-          mesajeExito: $("#successaMessage").val(),
+          mesajeExito: $("#mensajeExito").val(),
           mesajeFail: $("#failMessage").val(),
           imgSuccess: newImagen,
           imgFail: newImagen1,
@@ -166,22 +166,17 @@ $(function () {
           })),
           premios: premios.map(premio => ({
               nombre: premio.premioDescripcion,
-              cantidad: premio.cantidad,
-              valor: premio.valor // Asegúrate de incluir el valor aquí
+              cantidad: parseInt(premio.cantidad, 10), // Convertir a entero
+              valor: parseInt(premio.valor, 10), // Asegúrate de incluir el valor aquí
+              porcentaje: parseInt(premio.porcentaje, 10), // Convertir a entero
+              cupon: parseInt(premio.cupon, 10) // Convertir a entero
           }))
       };
       console.log(data);
       saveData(data);
       Limpiar();
-  });
-  
-
-
-
-
-
-
-
+    });
+    
 
 
 
@@ -217,7 +212,7 @@ $(function () {
       nemonico: $("#nemonico").val(),
       nombre: $("#nombre").val(),
       descripcion: $("#descripcion").val(),
-      mesajeExito: $("#successaMessage").val(),
+      mesajeExito: $("#mensajeExito").val(),
       mesajeFail: $("#failMessage").val(),
       imgSuccess: newImage,
       imgFail: newImagen1,
@@ -271,9 +266,6 @@ $(function () {
 
 
 
-
-
-
   // $("#formNew").submit(function () {
 
   //   const id = $("#id").val();
@@ -313,96 +305,107 @@ $(function () {
   // });
 
 
-  $("#formNew").submit(function (event) {
-    event.preventDefault();
-  
-    if (codigos.length === 0) {
-      Alert("Debe generar al menos un código.", "error");
-      return;
-    }
-  
-    if (premios.length === 0) {
-      Alert("Debe agregar al menos un premio.", "error");
-      return;
-    }
-  
-    // Función para convertir una imagen a base64
-    function getBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-      });
-    }
-  
-    // Obtener las imágenes
-    const imgSuccessFile = document.getElementById("newImagen").files[0];
-    const imgFailFile = document.getElementById("newImagen1").files[0];
-  
-    // Convertir las imágenes a base64 y luego enviar el formulario
-    Promise.all([getBase64(imgSuccessFile), getBase64(imgFailFile)])
-      .then(([imgSuccessBase64, imgFailBase64]) => {
-        const data = {
-          nemonico: $("#nemonico").val(),
-          nombre: $("#nombre").val(),
-          descripcion: $("#descripcion").val(),
-          mesajeExito: $("#successMessage").val() || "Mensaje de éxito", // Valor por defecto si está vacío
-          mesajeFail: $("#failMessage").val() || "Mensaje de fallo", // Valor por defecto si está vacío
-          fechaInicio: $("#fechaInicio").val(),
-          fechaFin: $("#fechaFin").val(),
-          imgSuccess: imgSuccessBase64,
-          imgFail: imgFailBase64,
-          PremioXcampania: 1,
-          estado: 1,
-          codigos: codigos.map((codigo, index) => ({
-            codigo: `CODE${index + 1}`,
-            esPremio: 0,
-            cupon: codigo.cupon
-          })),
-          premios: premios.map(premio => ({
-            nombre: premio.premioDescripcion,
-            cantidad: premio.cantidad
-          }))
-        };
-  
-        console.log("Datos del formulario a enviar:", data); // Verificar los datos
-  
-        const requestOptions = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data),
-          redirect: "follow"
-        };
-  
-        fetch(`${url}Promocion`, requestOptions) // Asegúrate de que la URL sea correcta
-          .then(response => response.json())
-          .then(result => {
-            console.log("Respuesta del servidor:", result); // Verificar la respuesta
-            if (result.code === "ok") {
-              getAllPromociones();
-              $("#modalNew").modal("toggle");
-              Alert(result.message, "success");
-            } else {
-              Alert(result.message, "error");
-            }
-          })
-          .catch(error => {
-            console.error("Error en la solicitud:", error); // Verificar errores
-            Alert(error.errors, "error");
-          });
-      })
-      .catch(error => {
-        console.error("Error al procesar las imágenes", error); // Verificar errores
-        Alert("Error al procesar las imágenes", "error");
-      });
-  
-    return false;
-  });
-  
 
+  
+    $("#formNew").submit(function (event) {
+      event.preventDefault();
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+  
+      let token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token no encontrado en localStorage");
+        Alert("Token no encontrado. Inicie sesión nuevamente.", "error");
+        return;
+      }
+      myHeaders.append("Authorization", token);
+  
+      if (codigos.length === 0) {
+        Alert("Debe generar al menos un código.", "error");
+        return;
+      }
+  
+      if (premios.length === 0) {
+        Alert("Debe agregar al menos un premio.", "error");
+        return;
+      }
+  
+      function getBase64(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+        });
+      }
+  
+      const imgSuccessFile = document.getElementById("newImagen").files[0];
+      const imgFailFile = document.getElementById("newImagen1").files[0];
+  
+      Promise.all([getBase64(imgSuccessFile), getBase64(imgFailFile)])
+        .then(([imgSuccessBase64, imgFailBase64]) => {
+          const data = {
+            nemonico: $("#nemonico").val(),
+            nombre: $("#nombre").val(),
+            descripcion: $("#descripcion").val(),
+            mesajeExito: $("#mensajeExito").val() || "Mensaje de éxito",
+            mesajeFail: $("#failMessage").val() || "Mensaje de fallo",
+            fechaInicio: $("#fechaInicio").val(),
+            fechaFin: $("#fechaFin").val(),
+            imgSuccess: imgSuccessBase64,
+            imgFail: imgFailBase64,
+            PremioXcampania: 1,
+            estado: 1,
+            codigos: codigos.map((codigo, index) => ({
+              codigo: `CODE${index + 1}`,
+              cupon: codigo.cupon,
+              esPremio: 0
+            })),
+            premios: premios.map(premio => ({
+              nombre: premio.premioDescripcion,
+              cantidad: parseInt(premio.cantidad, 10), // Convertir a entero
+              valor: parseInt(premio.valor, 10), // Convertir a entero
+              porcentaje: parseInt(premio.porcentaje, 10), // Convertir a entero
+              cupon: parseInt(premio.cupon, 10) // Convertir a entero
+            }))
+          };
+  
+          console.log("Datos del formulario a enviar:", data);
+  
+          const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: JSON.stringify(data),
+            redirect: "follow"
+          };
+  
+          fetch(`${url}Promocion`, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+              console.log("Respuesta del servidor:", result);
+              if (result.code === "ok") {
+                getAllPromociones();
+                $("#modalNew").modal("toggle");
+                Alert(result.message, "success");
+              } else {
+                Alert(result.message, "error");
+              }
+            })
+            .catch(error => {
+              console.error("Error en la solicitud:", error);
+              Alert("Error en la solicitud. Verifique los campos y el token.", "error");
+            });
+        })
+        .catch(error => {
+          console.error("Error al procesar las imágenes", error);
+          Alert("Error al procesar las imágenes", "error");
+        });
+  
+      return false;
+    });
+  
+ 
+  
 
 
 
@@ -587,19 +590,31 @@ $(function () {
     var premio = $("#premio option:selected").val();
     var premioDescripcion = $("#premio option:selected").text();
     var valor = $("#valorPremio").val();
+    var porcentaje = $("#porcentaje").val();
+    var cupon = $("#cupon").val();
   
     if (cantidad && premio !== "0" && valor) {
-        var data = { cantidad, premioDescripcion, idPremio: premio, valor };
-        premios.push(data);
-        console.log("Premios agregados:", premios); // Agrega este console.log
-        DrawPremios();
-        $("#cantidaPremio").val(null);
-        $("#premio").val("0");
-        $("#valorPremio").val(null);
+      var data = {
+        cantidad: parseInt(cantidad, 10), // Convertir a entero
+        premioDescripcion,
+        idPremio: premio,
+        valor,
+        porcentaje: parseInt(porcentaje, 10), // Convertir a entero
+        cupon: parseInt(cupon, 10) // Convertir a entero
+      };
+      premios.push(data);
+      console.log("Premios agregados:", premios); 
+      DrawPremios();
+      $("#cantidaPremio").val(null);
+      $("#premio").val("0");
+      $("#valorPremio").val(null);
+      $("#porcentaje").val(null);
+      $("#cupon").val(null);
     } else {
-        Alert("Todos los campos deben ser llenados", "error");
+      Alert("Todos los campos deben ser llenados", "error");
     }
   });
+  
   
 
 
@@ -908,12 +923,14 @@ const DrawPremios = () => {
           <td>${element.cantidad}</td>
           <td>${element.premioDescripcion}</td>
           <td>${element.valor}</td>
+          <td>${element.porcentaje}</td>
           <td><span class="btn-sm btn btn-outline-danger" onclick="removePremio(${index})">Eliminar</span></td>
       </tr>`;
       var tr2 = `<tr>
           <td>${element.cantidad}</td>
           <td>${element.premioDescripcion}</td>
           <td>${element.valor}</td>
+          <td>${element.porcentaje}</td>
       </tr>`;
       $("#detallePremios").append(tr);
       $("#detallePremioRes").append(tr2);
@@ -1005,7 +1022,7 @@ const loadMenuEdit = () => {
         $("#text-nemonico").text($("#nemonico").val());
         $("#text-nombre").text($("#nombre").val());
         $("#text-descripcion").text($("#descripcion").val());
-        $("#text-success").text($("#successaMessage").val());
+        $("#text-mensajeExito").text($("#mensajeExito").val());
         $("#text-fail").text($("#failMessage").val());
         $("#text-fechaInicio").text($("#fechaInicio").val());
         $("#text-fechaFin").text($("#fechaFin").val());
