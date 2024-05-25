@@ -14,8 +14,6 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 	display: none;
 }
 
-
-
 .dropzone .dz-message::before {
 	content: '';
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237367f0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-download'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'%3E%3C/path%3E%3Cpolyline points='7 5 12 15 17 5'%3E%3C/polyline%3E%3Cline x1='12' y1='15' x2='12' y2='3'%3E%3C/line%3E%3C/svg%3E");
@@ -40,14 +38,11 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 }
 
 .header-info{
-
 	background-color: white;
-	
 }
 
 span{
 	font-size: 0.95rem;
-	
 }
 
 .info-camp{
@@ -55,7 +50,6 @@ span{
 }
 
 .info-camp h5 + p {
-
 	font-size: 1.1rem;
 }
 
@@ -68,27 +62,18 @@ span{
 	padding-bottom: 15px;
 }
 
-
 .permisos-title{
-
 	box-shadow: 0 0 5px rgba(51, 51, 51, 0.37);
-	/*width: 35rem;*/
 	height: 5rem;
-
 }
 
-
 .content-title{
-
 	box-shadow: 0 0 5px rgba(51, 51, 51, 0.37);
-	/*width: 35rem;*/
 	height: 2rem;
-
 }
 
 .permisos-content-right{
-	box-shadow: 0 0 5px #ea5454b6	;
-	
+	box-shadow: 0 0 5px #ea5454b6;
 	border-radius: 5px;
 	height: 300px;
 }
@@ -112,23 +97,18 @@ span{
 	min-height: 200px;
 }
 
-
-
 .title-izquierdo{
 	box-shadow: 0 0 5px rgba(115, 53, 240, 0.384);
-	/*width: 35rem;*/
 	height: 5rem;
 	border-radius: 5px;
 }
 
 .title-content{
 	box-shadow: 0 0 2px rgba(115, 53, 240, 0.384);
-	/*width: 35rem;*/
 	height: 3rem;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 }
-
 
 .form-check input[type="checkbox"]{
 	display: none;
@@ -161,12 +141,10 @@ span{
 }
 
 .label-no-Asignado:hover{
-
 	background: rgba(115, 53, 240, 0.384);
 }
 
 .form-check .label-Asignado:hover{
-
 	background: rgba(234, 84, 85, 0.384);
 }
 
@@ -214,7 +192,6 @@ span{
 	display: none;
 }
 
-
 .container-select{
 	margin: 2px;
 	border-radius: 5px;
@@ -227,11 +204,8 @@ span{
 }
 
 .title-participantes{
-
 	margin-bottom: 2px;
 	font-weight: bold;
-	
-
 }
 
 .feather-15{
@@ -254,11 +228,38 @@ span{
 	height: 35px;
 }
 
+.navbar-content {
+	margin-left: 300px;
+	text-align: center;
+}
+@media (max-width: 1080px) {
+	.navbar-content {
+		margin-left: 0 !important;
+	}
+}
+
+.user-name {
+	display: block;
+}
+
+/* Oculta el nombre del usuario en pantallas pequeñas */
+@media (max-width: 1080px) {
+	.user-name {
+		display: none;
+	}
+}
+
+/* Ajusta el ancho de todas las columnas al 25% del ancho total de la tabla */
+#tableData th {
+	width: 25%;
+}
+
+/* Asegura que el texto no se envuelva y se muestre en una sola línea */
+#tableData th, #tableData td {
+	white-space: nowrap;
+	overflow: auto;
+}
+
 textarea {
 	resize: none;
 }
-
-
-
-
-

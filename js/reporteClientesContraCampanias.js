@@ -3,6 +3,14 @@ let token = localStorage.getItem("token");
 
 var infoExportar;
 $(function () {
+
+    function formatearTelefono(telefono) {
+        // Extraer el código de país y el número local asumiendo que el número tiene 11 dígitos
+        let codigoPais = telefono.substring(0, 3);
+        let numeroLocal = telefono.substring(3);
+        return `(${codigoPais}) ${numeroLocal.substring(0, 4)}-${numeroLocal.substring(4)}`;
+    }
+
     //formato para date picker
     $('#fecha_inicio').daterangepicker({
         singleDatePicker: true,
@@ -21,16 +29,6 @@ $(function () {
         }
     }, function (start, end, label) { });
 
-    // $('#btnConsultarInfo').click(function () {
-    //     const fechaI = $('#fecha_inicio').val();
-    //     const fechaF = $('#fecha_fin').val();
-    //     if (fechaI && fechaF) {
-    //         consultarDatos(fechaI, fechaF);
-    //     } else {
-    //         alert("Seleccione las fechas para consultar.");
-    //     }
-    // });
-    
     $('#btnExportarInfo').click(function () {
         $('#btnConsultarInfo').hide();
         $("#btnExportarInfo").attr("disabled", true);
@@ -48,10 +46,10 @@ $(function () {
         let row3 = [''];
         let row4 = [
             '',
-            { v: 'No.', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '595959' } } } },
-            { v: 'Telefono', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '595959' } } } },
-            { v: 'Cliente', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '595959' } } } },
-            { v: 'Campaña', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '595959' } } } },
+            { v: 'NO.', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '595959' } } } },
+            { v: 'TELÉFONO', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '595959' } } } },
+            { v: 'CLIENTE', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '595959' } } } },
+            { v: 'CAMPAÑA', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '595959' } } } },
         ];
         let infoFinal = [row1, row2, row3, row4];
         var contador = 1;
@@ -60,11 +58,13 @@ $(function () {
         var longitud3 = 0;
         var longitud4 = 0;
         infoExportar.forEach(function (informacion) {
+
+            let telefonoFormateado = formatearTelefono(informacion.telefono); // Formatear teléfono antes de agregarlo
             if (longitud1 < String(contador).length)
                 longitud1 = String(contador).length;
 
-            if (longitud2 < String(informacion.telefono).length)
-                longitud2 = String(informacion.telefono).length;
+            if (longitud2 < String(telefonoFormateado).length)
+                longitud2 = String(telefonoFormateado).length;
 
             if (longitud3 < String(informacion.nombre).length)
                 longitud3 = String(informacion.nombre).length;
@@ -75,7 +75,7 @@ $(function () {
             let rowInfo = [
                 '',
                 { v: contador, t: 's' },
-                { v: informacion.telefono, t: 's' },
+                { v: telefonoFormateado, t: 's' },
                 { v: informacion.nombre, t: 's' },
                 { v: informacion.campania, t: 's' },
             ];
@@ -111,68 +111,54 @@ $(function () {
         $("#btnExportarInfo").text("Descargar Excel");
         $('#btnPantallaInfo').show();
     });
-    // $('#btnPantallaInfo').click(function () {
-    //     $('#tablaDetalleParticipantes').show();
-    //     $('#btnConsultarInfo').hide();
-    //     $('#btnExportarInfo').hide();
-    //     $("#btnPantallaInfo").attr("disabled", true);
-    //     $("#btnPantallaInfo").text("Generando...");
-    //     $('#tablaDetalleParticipantes').show();
-    //     $('#tbParticipantes').empty();
-    //     $('#tablaDetalleParticipantes').dataTable().fnDeleteRow();
-    //     $('#tablaDetalleParticipantes').dataTable().fnUpdate();
-    //     $('#tablaDetalleParticipantes').dataTable().fnDestroy();
-    //     var tds = "";
-    //     var count = 1;
-    //     $.each(infoExportar, function () {
-    //         if (this.tipo == 2) {
-    //             tds += `
-	// 			<tr style="background-color: red; color: white;">
-	// 			<td>${count}</td>
-	// 			<td >${this.mistransacciones}</td>
-	// 			<td>${this.descripcion}</td>
-	// 			<td>${this.nombre}</td>
-	// 			</tr>
-	// 			`; count++;
-    //         } else {
-    //             tds += `
-	// 			<tr>
-	// 			<td>${count}</td>
-	// 			<td >${this.mistransacciones}</td>
-	// 			<td>${this.descripcion}</td>
-	// 			<td>${this.nombre}</td>
-	// 			</tr>
-	// 			`; count++;
-    //         }
-    //     });
-    //     $('#tbParticipantes').html(tds);
-    //     $('#tablaDetalleParticipantes').dataTable({
-    //         responsive: true,
-    //         "language": {
-    //             "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
-    //         },
-    //         scrollY: true,
-    //         "info": false,
-    //         "lengthChange": false,
-    //         "pageLength": 100,
-    //         language: {
-    //             searchPlaceholder: "Buscar",
-    //             search: "",
-    //         },
-    //         "dom": '<"pull-left"f>tip'
-    //     });
-    //     $('#btnConsultarInfo').show();
-    //     $('#btnExportarInfo').show();
-    //     $("#btnPantallaInfo").attr("disabled", false);
-    //     $("#btnPantallaInfo").text("Mostrar en Pantalla");
-    // });
+
+    $('#btnPantallaInfo').click(function () {
+        if ($.fn.DataTable.isDataTable('.datatables-basic')) {
+            $('.datatables-basic').DataTable().destroy();
+            $('.datatables-basic tbody').empty();
+          }
+        $('#btnConsultarInfo').hide();
+        $('#btnExportarInfo').hide();
+        $("#btnPantallaInfo").attr("disabled", true);
+        $("#btnPantallaInfo").text("Generando...");
+        $('#btnPantallaInfo').show();
+        var tds = "";
+        var count = 1;
+        $.each(infoExportar, function () {
+            let telefonoFormateado = formatearTelefono(this.telefono);
+            if (this.tipo == 2) {
+                tds += `
+                    <tr style="background-color: red; color: white;">
+                        <td>${count}</td>
+                        <td>${telefonoFormateado}</td>
+                        <td>${this.nombre}</td>
+                        <td>${this.campania}</td>
+                    </tr>
+                `;
+                count++;
+            } else {
+                tds += `
+                    <tr>
+                        <td>${count}</td>
+                        <td>${telefonoFormateado}</td>
+                        <td>${this.nombre}</td>
+                        <td>${this.campania}</td>
+                    </tr>
+                `;
+                count++;
+            }
+        });
+        $('#btnConsultarInfo').show();
+        $('#btnExportarInfo').show();
+        $("#btnPantallaInfo").attr("disabled", false);
+        $("#btnPantallaInfo").text("Mostrar en Pantalla");
+    });
 
     // Ocultar botones al inicio
     $('#btnExportarInfo, #btnPantallaInfo').hide();
 
     $('#btnConsultarInfo').click(function () {
-        var fechaI = $('#fecha_inicio').val();
-        var fechaF = $('#fecha_fin').val();
+
 
         // Llamada AJAX al backend
         $.ajax({
@@ -190,7 +176,7 @@ $(function () {
                 $("#btnConsultarInfo").attr("disabled", false).text("Consultar");
             },
             error: function() {
-                alert("Error al obtener los datos");
+                Alert("Error al obtener los datos");
                 $("#btnConsultarInfo").attr("disabled", false).text("Consultar");
             }
         });
@@ -209,9 +195,10 @@ $(function () {
             tBody.append('<tr><td colspan="4">No hay datos para mostrar.</td></tr>');
         } else {
             $.each(datos, function (index, item) {
+                let telefonoFormateado = formatearTelefono(this.telefono); // Formatear teléfono antes de agregarlo
                 var row = `<tr>
                     <td>${index + 1}</td>
-                    <td>${item.telefono || ''}</td>
+                    <td>${telefonoFormateado || ''}</td>
                     <td>${item.nombre || ''}</td>
                     <td>${item.campania || ''}</td>
                 </tr>`;

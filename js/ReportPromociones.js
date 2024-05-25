@@ -1,6 +1,6 @@
 const url = "http://localhost:3000/";
 let token = localStorage.getItem("token");
-let datosObtenidos = null; // Variable global para almacenar los datos obtenidos
+let datosObtenidos = null; 
 
 $(function () {
   $("#btnDescargarExcel, #PantallaInfo").hide(); // Ocultar botones al inicio
@@ -28,7 +28,8 @@ $(function () {
   });
 
   $("#PantallaInfo").on("click", function () {
-    if (datosObtenidos !== undefined && datosObtenidos !== null) {
+
+    if (datosObtenidos) {
       mostrarDatosEnTabla(datosObtenidos);
     } else {
       Alert("Primero debes obtener los datos", "error");
@@ -47,17 +48,11 @@ const getPromociones = () => {
     .then((response) => response.json())
     .then((result) => {
       console.log("Promociones obtenidas:", result);
-      // Limpiar el select antes de agregar opciones
       $("#selectpromo").empty();
-      // Agregar la opción por defecto
-      // $("#selectpromo").append(
-      //   "<option disabled selected value='0'>Elige una promoción</option>"
-      // );
 
       result.forEach((element) => {
         // Agregar opciones al select
         $("#selectpromo").append(
-          // '<option value="' + element.id + '">' + element.nombre + "</option>"
           `<option value="${element.id}">[${element.fechaInicio} - ${element.fechaFin}] ${element.nombre}</option>`
         );
       });
@@ -66,80 +61,111 @@ const getPromociones = () => {
     })
     .catch((error) => {
       console.error("Error al obtener promociones:", error);
-      alert(error, "error");
+      Alert("Error al obtener promociones: " + error.message);
     });
 };
 
 const getReport = () => {
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+  const fechaInicio = $("#FechaInicio").val();
+  const fechaFin = $("#FechaFin").val();
 
-  var raw = JSON.stringify({
+  // Convertir las cadenas de fecha en objetos Date para la comparación
+  const dateInicio = new Date(fechaInicio);
+  const dateFin = new Date(fechaFin);
+
+  // Comprueba si la fecha de inicio es mayor que la fecha de fin
+  if (dateInicio > dateFin) {
+    Alert("La Fecha Final no puede ser menor a fecha Inicial", "error");
+    return; // Evitar hacer la llamada al servidor si la fecha de inicio es mayor
+  }
+
+  const myHeaders = new Headers({ "Content-Type": "application/json" });
+  const body = JSON.stringify({
     promocion: $("#selectpromo").val(),
-    fechaInicial: $("#FechaInicio").val(),
-    fechaFinal: $("#FechaFin").val(),
+    fechaInicial: fechaInicio,
+    fechaFinal: fechaFin,
   });
 
-  var requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: raw,
-    redirect: "follow",
-  };
-
-  fetch(url + "reportePromocion", requestOptions)
-    .then((response) => response.json())
-    .then((result) => {
-      console.log("Datos del informe de promociones:", result);
+  fetch(url + "reportePromocion", { method: "POST", headers: myHeaders, body: body })
+    .then(response => response.json())
+    .then(result => {
       datosObtenidos = result;
-      $("#btnDescargarExcel, #PantallaInfo").show(); // Mostrar botones después de obtener los datos
-    }).catch((error) => {
+      if (datosObtenidos.length === 0) {
+        Alert("No se encontraron datos en las fechas seleccionadas", "error");
+        $("#btnDescargarExcel, #PantallaInfo").hide();
+      } else {
+        $("#btnDescargarExcel, #PantallaInfo").show();
+      }
+      limpiarTabla();
+    })
+    .catch(error => {
       console.error("Error al obtener el informe de promociones:", error);
-      alert(error, "error");
+      alert("Error al obtener el informe: " + error.message);
     });
 };
+function limpiarTabla() {
+  if ($.fn.DataTable.isDataTable('.datatables-basic')) {
+    $('.datatables-basic').DataTable().clear().destroy();
+  }
+}
+
+function formatearTelefono(telefono) {
+  // Asumir código de país "502" si no está presente
+  let codigoPais = '502';
+  let numeroLocal = telefono;  // Ya debería ser solo el número local sin código de país
+  // Comprobar si el número ya incluye el código de país
+  if (telefono.length > 8) {
+    codigoPais = telefono.substring(0, 3);
+    numeroLocal = telefono.substring(3);
+  }
+  // Formatear a la estructura deseada
+  return `(${codigoPais}) ${numeroLocal.substring(0, 4)}-${numeroLocal.substring(4)}`;
+}
+
 
 function mostrarDatosEnTabla(datos) {
-  console.log("Datos para mostrar en la tabla:", datos);
-  
-  // Inicializa la tabla con DataTables
+  // Check if a DataTable instance already exists
+  if ($.fn.DataTable.isDataTable('.datatables-basic')) {
+    // Destroy the current instance
+    $('.datatables-basic').DataTable().destroy();
+    // Clear the table body to ensure fresh data insertion
+    $('.datatables-basic tbody').empty();
+  }
   let table = $('.datatables-basic').DataTable({
-      order: [[0, 'asc']],
-      ordering: true,
-      language: {
-          search: "Buscar:",
-          searchPlaceholder: "Buscar",
-          lengthMenu: "Mostrar _MENU_",
-      },
-      scrollX: true
+    destroy: true,
+    order: [[0, 'asc']],
+    ordering: true,
+    language: {
+      search: "Buscar:",
+      searchPlaceholder: "Buscar",
+      lengthMenu: "Mostrar _MENU_",
+    },
+    scrollX: true,
   });
-  
-  // Limpia cualquier dato existente en la tabla
-  table.clear().draw();
-  
-  datos.forEach((element) => {
-    const fecha = formatearFechaHora(element.fecha);
-    const { valor, } = element.detallepromocion.premiopromocion;
-    const monto = parseFloat(element.detallepromocion.premiopromocion.valor).toFixed(2);
-    const montoTransaccion = element.detallepromocion.premiopromocion.cantidad * monto;
 
-    // Agrega una fila a la tabla
+  table.clear(); // Limpia los datos actuales de la tabla
+
+  datos.forEach(element => {
+    let telefonoFormateado = formatearTelefono(element.numeroTelefono);
+    const fecha = formatearFechaHora(element.fecha);
+    const monto = parseFloat(element.detallepromocion.premiopromocion.valor).toFixed(2);
+
     table.row.add([
       element.descripcion,
-      element.numeroTelefono,
+      telefonoFormateado,
       element.detallepromocion.premiopromocion.premio.premiocampania && element.detallepromocion.premiopromocion.premio.premiocampania[0] ? element.detallepromocion.premiopromocion.premio.premiocampania[0].etapa.campanium.nombre : '',
       element.detallepromocion.premiopromocion.premio.descripcion,
       monto,
       '',
       element.detallepromocion.cupon,
-      '-',
+      '',
       fecha,
       fecha
-    ]).draw();
+    ]);
   });
+
+  table.draw(); // Dibuja la tabla con los nuevos datos
 }
-
-
 document.getElementById("btnDescargarExcel").addEventListener("click", function () {
   console.log("Descargar Excel");
 
@@ -175,7 +201,7 @@ document.getElementById("btnDescargarExcel").addEventListener("click", function 
   const headerRow4 = [
     '',
     { v: 'NOMBRE', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-    { v: 'TELEFONO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+    { v: 'TELÉFONO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
     { v: 'CAMPAÑA', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
     { v: 'PREMIO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
     { v: 'MONTO PREMIO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
@@ -185,16 +211,19 @@ document.getElementById("btnDescargarExcel").addEventListener("click", function 
     { v: 'FECHA ACREDITACIÓN', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
     { v: 'FECHA PARTICIPACIÓN', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
   ];
+
+
+
   data.unshift(headerRow1, headerRow2, headerRow3, headerRow4);
 
   const ws = XLSX.utils.aoa_to_sheet(data);
 
   // Ajustar el ancho de las columnas al contenido
-  ws['!cols'] = [{wch:15}, {wch:15}, {wch:12}, {wch:25}, {wch:20}, {wch:15}, {wch:15}, {wch:15}, {wch:15}, {wch:20}, {wch:20}];
+  ws['!cols'] = [{ wch: 15 }, { wch: 15 }, { wch: 12 }, { wch: 25 }, { wch: 20 }, { wch: 15 }, { wch: 15 }, { wch: 15 }, { wch: 15 }, { wch: 20 }, { wch: 20 }];
 
   // Combinar las celdas E1, F1 y G1
-  if(!ws['!merges']) ws['!merges'] = [];
-  ws['!merges'].push({s:{r:0,c:4}, e:{r:0,c:6}});
+  if (!ws['!merges']) ws['!merges'] = [];
+  ws['!merges'].push({ s: { r: 0, c: 4 }, e: { r: 0, c: 6 } });
 
   // Agregar la hoja al libro
   XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
