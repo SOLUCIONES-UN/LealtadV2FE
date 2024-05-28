@@ -12,8 +12,7 @@
     <title>Invoice List - Lealtad V2</title>
     <link rel="apple-touch-icon" href="../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../app-assets/images/ico/favicon.ico">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
 
 
     <!-- BEGIN: Vendor CSS-->
@@ -46,7 +45,8 @@
 
     <style>
         .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #f7e8ff; /* Morado claro */
+            background-color: #f7e8ff;
+            /* Morado claro */
         }
     </style>
 
@@ -55,10 +55,8 @@
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click"
-    data-menu="vertical-menu-modern" data-col="">
-    <nav
-        class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow container-xxl">
+<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
+    <nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow container-xxl">
         <div class="navbar-container d-flex content">
             <div class="bookmark-wrapper d-flex align-items-center">
                 <ul class="nav navbar-nav d-xl-none">
@@ -80,27 +78,20 @@
                 <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
                             data-feather="moon"></i></a></li>
 
-                <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link"
-                        id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <div class="user-nav d-sm-flex d-none"><span
-                                class="user-name font-weight-bolder">Admin</span><span class="user-status">Admin</span>
+                <li class="nav-item dropdown dropdown-user">
+                    <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="user-nav d-sm-flex d-none"><span class="user-name font-weight-bolder">Admin</span><span class="user-status">Admin</span>
                         </div><span class="avatar"><img class="round"
                                 src="../../../app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40"
                                 width="40"><span class="avatar-status-online"></span></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user"><a
-                            class="dropdown-item" href="page-profile.html"><i class="mr-50" data-feather="user"></i>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user"><a class="dropdown-item" href="page-profile.html"><i class="mr-50" data-feather="user"></i>
                             Profile</a><a class="dropdown-item" href="app-email.html"><i class="mr-50"
                                 data-feather="mail"></i> Inbox</a><a class="dropdown-item" href="app-todo.html"><i
-                                class="mr-50" data-feather="check-square"></i> Task</a><a class="dropdown-item"
-                            href="app-chat.html"><i class="mr-50" data-feather="message-square"></i> Chats</a>
-                        <div class="dropdown-divider"></div><a class="dropdown-item"
-                            href="page-account-settings.html"><i class="mr-50" data-feather="settings"></i>
+                                class="mr-50" data-feather="check-square"></i> Task</a><a class="dropdown-item" href="app-chat.html"><i class="mr-50" data-feather="message-square"></i> Chats</a>
+                        <div class="dropdown-divider"></div><a class="dropdown-item" href="page-account-settings.html"><i class="mr-50" data-feather="settings"></i>
                             Settings</a><a class="dropdown-item" href="page-pricing.html"><i class="mr-50"
-                                data-feather="credit-card"></i> Pricing</a><a class="dropdown-item"
-                            href="page-faq.html"><i class="mr-50" data-feather="help-circle"></i> FAQ</a><a
-                            class="dropdown-item" href="login.html"><i class="mr-50" data-feather="power"></i>
+                                data-feather="credit-card"></i> Pricing</a><a class="dropdown-item" href="page-faq.html"><i class="mr-50" data-feather="help-circle"></i> FAQ</a><a class="dropdown-item" href="login.html"><i class="mr-50" data-feather="power"></i>
                             Logout</a>
                     </div>
                 </li>
@@ -109,12 +100,12 @@
     </nav>
 
     <ul class="main-search-list-defaultlist-other-list d-none">
-        <li class="auto-suggestion justify-content-between"><a
-                class="d-flex align-items-center justify-content-between w-100 py-50">
-                <div class="d-flex justify-content-start"><span class="mr-75"
-                        data-feather="alert-circle"></span><span>No
+        <li class="auto-suggestion justify-content-between">
+            <a class="d-flex align-items-center justify-content-between w-100 py-50">
+                <div class="d-flex justify-content-start"><span class="mr-75" data-feather="alert-circle"></span><span>No
                         results found.</span></div>
-            </a></li>
+            </a>
+        </li>
     </ul>
     <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
         <div class="navbar-header">
@@ -188,10 +179,8 @@
                         <div class="col-lg-6 col-md-12 col-sm-12">
                             <div class="card card-congratulations">
                                 <div class="card-body text-center">
-                                    <img src="../../../app-assets/images/elements/decore-left.png"
-                                        class="congratulations-img-left" alt="card-img-left" />
-                                    <img src="../../../app-assets/images/elements/decore-right.png"
-                                        class="congratulations-img-right" alt="card-img-right" />
+                                    <img src="../../../app-assets/images/elements/decore-left.png" class="congratulations-img-left" alt="card-img-left" />
+                                    <img src="../../../app-assets/images/elements/decore-right.png" class="congratulations-img-right" alt="card-img-right" />
                                     <div class="avatar avatar-xl bg-primary shadow">
                                         <div class="avatar-content">
                                             <i data-feather="award" class="font-large-1"></i>
@@ -200,9 +189,9 @@
                                     <div class="text-center">
                                         <h1 class=" mb-1 text-white">BIENVENIDO</h1>
                                         <h1 class=" user-name mb-1 text-white">Felicitaciones Admin</h1>
-                                        
-                                        
-                                        
+
+
+
                                         <p class="card-text m-auto w-75">
                                             Existe <strong>1</strong> proyecto activo.
                                         </p>
@@ -266,31 +255,26 @@
                                 </div>
                             </div>
                         </div>
-                      
+
 
 
                         <div class="col-lg-6 col-12">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row pb-50">
-                                        <div
-                                            class="col-sm-6 col-12 d-flex justify-content-between flex-column order-sm-1 order-2 mt-1 mt-sm-0">
+                                        <div class="col-sm-6 col-12 d-flex justify-content-between flex-column order-sm-1 order-2 mt-1 mt-sm-0">
                                             <div class="mb-1 mb-sm-0">
                                                 <h4 class="card-title">Resumen</h4>
                                                 <h2 class="fw-bolder mb-25"> <span id="Transaccion"></span></h2>
                                                 <p class="card-text fw-bold mb-2">Transacciones</p>
                                             </div>
                                         </div>
-                                        <div
-                                            class="col-sm-6 col-12 d-flex justify-content-between flex-column text-end order-sm-2 order-1">
+                                        <div class="col-sm-6 col-12 d-flex justify-content-between flex-column text-end order-sm-2 order-1">
                                             <div class="dropdown chart-dropdown">
-                                                <button class="btn btn-sm border-0 dropdown-toggle p-50" type="button"
-                                                    id="dropdownItem5" data-bs-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
+                                                <button class="btn btn-sm border-0 dropdown-toggle p-50" type="button" id="dropdownItem5" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     Última Semana
                                                 </button>
-                                                <div class="dropdown-menu dropdown-menu-end"
-                                                    aria-labelledby="dropdownItem5">
+                                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownItem5">
                                                     <a class="dropdown-item" href="#">Last 28 Days</a>
                                                     <a class="dropdown-item" href="#">Last Month</a>
                                                     <a class="dropdown-item" href="#">Last Year</a>
@@ -304,17 +288,14 @@
                                         <div class="col-6 mb-2">
                                             <p class="mb-50">Nuevas campañas: <span id="sumaValor"></span></p>
                                             <div class="progress progress-bar-primary" style="height: 6px">
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="50"
-                                                    aria-valuemin="50" aria-valuemax="100" style="width: 50%">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="50" aria-valuemax="100" style="width: 50%">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-6 mb-2">
                                             <p class="mb-50">Nuevas promociones: <span id="clientesCount"></span> </p>
                                             <div class="progress progress-bar-warning" style="height: 6px">
-                                                <div class="progress-bar" id="progressBar" role="progressbar"
-                                                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
-                                                    style="width: 0%">
+                                                <div class="progress-bar" id="progressBarxx" role="progressbarxx" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                                                 </div>
                                             </div>
                                         </div>
@@ -327,10 +308,9 @@
                                                     </div>
                                                 </div> -->
                                         <div class="col-6">
-                                            <p class="mb-50">Referidos <span id="Teferidos"></span></p>
+                                            <p class="mb-50">Referidos <span id="Referidos"></span>%</p>
                                             <div class="progress progress-bar-danger" style="height: 6px">
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="70"
-                                                    aria-valuemin="70" aria-valuemax="100" style="width: 70%">
+                                                <div class="progress-bar" id="progressBar" role="progressbar" aria-valuenow="70" aria-valuemin="70" aria-valuemax="100" style="width: 70%">
                                                 </div>
                                             </div>
                                         </div>
@@ -351,20 +331,20 @@
 
 
 
-                       
+
                         <div class="row justify-content-center">
                             <div id="datosGrafica" class="row match-height">
                                 <!-- Greetings Card starts -->
                                 <div class="col-lg-12 col-md-12 col-sm-12 text-center">
                                     <button class="btn btn-primary" id="btnRegresar">Volver</button>
-                               
-                                   <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <canvas id="graficaCampanas4"></canvas>
-                                </div>
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <canvas id="graficaCampanas4"></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                      
+
 
                         <div class="col-lg-6 col-md-6 col-sm-12 text-center">
                             <div class="card ">
@@ -380,23 +360,18 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row pb-50">
-                                        <div
-                                            class="col-sm-6 col-12 d-flex justify-content-between flex-column order-sm-1 order-2 mt-1 mt-sm-0">
+                                        <div class="col-sm-6 col-12 d-flex justify-content-between flex-column order-sm-1 order-2 mt-1 mt-sm-0">
                                             <div class="mb-1 mb-sm-0">
                                                 <h2 class="fw-bolder mb-25">122</h2>
                                                 <p class="card-text fw-bold mb-2">Clientes</p>
                                             </div>
                                         </div>
-                                        <div
-                                            class="col-sm-6 col-12 d-flex justify-content-between flex-column text-end order-sm-2 order-1">
+                                        <div class="col-sm-6 col-12 d-flex justify-content-between flex-column text-end order-sm-2 order-1">
                                             <div class="dropdown chart-dropdown">
-                                                <button class="btn btn-sm border-0 dropdown-toggle p-50" type="button"
-                                                    id="dropdownItem5" data-bs-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
+                                                <button class="btn btn-sm border-0 dropdown-toggle p-50" type="button" id="dropdownItem5" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     Última Semana
                                                 </button>
-                                                <div class="dropdown-menu dropdown-menu-end"
-                                                    aria-labelledby="dropdownItem5">
+                                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownItem5">
                                                     <a class="dropdown-item" href="#">Last 28 Days</a>
                                                     <a class="dropdown-item" href="#">Last Month</a>
                                                     <a class="dropdown-item" href="#">Last Year</a>
@@ -410,17 +385,14 @@
                                         <div class="col-6 mb-2">
                                             <p class="mb-50">Beneficios esperados: <span id="sumaValor"></span></p>
                                             <div class="progress progress-bar-primary" style="height: 6px">
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="50"
-                                                    aria-valuemin="50" aria-valuemax="100" style="width: 50%">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="50" aria-valuemax="100" style="width: 50%">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-6 mb-2">
                                             <p class="mb-50">Clientes: <span id="clientesCount"></span> </p>
                                             <div class="progress progress-bar-warning" style="height: 6px">
-                                                <div class="progress-bar" id="progressBar" role="progressbar"
-                                                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
-                                                    style="width: 0%">
+                                                <div class="progress-bar" id="progressBar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                                                 </div>
                                             </div>
                                         </div>
@@ -433,18 +405,16 @@
                                                     </div>
                                                 </div> -->
                                         <div class="col-6">
-                                            <p class="mb-50">Numero de promociones: 98%</p>
+                                            <p class="mb-50">Numero de promociones:<span id="Promocion"></span>% </p>
                                             <div class="progress progress-bar-danger" style="height: 6px">
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="70"
-                                                    aria-valuemin="70" aria-valuemax="100" style="width: 70%">
+                                                <div class="progress-bar" id="progressBarprom" role="progressBarprom" aria-valuenow="70" aria-valuemin="70" aria-valuemax="100" style="width: 70%">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <p class="mb-50">Duración: 11 meses</p>
                                             <div class="progress progress-bar-success" style="height: 6px">
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="90"
-                                                    aria-valuemin="90" aria-valuemax="100" style="width: 90%">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="90" aria-valuemax="100" style="width: 90%">
                                                 </div>
                                             </div>
                                         </div>
@@ -454,279 +424,268 @@
                         </div>
                         <!-- Avg Sessions Chart Card ends -->
 
-                     
+
                         <!-- Support Tracker Chart Card starts -->
-                        
- 
-                     
- 
+
+
+
+
                         <div class="col-12 col-md-6 col-lg-12">
                             <div class="card mb-7 shadow">
-                              <div class="card-body ">
-                                <div class="text-center">
-                                    <h4 class="text-purple">Top 10 de Usuarios participantes</h4>
-                                
+                                <div class="card-body ">
+                                    <div class="text-center">
+                                        <h4 class="text-purple">Top 10 de Usuarios participantes</h4>
+
+                                    </div>
+                                    <div class="table-responsive custom-scroll">
+                                        <table class="table table-striped" id="tableData">
+                                            <thead>
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Usuario</th>
+                                                    <th>Campaña</th>
+                                                    <th>Fecha de participacion</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="topUsuariosParticipantes">
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                                <div class="table-responsive custom-scroll" > 
-                                <table class="table table-striped" id="tableData">
-                                  <thead>
-                                    <tr>
-                                      <th>No.</th>
-                                      <th>Usuario</th>
-                                      <th>Campaña</th>
-                                      <th>Fecha de participacion</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody id="topUsuariosParticipantes">
-                                </tbody>
-                                </table>
-                              </div>
                             </div>
-                          </div>
- 
-                          
-                       
-                       
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const ctx = document.getElementById("graficaCampanas1").getContext("2d");
-
-                            // Datos para las 12 columnas
-                            const labels = [];
-                            for (let i = 1; i <= 6; i++) {
-                                labels.push(' ' + i);
-                            }
-                            const data = [25, 20, 15, 10, 5, 3]; // Datos quemados
-
-                            const backgroundColors = [
-                                 "rgba(255	112	67)",  // Color más vibrante para la primera columna
-                                "rgba(240	98	146  )",   // Color más vibrante para la segunda columna
-                                "rgba(115	103	240	 )",   // Color más vibrante para la tercera columna
-                                "rgba(57, 73, 171  )",   // Color más vibrante para la cuarta columna
-                                "rgba(57, 73, 171  )",  // Color más vibrante para la quinta columna
-                                "rgba(41, 182, 246 )"   // Color para la sexta columna
-                                                ];
 
 
-                            // Configuración del gráfico
-                            const chartData = {
-                                labels: labels,
-                                datasets: [{
-                                    label: "Número de Campañas",
-                                    data: data,
-                                    backgroundColor: backgroundColors,
-                                    borderColor: "rgba(54, 162, 235, 1)",
-                                    borderWidth: 1,
-                                }]
-                            };
 
-                            const chartOptions = {
-                                scales: {
-                                    yAxes: [{
-                                        ticks: {
-                                            beginAtZero: true
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    const ctx = document.getElementById("graficaCampanas1").getContext("2d");
+
+                                    // Datos para las 12 columnas
+                                    const labels = [];
+                                    for (let i = 1; i <= 6; i++) {
+                                        labels.push(' ' + i);
+                                    }
+                                    const data = [25, 20, 15, 10, 5, 3]; // Datos quemados
+
+                                    const backgroundColors = [
+                                        "rgba(255	112	67)", // Color más vibrante para la primera columna
+                                        "rgba(240	98	146  )", // Color más vibrante para la segunda columna
+                                        "rgba(115	103	240	 )", // Color más vibrante para la tercera columna
+                                        "rgba(57, 73, 171  )", // Color más vibrante para la cuarta columna
+                                        "rgba(57, 73, 171  )", // Color más vibrante para la quinta columna
+                                        "rgba(41, 182, 246 )" // Color para la sexta columna
+                                    ];
+
+
+                                    // Configuración del gráfico
+                                    const chartData = {
+                                        labels: labels,
+                                        datasets: [{
+                                            label: "Número de Campañas",
+                                            data: data,
+                                            backgroundColor: backgroundColors,
+                                            borderColor: "rgba(54, 162, 235, 1)",
+                                            borderWidth: 1,
+                                        }]
+                                    };
+
+                                    const chartOptions = {
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    beginAtZero: true
+                                                }
+                                            }]
                                         }
-                                    }]
-                                }
-                            };
+                                    };
 
-                            // Crear la gráfica
-                            new Chart(ctx, {
-                                type: "bar",
-                                data: chartData,
-                                options: chartOptions
-                            });
-                        });
-                      
-                    </script> 
+                                    // Crear la gráfica
+                                    new Chart(ctx, {
+                                        type: "bar",
+                                        data: chartData,
+                                        options: chartOptions
+                                    });
+                                });
+                            </script>
 
                 </section>
                 <!-- Dashboard Analytics end -->
 
 
+                </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <!-- END: Content-->
+            <!-- END: Content-->
 
 
 
-    <!-- modal de creacion or Update -->
-    <div class="modal modal-slide-in new-user-modal fade" id="modalNew">
-        <div class="modal-dialog">
-            <form id="formNew" class="add-new-user modal-content pt-0" autocomplete="off">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-                <div class="modal-header mb-1">
-                    <h5 class="modal-title" id="exampleModalLabel">Agregar Nuevo Usuario</h5>
+            <!-- modal de creacion or Update -->
+            <div class="modal modal-slide-in new-user-modal fade" id="modalNew">
+                <div class="modal-dialog">
+                    <form id="formNew" class="add-new-user modal-content pt-0" autocomplete="off">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                        <div class="modal-header mb-1">
+                            <h5 class="modal-title" id="exampleModalLabel">Agregar Nuevo Usuario</h5>
+                        </div>
+                        <div class="modal-body flex-grow-1">
+                            <div class="form-group">
+                                <label class="form-label" for="username">Nombre Usuario</label>
+                                <input type="text" class="form-control " id="username" placeholder="Nombre del usuario" name="username" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="nombre">Nombre</label>
+                                <input type="text" class="form-control " id="nombre" placeholder="Nombre" name="nombre" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="password">Contraseña</label>
+                                <input type="password" alt="strongPass" class="form-control " id="password" placeholder="Contraseña" name="password" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="password2">Confirmar Contraseña</label>
+                                <input type="password" alt="strongPass" class="form-control " id="password2" placeholder="Contraseña" name="password2" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="telefono">Telefono</label>
+                                <input type="text" class="form-control " id="telefono" placeholder="# de telefono" name="telefono" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="emailNotification">E-mail</label>
+                                <input type="text" class="form-control " id="emailNotification" placeholder="E-mail" name="emailNotification" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="rol">Roles</label>
+                                <select type="text" class="form-control" id="rol" name="rol" required></select>
+                            </div>
+                            <button id="btnSubmitAdd" type="submit" class="btn btn-primary mr-1 data-submit">Agregar </button>
+                            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-body flex-grow-1">
-                    <div class="form-group">
-                        <label class="form-label" for="username">Nombre Usuario</label>
-                        <input type="text" class="form-control " id="username" placeholder="Nombre del usuario"
-                            name="username" required />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="nombre">Nombre</label>
-                        <input type="text" class="form-control " id="nombre" placeholder="Nombre" name="nombre"
-                            required />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="password">Contraseña</label>
-                        <input type="password" alt="strongPass" class="form-control " id="password"
-                            placeholder="Contraseña" name="password" required />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="password2">Confirmar Contraseña</label>
-                        <input type="password" alt="strongPass" class="form-control " id="password2"
-                            placeholder="Contraseña" name="password2" required />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="telefono">Telefono</label>
-                        <input type="text" class="form-control " id="telefono" placeholder="# de telefono"
-                            name="telefono" required />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="emailNotification">E-mail</label>
-                        <input type="text" class="form-control " id="emailNotification" placeholder="E-mail"
-                            name="emailNotification" required />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="rol">Roles</label>
-                        <select type="text" class="form-control" id="rol" name="rol" required></select>
-                    </div>
-                    <button id="btnSubmitAdd" type="submit" class="btn btn-primary mr-1 data-submit">Agregar </button>
-                    <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                </div>
-            </form>
-        </div>
-    </div>
+            </div>
 
-    <div class="modal modal-slide-in new-user-modal fade" id="modalEdit">
-        <div class="modal-dialog">
-            <form id="formEdit" class="add-new-user modal-content pt-0" autocomplete="off">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-                <div class="modal-header mb-1">
-                    <h5 class="modal-title" id="exampleModalLabel">Actualizar el ususario</h5>
+            <div class="modal modal-slide-in new-user-modal fade" id="modalEdit">
+                <div class="modal-dialog">
+                    <form id="formEdit" class="add-new-user modal-content pt-0" autocomplete="off">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                        <div class="modal-header mb-1">
+                            <h5 class="modal-title" id="exampleModalLabel">Actualizar el ususario</h5>
+                        </div>
+                        <div class="modal-body flex-grow-1">
+                            <div class="form-group">
+                                <label class="form-label" for="usernameEdit">Nombre Usuario</label>
+                                <input type="text" class="form-control " id="usernameEdit" placeholder="Nombre del usuario" name="usernameEdit" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="nombreEdit">Nombre</label>
+                                <input type="text" class="form-control " id="nombreEdit" placeholder="Nombre" name="nombreEdit" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="passwordEdit">Contraseña</label>
+                                <input type="password" alt="strongPass" class="form-control " id="passwordEdit" placeholder="Contraseña" name="passwordEdit" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="passwordEdit2">Confirmar Contraseña</label>
+                                <input type="password" alt="strongPass" class="form-control " id="passwordEdit2" placeholder="Contraseña" name="passwordEdit2" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="telefonoEdit">Telefono</label>
+                                <input type="text" class="form-control " id="telefonoEdit" placeholder="# de telefono" name="telefonoEdit" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="emailEdit">E-mail</label>
+                                <input type="text" class="form-control " id="emailEdit" placeholder="E-mail" name="emailEdit" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="rolActualizar">Rol</label>
+                                <select type="text" class="form-control" id="rolActualizar" name="rolActualizar" required></select>
+                            </div>
+                            <button id="btnSubmitEdit" type="submit" class="btn btn-primary mr-1 data-submit">Agregar </button>
+                            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-body flex-grow-1">
-                    <div class="form-group">
-                        <label class="form-label" for="usernameEdit">Nombre Usuario</label>
-                        <input type="text" class="form-control " id="usernameEdit" placeholder="Nombre del usuario"
-                            name="usernameEdit" required />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="nombreEdit">Nombre</label>
-                        <input type="text" class="form-control " id="nombreEdit" placeholder="Nombre" name="nombreEdit"
-                            required />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="passwordEdit">Contraseña</label>
-                        <input type="password" alt="strongPass" class="form-control " id="passwordEdit"
-                            placeholder="Contraseña" name="passwordEdit" required />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="passwordEdit2">Confirmar Contraseña</label>
-                        <input type="password" alt="strongPass" class="form-control " id="passwordEdit2"
-                            placeholder="Contraseña" name="passwordEdit2" required />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="telefonoEdit">Telefono</label>
-                        <input type="text" class="form-control " id="telefonoEdit" placeholder="# de telefono"
-                            name="telefonoEdit" required />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="emailEdit">E-mail</label>
-                        <input type="text" class="form-control " id="emailEdit" placeholder="E-mail" name="emailEdit"
-                            required />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="rolActualizar">Rol</label>
-                        <select type="text" class="form-control" id="rolActualizar" name="rolActualizar"
-                            required></select>
-                    </div>
-                    <button id="btnSubmitEdit" type="submit" class="btn btn-primary mr-1 data-submit">Agregar </button>
-                    <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                </div>
-            </form>
-        </div>
-    </div>
+            </div>
 
-    <div class="modal modal-slide-in new-user-modal fade" id="modalDelete">
-        <div class="modal-dialog">
-            <form id="formDelete" class="add-new-user modal-content pt-0" autocomplete="off">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-                <div class="modal-header mb-1">
-                    <h5 class="modal-title" id="exampleModalLabel">Inhabilitar el usuario</h5>
+            <div class="modal modal-slide-in new-user-modal fade" id="modalDelete">
+                <div class="modal-dialog">
+                    <form id="formDelete" class="add-new-user modal-content pt-0" autocomplete="off">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                        <div class="modal-header mb-1">
+                            <h5 class="modal-title" id="exampleModalLabel">Inhabilitar el usuario</h5>
+                        </div>
+                        <div class="modal-body flex-grow-1">
+                            <div class="form-group">
+                                <input id="usernameDelete" type="hidden">
+                                <p>¿Esta seguro que desea <b>Inhabilitar este usuario?</b></p>
+                            </div>
+                            <button id="BtnDelete" type="button" class="btn btn-danger mr-1 data-submit">Confirmar </button>
+                            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-body flex-grow-1">
-                    <div class="form-group">
-                        <input id="usernameDelete" type="hidden">
-                        <p>¿Esta seguro que desea <b>Inhabilitar este usuario?</b></p>
-                    </div>
-                    <button id="BtnDelete" type="button" class="btn btn-danger mr-1 data-submit">Confirmar </button>
-                    <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+            <div class="modal modal-slide-in new-user-modal fade" id="graficaModal">
+                <div class="modal-dialog">
+                    <h3>Thony gay</h3>
                 </div>
-            </form>
+            </div>
+            <!-- END: Content-->
         </div>
-    </div>
-    <div class="modal modal-slide-in new-user-modal fade" id="graficaModal">
-        <div class="modal-dialog">
-            <h3>Thony gay</h3>
-        </div>
-    </div>
-    <!-- END: Content-->
-    </div>
-    <!-- End: Customizer-->
-    <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light">
-        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">&copy; 2024<a class="ml-25"
+        <!-- End: Customizer-->
+        <!-- BEGIN: Footer-->
+        <footer class="footer footer-static footer-light">
+            <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">&copy; 2024<a class="ml-25"
                     href="#" target="_blank">LEALTAD</a><span class="d-none d-sm-inline-block">, Reservados todos los
                     derechos.</span></span><span class="float-md-right d-none d-md-block">Desarrollado por:
                 SOLUCIONES-UN<i data-feather="code"></i></span></p>
-    </footer>
-    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
-    <!-- END: Footer-->
+        </footer>
+        <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+        <!-- END: Footer-->
 
 
-    <!-- BEGIN: Vendor JS-->
-    <script>
-        const url = 'http://localhost:3000/';
-    </script>
-    <script src="../app-assets/vendors/js/vendors.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- BEGIN Vendor JS-->
+        <!-- BEGIN: Vendor JS-->
+        <script>
+            const url = 'http://localhost:3000/';
+        </script>
+        <script src="../app-assets/vendors/js/vendors.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- BEGIN: Page Vendor JS-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"/>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+        <!-- BEGIN Vendor JS-->
+
+        <!-- BEGIN: Page Vendor JS-->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 
 
-    <script src="../app-assets/vendors/js/extensions/moment.min.js"></script>
-    <script src="../app-assets/vendors/js/tables/ag-grid/ag-grid-community.min.noStyle.js"></script>
-    <!-- END: Page Vendor JS-->
-    <script src="../app-assets/vendors/js/extensions/toastr.min.js"></script>
-    <!-- BEGIN: Theme JS-->
-    <script src="../app-assets/js/core/app-menu.min.js"></script>
-    <script src="../app-assets/js/core/app.min.js"></script>
-    <script src="../app-assets/js/scripts/customizer.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../app-assets/vendors/js/extensions/moment.min.js"></script>
+        <script src="../app-assets/vendors/js/tables/ag-grid/ag-grid-community.min.noStyle.js"></script>
+        <!-- END: Page Vendor JS-->
+        <script src="../app-assets/vendors/js/extensions/toastr.min.js"></script>
+        <!-- BEGIN: Theme JS-->
+        <script src="../app-assets/js/core/app-menu.min.js"></script>
+        <script src="../app-assets/js/core/app.min.js"></script>
+        <script src="../app-assets/js/scripts/customizer.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- END: Theme JS-->
+        <!-- END: Theme JS-->
 
-    <!-- BEGIN: Page JS-->
-    <script src="../js/menuDinamico.js"></script>
-    <script src="../js/dashboard.js"></script>
-    <!-- END: Page JS-->
+        <!-- BEGIN: Page JS-->
+        <script src="../js/menuDinamico.js"></script>
+        <script src="../js/dashboard.js"></script>
+        <!-- END: Page JS-->
 
-    <script>
-        $(window).on('load', function () {
-            if (feather) {
-                feather.replace({ width: 14, height: 14 });
-            }
-        });
-    </script>
+        <script>
+            $(window).on('load', function() {
+                if (feather) {
+                    feather.replace({
+                        width: 14,
+                        height: 14
+                    });
+                }
+            });
+        </script>
 </body>
 <!-- END: Body-->
 
