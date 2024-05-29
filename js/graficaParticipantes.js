@@ -1,29 +1,24 @@
 const url = "http://localhost:3000/";
-$(function () {
-  
-});
+$(function () {});
 
 $("#btnConsultar").click(function () {
   const headers = {
     "Content-Type": "application/json",
   };
 
-  
   const fechaInicio = $("#fechaInicio").val();
   const fechaFin = $("#fechaFin").val();
 
-
   if (!fechaInicio || fechaInicio === "0") {
     alert("Seleccione una fecha de inicio");
-    return; 
+    return;
   }
 
   if (!fechaFin || fechaFin === "0") {
     alert("Seleccione una fecha de fin");
-    return; 
+    return;
   }
 
-  
   var raw = JSON.stringify({
     fechaInicio: fechaInicio,
     fechaFin: fechaFin,
@@ -41,18 +36,17 @@ $("#btnConsultar").click(function () {
       redirect: "follow",
     };
 
-    fetch(`${url}ReporteParticipantes/ObtenerParticipacionesByFecha`,requestOptions)
+    fetch(
+      `${url}ReporteParticipantes/ObtenerParticipacionesByFecha`,
+      requestOptions
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log("Datos de campañas:", data);
 
-   
-        
         const canvas = document.getElementById("graficaParticipantes");
-       ; 
         const ctx = canvas.getContext("2d");
 
-        
         if (window.myChart) {
           window.myChart.destroy();
         }
@@ -60,7 +54,7 @@ $("#btnConsultar").click(function () {
         // Obtener datos para el gráfico
         const dataLabels = data.map((p) => `${p.nombre} - ${p.fecha}`); // Combinar nombre y fecha como etiquetas
         const participantes = data.map((p) => p.participantes);
-        
+
         // Configuración del gráfico
         const chartData = {
           labels: dataLabels,
@@ -84,21 +78,20 @@ $("#btnConsultar").click(function () {
 
         const chartOptions = {
           maintainAspectRatio: true,
-          responsive: false,// Establecer en false para mantener el tamaño constante
+          responsive: false, // Establecer en false para mantener el tamaño constante
           scales: {
             y: {
               beginAtZero: true, // Empezar el eje Y desde cero
             },
           },
         };
-        
+
         // Crear el gráfico
         window.myChart = new Chart(ctx, {
           type: "bar",
           data: chartData,
           options: chartOptions,
         });
-        
       })
       .catch((error) =>
         console.error("Error al obtener los datos de las campañas:", error)
@@ -108,8 +101,6 @@ $("#btnConsultar").click(function () {
 let chartType = "bar"; // Variable para controlar el tipo de gráfico actual
 
 $("#btnGrafCircular").click(function () {
-
-  
   if (window.myChart) {
     // Destruir el gráfico existente
     window.myChart.destroy();
@@ -124,12 +115,16 @@ $("#btnGrafCircular").click(function () {
 
     let rowHTML = '<div class="row">';
     labels.forEach((label, index) => {
-      rowHTML += `<div class="col-md-3">Fecha: ${label.split(" - ")[1]}, Campaña: ${label.split(" - ")[0]}, Participantes: ${data[index]}</div>`;
+      rowHTML += `<div class="col-md-3">Fecha: ${
+        label.split(" - ")[1]
+      }, Campaña: ${label.split(" - ")[0]}, Participantes: ${
+        data[index]
+      }</div>`;
       if ((index + 1) % 4 === 0) {
         rowHTML += '</div><div class="row">';
       }
     });
-    rowHTML += '</div>';
+    rowHTML += "</div>";
     $("#listaDatos").html(rowHTML);
 
     // Crear el nuevo gráfico con maintainAspectRatio establecido en false
@@ -170,11 +165,13 @@ $("#btnGrafCircular").click(function () {
     });
   }
 });
-document.getElementById('btnGrafCircular').addEventListener('click', function() {
-  var container = document.getElementById('container');
-  if (container.style.display === 'none') {
-      container.style.display = 'block'; // Mostrar el contenedor
-  } else {
-      container.style.display = 'none'; // Ocultar el contenedor
-  }
-});
+document
+  .getElementById("btnGrafCircular")
+  .addEventListener("click", function () {
+    var container = document.getElementById("container");
+    if (container.style.display === "none") {
+      container.style.display = "block"; // Mostrar el contenedor
+    } else {
+      container.style.display = "none"; // Ocultar el contenedor
+    }
+  });

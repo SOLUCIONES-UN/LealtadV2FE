@@ -1,5 +1,6 @@
-let usuarioDashboardDashboard = JSON.parse(localStorage.getItem("infousuarioDashboard"));
-
+let usuarioDashboardDashboard = JSON.parse(
+  localStorage.getItem("infousuarioDashboard")
+);
 
 const token = localStorage.getItem("token");
 
@@ -17,10 +18,6 @@ $(function() {
     getAllCampanasActivas();
     // mostrarGraficaCampañas();
 });
-
-
-
-
 
 const cerrarModalBtn = document.getElementById("cerrar-modal-btn");
 
@@ -379,7 +376,6 @@ function getAllCampanasActivasLastWeek() {
         })
         .catch((error) => console.log("error", error));
 }
-
 
 function displayNumPromocionesLastWeek(numPromociones) {
     const numPromocionesElement = document.getElementById(

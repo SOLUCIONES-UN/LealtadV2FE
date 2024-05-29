@@ -1,4 +1,4 @@
-const url = 'http://localhost:3000/'
+const url = "http://localhost:3000/";
 let token = localStorage.getItem("token");
 var actualStep = 0;
 var saveDataParams = [];
@@ -6,24 +6,24 @@ var saveDataParams = [];
 var datosTablaLocalidad = [];
 var datosTablaPremio = [];
 var datosTablaParametro = [];
-var datosTablaParticipacion= [];
-var permitidoUsuario =[];
+var datosTablaParticipacion = [];
+var permitidoUsuario = [];
 
 //var datosBloqueados = [];
-var TEMP =[];
-var etapasData=[]
+var TEMP = [];
+var etapasData = [];
 //variables de imagenes
 let imgCampania = null;
 
-var bloqueadosUsuarios =[];
-var DataEtapa =[];
+var bloqueadosUsuarios = [];
+var DataEtapa = [];
 var nombresMunicipios = {};
 
 //data edit
-var dataMunicipiosView=[]
-var dataDeptoView=[]
-var dataPremioView=[]
-var datatransaccionView=[]
+var dataMunicipiosView = [];
+var dataDeptoView = [];
+var dataPremioView = [];
+var datatransaccionView = [];
 
 let imgPush = null;
 let imgAkisi = null;
@@ -35,274 +35,277 @@ let actualStepEdit = 0;
 let previousStep = null;
 
 //valor para poder editar etapas
-var dataEditEtapa =[];
+var dataEditEtapa = [];
 
 isDataLoaded = true;
 
 $(function () {
-
   initStepper();
   initStepperEdit();
   getAllCampanias();
   getProjecs();
   getMunicipios();
   getDepartamento();
-  const containerArchivo = document.getElementById('containerArchivo');
+  const containerArchivo = document.getElementById("containerArchivo");
   if (containerArchivo) {
-    containerArchivo.style.display = 'none';
+    containerArchivo.style.display = "none";
   }
 
   // Ocultar el contenedor de bloqueo
-  const containerBloqueo = document.querySelector('#Bloqueo');
+  const containerBloqueo = document.querySelector("#Bloqueo");
   if (containerBloqueo) {
-    containerBloqueo.style.display = 'none';
+    containerBloqueo.style.display = "none";
   }
 
   //Inicializacion de Navs
-  $("#NavsOpc button").on("click", function(event) {
+  $("#NavsOpc button").on("click", function (event) {
     let data = $(this).attr("data-bs-target");
-    console.log(data,'data tab')
+    console.log(data, "data tab");
     event.preventDefault();
     $(this).tab("show");
     $(".opcLista").removeClass("show active");
     $(data).addClass("show active");
   });
 
-  $('#btnSubmitEdit').click(function(event) {
+  $("#btnSubmitEdit").click(function (event) {
     event.preventDefault(); // Evitar el comportamiento predeterminado del clic
-  
-    // Enviar el formulario
-    $('#formEdit').submit();
 
+    // Enviar el formulario
+    $("#formEdit").submit();
   });
 
-  $('#modalNew').on('show.bs.modal', function () {
+  $("#modalNew").on("show.bs.modal", function () {
     resetSteps();
     limpiarFormulario();
   });
 
-  $('#modalNew').on('hidden.bs.modal', function () {
+  $("#modalNew").on("hidden.bs.modal", function () {
     limpiarFormulario();
-
   });
 
-  $('#modalNew').find('[data-dismiss="modal"]').click(function () {
+  $("#modalNew")
+    .find('[data-dismiss="modal"]')
+    .click(function () {
       limpiarFormulario();
-      $("#btnSubmit").attr("disabled",false);
-  });
+      $("#btnSubmit").attr("disabled", false);
+    });
 
-  $('#modalNew').find('[data-dismiss="modal"]').click(function () {
+  $("#modalNew")
+    .find('[data-dismiss="modal"]')
+    .click(function () {
       limpiarFormulario();
-      $("#btnSubmit").attr("disabled",false);
+      $("#btnSubmit").attr("disabled", false);
+    });
+
+  $("#modalEdit").on("show.bs.modal", function () {
+    resetStepsEdit();
+    limpiarFormulario();
+    // Verificar si los datos han sido cargados
+    if (isDataLoaded) {
+      // Mostrar el modal
+      return true;
+    } else {
+      // Evitar que se muestre el modal
+      return false;
+    }
   });
 
-  $('#modalEdit').on('show.bs.modal', function() {
-    resetStepsEdit()
-    limpiarFormulario()
-      // Verificar si los datos han sido cargados
-      if (isDataLoaded) {
-        // Mostrar el modal
-        return true;
-      } else {
-        // Evitar que se muestre el modal
-        return false;
-      }
+  $("#modalEdit").on("hidden.bs.modal", function () {
+    limpiarFormulario();
+    $("#btnSubmitEdit").attr("disabled", false);
   });
 
-  $('#modalEdit').on('hidden.bs.modal', function () {
+  $("#modalEdit")
+    .find('[data-dismiss="modal"]')
+    .click(function () {
       limpiarFormulario();
-      $("#btnSubmitEdit").attr("disabled",false);
-  });
+      $("#btnSubmitEdit").attr("disabled", false);
+    });
 
-
-  $('#modalEdit').find('[data-dismiss="modal"]').click(function () {
-      limpiarFormulario();
-      $("#btnSubmitEdit").attr("disabled",false);
-  });
-
-  $('#formNew').submit(function(){
-    const valor = $('#tipoUsuarios').val();
+  $("#formNew").submit(function () {
+    const valor = $("#tipoUsuarios").val();
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", token);
-    
-    console.log('imagen 1', imgAkisi)
-    console.log('imagen 1', imgPush)
+
+    console.log("imagen 1", imgAkisi);
+    console.log("imagen 1", imgPush);
 
     var raw = JSON.stringify({
-      nombre: $('#campania').val(),
-      descripcion: $('#descripcionCampania').val(),
+      nombre: $("#campania").val(),
+      descripcion: $("#descripcionCampania").val(),
       fechaCreacion: "2024-02-04",
       fechaRegistro: $("#fechaRegistro").val(),
       fechaInicio: $("#fechaInicial").val(),
       fechaFin: $("#fechaFinal").val(),
-      edadInicial:parseInt($('#edadInicial').val()),
-      edadFinal: parseInt($('#edadFinal').val()),
-      sexo: parseInt($('#sexo').val()),
+      edadInicial: parseInt($("#edadInicial").val()),
+      edadFinal: parseInt($("#edadFinal").val()),
+      sexo: parseInt($("#sexo").val()),
       tipoUsuario: valor,
-      tituloNotificacion: $('#notificacion').val() ,
-      descripcionNotificacion:  $('#descripcionNotificacion').val(),
-      imgPush:  'valor.jpg',
-      imgAkisi:  'valor.jpg',
+      tituloNotificacion: $("#notificacion").val(),
+      descripcionNotificacion: $("#descripcionNotificacion").val(),
+      imgPush: "valor.jpg",
+      imgAkisi: "valor.jpg",
       estado: 3,
-      maximoParticipaciones:  parseInt($('#maximoParticipantes').val()),
-      campaniaTerceros: parseInt($('#tercerosCampania').val()),
-      terminosCondiciones: $('#terminosCondiciones').val(),
-      observaciones: $('#Observaciones').val(),
+      maximoParticipaciones: parseInt($("#maximoParticipantes").val()),
+      campaniaTerceros: parseInt($("#tercerosCampania").val()),
+      terminosCondiciones: $("#terminosCondiciones").val(),
+      observaciones: $("#Observaciones").val(),
       esArchivada: 0,
-      restriccionUser: parseInt($('#restriccionUsuarios').val()),
-      idProyecto: parseInt($('#proyecto').val()),
+      restriccionUser: parseInt($("#restriccionUsuarios").val()),
+      idProyecto: parseInt($("#proyecto").val()),
       etapas: getEtapasData(),
       bloqueados: bloqueadosUsuarios,
-      participacion:permitidoUsuario
-
+      participacion: permitidoUsuario,
     });
 
     console.log(raw);
 
     var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
     };
 
     fetch(`${url}Campania`, requestOptions)
-    .then(response => response.json())
-    .then(result => {
+      .then((response) => response.json())
+      .then((result) => {
         if (result.code == "ok") {
           limpiarFormulario();
           getAllCampanias();
-          $('#modalNew').modal('toggle'); // Mover esta línea aquí
-          Alert(result.message, 'success');
+          $("#modalNew").modal("toggle"); // Mover esta línea aquí
+          Alert(result.message, "success");
           console.log(result);
         } else {
           console.log("Verifica datos");
-          Alert(result.message, 'error');
+          Alert(result.message, "error");
         }
-    })
-    .catch(error => { Alert(error.errors, 'error') });
+      })
+      .catch((error) => {
+        Alert(error.errors, "error");
+      });
     return false;
   });
 
-  $('#formEdit').submit(function () {
-    console.log('entro a el form edit')
+  $("#formEdit").submit(function () {
+    console.log("entro a el form edit");
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", token);
 
     $("#btnSubmitEdit").attr("disabled", true);
 
-    const id = $('#idCampania').val();
-    const valor = $('#tipoUsuariosEdit').val();
-    console.log(id, 'idCampaña')
+    const id = $("#idCampania").val();
+    const valor = $("#tipoUsuariosEdit").val();
+    console.log(id, "idCampaña");
 
     var raw = JSON.stringify({
-      id :$('#idCampania').val(),
-      nombre: $('#campaniaEdit').val(),
-      descripcion: $('#descripcionCampaniaEdit').val(),
-      fechaCreacion: $('#fechaCreacion').val(),
+      id: $("#idCampania").val(),
+      nombre: $("#campaniaEdit").val(),
+      descripcion: $("#descripcionCampaniaEdit").val(),
+      fechaCreacion: $("#fechaCreacion").val(),
       fechaRegistro: $("#fechaRegistroEdit").val(),
       fechaInicio: $("#fechaInicialEdit").val(),
       fechaFin: $("#fechaFinalEdit").val(),
-      edadInicial:parseInt($('#edadInicialEdit').val()),
-      edadFinal: parseInt($('#edadFinalEdit').val()),
-      sexo: parseInt($('#sexoEdit').val()),
+      edadInicial: parseInt($("#edadInicialEdit").val()),
+      edadFinal: parseInt($("#edadFinalEdit").val()),
+      sexo: parseInt($("#sexoEdit").val()),
       tipoUsuario: valor,
-      tituloNotificacion: $('#notificacionEdit').val() ,
-      descripcionNotificacion:  $('#descripcionNotificacionEdit').val(),
-      imgPush: 'valor.png',
-      imgAkisi: 'valor.png',
-      estado: parseInt($('#estadoCampania').val()),
-      maximoParticipaciones:  parseInt($('#maximoParticipantesEdit').val()),
-      campaniaTerceros: parseInt($('#tercerosCampaniaEdit').val()),
-      terminosCondiciones: $('#terminosCondicionesEdit').val(),
-      observaciones: $('#ObservacionesEdit').val(),
-      esArchivada:  $('#esArchivadaEdit').is(':checked') ? 1 : 0, //verificar por lo del boton
-      restriccionUser: parseInt($('#restriccionUsuariosEdit').val()),
-      idProyecto: parseInt($('#proyectoEdit').val()),
-      etapas: dataEditEtapa, 
-      bloqueados: bloqueadosUsuarios, 
-      participacion:permitidoUsuario 
+      tituloNotificacion: $("#notificacionEdit").val(),
+      descripcionNotificacion: $("#descripcionNotificacionEdit").val(),
+      imgPush: "valor.png",
+      imgAkisi: "valor.png",
+      estado: parseInt($("#estadoCampania").val()),
+      maximoParticipaciones: parseInt($("#maximoParticipantesEdit").val()),
+      campaniaTerceros: parseInt($("#tercerosCampaniaEdit").val()),
+      terminosCondiciones: $("#terminosCondicionesEdit").val(),
+      observaciones: $("#ObservacionesEdit").val(),
+      esArchivada: $("#esArchivadaEdit").is(":checked") ? 1 : 0, //verificar por lo del boton
+      restriccionUser: parseInt($("#restriccionUsuariosEdit").val()),
+      idProyecto: parseInt($("#proyectoEdit").val()),
+      etapas: dataEditEtapa,
+      bloqueados: bloqueadosUsuarios,
+      participacion: permitidoUsuario,
     });
 
-    console.log(raw, 'raw')
+    console.log(raw, "raw");
 
     var requestOptions = {
-        method: 'PUT',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
+      method: "PUT",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
     };
 
     fetch(`${url}Campania/${id}`, requestOptions)
-        .then(response => response.json())
-        .then(result => {
-            if (result.code == "ok") {
-                $('#modalEdit').modal('toggle');
-                getAllCampanias();
-                limpiarFormulario();
-                Alert(result.message, 'success')
-            } else {
-
-                Alert(result.message, 'error')
-            }
-        })
-        .catch(error => { Alert(error.errors, 'error') });
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.code == "ok") {
+          $("#modalEdit").modal("toggle");
+          getAllCampanias();
+          limpiarFormulario();
+          Alert(result.message, "success");
+        } else {
+          Alert(result.message, "error");
+        }
+      })
+      .catch((error) => {
+        Alert(error.errors, "error");
+      });
     return false;
   });
 
   //eventos para la inhabilitacion de un proyecto
-  $('#BtnDelete').click(function () {
-    console.log('Entra a DELETE')
+  $("#BtnDelete").click(function () {
+    console.log("Entra a DELETE");
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", token);
 
-
-    const id = $('#idDelete').val();
+    const id = $("#idDelete").val();
 
     var requestOptions = {
-        method: 'DELETE',
-        headers: myHeaders,
-        redirect: 'follow'
+      method: "DELETE",
+      headers: myHeaders,
+      redirect: "follow",
     };
 
     fetch(`${url}Campania/${id}`, requestOptions)
-        .then(response => response.json())
-        .then(result => {
-            if (result.code == "ok") {
-                limpiarFormulario();
-                console.log('Elimino')
-                getAllCampanias();
-                $('#modalDelete').modal('toggle');
-                Alert(result.message, 'success');
-            } else {
-                Alert(result.message, 'error');
-            }
-
-        })
-        .catch(error => { Alert(error.errors, 'error') });            
-  })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.code == "ok") {
+          limpiarFormulario();
+          console.log("Elimino");
+          getAllCampanias();
+          $("#modalDelete").modal("toggle");
+          Alert(result.message, "success");
+        } else {
+          Alert(result.message, "error");
+        }
+      })
+      .catch((error) => {
+        Alert(error.errors, "error");
+      });
+  });
 });
-
 
 //Funcion del stepper
 function initStepper() {
-  actualStep=0;
-  var steps = $('#stepper').children(); // Obtener todos los elementos hijos del contenedor #stepper
+  actualStep = 0;
+  var steps = $("#stepper").children(); // Obtener todos los elementos hijos del contenedor #stepper
   var totalSteps = steps.length;
-  DataEtapa =[];
+  DataEtapa = [];
   var visitedSteps = [];
-  const containerBloqueo = document.querySelector('#Bloqueo');
-  containerBloqueo.style.display = 'none';
+  const containerBloqueo = document.querySelector("#Bloqueo");
+  containerBloqueo.style.display = "none";
 
   showStep(actualStep);
 
-  $('.next-btn').click(function(e) {
+  $(".next-btn").click(function (e) {
     e.preventDefault();
-    console.log(actualStep, 'antes');
+    console.log(actualStep, "antes");
 
     if (actualStep < totalSteps - 1) {
       // Validar el paso actual antes de avanzar
@@ -312,7 +315,7 @@ function initStepper() {
         showStep(actualStep);
         updateButtonsState(actualStep);
         console.log(actualStep);
-        return
+        return;
       } else {
         console.log("Error en la validación del paso " + (actualStep + 1));
       }
@@ -321,7 +324,7 @@ function initStepper() {
     }
   });
 
-  $('.prev-btn').click(function(e) {
+  $(".prev-btn").click(function (e) {
     e.preventDefault();
     if (actualStep > 0) {
       hideStep(actualStep);
@@ -335,8 +338,8 @@ function initStepper() {
     steps.eq(stepIndex).show();
 
     // Cambiar el color del botón correspondiente al paso actual
-    $('.step-progress').removeClass('active');
-    $('.step-btn-' + (stepIndex + 1)).addClass('active');
+    $(".step-progress").removeClass("active");
+    $(".step-btn-" + (stepIndex + 1)).addClass("active");
 
     // Actualizar el estado de los botones
     updateButtonsState(stepIndex);
@@ -348,18 +351,21 @@ function initStepper() {
   }
 
   function updateButtonsState(currentStep) {
-    $('.step-progress').each(function(index) {
-      if ($(this).attr('data-blocked') === 'true' || (index > currentStep && !visitedSteps.includes(index))) {
-        $(this).addClass('disabled');
-        $(this).prop('disabled', true);
+    $(".step-progress").each(function (index) {
+      if (
+        $(this).attr("data-blocked") === "true" ||
+        (index > currentStep && !visitedSteps.includes(index))
+      ) {
+        $(this).addClass("disabled");
+        $(this).prop("disabled", true);
       } else {
-        $(this).removeClass('disabled');
-        $(this).prop('disabled', false);
+        $(this).removeClass("disabled");
+        $(this).prop("disabled", false);
       }
     });
   }
-  
-  $('.step-btn-1').click(function(e) {
+
+  $(".step-btn-1").click(function (e) {
     e.preventDefault();
     if (actualStep !== 0) {
       hideStep(actualStep);
@@ -367,8 +373,8 @@ function initStepper() {
       showStep(actualStep);
     }
   });
-  
-  $('.step-btn-2').click(function(e) {
+
+  $(".step-btn-2").click(function (e) {
     e.preventDefault();
     if (actualStep !== 1) {
       hideStep(actualStep);
@@ -376,8 +382,8 @@ function initStepper() {
       showStep(actualStep);
     }
   });
-  
-  $('.step-btn-3').click(function(e) {
+
+  $(".step-btn-3").click(function (e) {
     e.preventDefault();
     if (actualStep !== 2) {
       hideStep(actualStep);
@@ -385,43 +391,41 @@ function initStepper() {
       showStep(actualStep);
     }
   });
-  
+
   function hideStep(stepIndex) {
     steps.eq(stepIndex).hide();
   }
 
-  $('#tipoParticipacion').change(function() {
+  $("#tipoParticipacion").change(function () {
     var tipoSeleccionado = $(this).val();
 
     // Ocultar todos los inputs
-    $('#inputsContainer > div').hide();
+    $("#inputsContainer > div").hide();
 
     // Mostrar los inputs correspondientes al tipo seleccionado
-     if (tipoSeleccionado === '2' || tipoSeleccionado === '3') {
-      $('#inputsTipo0').show();
-    } else if (tipoSeleccionado === '4') {
-      $('#inputsTipo1').show();
+    if (tipoSeleccionado === "2" || tipoSeleccionado === "3") {
+      $("#inputsTipo0").show();
+    } else if (tipoSeleccionado === "4") {
+      $("#inputsTipo1").show();
     }
   });
 
   // Stepp de los parametros de la campaña segun esta una etapa
-  $('#add-step-btn').click(function() {
+  $("#add-step-btn").click(function () {
+    var NombreEtapa = $("#NombreEtapa").val();
+    var orden = $("#orden").val();
+    var descripcionEtapa = $("#descripcionEtapa").val();
+    var tipoParticipacion = $("#tipoParticipacion").val();
+    var intervalo = parseInt($("#intervalo").val());
+    var rangoTiempo = parseInt($("#RangoTiempo").val());
+    var minimoTransaccion = parseFloat($("minimoTransaccion").val());
+    var TotalMinimo = parseFloat($("#totalMinimo").val());
 
-      var NombreEtapa = $('#NombreEtapa').val();
-      var orden = $('#orden').val();
-      var descripcionEtapa = $('#descripcionEtapa').val();
-      var tipoParticipacion = $('#tipoParticipacion').val();
-      var intervalo =parseInt( $('#intervalo').val());
-      var rangoTiempo = parseInt($('#RangoTiempo').val())
-      var minimoTransaccion = parseFloat($('minimoTransaccion').val());
-      var TotalMinimo = parseFloat($('#totalMinimo').val());
-  
-
-      if(validarCamposStep(actualStep)){
-        getDepartamento();
-        getTransaccion();
-        getPremio();
-        addStep(`<div class="form-step ">
+    if (validarCamposStep(actualStep)) {
+      getDepartamento();
+      getTransaccion();
+      getPremio();
+      addStep(`<div class="form-step ">
         <div class="content-header mt-2 mb-1">
             <h4 class="mb-0">Configuración de Parametros de Etapa</h4>
             <small class="text-muted">Ingresa los datos basicos de la Campaña.</small>
@@ -601,44 +605,42 @@ function initStepper() {
             </div>
           </div>`);
 
-        var nuevo ={
-          nombre: NombreEtapa,
-          descripcion: descripcionEtapa,
-          orden: orden,
-          tipoParticipacion: tipoParticipacion,
-          intervalo: intervalo,
-          periodo: rangoTiempo,
-          valorAcumulado: null,
-          minimoTransaccion: minimoTransaccion,
-          totalMinimo: TotalMinimo,
-          estado: 1,
-        }
-        TEMP.push(nuevo);
-        //muestraEtapa.push(TEMP)
+      var nuevo = {
+        nombre: NombreEtapa,
+        descripcion: descripcionEtapa,
+        orden: orden,
+        tipoParticipacion: tipoParticipacion,
+        intervalo: intervalo,
+        periodo: rangoTiempo,
+        valorAcumulado: null,
+        minimoTransaccion: minimoTransaccion,
+        totalMinimo: TotalMinimo,
+        estado: 1,
+      };
+      TEMP.push(nuevo);
+      //muestraEtapa.push(TEMP)
 
-        $('#NombreEtapa').val('');
-        $('#orden').val('');
-        $('#descripcionEtapa').val('');
-        $('#tipoParticipacion').val('');
-        $('#RangoTiempo').val('');
-        $('#intervalo').val('');
-        $('#minimoTransaccion').val('');
-        $('#TotalMinimo').val('');
-
-
-      }else{
-        Alert('No se pudo crear la etapa, por falta de datos', 'error');
-      }
+      $("#NombreEtapa").val("");
+      $("#orden").val("");
+      $("#descripcionEtapa").val("");
+      $("#tipoParticipacion").val("");
+      $("#RangoTiempo").val("");
+      $("#intervalo").val("");
+      $("#minimoTransaccion").val("");
+      $("#TotalMinimo").val("");
+    } else {
+      Alert("No se pudo crear la etapa, por falta de datos", "error");
+    }
   });
 
   function addStep(content) {
-    $('.step-progress').addClass('blocked');
-    $('.step-buttons button').prop('disabled', true);
+    $(".step-progress").addClass("blocked");
+    $(".step-buttons button").prop("disabled", true);
     var newStep = $(`<div class="step"></div>`).html(content);
-    $('#stepper').append(newStep);
+    $("#stepper").append(newStep);
     // Bloquear la tecla "Enter" en los campos de entrada
-    newStep.find('input').on('keydown', function(e) {
-      if (e.key === 'Enter') {
+    newStep.find("input").on("keydown", function (e) {
+      if (e.key === "Enter") {
         e.preventDefault();
       }
     });
@@ -649,8 +651,6 @@ function initStepper() {
     actualStep = totalSteps - 1;
     showStep(actualStep);
 
-    
-
     // // Deshabilitar y ocultar los botones de la barra
     // $('.step-button').prop('disabled', true);
     //     //borrar los arreglos para su reutilizacion
@@ -658,11 +658,11 @@ function initStepper() {
     //     datosTablaLocalidad = [];
     //     datosTablaPremio = [];
     // Agregar evento de clic al botón "Borrar" del nuevo paso
-    newStep.find('#removeStepp').click(function(e) {
+    newStep.find("#removeStepp").click(function (e) {
       e.preventDefault();
       if (totalSteps > 1) {
         // Limpiar los datos de la etapa actual
-        nombresMunicipios={}
+        nombresMunicipios = {};
         TEMP = [];
         datosTablaParametro = [];
         datosTablaLocalidad = [];
@@ -670,104 +670,113 @@ function initStepper() {
         hideStep(actualStep);
         actualStep = previousStep; // Establecer actualStep al valor guardado
         showStep(actualStep);
-        newStep.html('');
+        newStep.html("");
         stepData = null;
-        $('.step-progress').removeClass('blocked');
+        $(".step-progress").removeClass("blocked");
       }
     });
 
-    newStep.find('#transaccion').click(function(e){
+    newStep.find("#transaccion").click(function (e) {
       e.preventDefault();
       $(this).off(e);
     });
 
-    newStep.find('#GuardarEtapa').click(function(e){
+    newStep.find("#GuardarEtapa").click(function (e) {
       e.preventDefault();
       var stepData = {
         etapa: [...TEMP],
         parametros: datosTablaParametro,
         presupuesto: datosTablaLocalidad,
-        premio: datosTablaPremio
+        premio: datosTablaPremio,
       };
       // Guardar los datos de la etapa en el objeto correspondiente
-      if(datosTablaParametro.length !=0 && datosTablaLocalidad.length !=0 && datosTablaPremio.length !=0 && TEMP.length !=0){
+      if (
+        datosTablaParametro.length != 0 &&
+        datosTablaLocalidad.length != 0 &&
+        datosTablaPremio.length != 0 &&
+        TEMP.length != 0
+      ) {
         DataEtapa.push(stepData);
-        getEtapasData()
+        getEtapasData();
         console.log(getEtapasData());
-        mostrarDatosTabla('#TablaEtapa');
-          // Limpiar los datos de la etapa actual
-          nombresMunicipios={}
-          TEMP = [];
-          datosTablaParametro = [];
-          datosTablaLocalidad = [];
-          datosTablaPremio = [];
-  
-  
+        mostrarDatosTabla("#TablaEtapa");
+        // Limpiar los datos de la etapa actual
+        nombresMunicipios = {};
+        TEMP = [];
+        datosTablaParametro = [];
+        datosTablaLocalidad = [];
+        datosTablaPremio = [];
+
         //Funciones del stepp
         hideStep(actualStep);
         actualStep = previousStep; // Establecer actualStep al valor guardado
         showStep(actualStep);
-        newStep.html('');
+        newStep.html("");
         stepData = null;
-        Alert('Etapa creada con exito', 'success');
-        $('.step-progress').removeClass('blocked');
-      }else{
-        Alert('No se pudo crear la etapa, por falta de datos', 'error');
+        Alert("Etapa creada con exito", "success");
+        $(".step-progress").removeClass("blocked");
+      } else {
+        Alert("No se pudo crear la etapa, por falta de datos", "error");
       }
-
     });
 
+    $("#addParamas").click(function () {
+      var limiteParticipacion = parseInt($("#limiteParticipacion").val());
+      var Transaccion = parseInt($("#transaccion").val());
+      var limiteDiario = parseInt($("#limiteDiario").val());
+      var ValorMinimo = parseFloat($("#valorMinimo").val());
+      var ValorMaximo = parseFloat($("#valorMaximo").val());
 
-    $('#addParamas').click(function(){
-      var limiteParticipacion = parseInt($('#limiteParticipacion').val());
-      var Transaccion = parseInt($('#transaccion').val());
-      var limiteDiario = parseInt($('#limiteDiario').val());
-      var ValorMinimo = parseFloat($('#valorMinimo').val());
-      var ValorMaximo = parseFloat($('#valorMaximo').val());
-
-      var fields = ['limiteParticipacion', 'transaccion', 'valorMinimo', 'valorMaximo'];
+      var fields = [
+        "limiteParticipacion",
+        "transaccion",
+        "valorMinimo",
+        "valorMaximo",
+      ];
       var isValid = true;
 
-      fields.forEach(function(field) {
-        var value = $('#' + field).val();
-        var errorDiv = $('#' + field + 'Error')
+      fields.forEach(function (field) {
+        var value = $("#" + field).val();
+        var errorDiv = $("#" + field + "Error");
         if (!value) {
-          $('#' + field).addClass('is-invalid');
-          errorDiv.text('Este campo no puede estar vacío.');
+          $("#" + field).addClass("is-invalid");
+          errorDiv.text("Este campo no puede estar vacío.");
           isValid = false;
         } else {
-          $('#' + field).removeClass('is-invalid');
-          errorDiv.text('');
+          $("#" + field).removeClass("is-invalid");
+          errorDiv.text("");
         }
 
         // Agregar evento input para quitar el error cuando el usuario comience a escribir
-        $('#' + field).on('input', function() {
-          $(this).removeClass('is-invalid');
-          errorDiv.text('');
+        $("#" + field).on("input", function () {
+          $(this).removeClass("is-invalid");
+          errorDiv.text("");
         });
       });
 
-      
-      var errorValorMinimo = $('#valorMinimoError');
-      var errorValorMaximo = $('#valorMaximoError');
+      var errorValorMinimo = $("#valorMinimoError");
+      var errorValorMaximo = $("#valorMaximoError");
 
       if (ValorMinimo > ValorMaximo) {
-        $('#valorMinimo').addClass('is-invalid');
-        $('#valorMaximo').addClass('is-invalid');
-        errorValorMinimo.text('El valor mínimo debe ser menor al valor máximo.');
-        errorValorMaximo.text('El valor máximo debe ser mayor al valor mínimo.');
+        $("#valorMinimo").addClass("is-invalid");
+        $("#valorMaximo").addClass("is-invalid");
+        errorValorMinimo.text(
+          "El valor mínimo debe ser menor al valor máximo."
+        );
+        errorValorMaximo.text(
+          "El valor máximo debe ser mayor al valor mínimo."
+        );
         isValid = false;
       } else {
-        $('#valorMinimo').removeClass('is-invalid');
-        $('#valorMaximo').removeClass('is-invalid');
-        errorValorMinimo.text('');
-        errorValorMaximo.text('');
+        $("#valorMinimo").removeClass("is-invalid");
+        $("#valorMaximo").removeClass("is-invalid");
+        errorValorMinimo.text("");
+        errorValorMaximo.text("");
       }
 
-      console.log(isValid)
-      if( isValid === true ){
-
-        var nuevoParametro= {
+      console.log(isValid);
+      if (isValid === true) {
+        var nuevoParametro = {
           limiteParticipacion: limiteParticipacion,
           idTransaccion: Transaccion,
           //tipo de transaccion Que es?
@@ -777,55 +786,57 @@ function initStepper() {
           ValorMaximo: ValorMaximo,
           valorAnterior: 0,
           //rangoDias: RangoDias
-          estado: 1
-        }
+          estado: 1,
+        };
 
         datosTablaParametro.push(nuevoParametro);
         console.log(datosTablaParametro);
-        $('#limiteParticipacion').val('');
-        $('#totalMinimo').val('');
-        $('#transaccion').val('');
-        $('#limiteDiario').val('');
-        $('#valorMinimo').val('');
-        $('#valorMaximo').val('');
-        $('#RangoDias').val('');
+        $("#limiteParticipacion").val("");
+        $("#totalMinimo").val("");
+        $("#transaccion").val("");
+        $("#limiteDiario").val("");
+        $("#valorMinimo").val("");
+        $("#valorMaximo").val("");
+        $("#RangoDias").val("");
 
-        mostrarDatosParametro('#TablaParametros');
-
-
+        mostrarDatosParametro("#TablaParametros");
       }
 
       return isValid;
-
     });
 
-    $('#addLocalidad').click(function() {
+    $("#addLocalidad").click(function () {
       // Obtener los valores de los campos de entrada
-      var departamento = parseInt($('#departamento').val());
-      var municipio = parseInt($('#municipio').val());
-      var limiteGanador = parseInt($('#limiteGanador').val());
-      var presupuesto = parseFloat($('#presupuesto').val());
-      var presupuestoDiario =  parseFloat($('#presupuestoDiario').val());
+      var departamento = parseInt($("#departamento").val());
+      var municipio = parseInt($("#municipio").val());
+      var limiteGanador = parseInt($("#limiteGanador").val());
+      var presupuesto = parseFloat($("#presupuesto").val());
+      var presupuestoDiario = parseFloat($("#presupuestoDiario").val());
 
-      var fields = ['departamento', 'municipio', 'limiteGanador', 'presupuesto'];
+      var fields = [
+        "departamento",
+        "municipio",
+        "limiteGanador",
+        "presupuesto",
+      ];
       var isValid = true;
 
-      fields.forEach(function(field) {
-        var value = $('#' + field).val();
-        var errorDiv = $('#' + field + 'Error')
+      fields.forEach(function (field) {
+        var value = $("#" + field).val();
+        var errorDiv = $("#" + field + "Error");
         if (!value) {
-          $('#' + field).addClass('is-invalid');
-          errorDiv.text('Este campo no puede estar vacío.');
+          $("#" + field).addClass("is-invalid");
+          errorDiv.text("Este campo no puede estar vacío.");
           isValid = false;
         } else {
-          $('#' + field).removeClass('is-invalid');
-          errorDiv.text('');
+          $("#" + field).removeClass("is-invalid");
+          errorDiv.text("");
         }
 
         // Agregar evento input para quitar el error cuando el usuario comience a escribir
-        $('#' + field).on('input', function() {
-          $(this).removeClass('is-invalid');
-          errorDiv.text('');
+        $("#" + field).on("input", function () {
+          $(this).removeClass("is-invalid");
+          errorDiv.text("");
         });
       });
 
@@ -836,79 +847,83 @@ function initStepper() {
           idDepartamento: departamento,
           idMunicipio: municipio,
           limiteGanadores: limiteGanador,
-          presupuestoDiario:presupuestoDiario,
+          presupuestoDiario: presupuestoDiario,
           valor: presupuesto,
-          estado: 1
+          estado: 1,
         };
 
         // Agregar el nuevo dato al arreglo
         datosTablaLocalidad.push(nuevoDato);
-        console.log(datosTablaLocalidad)
+        console.log(datosTablaLocalidad);
         // Limpiar los campos de entrada
-        $('#departamento').val('');
-        $('#municipio').val('');
-        $('#limiteGanador').val('');
-        $('#presupuesto').val('');
-        $('#presupuestoDiario').val('')
+        $("#departamento").val("");
+        $("#municipio").val("");
+        $("#limiteGanador").val("");
+        $("#presupuesto").val("");
+        $("#presupuestoDiario").val("");
 
         // Mostrar los datos en la tabla
-        mostrarDatosParametro('#tableLocalidad');
-
+        mostrarDatosParametro("#tableLocalidad");
       }
 
       return isValid;
     });
 
-    $('#addPremio').click(function(){
-      var tipoPremio = $('#tipoPremio').val();
-      var linkPremio = parseInt($('#linkPremio').val());
-      var premio = parseInt($('#premio').val());
-      var valor = parseFloat($('#valor').val());
-      var porcentaje = $('#porcentajePremio').val();
+    $("#addPremio").click(function () {
+      var tipoPremio = $("#tipoPremio").val();
+      var linkPremio = parseInt($("#linkPremio").val());
+      var premio = parseInt($("#premio").val());
+      var valor = parseFloat($("#valor").val());
+      var porcentaje = $("#porcentajePremio").val();
 
-      var fields = ['tipoPremio', 'linkPremio', 'premio', 'valor', 'porcentajePremio'];
+      var fields = [
+        "tipoPremio",
+        "linkPremio",
+        "premio",
+        "valor",
+        "porcentajePremio",
+      ];
       var isValid = true;
 
-      fields.forEach(function(field) {
-        var value = $('#' + field).val();
-        var errorDiv = $('#' + field + 'Error')
+      fields.forEach(function (field) {
+        var value = $("#" + field).val();
+        var errorDiv = $("#" + field + "Error");
         if (!value) {
-          $('#' + field).addClass('is-invalid');
-          errorDiv.text('Este campo no puede estar vacío.');
+          $("#" + field).addClass("is-invalid");
+          errorDiv.text("Este campo no puede estar vacío.");
           isValid = false;
         } else {
-          $('#' + field).removeClass('is-invalid');
-          errorDiv.text('');
+          $("#" + field).removeClass("is-invalid");
+          errorDiv.text("");
         }
 
         // Agregar evento input para quitar el error cuando el usuario comience a escribir
-        $('#' + field).on('input', function() {
-          $(this).removeClass('is-invalid');
-          errorDiv.text('');
+        $("#" + field).on("input", function () {
+          $(this).removeClass("is-invalid");
+          errorDiv.text("");
         });
       });
 
-      if( isValid ){
-        var nuevoPremio ={
-          idPremio : premio,
+      if (isValid) {
+        var nuevoPremio = {
+          idPremio: premio,
           linkPremio: linkPremio,
           tipoPremio: tipoPremio,
           valor: valor,
-          porcentajePremio : porcentaje,
-          estado: 1
-        }
+          porcentajePremio: porcentaje,
+          estado: 1,
+        };
 
-        console.log(tipoPremio)
+        console.log(tipoPremio);
         datosTablaPremio.push(nuevoPremio);
-        console.log(datosTablaPremio)
-        $('#tipoPremio').val('');
-        $('#linkPremio').val('');
-        $('#premio').val('');
-        $('#valor').val('');
-        $('#porcentajePremio').val('');
+        console.log(datosTablaPremio);
+        $("#tipoPremio").val("");
+        $("#linkPremio").val("");
+        $("#premio").val("");
+        $("#valor").val("");
+        $("#porcentajePremio").val("");
 
-        mostrarDatosParametro('#TablaPremio');
-
+        mostrarDatosParametro("#TablaPremio");
       }
       return isValid;
     });
@@ -924,37 +939,40 @@ function initStepper() {
     }
 
     function mostrarDatosParametro(tabla) {
-      switch(tabla)
-      {
-        case '#tableLocalidad':
-            // Limpiar la tabla antes de insertar nuevas filas
-          $('#tableLocalidad').DataTable().clear().destroy();
+      switch (tabla) {
+        case "#tableLocalidad":
+          // Limpiar la tabla antes de insertar nuevas filas
+          $("#tableLocalidad").DataTable().clear().destroy();
 
           // Inicializar el DataTables con los datos de datosTablaLocalidad
-          $('#tableLocalidad').DataTable({
+          $("#tableLocalidad").DataTable({
             searching: false,
             paging: false,
             data: datosTablaLocalidad,
             columns: [
               {
-                render: function(data, type, row, meta) {
+                render: function (data, type, row, meta) {
                   return meta.row + 1;
                 },
-                width: '5%'
+                width: "5%",
               },
               {
-                data: 'idDepartamento',
+                data: "idDepartamento",
                 render: function (data) {
-                  var departamento = $('#departamento option[value="' + data + '"]').text();
+                  var departamento = $(
+                    '#departamento option[value="' + data + '"]'
+                  ).text();
                   return departamento;
                 },
-                width: '25%'
+                width: "25%",
               },
               {
-                data: 'idMunicipio',
+                data: "idMunicipio",
                 render: function (data, type, row, meta) {
-                  var municipio = $('#municipio option[value="' + data + '"]').text();
-              
+                  var municipio = $(
+                    '#municipio option[value="' + data + '"]'
+                  ).text();
+
                   if (!municipio) {
                     // Si no se encuentra el nombre del municipio en el <select>, buscarlo en el objeto nombresMunicipios
                     municipio = nombresMunicipios[data];
@@ -962,159 +980,172 @@ function initStepper() {
                     // Si se encuentra el nombre del municipio en el <select>, agregarlo al objeto nombresMunicipios
                     agregarNombreMunicipio(data, municipio);
                   }
-              
+
                   return municipio;
                 },
-                width: '25%'
+                width: "25%",
               },
               {
-                data: 'limiteGanadores',
-                width: '15%'
+                data: "limiteGanadores",
+                width: "15%",
               },
               {
-                data: 'valor',
-                width: '15%'
+                data: "valor",
+                width: "15%",
               },
               {
                 render: function (data, type, row, meta) {
                   var opcDelete = `
-                    <a href="#" class="dropdown-item btnEliminarLocalidad" data-index="${meta.row}">
-                      ${feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" })}
+                    <a href="#" class="dropdown-item btnEliminarLocalidad" data-index="${
+                      meta.row
+                    }">
+                      ${feather.icons["trash-2"].toSvg({
+                        class: "font-small-4 mr-50",
+                      })}
                     </a>
                   `;
                   return opcDelete;
                 },
-                width: '15%'    
-              }
-            ]
+                width: "15%",
+              },
+            ],
           });
-        break;
+          break;
 
-        case'#TablaParametros':
+        case "#TablaParametros":
           // Limpiar la tabla antes de insertar nuevas filas
-          $('#TablaParametros').DataTable().clear().destroy();
+          $("#TablaParametros").DataTable().clear().destroy();
 
           // Inicializar el DataTables con los datos de datosTablaParametro
-          $('#TablaParametros').DataTable({
+          $("#TablaParametros").DataTable({
             data: datosTablaParametro,
             searching: false, // Deshabilitar la funcionalidad de búsqueda
             paging: false,
             columns: [
               {
-                render: function(data, type, row, meta) {
+                render: function (data, type, row, meta) {
                   // Aquí puedes usar `meta.row` para obtener el índice de la fila actual
                   return meta.row + 1;
                 },
-                width: '5%'
+                width: "5%",
               },
               {
-                data: 'idTransaccion',
+                data: "idTransaccion",
                 render: function (data) {
-                  var transaccion = $('#transaccion option[value="' + data + '"]').text();
+                  var transaccion = $(
+                    '#transaccion option[value="' + data + '"]'
+                  ).text();
                   return transaccion;
                 },
-                width: '30%'
+                width: "30%",
               },
-              { data: 'ValorMinimo', width: '20%' },
-              { data: 'ValorMaximo', width: '20%' },
+              { data: "ValorMinimo", width: "20%" },
+              { data: "ValorMaximo", width: "20%" },
               {
                 render: function (data, type, row, meta) {
                   var opcDelete = `
-                    <a href="#" class="dropdown-item btnEliminarParametro" data-index="${meta.row}">
-                      ${feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" })}
+                    <a href="#" class="dropdown-item btnEliminarParametro" data-index="${
+                      meta.row
+                    }">
+                      ${feather.icons["trash-2"].toSvg({
+                        class: "font-small-4 mr-50",
+                      })}
                     </a>
                   `;
                   return opcDelete;
                 },
-                width: '25%'
-              }
-            ]
+                width: "25%",
+              },
+            ],
           });
-        break;
+          break;
 
-        case '#TablaPremio':
-           // Limpiar la tabla antes de insertar nuevas filas
-           $('#TablaPremio').DataTable().clear().destroy();
+        case "#TablaPremio":
+          // Limpiar la tabla antes de insertar nuevas filas
+          $("#TablaPremio").DataTable().clear().destroy();
 
-           // Inicializar el DataTables con los datos de datosTablaLocalidad
-           $('#TablaPremio').DataTable({
-             searching: false, // Deshabilitar la funcionalidad de búsqueda
-             paging: false,
-             data: datosTablaPremio,
-             columns: [
-               {
-                render: function(data, type, row, meta) {
+          // Inicializar el DataTables con los datos de datosTablaLocalidad
+          $("#TablaPremio").DataTable({
+            searching: false, // Deshabilitar la funcionalidad de búsqueda
+            paging: false,
+            data: datosTablaPremio,
+            columns: [
+              {
+                render: function (data, type, row, meta) {
                   // Aquí puedes usar `meta.row` para obtener el índice de la fila actual
                   return meta.row + 1;
                 },
-                width: '5%'
+                width: "5%",
               },
               {
-                data: 'idPremio',
+                data: "idPremio",
                 render: function (data) {
                   var premio = $('#premio option[value="' + data + '"]').text();
                   return premio;
                 },
-                width: '30%'
+                width: "30%",
               },
-              { data: 'valor', width: '30%' },
+              { data: "valor", width: "30%" },
               {
-                data: 'linkPremio',
+                data: "linkPremio",
                 render: function (data) {
-                  return data === 1 ? 'Sí' : 'No';
+                  return data === 1 ? "Sí" : "No";
                 },
-                width: '30%'
+                width: "30%",
               },
               {
                 render: function (data, type, row, meta) {
                   var opcDelete = `
-                    <a href="#" class="dropdown-item btnEliminarPremio" data-index="${meta.row}">
-                      ${feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" })}
+                    <a href="#" class="dropdown-item btnEliminarPremio" data-index="${
+                      meta.row
+                    }">
+                      ${feather.icons["trash-2"].toSvg({
+                        class: "font-small-4 mr-50",
+                      })}
                     </a>
                   `;
                   return opcDelete;
-                }
-              }
-             ]
-           });
-        break;
+                },
+              },
+            ],
+          });
+          break;
 
         default:
           break;
       }
-      
     }
 
-    $(document).on('click', '.btnEliminarLocalidad', function(e) {
+    $(document).on("click", ".btnEliminarLocalidad", function (e) {
       e.preventDefault();
-      var index = $(this).data('index');
-      eliminarDatoAddStep('#tableLocalidad', index);
+      var index = $(this).data("index");
+      eliminarDatoAddStep("#tableLocalidad", index);
     });
-    
-    $(document).on('click', '.btnEliminarParametro', function(e) {
+
+    $(document).on("click", ".btnEliminarParametro", function (e) {
       e.preventDefault();
-      var index = $(this).data('index');
-      eliminarDatoAddStep('#TablaParametros', index);
+      var index = $(this).data("index");
+      eliminarDatoAddStep("#TablaParametros", index);
     });
-    
-    $(document).on('click', '.btnEliminarPremio', function(e) {
+
+    $(document).on("click", ".btnEliminarPremio", function (e) {
       e.preventDefault();
-      var index = $(this).data('index');
-      eliminarDatoAddStep('#TablaPremio', index);
+      var index = $(this).data("index");
+      eliminarDatoAddStep("#TablaPremio", index);
     });
 
     // Función para eliminar un dato de las tablas
     function eliminarDatoAddStep(tabla, index) {
-      console.log('Eliminar dato')
+      console.log("Eliminar dato");
       switch (tabla) {
-        case '#tableLocalidad':
+        case "#tableLocalidad":
           eliminarNombreMunicipio(datosTablaLocalidad[index].idMunicipio);
           datosTablaLocalidad.splice(index, 1);
           break;
-        case '#TablaParametros':
+        case "#TablaParametros":
           datosTablaParametro.splice(index, 1);
           break;
-        case '#TablaPremio':
+        case "#TablaPremio":
           datosTablaPremio.splice(index, 1);
           break;
         default:
@@ -1122,26 +1153,23 @@ function initStepper() {
       }
       mostrarDatosParametro(tabla);
     }
-    
-
   }
-  
 }
 
 //Función del stepper
 function initStepperEdit() {
   // Reiniciar los stepps
   actualStepEdit = 0;
-  var stepsEdits = $('#stepperEdit').children();
+  var stepsEdits = $("#stepperEdit").children();
   stepsEdits.hide();
-  
+
   // Inicializar los stepps
   var totalStepsEdits = stepsEdits.length;
-  var previousStep
-  var newStep
-  
+  var previousStep;
+  var newStep;
+
   showStep(actualStepEdit);
-  $('.next-btn-edit').click(function(e) {
+  $(".next-btn-edit").click(function (e) {
     e.preventDefault(); // Detener el comportamiento predeterminado
     if (actualStepEdit < totalStepsEdits - 1) {
       hideStep(actualStepEdit);
@@ -1150,8 +1178,8 @@ function initStepperEdit() {
       console.log(actualStepEdit);
     }
   });
-  
-  $('.prev-btn-edit').click(function(e) {
+
+  $(".prev-btn-edit").click(function (e) {
     e.preventDefault(); // Detener el comportamiento predeterminado
     if (actualStepEdit > 0) {
       hideStep(actualStepEdit);
@@ -1159,36 +1187,36 @@ function initStepperEdit() {
       showStep(actualStepEdit);
     }
   });
-  
+
   function showStep(stepIndex) {
     stepsEdits.eq(stepIndex).show();
     // Cambiar el color del botón correspondiente al paso actual
-    $('.step-progressEdit').removeClass('active');
-    $('.step-btn-' + (stepIndex + 1)+ '-edit').addClass('active');
+    $(".step-progressEdit").removeClass("active");
+    $(".step-btn-" + (stepIndex + 1) + "-edit").addClass("active");
   }
-  
+
   // Agregar evento de clic a los botones de la parte superior
-  $('.step-btn-1-edit').click(function(e) {
+  $(".step-btn-1-edit").click(function (e) {
     e.preventDefault();
     hideStep(actualStepEdit);
     actualStepEdit = 0;
     showStep(actualStepEdit);
   });
-  
-  $('.step-btn-2-edit').click(function(e) {
+
+  $(".step-btn-2-edit").click(function (e) {
     e.preventDefault();
     hideStep(actualStepEdit);
     actualStepEdit = 1;
     showStep(actualStepEdit);
   });
-  
-  $('.step-btn-3-edit').click(function(e) {
+
+  $(".step-btn-3-edit").click(function (e) {
     e.preventDefault();
     hideStep(actualStepEdit);
     actualStepEdit = 2;
     showStep(actualStepEdit);
   });
-  
+
   function hideStep(stepIndex) {
     stepsEdits.eq(stepIndex).hide();
   }
@@ -1196,44 +1224,47 @@ function initStepperEdit() {
   function handleTipoParticipacionChange(selectId, inputsContainerId) {
     const tipoSeleccionado = $(`#${selectId}`).val();
     const inputsContainer = $(`#${inputsContainerId}`);
-  
-    inputsContainer.find('#inputsTipo0').css('display', 'none');
-    inputsContainer.find('#inputsTipo1').css('display', 'none');
-  
-    if (tipoSeleccionado === '2' || tipoSeleccionado === '3') {
-      inputsContainer.find('#inputsTipo0').css('display', 'block');
-    } else if (tipoSeleccionado === '4') {
-      inputsContainer.find('#inputsTipo1').css('display', 'block');
+
+    inputsContainer.find("#inputsTipo0").css("display", "none");
+    inputsContainer.find("#inputsTipo1").css("display", "none");
+
+    if (tipoSeleccionado === "2" || tipoSeleccionado === "3") {
+      inputsContainer.find("#inputsTipo0").css("display", "block");
+    } else if (tipoSeleccionado === "4") {
+      inputsContainer.find("#inputsTipo1").css("display", "block");
     }
   }
-  
+
   // Para el stepIniEdit
-  $('#tipoParticipacionEdit').change(function() {
-    handleTipoParticipacionChange('tipoParticipacionEdit', 'inputsContainerEdit');
+  $("#tipoParticipacionEdit").change(function () {
+    handleTipoParticipacionChange(
+      "tipoParticipacionEdit",
+      "inputsContainerEdit"
+    );
   });
 
   function handleTipoParticipacionChange(selectId, inputsContainerId) {
     const tipoSeleccionado = $(`#${selectId}`).val();
     const inputsContainer = $(`#${inputsContainerId}`);
-  
-    inputsContainer.find('#inputsTipo0').css('display', 'none');
-    inputsContainer.find('#inputsTipo1').css('display', 'none');
-  
-    if (tipoSeleccionado === '2' || tipoSeleccionado === '3') {
-      inputsContainer.find('#inputsTipo0').css('display', 'block');
-    } else if (tipoSeleccionado === '4') {
-      inputsContainer.find('#inputsTipo1').css('display', 'block');
+
+    inputsContainer.find("#inputsTipo0").css("display", "none");
+    inputsContainer.find("#inputsTipo1").css("display", "none");
+
+    if (tipoSeleccionado === "2" || tipoSeleccionado === "3") {
+      inputsContainer.find("#inputsTipo0").css("display", "block");
+    } else if (tipoSeleccionado === "4") {
+      inputsContainer.find("#inputsTipo1").css("display", "block");
     }
   }
 
- $('#TablaEtapaEdit').on('click', '.btn_edit', function(event) {
-   var id = $(this).data('id');
-   console.log('entra aqui')
-   getDepartamento();
-   getTransaccion();
+  $("#TablaEtapaEdit").on("click", ".btn_edit", function (event) {
+    var id = $(this).data("id");
+    console.log("entra aqui");
+    getDepartamento();
+    getTransaccion();
 
-   getPremio();
-   addStepEdit(`
+    getPremio();
+    addStepEdit(`
    <div class="form-step">
      <div class="content-header mt-2 mb-1">
        <h4 class="mb-0">Configuración de Etapa</h4>
@@ -1503,16 +1534,16 @@ function initStepperEdit() {
       </div>
     </div>
     `);
-   editarEtapa(id);
-   event.stopPropagation();
- });
+    editarEtapa(id);
+    event.stopPropagation();
+  });
 
   function addStepEdit(content) {
-   $('.step-progressEditedit').addClass('blocked');
-    $('.step-buttonsEdit button').prop('disabled', true);
-    console.log('id add')
-      newStep = $(`<div class="step"></div>`).html(content);
-    $('#stepperEdit').append(newStep);
+    $(".step-progressEditedit").addClass("blocked");
+    $(".step-buttonsEdit button").prop("disabled", true);
+    console.log("id add");
+    newStep = $(`<div class="step"></div>`).html(content);
+    $("#stepperEdit").append(newStep);
     totalStepsEdits++;
     previousStep = actualStepEdit; // Guardar el valor actual de actualStepEdit
     hideStep(actualStepEdit);
@@ -1522,233 +1553,257 @@ function initStepperEdit() {
 
   // Función para editar una etapa
   function editarEtapa(id) {
-
-    var etapa = dataEditEtapa.find(function(item) {
+    var etapa = dataEditEtapa.find(function (item) {
       return item.id === id;
     });
 
     if (etapa) {
-      console.log(etapa, 'la etapa es')
-      
+      console.log(etapa, "la etapa es");
+
       // Para el stepIniEdit
-      $('#tipoParticipacionEdit').change(function() {
-        handleTipoParticipacionChange('tipoParticipacionEdit', 'inputsContainerEdit');
+      $("#tipoParticipacionEdit").change(function () {
+        handleTipoParticipacionChange(
+          "tipoParticipacionEdit",
+          "inputsContainerEdit"
+        );
       });
 
-      $('#departamentoEdit').on('change', function() {
+      $("#departamentoEdit").on("change", function () {
         var selectedId = $(this).val();
         getMunicipioByDepto(selectedId);
       });
-   
-      newStep.find('#removeSteppEdit').click(function(e) {
+
+      newStep.find("#removeSteppEdit").click(function (e) {
         e.preventDefault();
         hideStep(actualStepEdit);
         actualStepEdit = previousStep; // Establecer actualStep al valor guardado
         showStep(actualStepEdit);
-        newStep.html('');
+        newStep.html("");
         stepData = null;
-        
       });
 
-      $('#GuardarEtapaEdit').off('click').on('click', function(e) {
-        e.preventDefault();
-  
-        // Obtener los datos actualizados de la etapa desde los campos de entrada
-        var nombre = $('#NombreEtapaEdit').val();
-        var orden = $('#ordenEdit').val();
-        var descripcion = $('#descripcionEtapaEdit').val();
-        var tipoParticipacion = $('#tipoParticipacionEdit').val();
-        var intervalo = $('#intervaloEdit').val();
-  
-        // Actualizar los datos de la etapa
-        etapa.nombre = nombre;
-        etapa.orden = orden;
-        etapa.descripcion = descripcion;
-        etapa.tipoParticipacion = tipoParticipacion;
-        etapa.intervalo = intervalo;
-  
-        // Buscar la etapa editada en el arreglo dataEditEtapa
-        var etapaIndex = dataEditEtapa.findIndex(function(item) {
-          return item.id === id;
+      $("#GuardarEtapaEdit")
+        .off("click")
+        .on("click", function (e) {
+          e.preventDefault();
+
+          // Obtener los datos actualizados de la etapa desde los campos de entrada
+          var nombre = $("#NombreEtapaEdit").val();
+          var orden = $("#ordenEdit").val();
+          var descripcion = $("#descripcionEtapaEdit").val();
+          var tipoParticipacion = $("#tipoParticipacionEdit").val();
+          var intervalo = $("#intervaloEdit").val();
+
+          // Actualizar los datos de la etapa
+          etapa.nombre = nombre;
+          etapa.orden = orden;
+          etapa.descripcion = descripcion;
+          etapa.tipoParticipacion = tipoParticipacion;
+          etapa.intervalo = intervalo;
+
+          // Buscar la etapa editada en el arreglo dataEditEtapa
+          var etapaIndex = dataEditEtapa.findIndex(function (item) {
+            return item.id === id;
+          });
+
+          if (etapaIndex !== -1) {
+            // Actualizar la etapa editada en el arreglo dataEditEtapa
+            dataEditEtapa[etapaIndex] = etapa;
+
+            console.log(dataEditEtapa, "data pasando");
+            //Funciones del stepp
+            hideStep(actualStepEdit);
+            actualStepEdit = previousStep; // Establecer actualStep al valor guardado
+            showStep(actualStepEdit);
+            newStep.html("");
+            stepData = null;
+            $(".step-progress").removeClass("blocked");
+            Alert("Etapa actualizada correctamente", "success");
+          } else {
+            Alert("No se pudo encontrar la etapa editada", "error");
+          }
         });
-  
-        if (etapaIndex !== -1) {
-          // Actualizar la etapa editada en el arreglo dataEditEtapa
-          dataEditEtapa[etapaIndex] = etapa;
-  
-          console.log(dataEditEtapa, 'data pasando');
-          //Funciones del stepp
-          hideStep(actualStepEdit);
-          actualStepEdit = previousStep; // Establecer actualStep al valor guardado
-          showStep(actualStepEdit);
-          newStep.html('');
-           stepData = null;
-            $('.step-progress').removeClass('blocked');
-          Alert('Etapa actualizada correctamente', 'success');
-         
-        } else {
-          Alert('No se pudo encontrar la etapa editada', 'error');
-        }
-         
-      });
-
 
       // Asignar los valores de la etapa a los campos de edición
-      $('#idEtapa').val(etapa.id);
-      $('#NombreEtapaEdit').val(etapa.nombre);
-      $('#ordenEdit').val(etapa.orden);
-      $('#descripcionEtapaEdit').val(etapa.descripcion);
-      $('#tipoParticipacionEdit').val(etapa.tipoParticipacion);
-      $('#intervaloEdit').val(etapa.intervalo);
-      $('#RangoTiempoEdit').val(etapa.periodo)
+      $("#idEtapa").val(etapa.id);
+      $("#NombreEtapaEdit").val(etapa.nombre);
+      $("#ordenEdit").val(etapa.orden);
+      $("#descripcionEtapaEdit").val(etapa.descripcion);
+      $("#tipoParticipacionEdit").val(etapa.tipoParticipacion);
+      $("#intervaloEdit").val(etapa.intervalo);
+      $("#RangoTiempoEdit").val(etapa.periodo);
       // $('#idParemetros').val(etapa.parametros.id);
-        
-      // Lógica para mostrar u ocultar los campos según el tipo de participación
-      var tipoParticipacion = $('#tipoParticipacionEdit').val(); // Obtener el valor del campo de selección
-      var inputsTipo0 = document.getElementById('inputsTipo0Edit');
-      var inputsTipo1 = document.getElementById('inputsTipo1Edit');
 
-      if (tipoParticipacion === '2' || tipoParticipacion === '3') {
-        inputsTipo0.style.display = 'block';
-        inputsTipo1.style.display = 'none';
-        $('#minimoTransaccionEdit').val(etapa.minimoTransaccion);
-      } else if (tipoParticipacion === '4') {
-        inputsTipo0.style.display = 'none';
-        inputsTipo1.style.display = 'block';
-        $('#TotalMinimoEdit').val(etapa.totalMinimo);
+      // Lógica para mostrar u ocultar los campos según el tipo de participación
+      var tipoParticipacion = $("#tipoParticipacionEdit").val(); // Obtener el valor del campo de selección
+      var inputsTipo0 = document.getElementById("inputsTipo0Edit");
+      var inputsTipo1 = document.getElementById("inputsTipo1Edit");
+
+      if (tipoParticipacion === "2" || tipoParticipacion === "3") {
+        inputsTipo0.style.display = "block";
+        inputsTipo1.style.display = "none";
+        $("#minimoTransaccionEdit").val(etapa.minimoTransaccion);
+      } else if (tipoParticipacion === "4") {
+        inputsTipo0.style.display = "none";
+        inputsTipo1.style.display = "block";
+        $("#TotalMinimoEdit").val(etapa.totalMinimo);
       } else {
-        inputsTipo0.style.display = 'none';
-        inputsTipo1.style.display = 'none';
+        inputsTipo0.style.display = "none";
+        inputsTipo1.style.display = "none";
       }
 
-      Promise.all([getDepartamento(), getTransaccion(), getPremio(), getMunicipios()])
-      .then(() => {
-        mostrarDatosEdit('#TablaParametrosEdit', etapa);
-        mostrarDatosEdit('#tableLocalidadEdit', etapa);
-        mostrarDatosEdit('#TablaPremioEdit', etapa);
-      })
-      .catch(error => {
-        console.log('Error al cargar los datos:', error);
-      });
+      Promise.all([
+        getDepartamento(),
+        getTransaccion(),
+        getPremio(),
+        getMunicipios(),
+      ])
+        .then(() => {
+          mostrarDatosEdit("#TablaParametrosEdit", etapa);
+          mostrarDatosEdit("#tableLocalidadEdit", etapa);
+          mostrarDatosEdit("#TablaPremioEdit", etapa);
+        })
+        .catch((error) => {
+          console.log("Error al cargar los datos:", error);
+        });
 
-      mostrarDatosEdit('#TablaParametrosEdit', etapa);
-      mostrarDatosEdit('#tableLocalidadEdit', etapa);
-      mostrarDatosEdit('#TablaPremioEdit', etapa);
-
+      mostrarDatosEdit("#TablaParametrosEdit", etapa);
+      mostrarDatosEdit("#tableLocalidadEdit", etapa);
+      mostrarDatosEdit("#TablaPremioEdit", etapa);
 
       // Event listeners para los botones de editar y eliminar de la tabla de parámetros
-      $('#TablaParametrosEdit tbody').off('click', '.btn_edit_parametro').on('click', '.btn_edit_parametro', function() {
-        var id = $(this).data('id');
-        editarParametro(id, etapa);
-      });
+      $("#TablaParametrosEdit tbody")
+        .off("click", ".btn_edit_parametro")
+        .on("click", ".btn_edit_parametro", function () {
+          var id = $(this).data("id");
+          editarParametro(id, etapa);
+        });
 
-      $('#TablaParametrosEdit tbody').off('click', '.btn_delete_parametro').on('click', '.btn_delete_parametro', function() {
-        var id = $(this).data('id');
-        eliminarParametro(id, etapa);
-      });
+      $("#TablaParametrosEdit tbody")
+        .off("click", ".btn_delete_parametro")
+        .on("click", ".btn_delete_parametro", function () {
+          var id = $(this).data("id");
+          eliminarParametro(id, etapa);
+        });
 
       // Event listeners para los botones de editar y eliminar de la tabla de localidades
-      $('#tableLocalidadEdit tbody').off('click', '.btn_edit_localidad').on('click', '.btn_edit_localidad', function() {
-        var id = $(this).data('id');
-        editarLocalidad(id);
-      });
+      $("#tableLocalidadEdit tbody")
+        .off("click", ".btn_edit_localidad")
+        .on("click", ".btn_edit_localidad", function () {
+          var id = $(this).data("id");
+          editarLocalidad(id);
+        });
 
-      $('#tableLocalidadEdit tbody').off('click', '.btn_delete_localidad').on('click', '.btn_delete_localidad', function() {
-        var id = $(this).data('id');
-        eliminarLocalidad(id, etapa);
-      });
+      $("#tableLocalidadEdit tbody")
+        .off("click", ".btn_delete_localidad")
+        .on("click", ".btn_delete_localidad", function () {
+          var id = $(this).data("id");
+          eliminarLocalidad(id, etapa);
+        });
 
       // Event listeners para los botones de editar y eliminar de la tabla de premios
-      $('#TablaPremioEdit tbody').off('click', '.btn_edit_premio').on('click', '.btn_edit_premio', function() {
-        var id = $(this).data('id');
-        editarPremio(id);
-      });
+      $("#TablaPremioEdit tbody")
+        .off("click", ".btn_edit_premio")
+        .on("click", ".btn_edit_premio", function () {
+          var id = $(this).data("id");
+          editarPremio(id);
+        });
 
-      $('#TablaPremioEdit tbody').off('click', '.btn_delete_premio').on('click', '.btn_delete_premio', function() {
-        var id = $(this).data('id');
-        eliminarPremio(id, etapa);
-      });
+      $("#TablaPremioEdit tbody")
+        .off("click", ".btn_delete_premio")
+        .on("click", ".btn_delete_premio", function () {
+          var id = $(this).data("id");
+          eliminarPremio(id, etapa);
+        });
     }
 
     function editarParametro(id) {
       if (etapa) {
-        var parametroIndex = etapa.parametros.findIndex(function(item) {
+        var parametroIndex = etapa.parametros.findIndex(function (item) {
           return item.id === id;
         });
-    
+
         if (parametroIndex !== -1) {
           var parametro = etapa.parametros[parametroIndex];
-    
+
           // Eliminar el registro del arreglo etapa.parametros
           etapa.parametros.splice(parametroIndex, 1);
-    
+
           // Mostrar los datos del registro seleccionado en los inputs
-          $('#idParemetros').val(parametro.id);
-          $('#limiteParticipacionEdit').val(parametro.limiteParticipacion);
-          $('#transaccionEdit').val(parametro.idTransaccion);
-          $('#valorMinimoEdit').val(parametro.ValorMinimo);
-          $('#valorMaximoEdit').val(parametro.ValorMaximo);
-          $('#limiteDiarioEdit').val(parametro.limiteDiario);
-    
+          $("#idParemetros").val(parametro.id);
+          $("#limiteParticipacionEdit").val(parametro.limiteParticipacion);
+          $("#transaccionEdit").val(parametro.idTransaccion);
+          $("#valorMinimoEdit").val(parametro.ValorMinimo);
+          $("#valorMaximoEdit").val(parametro.ValorMaximo);
+          $("#limiteDiarioEdit").val(parametro.limiteDiario);
+
           // Actualizar la tabla de parámetros
-          mostrarDatosEdit('#TablaParametrosEdit', etapa);
+          mostrarDatosEdit("#TablaParametrosEdit", etapa);
         }
       }
     }
-    
+
     // Event listener para el botón de guardar parámetro editado
-    $('#addParamasEdit').click(function() {
-      var id = $('#idParemetros').val();
-      var limiteParticipacion = $('#limiteParticipacionEdit').val();
-      var idTransaccion = $('#transaccionEdit').val();
-      var ValorMinimo = $('#valorMinimoEdit').val();
-      var ValorMaximo = $('#valorMaximoEdit').val();
-      var limiteDiario = $('#limiteDiarioEdit').val();
-      var parametro = {}
+    $("#addParamasEdit").click(function () {
+      var id = $("#idParemetros").val();
+      var limiteParticipacion = $("#limiteParticipacionEdit").val();
+      var idTransaccion = $("#transaccionEdit").val();
+      var ValorMinimo = $("#valorMinimoEdit").val();
+      var ValorMaximo = $("#valorMaximoEdit").val();
+      var limiteDiario = $("#limiteDiarioEdit").val();
+      var parametro = {};
 
       // Validar campos y aplicar clases y mensajes de error
-      var fields = ['limiteParticipacionEdit', 'transaccionEdit', 'valorMinimoEdit', 'valorMaximoEdit'];
+      var fields = [
+        "limiteParticipacionEdit",
+        "transaccionEdit",
+        "valorMinimoEdit",
+        "valorMaximoEdit",
+      ];
       var isValid = true;
 
-      fields.forEach(function(field) {
-        var value = $('#' + field).val();
-        var errorDiv = $('#' + field + 'Error');
+      fields.forEach(function (field) {
+        var value = $("#" + field).val();
+        var errorDiv = $("#" + field + "Error");
         if (!value) {
-          $('#' + field).addClass('is-invalid');
-          errorDiv.text('Este campo no puede estar vacío.');
+          $("#" + field).addClass("is-invalid");
+          errorDiv.text("Este campo no puede estar vacío.");
           isValid = false;
         } else {
-          $('#' + field).removeClass('is-invalid');
-          errorDiv.text('');
+          $("#" + field).removeClass("is-invalid");
+          errorDiv.text("");
         }
 
         // Agregar evento input para quitar el error cuando el usuario comience a escribir
-        $('#' + field).on('input', function() {
-          $(this).removeClass('is-invalid');
-          errorDiv.text('');
+        $("#" + field).on("input", function () {
+          $(this).removeClass("is-invalid");
+          errorDiv.text("");
         });
       });
 
       // Validar ValorMinimo y ValorMaximo
-      var errorValorMinimo = $('#valorMinimoEditError');
-      var errorValorMaximo = $('#valorMaximoEditError');
+      var errorValorMinimo = $("#valorMinimoEditError");
+      var errorValorMaximo = $("#valorMaximoEditError");
 
       if (ValorMinimo > ValorMaximo) {
-        $('#valorMinimoEdit').addClass('is-invalid');
-        $('#valorMaximoEdit').addClass('is-invalid');
-        errorValorMinimo.text('El valor mínimo debe ser menor al valor máximo.');
-        errorValorMaximo.text('El valor máximo debe ser mayor al valor mínimo.');
+        $("#valorMinimoEdit").addClass("is-invalid");
+        $("#valorMaximoEdit").addClass("is-invalid");
+        errorValorMinimo.text(
+          "El valor mínimo debe ser menor al valor máximo."
+        );
+        errorValorMaximo.text(
+          "El valor máximo debe ser mayor al valor mínimo."
+        );
         isValid = false;
       } else {
-        $('#valorMinimoEdit').removeClass('is-invalid');
-        $('#valorMaximoEdit').removeClass('is-invalid');
-        errorValorMinimo.text('');
-        errorValorMaximo.text('');
+        $("#valorMinimoEdit").removeClass("is-invalid");
+        $("#valorMaximoEdit").removeClass("is-invalid");
+        errorValorMinimo.text("");
+        errorValorMaximo.text("");
       }
 
-      
-      if(isValid){
-        if(id === null || id === ''){
+      if (isValid) {
+        if (id === null || id === "") {
           parametro = {
             limiteParticipacion: limiteParticipacion,
             idTransaccion: idTransaccion,
@@ -1757,9 +1812,9 @@ function initStepperEdit() {
             ValorMaximo: ValorMaximo,
             valorAnterior: 0,
             limiteDiario: limiteDiario,
-            estado:1
+            estado: 1,
           };
-        }else{
+        } else {
           parametro = {
             id: id,
             limiteParticipacion: limiteParticipacion,
@@ -1769,189 +1824,198 @@ function initStepperEdit() {
             ValorMaximo: ValorMaximo,
             valorAnterior: 0,
             limiteDiario: limiteDiario,
-            estado:1
+            estado: 1,
           };
         }
         // Agregar el parámetro actualizado al arreglo datosTablaParametro
         etapa.parametros.push(parametro);
         // Actualizar la tabla de parámetros
-        mostrarDatosEdit('#TablaParametrosEdit', etapa);
+        mostrarDatosEdit("#TablaParametrosEdit", etapa);
         // Limpiar los inputs después de guardar
-        $('#idParemetros').val('');
-        $('#limiteParticipacionEdit').val('');
-        $('#transaccionEdit').val('');
-        $('#valorMinimoEdit').val('');
-        $('#valorMaximoEdit').val('');
-        $('#limiteDiarioEdit').val('');
-        parametro={}
+        $("#idParemetros").val("");
+        $("#limiteParticipacionEdit").val("");
+        $("#transaccionEdit").val("");
+        $("#valorMinimoEdit").val("");
+        $("#valorMaximoEdit").val("");
+        $("#limiteDiarioEdit").val("");
+        parametro = {};
       }
-      
-
-      
     });
 
     //Funcion asociada
     function editarLocalidad(id) {
       if (etapa) {
-        var presupuestosIndex = etapa.presupuestos.findIndex(function(item) {
+        var presupuestosIndex = etapa.presupuestos.findIndex(function (item) {
           return item.id === id;
         });
-    
+
         if (presupuestosIndex !== -1) {
           var presupuesto = etapa.presupuestos[presupuestosIndex];
-    
+
           // Eliminar el registro del arreglo etapa.presupuestos
           etapa.presupuestos.splice(presupuestosIndex, 1);
-    
+
           // Mostrar los datos del registro seleccionado en los inputs
-          $('#idPresupuesto').val(presupuesto.id);
-          $('#departamentoEdit').val(presupuesto.idDepartamento);
-          $('#municipioEdit').val(presupuesto.idMunicipio);
+          $("#idPresupuesto").val(presupuesto.id);
+          $("#departamentoEdit").val(presupuesto.idDepartamento);
+          $("#municipioEdit").val(presupuesto.idMunicipio);
           getMunicipioByDepto(presupuesto.idDepartamento);
-          $('#limiteGanadorEdit').val(presupuesto.limiteGanadores);
-          $('#presupuestoEdit').val(presupuesto.valor);
-          $('#presupuestoDiarioEdit').val(presupuesto.presupuestoDiario);
-    
+          $("#limiteGanadorEdit").val(presupuesto.limiteGanadores);
+          $("#presupuestoEdit").val(presupuesto.valor);
+          $("#presupuestoDiarioEdit").val(presupuesto.presupuestoDiario);
+
           // Actualizar la tabla de localidades
-          mostrarDatosEdit('#tableLocalidadEdit', etapa);
+          mostrarDatosEdit("#tableLocalidadEdit", etapa);
         }
       }
     }
 
-    $('#addLocalidadEdit').click(function() {
-      var id = $('#idPresupuesto').val();
-      var idDepartamento = $('#departamentoEdit').val();
-      var idMunicipio = $('#municipioEdit').val();
-      var limiteGanadores = $('#limiteGanadorEdit').val();
-      var valor = $('#presupuestoEdit').val();
-      var presupuestoDiario = $('#presupuestoDiarioEdit').val();
+    $("#addLocalidadEdit").click(function () {
+      var id = $("#idPresupuesto").val();
+      var idDepartamento = $("#departamentoEdit").val();
+      var idMunicipio = $("#municipioEdit").val();
+      var limiteGanadores = $("#limiteGanadorEdit").val();
+      var valor = $("#presupuestoEdit").val();
+      var presupuestoDiario = $("#presupuestoDiarioEdit").val();
       var presupuestoActualizado = {};
 
-      var fields = ['departamentoEdit', 'municipioEdit', 'limiteGanadorEdit', 'presupuestoDiarioEdit','presupuestoEdit'];
+      var fields = [
+        "departamentoEdit",
+        "municipioEdit",
+        "limiteGanadorEdit",
+        "presupuestoDiarioEdit",
+        "presupuestoEdit",
+      ];
       var isValid = true;
-      
-      fields.forEach(function(field) {
-        var value = $('#' + field).val();
-        var errorDiv = $('#' + field + 'Error')
+
+      fields.forEach(function (field) {
+        var value = $("#" + field).val();
+        var errorDiv = $("#" + field + "Error");
         if (!value) {
-          $('#' + field).addClass('is-invalid');
-          errorDiv.text('Este campo no puede estar vacío.');
+          $("#" + field).addClass("is-invalid");
+          errorDiv.text("Este campo no puede estar vacío.");
           isValid = false;
         } else {
-          $('#' + field).removeClass('is-invalid');
-          errorDiv.text('');
+          $("#" + field).removeClass("is-invalid");
+          errorDiv.text("");
         }
 
         // Agregar evento input para quitar el error cuando el usuario comience a escribir
-        $('#' + field).on('input', function() {
-          $(this).removeClass('is-invalid');
-          errorDiv.text('');
+        $("#" + field).on("input", function () {
+          $(this).removeClass("is-invalid");
+          errorDiv.text("");
         });
       });
-    
-      if(isValid){
-        if (id === null || id === '') {
+
+      if (isValid) {
+        if (id === null || id === "") {
           presupuestoActualizado = {
             idDepartamento: idDepartamento,
             idMunicipio: idMunicipio,
             limiteGanadores: limiteGanadores,
             presupuestoDiario: presupuestoDiario,
             valor: valor,
-            estado: 1
+            estado: 1,
           };
         } else {
           presupuestoActualizado = {
-            id:id,
+            id: id,
             idDepartamento: idDepartamento,
             idMunicipio: idMunicipio,
             limiteGanadores: limiteGanadores,
             valor: valor,
             presupuestoDiario: presupuestoDiario,
-            estado: 1
+            estado: 1,
           };
         }
         // Agregar el presupuesto actualizado al arreglo etapa.presupuestos
         etapa.presupuestos.push(presupuestoActualizado);
         // Actualizar la tabla de parámetros
-        mostrarDatosEdit('#tableLocalidadEdit', etapa);
-      
+        mostrarDatosEdit("#tableLocalidadEdit", etapa);
+
         // Limpiar los inputs después de guardar
-        $('#idPresupuesto').val('');
-        $('#departamentoEdit').val('');
-        $('#municipioEdit').val('');
-        $('#limiteGanadorEdit').val('');
-        $('#presupuestoEdit').val('');
-        $('#presupuestoDiarioEdit').val('');
-        presupuestoActualizado={}
+        $("#idPresupuesto").val("");
+        $("#departamentoEdit").val("");
+        $("#municipioEdit").val("");
+        $("#limiteGanadorEdit").val("");
+        $("#presupuestoEdit").val("");
+        $("#presupuestoDiarioEdit").val("");
+        presupuestoActualizado = {};
       }
     });
     //Funcion asociada
     function editarPremio(id) {
       if (etapa) {
-        var premioIndex = etapa.premiocampania.findIndex(function(item) {
+        var premioIndex = etapa.premiocampania.findIndex(function (item) {
           return item.id === id;
         });
-    
+
         if (premioIndex !== -1) {
           var premio = etapa.premiocampania[premioIndex];
-    
+
           // Eliminar el registro del arreglo etapa.premiocampania
           etapa.premiocampania.splice(premioIndex, 1);
-    
+
           // Mostrar los datos del registro seleccionado en los inputs
-          $('#idPremio').val(premio.id);
-          $('#valorEdit').val(premio.valor);
-          $('#linkPremioEdit').val(premio.linkPremio);
-          $('#premioEdit').val(premio.idPremio);
-          $('#porcentajePremioEdit').val(premio.porcentajePremio);
-          $('#tipoPremioEdit').val(premio.tipoPremio);
-    
+          $("#idPremio").val(premio.id);
+          $("#valorEdit").val(premio.valor);
+          $("#linkPremioEdit").val(premio.linkPremio);
+          $("#premioEdit").val(premio.idPremio);
+          $("#porcentajePremioEdit").val(premio.porcentajePremio);
+          $("#tipoPremioEdit").val(premio.tipoPremio);
+
           // Actualizar la tabla de premios
-          mostrarDatosEdit('#TablaPremioEdit', etapa);
+          mostrarDatosEdit("#TablaPremioEdit", etapa);
         }
       }
     }
-    
-    $('#addPremioEdit').click(function() {
-      var id = $('#idPremio').val();
-      var tipoPremio = $('#tipoPremioEdit').val();
-      var linkPremio = parseInt($('#linkPremioEdit').val());
-      var premio = parseInt($('#premioEdit').val());
-      var valor = parseFloat($('#valorEdit').val());
-      var porcentaje = $('#porcentajePremioEdit').val();
+
+    $("#addPremioEdit").click(function () {
+      var id = $("#idPremio").val();
+      var tipoPremio = $("#tipoPremioEdit").val();
+      var linkPremio = parseInt($("#linkPremioEdit").val());
+      var premio = parseInt($("#premioEdit").val());
+      var valor = parseFloat($("#valorEdit").val());
+      var porcentaje = $("#porcentajePremioEdit").val();
       var premioActualizado = {};
 
-      var fields = ['tipoPremioEdit', 'linkPremioEdit', 'premioEdit', 'valorEdit', 'porcentajePremioEdit'];
+      var fields = [
+        "tipoPremioEdit",
+        "linkPremioEdit",
+        "premioEdit",
+        "valorEdit",
+        "porcentajePremioEdit",
+      ];
       var isValid = true;
 
-      fields.forEach(function(field) {
-        var value = $('#' + field).val();
-        var errorDiv = $('#' + field + 'Error')
+      fields.forEach(function (field) {
+        var value = $("#" + field).val();
+        var errorDiv = $("#" + field + "Error");
         if (!value) {
-          $('#' + field).addClass('is-invalid');
-          errorDiv.text('Este campo no puede estar vacío.');
+          $("#" + field).addClass("is-invalid");
+          errorDiv.text("Este campo no puede estar vacío.");
           isValid = false;
         } else {
-          $('#' + field).removeClass('is-invalid');
-          errorDiv.text('');
+          $("#" + field).removeClass("is-invalid");
+          errorDiv.text("");
         }
 
         // Agregar evento input para quitar el error cuando el usuario comience a escribir
-        $('#' + field).on('input', function() {
-          $(this).removeClass('is-invalid');
-          errorDiv.text('');
+        $("#" + field).on("input", function () {
+          $(this).removeClass("is-invalid");
+          errorDiv.text("");
         });
       });
-    
-      if(isValid){
-        if (id === null || id === '') {
+
+      if (isValid) {
+        if (id === null || id === "") {
           premioActualizado = {
             idPremio: premio,
             linkPremio: linkPremio,
             tipoPremio: tipoPremio,
             valor: valor,
             porcentajePremio: porcentaje,
-            estado: 1
+            estado: 1,
           };
         } else {
           premioActualizado = {
@@ -1961,74 +2025,79 @@ function initStepperEdit() {
             tipoPremio: tipoPremio,
             valor: valor,
             porcentajePremio: porcentaje,
-            estado: 1
+            estado: 1,
           };
         }
         // Agregar el premio actualizado al arreglo etapa.premiocampania
         etapa.premiocampania.push(premioActualizado);
-        console.log('premio actualizado', etapa.premiocampania)
-        mostrarDatosEdit('#TablaPremioEdit', etapa);
+        console.log("premio actualizado", etapa.premiocampania);
+        mostrarDatosEdit("#TablaPremioEdit", etapa);
         // Limpiar los inputs después de guardar
-        $('#idPremio').val('');
-        $('#valorEdit').val('');
-        $('#linkPremioEdit').val('');
-        $('#premioEdit').val('');
-        $('#porcentajePremioEdit').val('');
-        $('#tipoPremioEdit').val('')
-        premioActualizado={}
+        $("#idPremio").val("");
+        $("#valorEdit").val("");
+        $("#linkPremioEdit").val("");
+        $("#premioEdit").val("");
+        $("#porcentajePremioEdit").val("");
+        $("#tipoPremioEdit").val("");
+        premioActualizado = {};
       }
     });
 
     function eliminarParametro(id, etapa) {
       if (etapa) {
-        const parametro = etapa.parametros.find(item => item.id === id);
-    
+        const parametro = etapa.parametros.find((item) => item.id === id);
+
         if (parametro) {
           parametro.estado = 0;
-          mostrarDatosEdit('#TablaParametrosEdit', etapa);
+          mostrarDatosEdit("#TablaParametrosEdit", etapa);
         }
       }
     }
-    
+
     function eliminarLocalidad(id, etapa) {
       if (etapa) {
-        const presupuestoIndex = etapa.presupuestos.findIndex(item => item.id === id);
-    
+        const presupuestoIndex = etapa.presupuestos.findIndex(
+          (item) => item.id === id
+        );
+
         if (presupuestoIndex !== -1) {
           etapa.presupuestos[presupuestoIndex].estado = 0;
-          mostrarDatosEdit('#tableLocalidadEdit', etapa);
+          mostrarDatosEdit("#tableLocalidadEdit", etapa);
         }
       }
     }
-    
+
     function eliminarPremio(id, etapa) {
-      console.log('etapa premio', etapa)
+      console.log("etapa premio", etapa);
       if (etapa) {
-        const premioIndex = etapa.premiocampania.findIndex(item => item.id === id);
-    
+        const premioIndex = etapa.premiocampania.findIndex(
+          (item) => item.id === id
+        );
+
         if (premioIndex !== -1) {
           etapa.premiocampania[premioIndex].estado = 0;
-          console.log(etapa.premiocampania, 'estado')
-          mostrarDatosEdit('#TablaPremioEdit', etapa);
+          console.log(etapa.premiocampania, "estado");
+          mostrarDatosEdit("#TablaPremioEdit", etapa);
         }
       }
     }
 
     function mostrarDatosEdit(tabla, etapa) {
-
       switch (tabla) {
-        case '#tableLocalidadEdit':
+        case "#tableLocalidadEdit":
           // Filtro
-          const presupuestosActivos = etapa.presupuestos.filter(item => item.estado === 1);
+          const presupuestosActivos = etapa.presupuestos.filter(
+            (item) => item.estado === 1
+          );
 
-          console.log('Presupuestos activos:', presupuestosActivos);
+          console.log("Presupuestos activos:", presupuestosActivos);
 
-          console.log('depto tabla', dataDeptoView)
+          console.log("depto tabla", dataDeptoView);
           // Limpiar la tabla antes de insertar nuevas filas
-          $('#tableLocalidadEdit').DataTable().clear().destroy();
-    
+          $("#tableLocalidadEdit").DataTable().clear().destroy();
+
           // Inicializar el DataTables con los datos de datosTablaLocalidad
-          $('#tableLocalidadEdit').DataTable({
+          $("#tableLocalidadEdit").DataTable({
             searching: false,
             paging: false,
             data: presupuestosActivos,
@@ -2037,73 +2106,81 @@ function initStepperEdit() {
                 render: function (data, type, row, meta) {
                   return meta.row + 1;
                 },
-                width: '5%'
+                width: "5%",
               },
               {
-                data: 'idDepartamento',
+                data: "idDepartamento",
                 render: function (data, type, row) {
-                  console.log(dataDeptoView, 'antes del if');
+                  console.log(dataDeptoView, "antes del if");
                   if (dataDeptoView.length > 0) {
-                    console.log(dataDeptoView,'despues del if')
-                    const deptoActual = dataDeptoView.find(depto => depto.id == data);
+                    console.log(dataDeptoView, "despues del if");
+                    const deptoActual = dataDeptoView.find(
+                      (depto) => depto.id == data
+                    );
                     if (deptoActual) {
-                      console.log(deptoActual, 'depto')
+                      console.log(deptoActual, "depto");
                       return deptoActual.nombre;
                     }
                   }
-                  return 'Departemento no encontrado';
+                  return "Departemento no encontrado";
                 },
-                width: '25%'
+                width: "25%",
               },
               {
-                data: 'idMunicipio',
+                data: "idMunicipio",
                 render: function (data, type, row) {
-                  console.log('municipio', dataMunicipiosView)
+                  console.log("municipio", dataMunicipiosView);
                   if (dataMunicipiosView.length > 0) {
-                    const municipioActual = dataMunicipiosView.find(municipio => municipio.id == data);
+                    const municipioActual = dataMunicipiosView.find(
+                      (municipio) => municipio.id == data
+                    );
                     if (municipioActual) {
-                      console.log('encontro id', municipioActual)
+                      console.log("encontro id", municipioActual);
                       return municipioActual.nombre;
                     }
                   }
-                  return 'Municipio no encontrado';
+                  return "Municipio no encontrado";
                 },
-                width: '25%'
+                width: "25%",
               },
               {
-                data: 'limiteGanadores',
-                width: '15%'
+                data: "limiteGanadores",
+                width: "15%",
               },
               {
-                data: 'valor',
-                width: '15%'
+                data: "valor",
+                width: "15%",
               },
               {
                 data: "id",
                 render: function (data) {
                   return `<div  style="display: flex; justify-content:space-around">
                     <a href="#" data-id="${data}" class="btn_edit_localidad dropdown-item">
-                    ${feather.icons["edit"].toSvg({ class: "font-small-4 mr-50" })} 
+                    ${feather.icons["edit"].toSvg({
+                      class: "font-small-4 mr-50",
+                    })} 
                     </a>
                     <a href="#" data-id="${data}" class="btn_delete_localidad dropdown-item">
-                      ${feather.icons['trash-2'].toSvg({ class: 'font-small-4 mr-50' })} 
+                      ${feather.icons["trash-2"].toSvg({
+                        class: "font-small-4 mr-50",
+                      })} 
                     </a> 
                   </div>`;
                 },
-                width: '20%'
-              }
-            ]
+                width: "20%",
+              },
+            ],
           });
           break;
-    
-        case '#TablaParametrosEdit':
-        console.log('entra')
-          const parametro = etapa.parametros.filter(item => item.estado == 1);
+
+        case "#TablaParametrosEdit":
+          console.log("entra");
+          const parametro = etapa.parametros.filter((item) => item.estado == 1);
           // Limpiar la tabla antes de insertar nuevas filas
-          $('#TablaParametrosEdit').DataTable().clear().destroy();
-    
+          $("#TablaParametrosEdit").DataTable().clear().destroy();
+
           // Inicializar el DataTables con los datos de datosTablaParametro
-          $('#TablaParametrosEdit').DataTable({
+          $("#TablaParametrosEdit").DataTable({
             data: parametro,
             searching: false, // Deshabilitar la funcionalidad de búsqueda
             paging: false,
@@ -2113,50 +2190,61 @@ function initStepperEdit() {
                   // Aquí puedes usar `meta.row` para obtener el índice de la fila actual
                   return meta.row + 1;
                 },
-                width: '5%'
+                width: "5%",
               },
               {
-                data: 'idTransaccion',
+                data: "idTransaccion",
                 render: function (data, type, row) {
-                  console.log('transaccion antes de if', datatransaccionView)
+                  console.log("transaccion antes de if", datatransaccionView);
                   if (datatransaccionView.length > 0) {
-                    console.log('transaccion despues de if', datatransaccionView)
-                    const transaccionActual = datatransaccionView.find(transaccion => transaccion.id == data);
+                    console.log(
+                      "transaccion despues de if",
+                      datatransaccionView
+                    );
+                    const transaccionActual = datatransaccionView.find(
+                      (transaccion) => transaccion.id == data
+                    );
                     if (transaccionActual) {
                       return transaccionActual.descripcion;
                     }
                   }
-                  return 'Transaccion no encontrado';
+                  return "Transaccion no encontrado";
                 },
-                width: '25%'
+                width: "25%",
               },
-              { data: 'ValorMinimo', width: '20%' },
-              { data: 'ValorMaximo', width: '20%' },
+              { data: "ValorMinimo", width: "20%" },
+              { data: "ValorMaximo", width: "20%" },
               {
                 data: "id",
                 render: function (data) {
                   return `<div  style="display: flex; justify-content:space-around">
                     <a href="#" data-id="${data}" class="btn_edit_parametro dropdown-item">
-                    ${feather.icons["edit"].toSvg({ class: "font-small-4 mr-50" })} 
+                    ${feather.icons["edit"].toSvg({
+                      class: "font-small-4 mr-50",
+                    })} 
                     </a>
                     <a href="#" data-id="${data}" class="btn_delete_parametro dropdown-item">
-                      ${feather.icons['trash-2'].toSvg({ class: 'font-small-4 mr-50' })} 
+                      ${feather.icons["trash-2"].toSvg({
+                        class: "font-small-4 mr-50",
+                      })} 
                     </a> 
                   </div>`;
                 },
-                width: '20%'
-              }
-            ]
+                width: "20%",
+              },
+            ],
           });
           break;
-    
-        case '#TablaPremioEdit':
-          const premiosActivos = etapa.premiocampania.filter(item => item.estado == 1);
+
+        case "#TablaPremioEdit":
+          const premiosActivos = etapa.premiocampania.filter(
+            (item) => item.estado == 1
+          );
           // Limpiar la tabla antes de insertar nuevas filas
-          $('#TablaPremioEdit').DataTable().clear().destroy();
-    
+          $("#TablaPremioEdit").DataTable().clear().destroy();
+
           // Inicializar el DataTables con los datos de datosTablaLocalidad
-          $('#TablaPremioEdit').DataTable({
+          $("#TablaPremioEdit").DataTable({
             searching: false, // Deshabilitar la funcionalidad de búsqueda
             paging: false,
             data: premiosActivos,
@@ -2166,65 +2254,68 @@ function initStepperEdit() {
                   // Aquí puedes usar `meta.row` para obtener el índice de la fila actual
                   return meta.row + 1;
                 },
-                width: '5%'
+                width: "5%",
               },
               {
-                data: 'idPremio',
+                data: "idPremio",
                 render: function (data) {
-                  var premio = $('#premioEdit option[value="' + data + '"]').text();
+                  var premio = $(
+                    '#premioEdit option[value="' + data + '"]'
+                  ).text();
                   return premio;
                 },
-                width: '30%'
+                width: "30%",
               },
-              { data: 'valor', width: '30%' },
+              { data: "valor", width: "30%" },
               {
-                data: 'linkPremio',
+                data: "linkPremio",
                 render: function (data) {
-                  return data === 1 ? 'Sí' : 'No';
+                  return data === 1 ? "Sí" : "No";
                 },
-                width: '20%'
+                width: "20%",
               },
               {
                 data: "id",
                 render: function (data) {
                   return `<div style="display: flex; justify-content:space-around">
                     <a href="#" data-id="${data}" class="btn_edit_premio dropdown-item">
-                      ${feather.icons["edit"].toSvg({ class: "font-small-4 mr-50" })} 
+                      ${feather.icons["edit"].toSvg({
+                        class: "font-small-4 mr-50",
+                      })} 
                     </a>
                     <a href="#" data-id="${data}" class="btn_delete_premio dropdown-item">
-                      ${feather.icons['trash-2'].toSvg({ class: 'font-small-4 mr-50' })} 
+                      ${feather.icons["trash-2"].toSvg({
+                        class: "font-small-4 mr-50",
+                      })} 
                     </a> 
                   </div>`;
                 },
-                width: '20%'
-              }
-            ]
+                width: "20%",
+              },
+            ],
           });
           break;
-    
+
         default:
           break;
       }
     }
   }
- 
 }
-
 
 // Modificar la función getEtapasData para recorrer el objeto de etapas
 function getEtapasData() {
-    const etapas = DataEtapa.map((stepData) => {
+  const etapas = DataEtapa.map((stepData) => {
     return {
       ...stepData.etapa[0],
       parametros: stepData.parametros || [],
       presupuesto: stepData.presupuesto || [],
-      premio: stepData.premio || []
+      premio: stepData.premio || [],
     };
   });
 
   return etapas;
 }
-
 
 function previewImageEdit(event, textImg, textContent) {
   const input = event.target;
@@ -2237,229 +2328,237 @@ function previewImageEdit(event, textImg, textContent) {
 
       reader.onload = function (e) {
         preview.src = e.target.result;
-        preview.style.display = 'block';
-        imgCampania.style.display = 'none';
-      }
+        preview.style.display = "block";
+        imgCampania.style.display = "none";
+      };
 
       reader.readAsDataURL(input.files[0]);
 
       // Leer el archivo y convertirlo a base64
       const file = input.files[0];
       const fileName = file.name;
-      const fileExtension = fileName.split('.').pop().toLowerCase();
+      const fileExtension = fileName.split(".").pop().toLowerCase();
       const reader2 = new FileReader();
-      reader2.onload = event => {
-        if (textImg === 'previewImgEdit') {
-          imgPushEdit = `data:image/${fileExtension};base64,${btoa(event.target.result)}`;
-        } else if (textImg === 'previewNotificacionEdit') {
-          imgAkisiEdit = `data:image/${fileExtension};base64,${btoa(event.target.result)}`;
+      reader2.onload = (event) => {
+        if (textImg === "previewImgEdit") {
+          imgPushEdit = `data:image/${fileExtension};base64,${btoa(
+            event.target.result
+          )}`;
+        } else if (textImg === "previewNotificacionEdit") {
+          imgAkisiEdit = `data:image/${fileExtension};base64,${btoa(
+            event.target.result
+          )}`;
         }
       };
       reader2.readAsBinaryString(file);
     } else {
-      preview.src = '#';
-      preview.style.display = 'none';
-      imgCampania.style.display = 'block';
+      preview.src = "#";
+      preview.style.display = "none";
+      imgCampania.style.display = "block";
     }
 
     // Agregar evento de clic al preview
-    preview.parentElement.addEventListener('click', function() {
+    preview.parentElement.addEventListener("click", function () {
       input.click();
     });
   } else {
-    console.error('Elemento con ID ' + textContent + ' no encontrado en el documento.');
+    console.error(
+      "Elemento con ID " + textContent + " no encontrado en el documento."
+    );
   }
 }
 
-
 // Función para agregar datos a la tabla y al arreglo
-$('#addBloqueo').click(function(){
-  var usuarioBloqueo = $('#usuarioBloqueo').val();
+$("#addBloqueo").click(function () {
+  var usuarioBloqueo = $("#usuarioBloqueo").val();
 
-  if(usuarioBloqueo){
-    var block ={
-      numero: usuarioBloqueo
-    }
+  if (usuarioBloqueo) {
+    var block = {
+      numero: usuarioBloqueo,
+    };
 
     bloqueadosUsuarios.push(block);
-    $('#usuarioBloqueo').val("");
+    $("#usuarioBloqueo").val("");
   }
 });
 
-$('#addBloqueoEdit').click(function() {
-  var usuarioBloqueo = $('#usuarioBloqueoEdit').val();
+$("#addBloqueoEdit").click(function () {
+  var usuarioBloqueo = $("#usuarioBloqueoEdit").val();
 
   if (usuarioBloqueo) {
-    var usuarioBloqueadoExistente = bloqueadosUsuarios.find(item => item.numero === usuarioBloqueo);
+    var usuarioBloqueadoExistente = bloqueadosUsuarios.find(
+      (item) => item.numero === usuarioBloqueo
+    );
 
     if (usuarioBloqueadoExistente) {
       usuarioBloqueadoExistente.estado = 1; // Actualizar el estado a 1 si el usuario ya existe
     } else {
       var nuevoBloqueo = {
         numero: usuarioBloqueo,
-        estado: 1 // Asignar estado 1 a los nuevos usuarios bloqueados
+        estado: 1, // Asignar estado 1 a los nuevos usuarios bloqueados
       };
       bloqueadosUsuarios.push(nuevoBloqueo);
     }
 
-    $('#usuarioBloqueoEdit').val("");
+    $("#usuarioBloqueoEdit").val("");
     mostrarDatosTabla("#tablaBloqueoEdit");
   }
 });
 
 // Función para cargar usuarios bloqueados desde un archivo XLSX
-$('#Archivo').change(function(e) {
+$("#Archivo").change(function (e) {
   var inputFile = e.target;
   var extPermitidas = /(.xlsx)$/;
-  var restriccion = $('#restriccionUsuarios').val();
+  var restriccion = $("#restriccionUsuarios").val();
 
   if (!extPermitidas.exec(inputFile.value)) {
     Alert("El archivo debe ser un excel", "error");
     inputFile.value = "";
   } else {
-
-    if(restriccion === 1 || restriccion === '1'){
-
-      readXlsxFile(inputFile.files[0]).then(function(data) {
+    if (restriccion === 1 || restriccion === "1") {
+      readXlsxFile(inputFile.files[0]).then(function (data) {
         data.map((row, indexP) => {
           var permitido = {
             numero: row[0],
-            estado: 1
+            estado: 1,
           };
 
           permitidoUsuario.push(permitido);
         });
         console.log(permitidoUsuario);
       });
-    }else if(restriccion === 2 || restriccion === '2'){
-
-      readXlsxFile(inputFile.files[0]).then(function(data) {
+    } else if (restriccion === 2 || restriccion === "2") {
+      readXlsxFile(inputFile.files[0]).then(function (data) {
         data.map((row, indexP) => {
           var block = {
             numero: row[0],
-            estado: 1
+            estado: 1,
           };
 
           bloqueadosUsuarios.push(block);
         });
-
       });
-    }else{
-      bloqueadosUsuarios=[];
-      permitidoUsuario =[];
+    } else {
+      bloqueadosUsuarios = [];
+      permitidoUsuario = [];
     }
   }
 });
 
-$('#CrearEtapaBtn').click(function(e){
+$("#CrearEtapaBtn").click(function (e) {
   e.preventDefault();
-  const containerEtapa = document.getElementById('CrearEtapa');
-  containerEtapa.style.display = 'block';
-})
-
-$('#mostrar').click(function(){
-  mostrarDatosTabla('#tablaBloqueo');
+  const containerEtapa = document.getElementById("CrearEtapa");
+  containerEtapa.style.display = "block";
 });
 
-$('#mostrarEdit').click(function(){
-  mostrarDatosTabla('#tablaBloqueoEdit');
-})
+$("#mostrar").click(function () {
+  mostrarDatosTabla("#tablaBloqueo");
+});
+
+$("#mostrarEdit").click(function () {
+  mostrarDatosTabla("#tablaBloqueoEdit");
+});
 
 function mostrarDatosTabla(tabla) {
-
-  switch(tabla)
-  {
-    case '#TablaEtapa':
-        // Limpiar la tabla antes de insertar nuevas filas
-      $('#TablaEtapa').DataTable().clear().destroy();
-      var row =-1;
+  switch (tabla) {
+    case "#TablaEtapa":
+      // Limpiar la tabla antes de insertar nuevas filas
+      $("#TablaEtapa").DataTable().clear().destroy();
+      var row = -1;
       // Inicializar el DataTables con los datos de datosTablaLocalidad
-      $('#TablaEtapa').DataTable({
+      $("#TablaEtapa").DataTable({
         searching: false, // Deshabilitar la funcionalidad de búsqueda
         paging: false,
         data: DataEtapa,
         columns: [
           {
-            render: function(data, type, row, meta) {
-            // Aquí puedes usar `meta.row` para obtener el índice de la fila actual
-            return meta.row + 1;
-            }
-          },
-          {  
-            data: null,
-            render: function(data, type, row, meta) {
-              if (data.etapa && data.etapa.length > 0) {
-                var nombres = data.etapa.map(function(etapa) {
-                  return etapa.nombre;
-                });
-                return nombres.join(', ');
-              }
-              return '';
-            }
-          },
-          {  
-            data: null,
-            render: function(data, type, row, meta) {
-              if (data.etapa && data.etapa.length > 0) {
-                var descripciones = data.etapa.map(function(etapa) {
-                  return etapa.descripcion;
-                });
-                return descripciones.join(', ');
-              }
-              return '';
-            }
+            render: function (data, type, row, meta) {
+              // Aquí puedes usar `meta.row` para obtener el índice de la fila actual
+              return meta.row + 1;
+            },
           },
           {
-            render: function(data, type, row, meta) {
+            data: null,
+            render: function (data, type, row, meta) {
+              if (data.etapa && data.etapa.length > 0) {
+                var nombres = data.etapa.map(function (etapa) {
+                  return etapa.nombre;
+                });
+                return nombres.join(", ");
+              }
+              return "";
+            },
+          },
+          {
+            data: null,
+            render: function (data, type, row, meta) {
+              if (data.etapa && data.etapa.length > 0) {
+                var descripciones = data.etapa.map(function (etapa) {
+                  return etapa.descripcion;
+                });
+                return descripciones.join(", ");
+              }
+              return "";
+            },
+          },
+          {
+            render: function (data, type, row, meta) {
               var opcDelete = `
-                <a href="#" class="dropdown-item" onclick="eliminarDato('${tabla}', ${meta.row})">
-                  ${feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" })} Eliminar
+                <a href="#" class="dropdown-item" onclick="eliminarDato('${tabla}', ${
+                meta.row
+              })">
+                  ${feather.icons["trash-2"].toSvg({
+                    class: "font-small-4 mr-50",
+                  })} Eliminar
                 </a>
               `;
               return opcDelete;
-            }
-          }
-        ]
-    });
-
-
-    case '#tablaBloqueo':
-        // Limpiar la tabla antes de insertar nuevas filas
-        $('#tablaBloqueo').DataTable().clear().destroy();
-
-        // Inicializar el DataTables con los datos de datosTablaLocalidad
-        $('#tablaBloqueo').DataTable({
-          searching: false, // Deshabilitar la funcionalidad de búsqueda
-          paging: false,
-          data: bloqueadosUsuarios,
-          columns: [
-            {
-              render: function(data, type, row, meta) {
-                // Aquí puedes usar `meta.row` para obtener el índice de la fila actual
-                return meta.row + 1;
-              }
             },
-            { data: 'numero' },
-            {
-              render: function(data, type, row, meta) {
-                var opcDelete = `
-                  <a href="#" class="dropdown-item" onclick="eliminarDato('${tabla}', ${meta.row}, event)">
-                    ${feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" })} Eliminar
+          },
+        ],
+      });
+
+    case "#tablaBloqueo":
+      // Limpiar la tabla antes de insertar nuevas filas
+      $("#tablaBloqueo").DataTable().clear().destroy();
+
+      // Inicializar el DataTables con los datos de datosTablaLocalidad
+      $("#tablaBloqueo").DataTable({
+        searching: false, // Deshabilitar la funcionalidad de búsqueda
+        paging: false,
+        data: bloqueadosUsuarios,
+        columns: [
+          {
+            render: function (data, type, row, meta) {
+              // Aquí puedes usar `meta.row` para obtener el índice de la fila actual
+              return meta.row + 1;
+            },
+          },
+          { data: "numero" },
+          {
+            render: function (data, type, row, meta) {
+              var opcDelete = `
+                  <a href="#" class="dropdown-item" onclick="eliminarDato('${tabla}', ${
+                meta.row
+              }, event)">
+                    ${feather.icons["trash-2"].toSvg({
+                      class: "font-small-4 mr-50",
+                    })} Eliminar
                   </a>
                 `;
-                return opcDelete;
-              }
-            }
-          ]
-        });
-    break;
+              return opcDelete;
+            },
+          },
+        ],
+      });
+      break;
 
-    case '#TablaEtapaEdit':
+    case "#TablaEtapaEdit":
       // Limpiar la tabla antes de insertar nuevas filas
-      $('#TablaEtapaEdit').DataTable().clear().destroy();
-        console.log('esta aqui')
+      $("#TablaEtapaEdit").DataTable().clear().destroy();
+      console.log("esta aqui");
       // Inicializar el DataTables con los datos de dataEditEtapa
-      $('#TablaEtapaEdit').DataTable({
+      $("#TablaEtapaEdit").DataTable({
         searching: false,
         paging: false,
         data: dataEditEtapa,
@@ -2467,92 +2566,106 @@ function mostrarDatosTabla(tabla) {
           {
             render: function (data, type, row, meta) {
               return meta.row + 1;
-            }
+            },
           },
-          { data: 'nombre' },
-          { data: 'descripcion' },
+          { data: "nombre" },
+          { data: "descripcion" },
           {
             data: "id",
             render: function (data) {
-              return '<div class="btn-group">' +
+              return (
+                '<div class="btn-group">' +
                 '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
-                feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
-                '</a>' +
+                feather.icons["more-vertical"].toSvg({
+                  class: "font-small-4",
+                }) +
+                "</a>" +
                 '<div class="dropdown-menu dropdown-menu-right">' +
-                '<a href="#" data-id="' + data + '" class="btn_edit dropdown-item">' +
-                feather.icons['edit'].toSvg({ class: 'font-small-4 mr-50' }) + ' Actualizar' +
-                '</a>' +
-                '<a href="#" onclick="OpenDelete(' + data + ')" class="btn_delete dropdown-item">' +
-                feather.icons['trash-2'].toSvg({ class: 'font-small-4 mr-50' }) + ' Inhabilitar' +
-                '</a>' +
-                '</div>' +
-                '</div>';
-            }
-          }
-        ]
+                '<a href="#" data-id="' +
+                data +
+                '" class="btn_edit dropdown-item">' +
+                feather.icons["edit"].toSvg({ class: "font-small-4 mr-50" }) +
+                " Actualizar" +
+                "</a>" +
+                '<a href="#" onclick="OpenDelete(' +
+                data +
+                ')" class="btn_delete dropdown-item">' +
+                feather.icons["trash-2"].toSvg({
+                  class: "font-small-4 mr-50",
+                }) +
+                " Inhabilitar" +
+                "</a>" +
+                "</div>" +
+                "</div>"
+              );
+            },
+          },
+        ],
       });
-    break;
+      break;
 
+    case "#tablaBloqueoEdit":
+      // Limpiar la tabla antes de insertar nuevas filas
+      $("#tablaBloqueoEdit").DataTable().clear().destroy();
 
-    case '#tablaBloqueoEdit':
-    // Limpiar la tabla antes de insertar nuevas filas
-    $('#tablaBloqueoEdit').DataTable().clear().destroy();
+      // Filtrar los usuarios bloqueados con estado 1
+      const usuariosBloqueadosActivos = bloqueadosUsuarios.filter(
+        (item) => item.estado === 1
+      );
 
-     // Filtrar los usuarios bloqueados con estado 1
-     const usuariosBloqueadosActivos = bloqueadosUsuarios.filter(item => item.estado === 1);
-
-    // Inicializar el DataTables con los datos de datosTablaLocalidad
-    $('#tablaBloqueoEdit').DataTable({
-      searching: false, // Deshabilitar la funcionalidad de búsqueda
-      paging: false,
-      data: usuariosBloqueadosActivos,
-      columns: [
-        {
-          render: function(data, type, row, meta) {
-            // Aquí puedes usar `meta.row` para obtener el índice de la fila actual
-            return meta.row + 1;
-          }
-        },
-        { data: 'numero' },
-        {
-          render: function(data, type, row, meta) {
-            var opcDelete = `
-              <a href="#" class="dropdown-item" onclick="eliminarBloqueoEdit(${meta.row}, event)">
-                ${feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" })} Eliminar
+      // Inicializar el DataTables con los datos de datosTablaLocalidad
+      $("#tablaBloqueoEdit").DataTable({
+        searching: false, // Deshabilitar la funcionalidad de búsqueda
+        paging: false,
+        data: usuariosBloqueadosActivos,
+        columns: [
+          {
+            render: function (data, type, row, meta) {
+              // Aquí puedes usar `meta.row` para obtener el índice de la fila actual
+              return meta.row + 1;
+            },
+          },
+          { data: "numero" },
+          {
+            render: function (data, type, row, meta) {
+              var opcDelete = `
+              <a href="#" class="dropdown-item" onclick="eliminarBloqueoEdit(${
+                meta.row
+              }, event)">
+                ${feather.icons["trash-2"].toSvg({
+                  class: "font-small-4 mr-50",
+                })} Eliminar
               </a>
             `;
-            return opcDelete;
-          }
-        }
-      ]
-    });
-    break;
+              return opcDelete;
+            },
+          },
+        ],
+      });
+      break;
 
-
-      default:
+    default:
       break;
   }
-
-
 }
 
-function eliminarBloqueoEdit(index, event){
+function eliminarBloqueoEdit(index, event) {
   event.preventDefault();
-  bloqueadosUsuarios[index].estado = 0; 
-  mostrarDatosTabla('#tablaBloqueoEdit'); 
+  bloqueadosUsuarios[index].estado = 0;
+  mostrarDatosTabla("#tablaBloqueoEdit");
 }
 
 function eliminarDato(tabla, index, event) {
   event.preventDefault();
-  console.log('tabla:', tabla, 'row', index)
+  console.log("tabla:", tabla, "row", index);
   switch (tabla) {
-    case '#tablaBloqueo':
+    case "#tablaBloqueo":
       bloqueadosUsuarios.splice(index, 1);
       break;
-    case '#TablaEtapa':
+    case "#TablaEtapa":
       TEMP.splice(index, 1);
       break;
-    case '#TablaEtapaEdit':
+    case "#TablaEtapaEdit":
       dataEditEtapa.splice(index, 1);
       mostrarDatosTabla(tabla);
       break;
@@ -2561,7 +2674,7 @@ function eliminarDato(tabla, index, event) {
   }
 
   // Retrasar la llamada a mostrarDatosTabla para que ocurra después de que se complete la operación de eliminación
-  setTimeout(function() {
+  setTimeout(function () {
     mostrarDatosTabla(tabla);
   }, 0);
 }
@@ -2577,37 +2690,47 @@ function previewImage(event, previewId, requerimientosId) {
 
       reader.onload = function (e) {
         preview.src = e.target.result;
-        preview.style.display = 'block';
-        requerimientos.style.display = 'none';
-      }
+        preview.style.display = "block";
+        requerimientos.style.display = "none";
+      };
 
       reader.readAsDataURL(input.files[0]);
 
       // Leer el archivo y convertirlo a base64
       const file = input.files[0];
       const fileName = file.name;
-      const fileExtension = fileName.split('.').pop().toLowerCase();
+      const fileExtension = fileName.split(".").pop().toLowerCase();
       const reader2 = new FileReader();
-      reader2.onload = event => {
-        if (previewId === 'previewImg') {
-          imgPush = `data:image/${fileExtension};base64,${btoa(event.target.result)}`;
-        } else if (previewId === 'previewNotificacion') {
-          imgAkisi = `data:image/${fileExtension};base64,${btoa(event.target.result)}`;
+      reader2.onload = (event) => {
+        if (previewId === "previewImg") {
+          imgPush = `data:image/${fileExtension};base64,${btoa(
+            event.target.result
+          )}`;
+        } else if (previewId === "previewNotificacion") {
+          imgAkisi = `data:image/${fileExtension};base64,${btoa(
+            event.target.result
+          )}`;
         }
       };
       reader2.readAsBinaryString(file);
     } else {
-      preview.src = '#';
-      preview.style.display = 'none';
-      requerimientos.style.display = 'block';
+      preview.src = "#";
+      preview.style.display = "none";
+      requerimientos.style.display = "block";
     }
 
     // Agregar evento de clic al contenedor del preview
-    preview.parentElement.addEventListener('click', function() {
+    preview.parentElement.addEventListener("click", function () {
       input.click();
     });
   } else {
-    console.error('Elemento con ID ' + previewId + ' o ' + requerimientosId + ' no encontrado en el documento.');
+    console.error(
+      "Elemento con ID " +
+        previewId +
+        " o " +
+        requerimientosId +
+        " no encontrado en el documento."
+    );
   }
 }
 
@@ -2616,35 +2739,35 @@ function userValidator(event, container) {
   const containerArchivo = document.getElementById(container);
   let containerBloqueo;
 
-  if (container === 'containerArchivo') {
-    containerBloqueo = document.getElementById('Bloqueo');
-  } else if (container === 'containerArchivoEdit') {
-    containerBloqueo = document.getElementById('BloqueoEdit');
+  if (container === "containerArchivo") {
+    containerBloqueo = document.getElementById("Bloqueo");
+  } else if (container === "containerArchivoEdit") {
+    containerBloqueo = document.getElementById("BloqueoEdit");
   }
 
   if (containerArchivo && containerBloqueo) {
-    if (input.value === '0' || input.value === 0 || input.value === null) {
-      containerArchivo.style.display = 'none';
-      containerBloqueo.style.display = 'none';
-      
-      if (container === 'containerArchivo') {
-        $('#Archivo').val('');
-      } else if (container === 'containerArchivoEdit') {
-        $('#ArchivoEdit').val('');
+    if (input.value === "0" || input.value === 0 || input.value === null) {
+      containerArchivo.style.display = "none";
+      containerBloqueo.style.display = "none";
+
+      if (container === "containerArchivo") {
+        $("#Archivo").val("");
+      } else if (container === "containerArchivoEdit") {
+        $("#ArchivoEdit").val("");
       }
     } else {
-      containerArchivo.style.display = 'block';
-      
-      if (input.value === 2 || input.value === '2') {
-        containerBloqueo.style.display = 'block';
+      containerArchivo.style.display = "block";
+
+      if (input.value === 2 || input.value === "2") {
+        containerBloqueo.style.display = "block";
       } else {
-        containerBloqueo.style.display = 'none';
+        containerBloqueo.style.display = "none";
       }
-      
-      if (container === 'containerArchivo') {
-        $('#Archivo').val('');
-      } else if (container === 'containerArchivoEdit') {
-        $('#ArchivoEdit').val('');
+
+      if (container === "containerArchivo") {
+        $("#Archivo").val("");
+      } else if (container === "containerArchivoEdit") {
+        $("#ArchivoEdit").val("");
       }
     }
   }
@@ -2652,73 +2775,80 @@ function userValidator(event, container) {
 /*FUNCIONES PARA TRAER DATOS A LOS SELECT*/
 
 //Funcion para traer los proyectos
-const getProjecs = () =>{
+const getProjecs = () => {
   var requestOptions = {
-    method: 'GET',
-    redirect: 'follow',
-    headers: {"Authorization": token}
+    method: "GET",
+    redirect: "follow",
+    headers: { Authorization: token },
   };
 
-  $('#proyecto').html('<option value="0" selected disabled>Selecciona una Opcion</option>');
+  $("#proyecto").html(
+    '<option value="0" selected disabled>Selecciona una Opcion</option>'
+  );
   fetch(`${url}projects`, requestOptions)
-    .then(response => response.json())
-    .then(result =>{
-      result.forEach(element => {
-        var opc  = `<option value="${element.id}">${element.descripcion}</option>`;
-        $('#proyecto').append(opc);
-        $('#proyectoEdit').append(opc);
+    .then((response) => response.json())
+    .then((result) => {
+      result.forEach((element) => {
+        var opc = `<option value="${element.id}">${element.descripcion}</option>`;
+        $("#proyecto").append(opc);
+        $("#proyectoEdit").append(opc);
       });
-    })
-}
+    });
+};
 
 const getDepartamento = () => {
   return new Promise((resolve, reject) => {
     var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-      headers: { "Authorization": token }
+      method: "GET",
+      redirect: "follow",
+      headers: { Authorization: token },
     };
 
     fetch(`${url}Departamento`, requestOptions)
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Error en la respuesta de la API');
+          throw new Error("Error en la respuesta de la API");
         }
         return response.json();
       })
-      .then(result => {
+      .then((result) => {
         // Vaciar el select antes de agregar las nuevas opciones
-        $('#departamento').empty();
-        $('#departamentoEdit').empty();
+        $("#departamento").empty();
+        $("#departamentoEdit").empty();
 
         // Agregar la opción por defecto
-        $('#departamento').append('<option value="" selected disabled>Selecciona una opción</option>');
-        $('#departamentoEdit').append('<option value="" selected disabled>Selecciona una opción</option>');
+        $("#departamento").append(
+          '<option value="" selected disabled>Selecciona una opción</option>'
+        );
+        $("#departamentoEdit").append(
+          '<option value="" selected disabled>Selecciona una opción</option>'
+        );
 
         // Agregar las opciones de los departamentos
-        result.forEach(element => {
+        result.forEach((element) => {
           var opc = `<option value="${element.id}">${element.nombre}</option>`;
-          $('#departamento').append(opc);
-          $('#departamentoEdit').append(opc);
+          $("#departamento").append(opc);
+          $("#departamentoEdit").append(opc);
         });
 
         dataDeptoView = result;
-               
-        console.log('Departamentos obtenidos:', dataDeptoView);
+
+        console.log("Departamentos obtenidos:", dataDeptoView);
 
         // Verificar si los elementos existen antes de asignar los event listeners
-        var selectDepartamento = document.getElementById('departamento');
-        var selectDepartamentoEdit = document.getElementById('departamentoEdit');
+        var selectDepartamento = document.getElementById("departamento");
+        var selectDepartamentoEdit =
+          document.getElementById("departamentoEdit");
 
         if (selectDepartamento) {
-          selectDepartamento.addEventListener('change', function() {
+          selectDepartamento.addEventListener("change", function () {
             var selectedId = this.value;
             getMunicipioByDepto(selectedId);
           });
         }
 
         if (selectDepartamentoEdit) {
-          selectDepartamentoEdit.addEventListener('change', function() {
+          selectDepartamentoEdit.addEventListener("change", function () {
             var selectedId = this.value;
             getMunicipioByDepto(selectedId);
           });
@@ -2727,8 +2857,8 @@ const getDepartamento = () => {
         // Resolver la promesa
         resolve();
       })
-      .catch(error => {
-        console.error('Error al obtener los departamentos:', error);
+      .catch((error) => {
+        console.error("Error al obtener los departamentos:", error);
         reject(error);
       });
   });
@@ -2738,33 +2868,33 @@ const getDepartamento = () => {
 const getMunicipioByDepto = (idDepartamento) => {
   return new Promise((resolve, reject) => {
     var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-      headers: { "Authorization": token }
+      method: "GET",
+      redirect: "follow",
+      headers: { Authorization: token },
     };
 
     // Eliminar todas las opciones del select #municipio y #municipioEdit excepto la opción seleccionada por defecto
-    $('#municipio option:not(:disabled)').remove();
-    $('#municipioEdit option:not(:disabled)').remove();
+    $("#municipio option:not(:disabled)").remove();
+    $("#municipioEdit option:not(:disabled)").remove();
 
     fetch(`${url}Municipio/by/${idDepartamento}`, requestOptions)
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
-      .then(result => {
+      .then((result) => {
         // Agregar las nuevas opciones de municipios
-        result.forEach(element => {
+        result.forEach((element) => {
           var opc = `<option value="${element.id}">${element.nombre}</option>`;
-          $('#municipio').append(opc);
-          $('#municipioEdit').append(opc);
+          $("#municipio").append(opc);
+          $("#municipioEdit").append(opc);
         });
         resolve();
       })
-      .catch(err => {
-        console.log('error', err);
+      .catch((err) => {
+        console.log("error", err);
         reject(err);
       });
   });
@@ -2773,29 +2903,29 @@ const getMunicipioByDepto = (idDepartamento) => {
 const getTransaccion = () => {
   return new Promise((resolve, reject) => {
     var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-      headers: {"Authorization": token}
+      method: "GET",
+      redirect: "follow",
+      headers: { Authorization: token },
     };
 
     fetch(`${url}Transaccion`, requestOptions)
-      .then(response => response.json())
-      .then(result => {
+      .then((response) => response.json())
+      .then((result) => {
         datatransaccionView = result;
         // Verificar si result es un array antes de iterar
         if (Array.isArray(result)) {
-          result.forEach(element => {
+          result.forEach((element) => {
             var opc = `<option value="${element.id}">${element.descripcion}</option>`;
-            $('#transaccion').append(opc);
-            $('#transaccionEdit').append(opc);
+            $("#transaccion").append(opc);
+            $("#transaccionEdit").append(opc);
           });
         } else {
-          console.warn('La respuesta no es un array:', result);
+          console.warn("La respuesta no es un array:", result);
         }
         resolve(); // Resuelve la promesa cuando los datos se hayan cargado
       })
-      .catch(error => {
-        console.log('error', error);
+      .catch((error) => {
+        console.log("error", error);
         reject(error); // Rechaza la promesa en caso de error
       });
   });
@@ -2804,207 +2934,224 @@ const getTransaccion = () => {
 //Funcion para traer los Premios
 const getPremio = () => {
   var requestOptions = {
-    method: 'GET',
-    redirect: 'follow',
-    headers: {"Authorization": token}
+    method: "GET",
+    redirect: "follow",
+    headers: { Authorization: token },
   };
 
   fetch(`${url}Premio`, requestOptions)
-    .then(response => response.json())
-    .then(result => {
+    .then((response) => response.json())
+    .then((result) => {
       dataPremioView = result;
       // Verificar si result es un array antes de iterar
       if (Array.isArray(result)) {
-        result.forEach(element => {
+        result.forEach((element) => {
           var opc = `<option value="${element.id}">${element.descripcion}</option>`;
-          $('#premio').append(opc);
-          $('#premioEdit').append(opc);
+          $("#premio").append(opc);
+          $("#premioEdit").append(opc);
         });
       } else {
-        console.warn('La respuesta no es un array:', result);
+        console.warn("La respuesta no es un array:", result);
       }
     })
-    .catch(error => console.log('error', error));
+    .catch((error) => console.log("error", error));
 };
 
 //Funcion para traer municipios
 const getMunicipios = () => {
   var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-      headers: {"Authorization": token}
+    method: "GET",
+    redirect: "follow",
+    headers: { Authorization: token },
   };
 
   //$('#').html('<option value="0" selected disabled>Selecciona una Opcion</option>');
   fetch(`${url}Municipio`, requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        dataMunicipiosView = result;
-        console.log('municipios', dataMunicipiosView)
-      })
-      .catch(error => console.log('error', error));
-
-}
+    .then((response) => response.json())
+    .then((result) => {
+      dataMunicipiosView = result;
+      console.log("municipios", dataMunicipiosView);
+    })
+    .catch((error) => console.log("error", error));
+};
 
 //validacion de inputs
 function validarCamposStep(stepIndex) {
-  var config = `step${stepIndex+1}`;
-  console.log(config,'vuelta', stepIndex)
+  var config = `step${stepIndex + 1}`;
+  console.log(config, "vuelta", stepIndex);
 
-  switch(config){
-    case 'step1':{
-      var fields = ['imgCampania', 'imgNotificacion', 'restriccionUsuarios', 'proyecto', 'tercerosCampania'];
+  switch (config) {
+    case "step1": {
+      var fields = [
+        "imgCampania",
+        "imgNotificacion",
+        "restriccionUsuarios",
+        "proyecto",
+        "tercerosCampania",
+      ];
       var isValid = true;
-      
-      fields.forEach(function(field) {
-        var value = $('#' + field).val();
-        var errorDiv = $('#' + field + 'Error');
+
+      fields.forEach(function (field) {
+        var value = $("#" + field).val();
+        var errorDiv = $("#" + field + "Error");
         if (!value) {
-          $('#' + field).addClass('is-invalid');
-          errorDiv.text('Este campo no puede estar vacío.');
+          $("#" + field).addClass("is-invalid");
+          errorDiv.text("Este campo no puede estar vacío.");
           isValid = false;
         } else {
-          $('#' + field).removeClass('is-invalid');
-          errorDiv.text('');
+          $("#" + field).removeClass("is-invalid");
+          errorDiv.text("");
         }
-        
+
         // Agregar evento input para quitar el error cuando el usuario comience a escribir
-        $('#' + field).on('input', function() {
-          $(this).removeClass('is-invalid');
-          errorDiv.text('');
+        $("#" + field).on("input", function () {
+          $(this).removeClass("is-invalid");
+          errorDiv.text("");
         });
       });
-      
-      var restriccion = $('#restriccionUsuarios').val();
-      var Archivo = $('#Archivo')[0].files;
-      var errorArchivo = $('#ArchivoError');
-      var errorRestriccion = $('#restriccionUsuariosError');
-      
-      if (restriccion === '2' && Archivo.length === 0) {
-        $('#restriccionUsuarios').addClass('is-invalid');
-        $('#Archivo').addClass('is-invalid');
-        errorArchivo.text('Ingrese los numeros a bloquear para esta campaña.');
-        errorRestriccion.text('Ingrese los numeros a bloquear para esta campaña.');
+
+      var restriccion = $("#restriccionUsuarios").val();
+      var Archivo = $("#Archivo")[0].files;
+      var errorArchivo = $("#ArchivoError");
+      var errorRestriccion = $("#restriccionUsuariosError");
+
+      if (restriccion === "2" && Archivo.length === 0) {
+        $("#restriccionUsuarios").addClass("is-invalid");
+        $("#Archivo").addClass("is-invalid");
+        errorArchivo.text("Ingrese los numeros a bloquear para esta campaña.");
+        errorRestriccion.text(
+          "Ingrese los numeros a bloquear para esta campaña."
+        );
         isValid = false;
-      } else if (restriccion === '1' && Archivo.length === 0) {
-        $('#restriccionUsuarios').addClass('is-invalid');
-        $('#Archivo').addClass('is-invalid');
-        errorArchivo.text('Ingrese los numeros que participaran para esta campaña.');
-        errorRestriccion.text('Ingrese los numeros que participaran para esta campaña.');
+      } else if (restriccion === "1" && Archivo.length === 0) {
+        $("#restriccionUsuarios").addClass("is-invalid");
+        $("#Archivo").addClass("is-invalid");
+        errorArchivo.text(
+          "Ingrese los numeros que participaran para esta campaña."
+        );
+        errorRestriccion.text(
+          "Ingrese los numeros que participaran para esta campaña."
+        );
         isValid = false;
-      } 
-      
+      }
+
       return isValid;
     }
 
-    case 'step2':{
+    case "step2": {
       var fields = [
-        'campania',
-        'notificacion',
-        'descripcionCampania',
-        'descripcionNotificacion',
-        'Observaciones',
-        'terminosCondiciones',
-        'fechaRegistro',
-        'usuarioPermitido',
-        'fechaInicial',
-        'fechaFinal',
-        'edadInicial',
-        'edadFinal',
-        'tipoUsuarios',
-        'sexo',
-        'maximoParticipantes'
+        "campania",
+        "notificacion",
+        "descripcionCampania",
+        "descripcionNotificacion",
+        "Observaciones",
+        "terminosCondiciones",
+        "fechaRegistro",
+        "usuarioPermitido",
+        "fechaInicial",
+        "fechaFinal",
+        "edadInicial",
+        "edadFinal",
+        "tipoUsuarios",
+        "sexo",
+        "maximoParticipantes",
       ];
 
       var isValid = true;
 
-      fields.forEach(function(field) {
-        var value = $('#' + field).val();
-        var errorDiv = $('#' + field + 'Error');
+      fields.forEach(function (field) {
+        var value = $("#" + field).val();
+        var errorDiv = $("#" + field + "Error");
 
         // Validar que no haya números negativos
         if (/^-\d+/.test(value)) {
-          $('#' + field).addClass('is-invalid');
-          errorDiv.text('Este campo no puede contener números negativos.');
+          $("#" + field).addClass("is-invalid");
+          errorDiv.text("Este campo no puede contener números negativos.");
           isValid = false;
         }
         // Validar que no haya espacios en blanco al inicio o que solo sean espacios en blanco
         else if (/^(\s+|\s+$)/.test(value)) {
-          if ($('#' + field).attr('type') !== 'textarea') {
-            $('#' + field).addClass('is-invalid');
-            errorDiv.text('Este campo no puede comenzar o contener solo espacios en blanco.');
+          if ($("#" + field).attr("type") !== "textarea") {
+            $("#" + field).addClass("is-invalid");
+            errorDiv.text(
+              "Este campo no puede comenzar o contener solo espacios en blanco."
+            );
             isValid = false;
           }
         }
         // Validar que no haya caracteres especiales (excepto para fechas, texto y "_", ".", ",")
         else if (/[^a-zA-ZñÑ0-9\/\-\:\s\n\r_.,]/g.test(value)) {
-          if ($('#' + field).attr('type') !== 'date' && $('#' + field).attr('type') !== 'textarea') {
-            $('#' + field).addClass('is-invalid');
-            errorDiv.text('Este campo no puede contener caracteres especiales.');
+          if (
+            $("#" + field).attr("type") !== "date" &&
+            $("#" + field).attr("type") !== "textarea"
+          ) {
+            $("#" + field).addClass("is-invalid");
+            errorDiv.text(
+              "Este campo no puede contener caracteres especiales."
+            );
             isValid = false;
           }
-        }
-        else if (!value) {
-          $('#' + field).addClass('is-invalid');
-          errorDiv.text('Este campo no puede estar vacío.');
+        } else if (!value) {
+          $("#" + field).addClass("is-invalid");
+          errorDiv.text("Este campo no puede estar vacío.");
           isValid = false;
         } else {
-          $('#' + field).removeClass('is-invalid');
-          errorDiv.text('');
+          $("#" + field).removeClass("is-invalid");
+          errorDiv.text("");
         }
 
         // Agregar evento input para quitar el error cuando el usuario comience a escribir
-        $('#' + field).on('input', function() {
-          $(this).removeClass('is-invalid');
-          errorDiv.text('');
+        $("#" + field).on("input", function () {
+          $(this).removeClass("is-invalid");
+          errorDiv.text("");
         });
       });
 
       //Validar que la edad inicial no sea menor a la edad final
-      var edadInicial = parseInt($('#edadInicial').val());
-      var edadFinal = parseInt($('#edadFinal').val());
-      var errorEdadIni = $('#edadInicialError');
-      var errorEdadFin = $('#edadFinalError');
+      var edadInicial = parseInt($("#edadInicial").val());
+      var edadFinal = parseInt($("#edadFinal").val());
+      var errorEdadIni = $("#edadInicialError");
+      var errorEdadFin = $("#edadFinalError");
 
       if (edadInicial > edadFinal) {
-        $('#edadInicial').addClass('is-invalid');
-        $('#edadFinal').addClass('is-invalid');
-        errorEdadIni.text('La edad inicial debe ser menor a la edad final.');
-        errorEdadFin.text('La edad inicial debe ser menor a la edad final.');
+        $("#edadInicial").addClass("is-invalid");
+        $("#edadFinal").addClass("is-invalid");
+        errorEdadIni.text("La edad inicial debe ser menor a la edad final.");
+        errorEdadFin.text("La edad inicial debe ser menor a la edad final.");
 
         isValid = false;
       }
-      
-      if(edadInicial >= 100){
-        $('#edadInicial').addClass('is-invalid');
-        errorEdadIni.text('La edad inicial no puede ser mayor a 100 años.');
+
+      if (edadInicial >= 100) {
+        $("#edadInicial").addClass("is-invalid");
+        errorEdadIni.text("La edad inicial no puede ser mayor a 100 años.");
         isValid = false;
-      }else if(edadInicial < 18){
-        $('#edadInicial').addClass('is-invalid');
-        errorEdadIni.text('La edad inicial no puede ser menor a 18 años.');
+      } else if (edadInicial < 18) {
+        $("#edadInicial").addClass("is-invalid");
+        errorEdadIni.text("La edad inicial no puede ser menor a 18 años.");
         isValid = false;
       }
-      
-      if(edadFinal >= 100){
-        $('#edadFinal').addClass('is-invalid');
-        errorEdadFin.text('La edad final no puede ser mayor a 100 años.');
+
+      if (edadFinal >= 100) {
+        $("#edadFinal").addClass("is-invalid");
+        errorEdadFin.text("La edad final no puede ser mayor a 100 años.");
         isValid = false;
-      }else if(edadFinal < 18){
-        $('#edadFinal').addClass('is-invalid');
-        errorEdadFin.text('La edad final no puede ser menor a 18 años.');
+      } else if (edadFinal < 18) {
+        $("#edadFinal").addClass("is-invalid");
+        errorEdadFin.text("La edad final no puede ser menor a 18 años.");
         isValid = false;
       }
 
       // Validar que la fecha inicial no sea mayor que la fecha fin
-      var fechaInicial = new Date($('#fechaInicial').val());
-      var fechaFinal = new Date($('#fechaFinal').val());
-      var errorfechaIni = $('#fechaInicialError');
-      var errorfechaFinal = $('#fechaFinalError');
+      var fechaInicial = new Date($("#fechaInicial").val());
+      var fechaFinal = new Date($("#fechaFinal").val());
+      var errorfechaIni = $("#fechaInicialError");
+      var errorfechaFinal = $("#fechaFinalError");
       if (fechaInicial > fechaFinal) {
-        $('#fechaInicial').addClass('is-invalid');
-        $('#fechaFinal').addClass('is-invalid');
-        errorfechaIni.text('Fecha inicial debe ser menor a fecha fin.');
-        errorfechaFinal.text('Fecha inicial debe ser menor a fecha fin.');
+        $("#fechaInicial").addClass("is-invalid");
+        $("#fechaFinal").addClass("is-invalid");
+        errorfechaIni.text("Fecha inicial debe ser menor a fecha fin.");
+        errorfechaFinal.text("Fecha inicial debe ser menor a fecha fin.");
 
         isValid = false;
       }
@@ -3012,88 +3159,88 @@ function validarCamposStep(stepIndex) {
       return isValid;
     }
 
-    case 'step3':{
+    case "step3": {
       var fields = [
-        'NombreEtapa',
-        'orden',
-        'descripcionEtapa',
-        'tipoParticipacion',
-        'intervalo',
+        "NombreEtapa",
+        "orden",
+        "descripcionEtapa",
+        "tipoParticipacion",
+        "intervalo",
       ];
       var isValid = true;
-      if(DataEtapa.length == 0){
-        fields.forEach(function(field) {
-          var value = $('#' + field).val();
-          var errorDiv = $('#' + field + 'Error');
+      if (DataEtapa.length == 0) {
+        fields.forEach(function (field) {
+          var value = $("#" + field).val();
+          var errorDiv = $("#" + field + "Error");
           if (!value) {
-            $('#' + field).addClass('is-invalid');
-            errorDiv.text('Este campo no puede estar vacío.');
+            $("#" + field).addClass("is-invalid");
+            errorDiv.text("Este campo no puede estar vacío.");
             isValid = false;
           } else {
-            $('#' + field).removeClass('is-invalid');
-            errorDiv.text('');
+            $("#" + field).removeClass("is-invalid");
+            errorDiv.text("");
           }
         });
       }
 
-      fields.forEach(function(field) {
-        var value = $('#' + field).val();
-        var errorDiv = $('#' + field + 'Error');
+      fields.forEach(function (field) {
+        var value = $("#" + field).val();
+        var errorDiv = $("#" + field + "Error");
         // Validar que no haya números negativos
         if (/^-\d+/.test(value)) {
-          $('#' + field).addClass('is-invalid');
-          errorDiv.text('Este campo no puede contener números negativos.');
+          $("#" + field).addClass("is-invalid");
+          errorDiv.text("Este campo no puede contener números negativos.");
           isValid = false;
         }
         // Validar que no haya espacios en blanco al inicio o que solo sean espacios en blanco
         else if (/^(\s+|\s+$)/.test(value)) {
-          if ($('#' + field).attr('type') !== 'textarea') {
-            $('#' + field).addClass('is-invalid');
-            errorDiv.text('Este campo no puede comenzar o contener solo espacios en blanco.');
+          if ($("#" + field).attr("type") !== "textarea") {
+            $("#" + field).addClass("is-invalid");
+            errorDiv.text(
+              "Este campo no puede comenzar o contener solo espacios en blanco."
+            );
             isValid = false;
           }
         }
         // Validar que no haya caracteres especiales (excepto para fechas, texto y "_", ".", ",")
         else if (/[^a-zA-ZñÑ0-9\/\-\:\s\n\r_.,]/g.test(value)) {
-          if ($('#' + field).attr('type') !== 'date' && $('#' + field).attr('type') !== 'textarea') {
-            $('#' + field).addClass('is-invalid');
-            errorDiv.text('Este campo no puede contener caracteres especiales.');
+          if (
+            $("#" + field).attr("type") !== "date" &&
+            $("#" + field).attr("type") !== "textarea"
+          ) {
+            $("#" + field).addClass("is-invalid");
+            errorDiv.text(
+              "Este campo no puede contener caracteres especiales."
+            );
             isValid = false;
           }
-        }
-        else if (!value) {
-          $('#' + field).addClass('is-invalid');
-          errorDiv.text('Este campo no puede estar vacío.');
+        } else if (!value) {
+          $("#" + field).addClass("is-invalid");
+          errorDiv.text("Este campo no puede estar vacío.");
           isValid = false;
         } else {
-          $('#' + field).removeClass('is-invalid');
-          errorDiv.text('');
+          $("#" + field).removeClass("is-invalid");
+          errorDiv.text("");
         }
 
         // Agregar evento input para quitar el error cuando el usuario comience a escribir
-        $('#' + field).on('input', function() {
-          $(this).removeClass('is-invalid');
-          errorDiv.text('');
+        $("#" + field).on("input", function () {
+          $(this).removeClass("is-invalid");
+          errorDiv.text("");
         });
       });
-      
-     
 
       return isValid;
-
     }
-
   }
-
-
 }
 
 function resetSteps() {
   // Reiniciar los stepps
   actualStep = 0;
-  var steps = $('#stepper .step');
+  var steps = $("#stepper .step");
   steps.hide();
-  
+
   // Limpiar los arreglos y datos relacionados con los steps
   TEMP = [];
   DataEtapa = [];
@@ -3105,118 +3252,115 @@ function resetSteps() {
   nombresMunicipios = {};
 
   // Limpiar las tablas relacionadas con los steps
-  $('#TablaEtapa').DataTable().clear().destroy();
-  $('#tablaBloqueo').DataTable().clear().destroy();
+  $("#TablaEtapa").DataTable().clear().destroy();
+  $("#tablaBloqueo").DataTable().clear().destroy();
 
   // Eliminar los steps adicionales
-  $('#stepper .step:not(:first)').remove();
+  $("#stepper .step:not(:first)").remove();
 
   // Mostrar el primer step
   steps.first().show();
-  $('.step-progress').removeClass('active');
-  $('.step-btn-1').addClass('active');
-  $('.step-progress').removeClass('disabled').prop('disabled', false);
+  $(".step-progress").removeClass("active");
+  $(".step-btn-1").addClass("active");
+  $(".step-progress").removeClass("disabled").prop("disabled", false);
 }
 
 function resetStepsEdit() {
   // Reiniciar los stepps
   actualStepEdit = 0;
-  var stepsEdits = $('#stepperEdit .step');
+  var stepsEdits = $("#stepperEdit .step");
   stepsEdits.hide();
 
   // Limpiar los arreglos y datos relacionados con los steps de edición
   dataEditEtapa = [];
-
 
   // Reiniciar las variables relacionadas con los pasos
   totalStepsEdits = 0; // Inicializar totalStepsEdits a 0
   previousStep = null; // Reiniciar previousStep a null
 
   // Limpiar las tablas relacionadas con los steps de edición
-  $('#TablaEtapaEdit').DataTable().clear().destroy();
-  $('#tablaBloqueoEdit').DataTable().clear().destroy();
+  $("#TablaEtapaEdit").DataTable().clear().destroy();
+  $("#tablaBloqueoEdit").DataTable().clear().destroy();
 
   // Eliminar los steps adicionales
-  $('#stepperEdit .step:not(:first)').remove();
+  $("#stepperEdit .step:not(:first)").remove();
 
   // Mostrar el primer step
   stepsEdits.first().show();
-  $('.step-progressEdit').removeClass('active');
-  $('.step-btn-1-edit').addClass('active');
-  $('.step-progressEdit').removeClass('disabled').prop('disabled', false);
+  $(".step-progressEdit").removeClass("active");
+  $(".step-btn-1-edit").addClass("active");
+  $(".step-progressEdit").removeClass("disabled").prop("disabled", false);
 }
-
 
 //limpiar el form
 function limpiarFormulario() {
- 
   // Limpiar los steps y reiniciar los datos relacionados
   resetSteps();
   resetStepsEdit();
-  $('#campania').val('');
-  $('#descripcionCampania').val('');
-  $('#fechaRegistro').val('');
-  $('#fechaInicial').val('');
-  $('#fechaFinal').val('');
-  $('#HoraRecordatorio').val('');
-  $('#correo').val('');
-  $('#edadInicial').val('');
-  $('#edadFinal').val('');
-  $('#sexo').val('');
-  $('#tipoUsuarios').val('');
-  $('#notificacion').val('');
-  $('#descripcionNotificacion').val('');
-  $('#imgCampania').val('');
-  $('#imgNotificacion').val('');
-  $('#maximoParticipantes').val('');
-  $('#tercerosCampania').val('');
-  $('#allday').prop('checked', false);
-  $('#repeat').prop('checked', false);
-  $('#FechaIniRecordatorio').val('');
-  $('#FechaFinRecordatorio').val('');
-  $('#terminosCondiciones').val('');
-  $('#Observaciones').val('');
-  $('#proyecto').val('');
-  $('#restriccionUsuarios').val('');
-  $('#Archivo').val('');
-  $('#usuarioBloqueo').val('');
+  $("#campania").val("");
+  $("#descripcionCampania").val("");
+  $("#fechaRegistro").val("");
+  $("#fechaInicial").val("");
+  $("#fechaFinal").val("");
+  $("#HoraRecordatorio").val("");
+  $("#correo").val("");
+  $("#edadInicial").val("");
+  $("#edadFinal").val("");
+  $("#sexo").val("");
+  $("#tipoUsuarios").val("");
+  $("#notificacion").val("");
+  $("#descripcionNotificacion").val("");
+  $("#imgCampania").val("");
+  $("#imgNotificacion").val("");
+  $("#maximoParticipantes").val("");
+  $("#tercerosCampania").val("");
+  $("#allday").prop("checked", false);
+  $("#repeat").prop("checked", false);
+  $("#FechaIniRecordatorio").val("");
+  $("#FechaFinRecordatorio").val("");
+  $("#terminosCondiciones").val("");
+  $("#Observaciones").val("");
+  $("#proyecto").val("");
+  $("#restriccionUsuarios").val("");
+  $("#Archivo").val("");
+  $("#usuarioBloqueo").val("");
 
   // Limpiar las tablas
-  $('#TablaEtapa').DataTable().clear().destroy();
-  $('#tablaBloqueo').DataTable().clear().destroy();
-  $('#formNew').trigger("reset");
+  $("#TablaEtapa").DataTable().clear().destroy();
+  $("#tablaBloqueo").DataTable().clear().destroy();
+  $("#formNew").trigger("reset");
 
-  $('#campaniaEdit').val('');
-  $('#descripcionCampaniaEdit').val('');
-  $('#fechaRegistroEdit').val('');
-  $('#fechaInicialEdit').val('');
-  $('#fechaFinalEdit').val('');
-  $('#HoraRecordatorioEdit').val('');
-  $('#correoEdit').val('');
-  $('#edadInicialEdit').val('');
-  $('#edadFinalEdit').val('');
-  $('#sexoEdit').val('');
-  $('#tipoUsuariosEdit').val('');
-  $('#notificacionEdit').val('');
-  $('#descripcionNotificacionEdit').val('');
-  $('#imgCampaniaEdit').val('');
-  $('#imgNotificacionEdit').val('');
-  $('#maximoParticipantesEdit').val('');
-  $('#tercerosCampaniaEdit').val('');
-  $('#alldayEdit').prop('checked', false);
-  $('#repeatEdit').prop('checked', false);
-  $('#FechaIniRecordatorioEdit').val('');
-  $('#FechaFinRecordatorioEdit').val('');
-  $('#terminosCondicionesEdit').val('');
-  $('#ObservacionesEdit').val('');
-  $('#proyectoEdit').val('');
-  $('#restriccionUsuariosEdit').val('');
-  $('#ArchivoEdit').val('');
-  $('#usuarioBloqueoEdit').val('');
+  $("#campaniaEdit").val("");
+  $("#descripcionCampaniaEdit").val("");
+  $("#fechaRegistroEdit").val("");
+  $("#fechaInicialEdit").val("");
+  $("#fechaFinalEdit").val("");
+  $("#HoraRecordatorioEdit").val("");
+  $("#correoEdit").val("");
+  $("#edadInicialEdit").val("");
+  $("#edadFinalEdit").val("");
+  $("#sexoEdit").val("");
+  $("#tipoUsuariosEdit").val("");
+  $("#notificacionEdit").val("");
+  $("#descripcionNotificacionEdit").val("");
+  $("#imgCampaniaEdit").val("");
+  $("#imgNotificacionEdit").val("");
+  $("#maximoParticipantesEdit").val("");
+  $("#tercerosCampaniaEdit").val("");
+  $("#alldayEdit").prop("checked", false);
+  $("#repeatEdit").prop("checked", false);
+  $("#FechaIniRecordatorioEdit").val("");
+  $("#FechaFinRecordatorioEdit").val("");
+  $("#terminosCondicionesEdit").val("");
+  $("#ObservacionesEdit").val("");
+  $("#proyectoEdit").val("");
+  $("#restriccionUsuariosEdit").val("");
+  $("#ArchivoEdit").val("");
+  $("#usuarioBloqueoEdit").val("");
 
   // Limpiar las tablas
-  $('#TablaEtapaEdit').DataTable().clear().destroy();
-  $('#tablaBloqueoEdit').DataTable().clear().destroy();
+  $("#TablaEtapaEdit").DataTable().clear().destroy();
+  $("#tablaBloqueoEdit").DataTable().clear().destroy();
 
   // Limpiar los arreglos
   // TEMP = [];
@@ -3224,28 +3368,27 @@ function limpiarFormulario() {
   // bloqueadosUsuarios = [];
   // dataEditEtapa=[]
 
-    saveDataParams = [];
-    // Arreglo para almacenar los datos guardados de la tabla
-    // datosTablaLocalidad = [];
-    // datosTablaPremio = [];
-    // datosTablaParametro = [];
-    // datosTablaParticipacion= [];
-    permitidoUsuario =[];
+  saveDataParams = [];
+  // Arreglo para almacenar los datos guardados de la tabla
+  // datosTablaLocalidad = [];
+  // datosTablaPremio = [];
+  // datosTablaParametro = [];
+  // datosTablaParticipacion= [];
+  permitidoUsuario = [];
 
-    // datosBloqueados = [];
-    TEMP =[];
-    etapasData=[]
-    //variables de imagenes
-    bloqueadosUsuarios =[];
-    DataEtapa =[];
-    nombresMunicipios = {};
+  // datosBloqueados = [];
+  TEMP = [];
+  etapasData = [];
+  //variables de imagenes
+  bloqueadosUsuarios = [];
+  DataEtapa = [];
+  nombresMunicipios = {};
 
-    //data edit
-    dataMunicipiosView=[]
-    dataDeptoView=[]
-    dataPremioView=[]
-    datatransaccionView=[]
-
+  //data edit
+  dataMunicipiosView = [];
+  dataDeptoView = [];
+  dataPremioView = [];
+  datatransaccionView = [];
 }
 
 const OpenEdit = (id) => {
@@ -3256,66 +3399,63 @@ const OpenEdit = (id) => {
   resetStepsEdit(); // Agregar esta línea para reiniciar los pasos correctamente
 
   // Ocultar el contenido del modal y mostrar el spinner
-  $('#modalEdit .modal-body').css('opacity', '0.5');
-  $('#modalEdit .spinner-container').show();
+  $("#modalEdit .modal-body").css("opacity", "0.5");
+  $("#modalEdit .spinner-container").show();
 
   var requestOptions = {
-    method: 'GET',
-    redirect: 'follow',
-    headers: {"Authorization": token}
+    method: "GET",
+    redirect: "follow",
+    headers: { Authorization: token },
   };
 
   fetch(`${url}Campania/${id}`, requestOptions)
-    .then(response => response.json())
-    .then(result => {
+    .then((response) => response.json())
+    .then((result) => {
       // Mostrar manualmente el primer paso
-      var stepsEdits = $('#stepperEdit').children();
+      var stepsEdits = $("#stepperEdit").children();
       stepsEdits.hide();
       stepsEdits.eq(0).show();
-        // Ocultar el spinner y mostrar el contenido del modal
-      $('#modalEdit .modal-body').css('opacity', '1');
-      $('#modalEdit .spinner-container').hide();
+      // Ocultar el spinner y mostrar el contenido del modal
+      $("#modalEdit .modal-body").css("opacity", "1");
+      $("#modalEdit .spinner-container").hide();
 
-        // Ocultar el indicador de carga
-        $('#modalEdit .spinner-container').hide();
+      // Ocultar el indicador de carga
+      $("#modalEdit .spinner-container").hide();
 
-        // Mostrar el primer paso del stepper
-        var stepsEdits = $('#stepperEdit').children();
-        stepsEdits.hide();
-        stepsEdits.eq(0).show();
+      // Mostrar el primer paso del stepper
+      var stepsEdits = $("#stepperEdit").children();
+      stepsEdits.hide();
+      stepsEdits.eq(0).show();
 
-        
-
-        // Mostrar el modal solo si los datos han sido cargados
-        if (isDataLoaded) {
-          $('#modalEdit').modal('show');
-        }
+      // Mostrar el modal solo si los datos han sido cargados
+      if (isDataLoaded) {
+        $("#modalEdit").modal("show");
+      }
 
       // Mostrar el modal
-      $('#modalEdit').modal('toggle');
-      console.log('Resultados', result);
+      $("#modalEdit").modal("toggle");
+      console.log("Resultados", result);
 
       // Asignar los datos del registro a los campos del formulario
-      $('#idCampania').val(id);
-      $('#campaniaEdit').val(result.nombre);
-      $('#descripcionCampaniaEdit').val(result.descripcion);
-      $('#fechaRegistroEdit').val(result.fechaRegistro);
-      $('#fechaInicialEdit').val(result.fechaInicio);
-      $('#fechaFinalEdit').val(result.fechaFin);
-      $('#fechaCreacion').val(result.fechaCreacion);
-      $('#edadInicialEdit').val(result.edadInicial);
-      $('#edadFinalEdit').val(result.edadFinal);
-      $('#sexoEdit').val(result.sexo);
-      $('#tipoUsuariosEdit').val(result.tipoUsuario);
-      $('#notificacionEdit').val(result.tituloNotificacion);
-      $('#descripcionNotificacionEdit').val(result.descripcionNotificacion);
-      $('#estadoCampania').val(result.estado)
+      $("#idCampania").val(id);
+      $("#campaniaEdit").val(result.nombre);
+      $("#descripcionCampaniaEdit").val(result.descripcion);
+      $("#fechaRegistroEdit").val(result.fechaRegistro);
+      $("#fechaInicialEdit").val(result.fechaInicio);
+      $("#fechaFinalEdit").val(result.fechaFin);
+      $("#fechaCreacion").val(result.fechaCreacion);
+      $("#edadInicialEdit").val(result.edadInicial);
+      $("#edadFinalEdit").val(result.edadFinal);
+      $("#sexoEdit").val(result.sexo);
+      $("#tipoUsuariosEdit").val(result.tipoUsuario);
+      $("#notificacionEdit").val(result.tituloNotificacion);
+      $("#descripcionNotificacionEdit").val(result.descripcionNotificacion);
+      $("#estadoCampania").val(result.estado);
       // Llamar a la función userValidator con el valor de restriccionUsuarios
       const event = {
-        target: document.getElementById('restriccionUsuariosEdit')
+        target: document.getElementById("restriccionUsuariosEdit"),
       };
-      userValidator(event, 'containerArchivoEdit');
-
+      userValidator(event, "containerArchivoEdit");
 
       // Asignar las imágenes si existen
       // if (result.imgPush) {
@@ -3327,41 +3467,42 @@ const OpenEdit = (id) => {
       //   $('#previewNotificacionEdit').show();
       // }
 
-      $('#maximoParticipantesEdit').val(result.maximoParticipaciones);
-      $('#tercerosCampaniaEdit').val(result.campaniaTerceros);
-      $('#esArchivadaEdit').prop('checked', result.esArchivada === 1);
-      $('#terminosCondicionesEdit').val(result.terminosCondiciones);
-      $('#ObservacionesEdit').val(result.observaciones);
-      $('#proyectoEdit').val(result.idProyecto);
-      $('#restriccionUsuariosEdit').val(result.restriccionUser);
-      
-      bloqueadosUsuarios = result.bloqueados
-      permitidoUsuario = result.participantes
+      $("#maximoParticipantesEdit").val(result.maximoParticipaciones);
+      $("#tercerosCampaniaEdit").val(result.campaniaTerceros);
+      $("#esArchivadaEdit").prop("checked", result.esArchivada === 1);
+      $("#terminosCondicionesEdit").val(result.terminosCondiciones);
+      $("#ObservacionesEdit").val(result.observaciones);
+      $("#proyectoEdit").val(result.idProyecto);
+      $("#restriccionUsuariosEdit").val(result.restriccionUser);
+
+      bloqueadosUsuarios = result.bloqueados;
+      permitidoUsuario = result.participantes;
       dataEditEtapa = result.etapas;
-      console.log(dataEditEtapa, "asignacion")
-      
+      console.log(dataEditEtapa, "asignacion");
+
       // Mostrar las etapas en la tabla
       mostrarDatosTabla("#TablaEtapaEdit");
       // Mostrar el modal
-      $('#modalEdit').modal('toggle');
-      console.log('Resultados',result)
+      $("#modalEdit").modal("toggle");
+      console.log("Resultados", result);
     })
-    .catch(error => {console.log('error', error)
-      $('#modalEdit .modal-body').css('opacity', '1');
-      $('#modalEdit .spinner-container').hide();
-      });
+    .catch((error) => {
+      console.log("error", error);
+      $("#modalEdit .modal-body").css("opacity", "1");
+      $("#modalEdit .spinner-container").hide();
+    });
 };
 
-const OpenDelete = (id) =>{
+const OpenDelete = (id) => {
   limpiarFormulario();
-  console.log(id, 'idDelete')
-  $('#idDelete').val(id);
-  $('#modalDelete').modal('toggle');
-}
+  console.log(id, "idDelete");
+  $("#idDelete").val(id);
+  $("#modalDelete").modal("toggle");
+};
 
 //actualiza y pausa una campaña
 const pausarActualizarCampania = (id, type) => {
-  console.log('type', type)
+  console.log("type", type);
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Authorization", token);
@@ -3369,7 +3510,7 @@ const pausarActualizarCampania = (id, type) => {
   var requestOptions = {
     method: "PUT",
     headers: myHeaders,
-    redirect: 'follow'
+    redirect: "follow",
   };
 
   fetch(
@@ -3394,15 +3535,14 @@ const pausarActualizarCampania = (id, type) => {
 //obtiene todas las campañas
 const getAllCampanias = () => {
   var requestOptions = {
-    method: 'GET',
-    redirect: 'follow',
-    headers: { "Authorization": token }
+    method: "GET",
+    redirect: "follow",
+    headers: { Authorization: token },
   };
 
   fetch(`${url}Campania`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
-    
       table("tableTodas", result);
       $("#textTodas").text(result.length);
 
@@ -3418,13 +3558,12 @@ const getAllCampanias = () => {
       $("#textBorrador").text(borrador.length);
       table("tableBorrador", borrador);
 
-      let archivo = result.filter((x) => x.esArchivada === 1); 
+      let archivo = result.filter((x) => x.esArchivada === 1);
       $("#textArchivo").text(archivo.length);
       table("tableArchivo", archivo);
     })
     .catch((error) => console.log("error", error));
 };
-
 
 //tablas de campaña
 const table = (table, data) => {
@@ -3435,40 +3574,47 @@ const table = (table, data) => {
       {
         data: null,
         render: function (data, type, row, meta) {
-          if (type === 'display') {
+          if (type === "display") {
             return meta.row + 1;
           }
           return meta.row + 1;
-        }
+        },
       },
       { data: "nombre" },
       {
         data: "esArchivada",
-        render: function(data, type, row) {
+        render: function (data, type, row) {
           if (data === 1) {
             return "Archivada";
           } else {
             return renderEstado(row.estado);
           }
-        }
+        },
       },
       { data: "fechaInicio" },
       { data: "fechaFin" },
-      { data: "id",
+      {
+        data: "id",
         render: function (data, type, row) {
           var opcAdd = ``;
-          
+
           if (row.estado === 3) {
             // Si el estado es borrador (3), mostrar las opciones de activar, editar, archivar y eliminar
             opcAdd += `
               <a href="#" onclick="pausarActualizarCampania(${data}, 1)" class="btn_activar dropdown-item">
-                ${feather.icons["play"].toSvg({ class: "font-small-4 mr-50" })} Activar
+                ${feather.icons["play"].toSvg({
+                  class: "font-small-4 mr-50",
+                })} Activar
               </a>
               <a href="#" class="btn_edit dropdown-item" onclick="OpenEdit(${data})" data-toggle="modal" data-target="#modalEdit">
-                ${feather.icons["edit"].toSvg({ class: "font-small-4 mr-50" })} Editar
+                ${feather.icons["edit"].toSvg({
+                  class: "font-small-4 mr-50",
+                })} Editar
               </a>
               <a href="#" onclick="OpenDelete(${data})" class="btn_delete dropdown-item">
-                ${feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" })} Eliminar
+                ${feather.icons["trash-2"].toSvg({
+                  class: "font-small-4 mr-50",
+                })} Eliminar
               </a>
             `;
           } else {
@@ -3477,44 +3623,55 @@ const table = (table, data) => {
               case 1:
                 opcAdd += `
                   <a href="#" onclick="pausarActualizarCampania(${data}, 2)" class="btn_pausar dropdown-item">
-                    ${feather.icons["pause-circle"].toSvg({ class: "font-small-4 mr-50" })} Pausar
+                    ${feather.icons["pause-circle"].toSvg({
+                      class: "font-small-4 mr-50",
+                    })} Pausar
                   </a>
                 `;
                 break;
               case 2:
                 opcAdd += `
                   <a href="#" onclick="pausarActualizarCampania(${data}, 1)" class="btn_activar dropdown-item">
-                    ${feather.icons["play"].toSvg({ class: "font-small-4 mr-50" })} Activar
+                    ${feather.icons["play"].toSvg({
+                      class: "font-small-4 mr-50",
+                    })} Activar
                   </a>
                 `;
                 break;
             }
-            
+
             opcAdd += `
               <a href="#" class="btn_edit dropdown-item" onclick="OpenEdit(${data})" data-toggle="modal" data-target="#modalEdit">
-                ${feather.icons["edit"].toSvg({ class: "font-small-4 mr-50" })} Actualizar
+                ${feather.icons["edit"].toSvg({
+                  class: "font-small-4 mr-50",
+                })} Actualizar
               </a>
               <a href="#" onclick="OpenDelete(${data})" class="btn_delete dropdown-item">
-                ${feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" })} Inhabilitar
+                ${feather.icons["trash-2"].toSvg({
+                  class: "font-small-4 mr-50",
+                })} Inhabilitar
               </a>
             `;
           }
-          
+
           return `
             <div class="btn-group">
               <a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
-                ${feather.icons["more-vertical"].toSvg({ class: "font-small-4" })}
+                ${feather.icons["more-vertical"].toSvg({
+                  class: "font-small-4",
+                })}
               </a>
               <div class="dropdown-menu dropdown-menu-right">
                 ${opcAdd}
               </div>
             </div>
           `;
-        }
+        },
       },
     ],
     // order: [[1, 'asc']],
-    dom: '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
+    dom:
+      '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
       '<"col-lg-12 col-xl-6" l>' +
       '<"col-lg-12 col-xl-6 pl-xl-75 pl-0"<"dt-action-buttons text-xl-right text-lg-left text-md-right text-left d-flex align-items-center justify-content-lg-end align-items-center flex-sm-nowrap flex-wrap mr-1"<"mr-1"f>B>>' +
       ">t" +
@@ -3530,27 +3687,31 @@ const table = (table, data) => {
     // Buttons with Dropdown
     buttons: [
       {
-        text: 'Nuevo',
-        className: 'add-new btn btn-primary mt-50',
+        text: "Nuevo",
+        className: "add-new btn btn-primary mt-50",
         attr: {
-          'data-toggle': 'modal',
-          'data-target': '#modalNew',
+          "data-toggle": "modal",
+          "data-target": "#modalNew",
         },
         init: function (api, node, config) {
-          $(node).removeClass('btn-secondary');
+          $(node).removeClass("btn-secondary");
           //Metodo para agregar un nuevo usuario
-        }
+        },
       },
     ],
   });
 };
 
-//render para el estado de la campaña 
+//render para el estado de la campaña
 function renderEstado(estado) {
   switch (estado) {
-    case 1: return `Activa`;
-    case 2: return `Pausada`;
-    case 3: return `Borrador`;
-    default: return ``;
+    case 1:
+      return `Activa`;
+    case 2:
+      return `Pausada`;
+    case 3:
+      return `Borrador`;
+    default:
+      return ``;
   }
 }

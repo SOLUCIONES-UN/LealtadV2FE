@@ -3,59 +3,50 @@ $(function () {
 });
 
 $("#btnConsultar").click(function () {
- 
-  let phone= $("#phone").val();
- 
-  
-  if(phone !== ""){
-    
+  let phone = $("#phone").val();
 
+  if (phone !== "") {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
- 
-  var raw = JSON.stringify({
+    var raw = JSON.stringify({
+      phone: phone,
+    });
 
-    phone:phone,
-    
-    
-  });
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
 
-  var requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: raw,
-    redirect: "follow",
-  };
+    fetch(`${url}codigoReferidos/getCodigoReferidoByPhone`, requestOptions)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("La solicitud no fue exitosa");
+        }
+      })
+      .then((result) => {
+        if (result.length > 0) {
+          let { id, codigo } = result[0];
+          $("#id").val(id);
+          $("#codigo").val(codigo);
+          $("#container1").show("fast");
+        } else {
+          alert("El teléfono ingresado no es referido.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error en la solicitud:", error);
+        Alert("El teléfono ingresado no es referido", "error");
+      });
+  } else {
+    alert("El teléfono es requerido");
+  }
 
-  fetch(`${url}codigoReferidos/getCodigoReferidoByPhone`, requestOptions)
- 
-  .then((response) => {
-    if (response.ok) {
-        return response.json();
-    } else {
-        throw new Error('La solicitud no fue exitosa');
-    }
-})
-.then((result) => {
-    if (result.length > 0) {
-        let { id, codigo } = result[0];
-        $("#id").val(id);
-        $("#codigo").val(codigo);
-        $("#container1").show("fast");
-    } else {
-        alert("El teléfono ingresado no es referido.");
-    }
-})
-.catch((error) => {
-    console.error('Error en la solicitud:', error);
-    Alert("El teléfono ingresado no es referido", "error");
-});
-} else {
-alert("El teléfono es requerido");
-}
-
-return false;
+  return false;
 });
 
 $("#btnCancelar").click(function () {
@@ -63,7 +54,6 @@ $("#btnCancelar").click(function () {
 });
 
 $("#formNew").submit(function () {
-
   const id = $("#id").val();
   const codigo = $("#codigo").val();
 
