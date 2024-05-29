@@ -539,7 +539,14 @@ const getparticipantes = () => {
                     return meta.row + 1;
                 }
             },
-            { data: "id" },
+            {
+                data: null,
+                render: function(data, type, row) {
+                    return `${row.customerInfo.fname} ${row.customerInfo.lname}`;
+                }
+            },
+
+            // { data: "customerInfo.fname"  },
             { data: "campanium.nombre" }, // Nombre de la campaña
             // Fecha de creación de la campaña
             {

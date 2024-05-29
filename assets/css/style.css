@@ -262,27 +262,27 @@ body {
     box-sizing: border-box;
 }
 
-.container {
+/* .container-xxl {
     display: flex;
     justify-content: space-around;
     height: 100vh;
     background-color: #b9cbd2;
     align-items: center;
-}
+} */
 
-.col-lg-3,
+/* .col-lg-3,
 .col-sm-6,
 .col-12 {
     display: flex;
     justify-content: center;
-}
+} */
 
-.card {
+/* .card {
     perspective: 1000px;
     transform-style: preserve-3d;
-}
+} */
 
-.card-item {
+/* .card-item {
     background-color: #fff;
     width: 100%;
     height: 100%;
@@ -290,16 +290,16 @@ body {
     padding: 1rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
+} */
+/* 
 .card-header {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-bottom: 0;
-}
+} */
 
-.avatar {
+/* .avatar {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -307,16 +307,23 @@ body {
     padding: 1rem;
     margin: 0;
     border-radius: 50%;
-}
-
+} */
+/* 
 .avatar-content {
     font-size: 2rem;
-}
+} */
 
-.fw-bolder {
+/* .fw-bolder {
     font-weight: bolder;
-}
+} */
 
-.card-text {
+/* .card-text {
     margin-top: 0.5rem;
-}
+}  */
+
+
+
+
+/* esto va aqui   */
+
+
