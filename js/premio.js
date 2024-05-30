@@ -229,6 +229,9 @@ function limpiarFormulario() {
   $("#tipoForm").empty();
 }
 
+
+
+
 const getPremios = () => {
   var tipoTransaccion;
 
@@ -241,7 +244,12 @@ const getPremios = () => {
       headers: headers,
     },
     columns: [
-      { data: "id" },
+      {
+        data: null, // Esta columna no va a usar ningún dato del servidor
+        render: function (data, type, row, meta) {
+          return meta.row + 1; // meta.row contiene el índice de la fila, que empieza en 0
+        }
+      },
       {
         data: "descripcion",
         render: function (data) {
@@ -252,41 +260,30 @@ const getPremios = () => {
           }
         },
       },
-    //   {
-    //     data: "tipo",
-    //     render: function (data) {
-    //       if (data == 1) {
-    //         return "Transaccion";
-    //       } else if (data == 2) {
-    //         return "OfertCraft";
-    //       }
-    //     },
-    //   },
-     
-    {
+      {
         data: "id",
         render: function (data) {
-            return (
-                '<div class="btn-group">' +
-                '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
-                feather.icons["more-vertical"].toSvg({ class: "font-small-4" }) +
-                "</a>" +
-                '<div class="dropdown-menu dropdown-menu-right">' +
-                '<a href="#" onclick="OpenEdit(' +
-                data +
-                ')" class="btn_edit dropdown-item">' +
-                feather.icons["archive"].toSvg({ class: "font-small-4 mr-50" }) +
-                " Actualizar" +
-                "</a>" +
-                '<a href="#" onclick="OpenDelete(' +
-                data +
-                ')" class="btn_delete dropdown-item">' +
-                feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" }) +
-                " Inhabilitar" +
-                "</a>" +
-                "</div>" +
-                "</div>"
-              );
+          return (
+            '<div class="btn-group">' +
+            '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
+            feather.icons["more-vertical"].toSvg({ class: "font-small-4" }) +
+            "</a>" +
+            '<div class="dropdown-menu dropdown-menu-right">' +
+            '<a href="#" onclick="OpenEdit(' +
+            data +
+            ')" class="btn_edit dropdown-item">' +
+            feather.icons["archive"].toSvg({ class: "font-small-4 mr-50" }) +
+            " Actualizar" +
+            "</a>" +
+            '<a href="#" onclick="OpenDelete(' +
+            data +
+            ')" class="btn_delete dropdown-item">' +
+            feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" }) +
+            " Inhabilitar" +
+            "</a>" +
+            "</div>" +
+            "</div>"
+          );
         },
       },
     ],
@@ -300,7 +297,7 @@ const getPremios = () => {
       '<"col-sm-12 col-md-6"p>' +
       ">",
     language: {
-      sLengthMenu: "Show _MENU_",
+      sLengthMenu: "Mostrar _MENU_",
       search: "Buscar",
       searchPlaceholder: "Buscar...",
     },
@@ -322,6 +319,110 @@ const getPremios = () => {
     ],
   });
 };
+
+
+
+
+
+
+
+
+
+
+// const getPremios = () => {
+//   var tipoTransaccion;
+
+//   return $("#tableData").dataTable({
+//     ajax: {
+//       url: `${url}Premio`,
+//       type: "GET",
+//       datatype: "json",
+//       dataSrc: "",
+//       headers: headers,
+//     },
+//     columns: [
+//       { data: "id" },
+//       {
+//         data: "descripcion",
+//         render: function (data) {
+//           if (data == null) {
+//             return "Premio por transaccion";
+//           } else {
+//             return data;
+//           }
+          
+//         },
+//       },
+//     //   {
+//     //     data: "tipo",
+//     //     render: function (data) {
+//     //       if (data == 1) {
+//     //         return "Transaccion";
+//     //       } else if (data == 2) {
+//     //         return "OfertCraft";
+//     //       }
+//     //     },
+//     //   },
+     
+//     {
+//         data: "id",
+//         render: function (data) {
+//             return (
+//                 '<div class="btn-group">' +
+//                 '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
+//                 feather.icons["more-vertical"].toSvg({ class: "font-small-4" }) +
+//                 "</a>" +
+//                 '<div class="dropdown-menu dropdown-menu-right">' +
+//                 '<a href="#" onclick="OpenEdit(' +
+//                 data +
+//                 ')" class="btn_edit dropdown-item">' +
+//                 feather.icons["archive"].toSvg({ class: "font-small-4 mr-50" }) +
+//                 " Actualizar" +
+//                 "</a>" +
+//                 '<a href="#" onclick="OpenDelete(' +
+//                 data +
+//                 ')" class="btn_delete dropdown-item">' +
+//                 feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" }) +
+//                 " Inhabilitar" +
+//                 "</a>" +
+//                 "</div>" +
+//                 "</div>"
+//               );
+//         },
+//       },
+//     ],
+//     dom:
+//       '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
+//       '<"col-lg-12 col-xl-6" l>' +
+//       '<"col-lg-12 col-xl-6 pl-xl-75 pl-0"<"dt-action-buttons text-xl-right text-lg-left text-md-right text-left d-flex align-items-center justify-content-lg-end align-items-center flex-sm-nowrap flex-wrap mr-1"<"mr-1"f>B>>' +
+//       ">t" +
+//       '<"d-flex justify-content-between mx-2 row mb-1"' +
+//       '<"col-sm-12 col-md-6"i>' +
+//       '<"col-sm-12 col-md-6"p>' +
+//       ">",
+//     language: {
+//       sLengthMenu: "Show _MENU_",
+//       search: "Buscar",
+//       searchPlaceholder: "Buscar...",
+//     },
+
+//     //Buttons with Dropdown
+//     buttons: [
+//       {
+//         text: "Nuevo",
+//         className: "add-new btn btn-primary mt-50",
+//         attr: {
+//           "data-toggle": "modal",
+//           "data-target": "#modalNew",
+//         },
+//         init: function (api, node, config) {
+//           $(node).removeClass("btn-secondary");
+//           //Metodo para agregar un nuevo usuario
+//         },
+//       },
+//     ],
+//   });
+// };
 
 const limpiarForm = () => {
   $("#formNew").trigger("reset");
@@ -370,22 +471,7 @@ const OpenDelete = (id) => {
 };
 
 function tipoTransaccionForm() {
-  // <div class="form-group">
-  //     <label class="form-label" for="basic-icon-default-fullname">Nombre</label>
-  //     <input type="text" class="form-control dt-full-name" id="nombre" placeholder="Nombre del cliente"
-  //     name="nombre" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
-  // </div>
-
-  // <div class="form-group">
-  //     <label class="form-label" for="basic-icon-default-fullname">Descripcion</label>
-  //     <input type="text" class="form-control dt-full-name" id="descripcion" placeholder="Descripcion del premio"
-  //     name="descripcion" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
-  // </div>
-  // <div class="form-group">
-  //     <label class="form-label" for="basic-icon-default-fullname">Nombre</label>
-  //     <input type="text" class="form-control dt-full-name" id="nombre" placeholder="Nombre del cliente"
-  //     name="nombre" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
-  // </div>
+ 
 
   var valor = $("#tipoTransaccion").val();
 
@@ -497,9 +583,9 @@ const getTrasacciones = (idTransaccion) => {
     .then((response) => response.json())
     .then((result) => {
       result.forEach((element) => {
-        var opc = `<option value="${element.id}">${element.nombre}</option>`;
+        var opc = `<option value="${element.id}">${element.descripcion}</option>`;
         if (element.id === idTransaccion) {
-          opc = `<option value="${element.id}" selected>${element.nombre}</option>`;
+          opc = `<option value="${element.id}" selected>${element.descripcion}</option>`;
         }
 
         $("#transaccion").append(opc);
@@ -508,7 +594,6 @@ const getTrasacciones = (idTransaccion) => {
     })
     .catch((error) => console.log("error", error));
 };
-
 function limpiarCampos() {
   $("#tipoTransaccion").val("0");
 

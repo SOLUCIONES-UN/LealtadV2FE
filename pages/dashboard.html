@@ -48,6 +48,121 @@
             background-color: #f7e8ff;
             /* Morado claro */
         }
+        .dash {
+            background-color: #F1EFFF;
+            /* Morado claro */
+        }
+
+        .card {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%; /* Ajusta el ancho según tus necesidades */
+}
+
+.card-body {
+    text-align: center;
+}
+
+canvas {
+    max-width: 100%; /* Asegura que la gráfica no se desborde */
+}
+    
+
+
+
+
+
+.card {
+        position: relative;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        transition: all 0.3s ease-in-out;
+        border: 3px solid transparent; /* Borde transparente inicial */
+    }
+
+    .card-item {
+        position: relative;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        padding: 15px;
+    }
+
+    .card:hover {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        transform: translateY(-10px);
+        border: 3px solid rgba(0, 0, 0, 0.1); /* Borde visible al hacer hover */
+    }
+
+    /* .avatar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        background-color: #007bff;
+        border-radius: 50%;
+        padding: 10px;
+    } */
+
+    .bg-light-primary {
+        background-color: #9F97D5;
+    }
+
+    .card-two {
+        background-color: #9F97D5;
+        margin-top: 20px
+    }
+    .p-50 {
+        padding: 50%;
+    }
+
+    .m-0 {
+        margin: 0;
+    }
+
+    .font-medium-5 {
+        font-size: 2rem;
+    }
+
+    .fw-bolder {
+        font-weight: bolder;
+    }
+
+    .mt-1 {
+        margin-top: 1rem;
+    }
+
+    .pb-0 {
+        padding-bottom: 0;
+    }
+
+    .card-text {
+        margin: 0;
+        font-size: 1rem;
+        color: #060606;
+    }
+    .texti {
+        margin: 0;
+        font-size: 1rem;
+        color: #060606;
+    }
+    
+
+    .flex-column {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .align-items-start {
+        align-items: flex-start;
+    }
+    
+    
+
+   
+    
     </style>
 
 </head>
@@ -82,11 +197,10 @@
                     <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="user-nav d-sm-flex d-none"><span class="user-name font-weight-bolder">Admin</span><span class="user-status">Admin</span>
                         </div><span class="avatar"><img class="round"
-                                src="../../../app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40"
+                                src="../../../app-assets/images/portrait/small/OIG2.jpg" alt="avatar" height="40"
                                 width="40"><span class="avatar-status-online"></span></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user"><a class="dropdown-item" href="page-profile.html"><i class="mr-50" data-feather="user"></i>
-                            Profile</a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user">
                         <div class="dropdown-divider"></div><a class="dropdown-item" href="login.html"><i class="mr-50" data-feather="power"></i>
                             Logout</a>
                     </div>
@@ -170,11 +284,12 @@
             <div class="content-body">
                 <!-- Dashboard Analytics Start -->
                 <section id="dashboard-analytics">
-                    <div id="dataDashboard" class="row  match-height">
+                    <div id="dataDashboard" class="dash row  match-height">
                         <!-- Greetings Card starts -->
                         <div class="col-lg-6 col-md-12 col-sm-12">
                             <div class="card card-congratulations">
-                                <div class="card-item">
+                                    
+
                                 <div class="card-body text-center">
                                     <img src="../../../app-assets/images/elements/decore-left.png" class="congratulations-img-left" alt="card-img-left" />
                                     <img src="../../../app-assets/images/elements/decore-right.png" class="congratulations-img-right" alt="card-img-right" />
@@ -194,8 +309,8 @@
                                         </p>
                                     </div>
                                 </div>
+                                
 
-                            </div>
                             </div>
                         </div>
                         <!-- Greetings Card ends -->
@@ -208,28 +323,32 @@
 
 
                     
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-                                <div class="card-item">
-                                <div class="card-header flex-column align-items-start pb-0">
-                                    <div class="avatar bg-light-primary p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i data-feather="users" class="font-medium-5"></i>
+                        <div class="col-lg-3 col-2">
+                            <div class="card justify-content-center">
+                                <div class="card-two card mb-7 shadow   justify-content-center">
+                                    <div class="card-item" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+                                        <div class="card-header flex-column align-items-start pb-0">
+                                            <div class="avatar bg-light-primary p-20 m-0">
+                                                <div class="avatar-content">
+                                                    <i data-feather="users" class="font-medium-5"></i>
+                                                </div>
+                                            </div>
+                                            <h2 class="fw-bolder mt-1" id="num-promociones"></h2>
+                                            <p class="card-text">Promociones Activas</p>
                                         </div>
+                                        <div id="gained-chart"></div>
                                     </div>
-                                    <h2 class="fw-bolder mt-1" id="num-promociones"></h2>
-                                    <p class="card-text">Promociones Activas</p>
                                 </div>
-                                <div id="gained-chart"></div>
-                            </div>
                             </div>
                         </div>
+                        
  
 
 
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-                                <div class="card-item">
+                        <div class="col-lg-3 col-12">
+                            <div class=" card  justify-content-center justify-content-center ">
+                            <div class="card-two card mb-7  shadow">
+                                <div class="card-item"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
                                 <div class="card-header flex-column align-items-start pb-0">
                                     <div class="avatar bg-light-warning p-50 m-0">
                                         <div class="avatar-content">
@@ -243,14 +362,19 @@
                                     <!-- Cambio de "Campañas" a "Campañas Activas" -->
                                 </div>
                                 <div id="order-chart"></div>
-
+                            </div>
                             </div>
                             </div>
                         </div>
+
+
+
+                        
                         <!-- Orders Chart Card ends -->
-                        <div class="col-lg-6 col-12">
-                            <div class="card mb-7 shadow">
-                                <div class="card-item">
+                        <div class=" col-lg-6 col-12">
+                            <div class=" card   ">
+                            <div class="card-two card mb-7 shadow">
+                                <div class="card-item"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
                                 <div class="card-header d-flex justify-content-center pb-0">
                                     <h4 class="card-title">Resumen de Campañas</h4>
                                     <div class="table-responsive custom-scroll">
@@ -267,13 +391,16 @@
                                 </div>
                             </div>
                             </div>
+                            </div>
                         </div>
 
 
 
                         <div class="col-lg-6 col-12">
-                            <div class="card">
-                                <div class="card-item">
+                            <div class=" card   justify-content-center">
+
+                            <div class="card-two card   ">
+                                <div class="card-item"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
                                 <div class="card-body">
                                     <div class="row pb-50">
                                         <div class="col-sm-6 col-12 d-flex justify-content-between flex-column order-sm-1 order-2 mt-1 mt-sm-0">
@@ -332,6 +459,7 @@
                                 </div>
                             </div>
                             </div>
+                            </div>
                         </div>
 
 
@@ -352,13 +480,22 @@
                             </div>
                         </div>
 
+                        <!-- <div class="card">
+                            <div class="card-body">
+                                <canvas id="graficaCampanas1"></canvas>
+                            </div>
+                        </div> -->
 
                         <div class="col-lg-6 col-md-6 col-sm-12 text-center">
-                            <div class="card ">
-                                <div class="card-item">
+                            <div class=" card   justify-content-center">
+
+                            <div class="card-two card ">
+                                <div class="card-item"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+
                                 <div class="card-body">
                                     <canvas id="graficaCampanas1"></canvas>
                                 </div>
+                            </div>
                             </div>
                             </div>
                         </div>
@@ -366,8 +503,10 @@
 
                         <!-- Avg Sessions Chart Card starts -->
                         <div class="col-lg-6 col-12">
-                            <div class="card">
-                                <div class="card-item">
+                            <div class=" card   justify-content-center">
+
+                            <div class="card-two card">
+                                <div class="card-item"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
 
                                 <div class="card-body">
                                     <div class="row pb-50">
@@ -433,6 +572,7 @@
                                 </div>
                             </div>
                             </div>
+                            </div>
                         </div>
                         <!-- Avg Sessions Chart Card ends -->
 
@@ -443,12 +583,14 @@
 
 
                         <div class="col-12 col-md-6 col-lg-12">
-                            <div class="card mb-7 shadow">
+                            <div class=" card">
+
+                            <div class="card-two card mb-7 shadow">
                                 <!-- <div class="card-item"> -->
 
                                 <div class="card-body ">
                                     <div class="text-center">
-                                        <h4 class="text-purple">Top 10 de Usuarios participantes</h4>
+                                        <h4 class="texti text-purple">Top 10 de Usuarios participantes</h4>
 
                                     </div>
                                     <div class="table-responsive custom-scroll">
@@ -467,6 +609,7 @@
                                     </div>
                                 <!-- </div> -->
                                 </div>
+                            </div>
                             </div>
 
 
