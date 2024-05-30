@@ -4,9 +4,9 @@ const url = "http://localhost:3000/";
 let tokenOfercraft = localStorage.getItem("token");
 let datosObtenidos = null; // Variable global para almacenar los datos obtenidos
 
-$(document).ready(function() {
+$(function() {
     // Ocultar botones y tabla al inicio
-    $("#btnDescargarExcel, #PantallaInfo, #Reenviar, .datatables-basic").hide();
+    $("#btnDescargarExcel, #PantallaInfo, #Reenviar,#tableData ").hide();
 
     // Evento al hacer clic en "Consultar"
     $("#ConsultaParticipacion").on("click", function() {
@@ -18,7 +18,7 @@ $(document).ready(function() {
     });
 
     // Evento al hacer clic en "PantallaInfo"
-    $("#PantallaInfo").on("click", function() {
+   $("#PantallaInfo").on("click", function() {
         if (datosObtenidos) {
             mostrarDatosEnTabla(datosObtenidos);
             $(".datatables-basic").show(); // Mostrar tabla después de obtener datos
@@ -26,6 +26,7 @@ $(document).ready(function() {
             Alert("Primero debes obtener los datos", "error");
         }
     });
+    
 
     // Evento al hacer clic en "Descargar Excel"
     $('#btnDescargarExcel').on("click", function() {
@@ -37,13 +38,19 @@ $(document).ready(function() {
 const getReport = () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    const fechaInicio = $("#fechaInicio").val();
-    const fechaFin = $("#fechaFin").val();
-
-    if (!fechaInicio || !fechaFin) {
-        console.error("Las fechas de inicio y fin son obligatorias.");
-        return;
-    }
+   
+        const fechaInicio = $("#fechaInicio").val();
+        const fechaFin = $("#fechaFin").val();
+      
+        const dateInicio = new Date(fechaInicio);
+        const dateFin = new Date(fechaFin);
+      
+        // Comprueba si la fecha de inicio es mayor que la fecha de fin
+        if (dateInicio > dateFin) {
+          Alert("La Fecha Final no puede ser menor a fecha Inicial", "error");
+          return; // Evitar hacer la llamada al servidor si la fecha de inicio es mayor
+        }
+      
 
     var raw = JSON.stringify({
         fechaInicio: fechaInicio,
@@ -63,7 +70,8 @@ const getReport = () => {
             console.log("Datos del informe de oferCraft:", result);
             if (result.queryNotificaciones && result.customerinfo) {
                 datosObtenidos = [...result.queryNotificaciones, ...result.customerinfo];
-                $("#btnDescargarExcel, #PantallaInfo, #Reenviar").show(); // Mostrar botones después de obtener los datos
+                $("#btnDescargarExcel, #PantallaInfo, #Reenviar").show();
+                // $("#PantallaInfo").prop("disabled", false); // Mostrar botones después de obtener los datos
             } else {
                 console.error("El formato de los datos obtenidos no es correcto", result);
                 Alert("El formato de los datos obtenidos no es correcto", "error");
@@ -77,70 +85,67 @@ const getReport = () => {
 
 
 function mostrarDatosEnTabla(datos) {
-  console.log("Datos para mostrar en la tabla:", datos);
-  if (!Array.isArray(datos)) {
-    console.error("Los datos no son un array:", datos);
-    return;
-  }
+    
+    let table = $('#tableData').DataTable();
+    console.log("Datos para mostrar en la tabla:", datos);
+    if (!Array.isArray(datos)) {
+      console.error("Los datos no son un array:", datos);
+      return;
+    }
+  
+    if (!$.fn.DataTable.isDataTable('#tableData')) {
 
-  // Inicializa la tabla si no está inicializada
-  if (!$.fn.DataTable.isDataTable('#tableData')) {
-    let tabla = $('.datatables-basic').DataTable({
-
-        columnDefs: [
-        { "defaultContent": "-", "targets": "_all" }
-      ],
-      order: [[1, 'asc']], // Ajuste para ordenar por la segunda columna (No.)
+        $('#tableData').DataTable({
+            columnDefs: [
+                { "defaultContent": "-", "targets": "_all" }
+            ],
+            order: [[0, 'asc']],
             ordering: true,
             language: {
-        search: "Buscar:",
-        searchPlaceholder: "Buscar",
-        lengthMenu: "Mostrar _MENU_",
-      },
-      scrollX: true,
-      columns: [
-        { width: "5%" },   // Ancho de la columna de checkboxes
-        { width: "20%" },   // Ancho de la columna de números
-        { width: "20%" },  // Ancho de la columna de teléfono
-        { width: "40%" },  // Ancho de la columna de cliente
-        { width: "50%" },  // Ancho de la columna de campaña
-        { width: "40%" },  // Ancho de la columna de fecha
-        { width: "40%" }
-    ]
-
-    });
+                search: "Buscar:",
+                searchPlaceholder: "Buscar",
+                lengthMenu: "Mostrar _MENU_",
+            },
+            scrollX: true, 
+           
+        });
+    }
   
-// 
-//   let tabla = $('#tableData').DataTable();
-//   console.log(tabla);
+  
+    // Limpia cualquier dato existente en la tabla
+    table.clear('#tableData').draw();
+  
+    let contador = 1;
+  
+    datos.forEach((element, index) => {
+      const fila = [
+        `<input type="checkbox" class="selectAll" data-telefono="${element.telefono}" data-campana="${element.campana}" data-transaccion="${element.numeroTransaccion || 'no aplica'}" data-valorTransaccion="${element.valorPremio || 'No aplica'}">`,
+        contador++,
+        formatTelefonoGuatemala(element.telefono),
+        element.nombre || "Sin nombre",
+        element.campana || "Sin campaña",
+        element.fecha || "Sin fecha",
+        element.premio || "Sin premio",
+        element.numeroTransaccion || "no aplica",
+        element.valorPremio || "No aplica"
+      ];
+  
+      // Agrega la fila a la tabla
+      table.row.add(fila).draw();
+    });
+  }
+  
+    // Agregar evento de cambio a los checkboxes
+    $('.selectAll').on('change', function() {
+        const telefono = $(this).data('telefono');
+        const campana = $(this).data('campana');
 
-  // Limpia cualquier dato existente en la tabla
-  tabla.clear().draw();
+        console.log("Registro seleccionado:", { telefono, campana });
+    });
 
 
-datos.forEach((element, index) => {
-    const telefonoFormateado = formatTelefonoGuatemala(element.telefono);
-    const nombreCompleto = element.nombre || "Sin nombre";
-    const campana = element.campana || "Sin campaña";
-    const fecha = element.fecha || "Sin fecha";
-    const premio = element.premio || "Sin premio";
 
-    tabla += `
-    <tr> 
-      <td><input type="checkbox" class="selectAll"></td>
-      <td>${index + 1 }</td>
-      <td>${telefonoFormateado}</td>
-      <td>${nombreCompleto}</td>
-      <td>${campana}</td>
-      <td>${fecha}</td>
-      <td>${premio}</td>
-    </tr>
-  `;
-});
-$('.datatables-basic tbody').html(tabla);
 
-}
-}
 const formatTelefonoGuatemala = (telefono) => {
     const codigoPais = telefono.slice(0, 3); // Código de país (502)
     const parte1 = telefono.slice(3, 7);    // Primeros 4 dígitos
@@ -184,7 +189,10 @@ function descargarExcel() {
         { v: 'CAMPAÑA', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
         { v: 'FECHA', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
         { v: 'PREMIO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+        { v: 'TRANSACCIÓN', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+        { v: 'VALOR TRANSACCIÓN', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
     ];
+    
     data.unshift(headerRow1, headerRow2, headerRow3, headerRow4);
 
     const ws = XLSX.utils.aoa_to_sheet(data);
@@ -197,6 +205,8 @@ function descargarExcel() {
         { wch: 40 },
         { wch: 25 },
         { wch: 25 },
+        { wch: 40 },
+        { wch: 40 },
     ];
 
     XLSX.utils.book_append_sheet(wb, ws, 'Reporte');

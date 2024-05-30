@@ -49,7 +49,8 @@
 
   <!-- BEGIN: Body-->
 
-  <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click"
+
+  <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static" data-open="click"
   data-menu="vertical-menu-modern" data-col="">
   <nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow container-xxl">
     <div class="navbar-container d-flex content">
@@ -62,16 +63,14 @@
           </li>
         </ul>
         <ul class="navbar-container p-0">
-          <li class="nav-item">
+          <!-- <li class="nav-item"> -->
             <div class="navbar-content text-center">
-                            <div><b style="font-size: 20px;">REPORTE DE PARTICIPANTES POR CAMPAÑA </b>
-                                <div><b>Filtra por rango de fechas el listado de los usuarios participantes por campaña</b></div>
-                          </div>
-                        </div>
-                    </li>
-                </ul>
+              <div><b style="font-size: 20px;">REPORTE DE PARTICIPANTES POR CAMPAÑA</b></div>
+              <div><b>Filtra por rango de fechas el listado de los usuarios participantes por campaña</b></div>
             </div>
-              </div>
+          </li>
+        </ul>
+      </div>
               <ul class="nav navbar-nav align-items-center ml-auto">
                   <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
                               data-feather="moon"></i></a></li>
@@ -168,22 +167,23 @@
       </div>
       <!-- END: Main Menu-->
   <!-- BEGIN: Content-->
-  <div class="app-content content ">
+  <div class="app-content content">
     <div class="content-overlay"></div>
     <div class="header-navbar-shadow"></div>
     <div class="content-wrapper container-xxl p-0">
       <div class="content-header row">
       </div>
       <div class="content-body">
-        <section class="card p-1">
+        <section class="card p-1 ">
           <div class="row p-2">
+
 
             <div class="col-md-4">
                 <label for="fechaInicio">Fecha Inicio</label>
                 <input id="fechaInicio" class="form-control" type="date">
               </div>
               <div class="col-md-4">
-                <label for="false">Fecha Fin</label>
+                <label for="fechaFin">Fecha Fin</label>
                 <input id="fechaFin" class="form-control" type="date">
               </div>
       
@@ -208,9 +208,10 @@
             </section>     
             </div>
           </div>
-          
         </div>
-      </div>               
+        </div>
+      </div>  
+                   
                       
       <!-- END: Content-->
       </div>
