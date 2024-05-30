@@ -14,6 +14,26 @@ $(function () {
 
   getPromociones();
 
+
+
+  
+  function validarFechas() {
+    const FechaInicio = document.getElementById('FechaInicio').value;
+    const FechaFin = document.getElementById('FechaFin').value;
+  
+    if (FechaInicio === FechaFin) {
+        Alert('Las fechas de inicio y fin no pueden ser iguales.','error');
+    }
+  }
+  
+  window.onload = function() {
+    document.getElementById('FechaInicio').addEventListener('blur', validarFechas);
+    document.getElementById('FechaFin').addEventListener('blur', validarFechas);
+  }
+  
+
+
+
   $("#ConsultarPromo").on("click", function () {
     if (
       $("#selectpromo").val() !== null && // Verificar si se ha seleccionado al menos una opción

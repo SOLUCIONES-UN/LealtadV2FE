@@ -13,6 +13,21 @@ $(function () {
   });
 
   getCampaniasActivas();
+  
+  function validarFechas() {
+    const FechaInicio = document.getElementById('FechaInicio').value;
+    const FechaFin = document.getElementById('FechaFin').value;
+  
+    if (FechaInicio === FechaFin) {
+        Alert('Las fechas de inicio y fin no pueden ser iguales.','error');
+    }
+  }
+  
+  window.onload = function() {
+    document.getElementById('FechaInicio').addEventListener('change', validarFechas);
+    document.getElementById('FechaFin').addEventListener('change', validarFechas);
+  }
+  
 
   $("#btnConsultar").click(function () {
     if (
@@ -119,6 +134,17 @@ const getReport = () => {
       Alert("Error al obtener reporte de referidos.","error");
     });
 };
+
+
+const Alert = function (message, status) {
+  toastr[`${status}`](message, `${status}`, {
+    closeButton: true,
+    tapToDismiss: false,
+    positionClass: "toast-top-right",
+    rtl: false,
+  });
+};
+
 
 function mostrarDatosEnTabla(datos) {
   console.log("Datos para mostrar en la tabla:", datos);

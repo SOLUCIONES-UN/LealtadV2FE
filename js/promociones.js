@@ -15,6 +15,12 @@ let newImagen1 = "";
 const inputFile = document.getElementById("formFile");
 
 
+$('#modalNew').on('show.bs.modal', function () {
+  console.log("Modal nuevo abierto"); // Agregar este console.log para verificar si se activa correctamente
+
+});
+
+
 // funcion para cargar imagenes
 function Uploaded(input) {
   var file = document.getElementById(input).files[0];
@@ -548,6 +554,10 @@ const table = (table, data) => {
       {
         text: "Nuevo",
         className: "btn btn-primary mt-50",
+        attr: {
+          'data-toggle': 'modal',
+          'data-target': '#modalNew',
+      },
         action: function (e, dt, node, config) {
           ChangePanel(2);
         },

@@ -3,10 +3,9 @@ const url = "http://localhost:3000/";
 let token = localStorage.getItem("token");
 
 const headers = {
-    'Authorization': token,
-    'Content-Type': 'application/json'
+  Authorization: token,
+  "Content-Type": "application/json",
 };
-
 
 let codigos = [];
 let premios = [];
@@ -20,202 +19,181 @@ let index = 1;
 let indexB = 1;
 var isAddLimited = true;
 var bsStepper = document.querySelectorAll(".bs-stepper"),
-    select = $(".select2"),
-    verticalWizard = document.querySelector(".vertical-wizard-example");
+  select = $(".select2"),
+  verticalWizard = document.querySelector(".vertical-wizard-example");
 
 var numConfigButtons = 4;
-const inputFile = document.getElementById('formFile');
-const inputFileBloqueados = document.getElementById('formFileBloqueados');
-
+const inputFile = document.getElementById("formFile");
+const inputFileBloqueados = document.getElementById("formFileBloqueados");
 
 //var stepper = new Stepper(document.querySelector('.bs-stepper'))
 // stepper.to(3)
 
-let imgAkisi = '';
-let imgPush = '';
+let imgAkisi = "";
+let imgPush = "";
 
-const getBlob = file => file.slice(0, file.size, file.type)
+const getBlob = (file) => file.slice(0, file.size, file.type);
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
+  initDateInputs();
+  removeLettersAndSC();
+  removeSpecialCharacters();
 
-    initDateInputs();
-    removeLettersAndSC();
-    removeSpecialCharacters();
+  const nombre = document.querySelector("#nombre");
+  validate(nombre, "Campaña");
 
-    const nombre = document.querySelector('#nombre');
-    validate(nombre, 'Campaña');
+  const tituloNotificacion = document.querySelector("#tituloNotificacion");
+  validate(tituloNotificacion, "Campaña");
 
-    const tituloNotificacion = document.querySelector('#tituloNotificacion');
-    validate(tituloNotificacion, 'Campaña');
+  const limiteParticipacion = document.querySelector("#limiteParticipacion");
+  validate(limiteParticipacion, "Límite de Participación");
 
-    const limiteParticipacion = document.querySelector('#limiteParticipacion');
-    validate(limiteParticipacion, 'Límite de Participación');
+  const imgAkisi = document.querySelector("#imgAkisi");
+  validate(imgAkisi, "Ícono de la campaña");
 
-    const imgAkisi = document.querySelector('#imgAkisi');
-    validate(imgAkisi, 'Ícono de la campaña');
+  const fechaInicio = document.querySelector("#fechaInicio");
+  validate(fechaInicio, "Fecha Inicio");
 
-    const fechaInicio = document.querySelector('#fechaInicio');
-    validate(fechaInicio, 'Fecha Inicio');
+  const fechaRegistro = document.querySelector("#fechaRegistro");
+  validate(fechaRegistro, "Fecha Inicio");
 
-    const fechaRegistro = document.querySelector('#fechaRegistro');
-    validate(fechaRegistro, 'Fecha Inicio');
+  const edadIni = document.querySelector("#edadIni");
+  validate(edadIni, "Edad Inicial");
 
-    const edadIni = document.querySelector('#edadIni');
-    validate(edadIni, 'Edad Inicial');
+  const tipoUsuario = document.querySelector("#tipoUsuario");
+  validate(tipoUsuario, "Tipo De Usuario");
 
-    const tipoUsuario = document.querySelector('#tipoUsuario');
-    validate(tipoUsuario, 'Tipo De Usuario');
+  const descripcionCampania = document.querySelector("#descripcionCampania");
+  validate(descripcionCampania, "Descripción");
 
-    const descripcionCampania = document.querySelector('#descripcionCampania');
-    validate(descripcionCampania, 'Descripción');
+  const descripcionNotificacion = document.querySelector(
+    "#descripcionNotificacion"
+  );
+  validate(descripcionNotificacion, "Descripción De La Notificación");
 
-    const descripcionNotificacion = document.querySelector('#descripcionNotificacion');
-    validate(descripcionNotificacion, 'Descripción De La Notificación');
+  const imgPush = document.querySelector("#imgPush");
+  validate(imgPush, "Imagen de Notificación");
 
-    const imgPush = document.querySelector('#imgPush');
-    validate(imgPush, 'Imagen de Notificación');
+  const fechaFin = document.querySelector("#fechaFin");
+  validate(fechaFin, "Fecha Fin");
 
-    const fechaFin = document.querySelector('#fechaFin');
-    validate(fechaFin, 'Fecha Fin');
+  const edadFini = document.querySelector("#edadFini");
+  validate(edadFini, "Edad Final");
 
-    const edadFini = document.querySelector('#edadFini');
-    validate(edadFini, 'Edad Final');
+  const sexo = document.querySelector("#sexo");
+  validate(sexo, "Sexo");
 
-    const sexo = document.querySelector('#sexo');
-    validate(sexo, 'Sexo');
+  const diaReporte = document.querySelector("#dia");
+  validate(diaReporte, "diaReporte");
 
-    const diaReporte = document.querySelector('#dia');
-    validate(diaReporte, 'diaReporte');
-
-    const horaReporte = document.querySelector('#hora');
-    validate(horaReporte, 'horaReporte');
-    $(document).ready(function() {
-        // Generar opciones de hora en incrementos de 1 hora
-        for (var hour = 0; hour < 24; hour++) {
-            $('#hora').append($('<option>', {
-                value: (hour < 10 ? '0' : '') + hour + ':00', // Formato HH:00
-                text: (hour < 10 ? '0' : '') + hour + ':00'
-            }));
-        }
-
-        // Escuchar el evento de cambio en el select de hora
-        $('#hora').on('change', function() {
-            var selectedHour = $(this).val();
-            // Aquí puedes hacer algo con la hora seleccionada, como enviarla al backend
-            console.log(selectedHour);
-        });
-
-
-        const emails = document.querySelector('#correosElectrónicos');
-        validate(emails, 'emails');
-
-
-
-    });
-
-
-
-    $(document).ready(function() {
-        $('#fechaHoraInicioPicker').datetimepicker({
-            format: 'YYYY-MM-DD' // Formato de fecha
-        });
-        $('#fechaHoraFinPicker').datetimepicker({
-            format: 'YYYY-MM-DD' // Formato de fecha
-        });
-        // Llenar opciones de hora
-        for (let i = 0; i < 24; i++) {
-            $('#horaInicio').append(`<option value="${i}">${i}:00</option>`);
-        }
-    });
-
-
-
-    function guardarDia() {
-        var diaSeleccionado = document.getElementById('dia').value;
-        // Aquí puedes hacer lo que necesites con el día seleccionado
-        console.log("Día seleccionado:", diaSeleccionado);
-        // Por ejemplo, podrías enviarlo a través de una solicitud AJAX a tu servidor
+  const horaReporte = document.querySelector("#hora");
+  validate(horaReporte, "horaReporte");
+  $(document).ready(function () {
+    // Generar opciones de hora en incrementos de 1 hora
+    for (var hour = 0; hour < 24; hour++) {
+      $("#hora").append(
+        $("<option>", {
+          value: (hour < 10 ? "0" : "") + hour + ":00", // Formato HH:00
+          text: (hour < 10 ? "0" : "") + hour + ":00",
+        })
+      );
     }
 
+    // Escuchar el evento de cambio en el select de hora
+    $("#hora").on("change", function () {
+      var selectedHour = $(this).val();
+      // Aquí puedes hacer algo con la hora seleccionada, como enviarla al backend
+      console.log(selectedHour);
+    });
 
+    const emails = document.querySelector("#correosElectrónicos");
+    validate(emails, "emails");
+  });
 
+  $(document).ready(function () {
+    $("#fechaHoraInicioPicker").datetimepicker({
+      format: "YYYY-MM-DD", // Formato de fecha
+    });
+    $("#fechaHoraFinPicker").datetimepicker({
+      format: "YYYY-MM-DD", // Formato de fecha
+    });
+    // Llenar opciones de hora
+    for (let i = 0; i < 24; i++) {
+      $("#horaInicio").append(`<option value="${i}">${i}:00</option>`);
+    }
+  });
 
+  function guardarDia() {
+    var diaSeleccionado = document.getElementById("dia").value;
+    // Aquí puedes hacer lo que necesites con el día seleccionado
+    console.log("Día seleccionado:", diaSeleccionado);
+    // Por ejemplo, podrías enviarlo a través de una solicitud AJAX a tu servidor
+  }
 
-    /* allFormVal['nombre'] = false;
+  /* allFormVal['nombre'] = false;
     allFormVal['tituloNotificacion'] = false;
     allFormVal['limiteParticipacion'] = false;
     allFormVal['imgAkisi'] = false; */
 
-    const inputs = document.querySelectorAll('input');
-    inputs.forEach(input => {
-        if (input.id != '' && input.type != 'hidden') {
-            allFormVal[input.id] = false;
-        }
-    });
+  const inputs = document.querySelectorAll("input");
+  inputs.forEach((input) => {
+    if (input.id != "" && input.type != "hidden") {
+      allFormVal[input.id] = false;
+    }
+  });
 
-
-  const img1 = document.querySelector('#imgAkisi');
+  const img1 = document.querySelector("#imgAkisi");
   img1.onchange = () => {
     const file = img1.files[0];
     const fileName = file.name;
-    const fileExtension = fileName.split('.').pop().toLowerCase();
+    const fileExtension = fileName.split(".").pop().toLowerCase();
     //imgAkisi = getBlob(file);
     const reader = new FileReader();
-    reader.onload = event => {
-      imgAkisi = `data:image/${fileExtension};base64,${btoa(event.target.result)}`;
+    reader.onload = (event) => {
+      imgAkisi = `data:image/${fileExtension};base64,${btoa(
+        event.target.result
+      )}`;
     };
     reader.readAsBinaryString(file);
-  }
+  };
 
-  const img2 = document.querySelector('#imgPush');
+  const img2 = document.querySelector("#imgPush");
   img2.onchange = () => {
     const file = img2.files[0];
     const fileName = file.name;
-    const fileExtension = fileName.split('.').pop().toLowerCase();
+    const fileExtension = fileName.split(".").pop().toLowerCase();
     //imgPush = getBlob(file);
     const reader = new FileReader();
-    reader.onload = event => {
-      imgPush = `data:image/${fileExtension};base64,${btoa(event.target.result)}`;
+    reader.onload = (event) => {
+      imgPush = `data:image/${fileExtension};base64,${btoa(
+        event.target.result
+      )}`;
     };
     reader.readAsBinaryString(file);
-  }
-})
-
-$(document).ready(function() {
-    $('#fechaHoraInicioPicker').datetimepicker({
-        format: 'YYYY-MM-DD' // Formato de fecha
-    });
-    $('#fechaHoraFinPicker').datetimepicker({
-        format: 'YYYY-MM-DD' // Formato de fecha
-    });
-    // Llenar opciones de hora
-    for (let i = 0; i < 24; i++) {
-        $('#horaInicio').append(`<option value="${i}">${i}:00</option>`);
-    }
+  };
 });
 
-
+$(document).ready(function () {
+  $("#fechaHoraInicioPicker").datetimepicker({
+    format: "YYYY-MM-DD", // Formato de fecha
+  });
+  $("#fechaHoraFinPicker").datetimepicker({
+    format: "YYYY-MM-DD", // Formato de fecha
+  });
+  // Llenar opciones de hora
+  for (let i = 0; i < 24; i++) {
+    $("#horaInicio").append(`<option value="${i}">${i}:00</option>`);
+  }
+});
 
 function guardarDia() {
-    var diaSeleccionado = document.getElementById('diaEnvio').value;
-    // Aquí puedes hacer lo que necesites con el día seleccionado
-    console.log("Día seleccionado:", diaSeleccionado);
-    // Por ejemplo, podrías enviarlo a través de una solicitud AJAX a tu servidor
+  var diaSeleccionado = document.getElementById("diaEnvio").value;
+  // Aquí puedes hacer lo que necesites con el día seleccionado
+  console.log("Día seleccionado:", diaSeleccionado);
+  // Por ejemplo, podrías enviarlo a través de una solicitud AJAX a tu servidor
 }
 
-
-
-
-
-
-
-
-
-
-
-
-// esto es para la hora cuando es input individual 
-
+// esto es para la hora cuando es input individual
 
 // $(document).ready(function() {
 //     $('#hora').timepicker({
@@ -224,29 +202,27 @@ function guardarDia() {
 //     });
 // });
 
+$(function () {
+  loadMenu();
+  ("use strict");
+  ChangePanel(1);
+  getAllCampanias();
+  $("#formFile").hide();
+  $("#tableParticipantes").hide();
+  $("#btnActualizarParametros").hide();
+  $("#btnActualizarPremios").hide();
+  $("#btnActualizarPresupuesto").hide();
 
+  Usuario();
 
-$(function() {
-    loadMenu();
-    ("use strict");
-    ChangePanel(1);
-    getAllCampanias();
-    $("#formFile").hide();
-    $("#tableParticipantes").hide();
-    $("#btnActualizarParametros").hide();
-    $("#btnActualizarPremios").hide();
-    $("#btnActualizarPresupuesto").hide();
-
-    Usuario();
-
-    //Inicializacion de Navs
-    $("#NavsOpc button").on("click", function(event) {
-        let data = $(this).attr("data-bs-target");
-        event.preventDefault();
-        $(this).tab("show");
-        $(".opcLista").removeClass("show active");
-        $(data).addClass("show active");
-    });
+  //Inicializacion de Navs
+  $("#NavsOpc button").on("click", function (event) {
+    let data = $(this).attr("data-bs-target");
+    event.preventDefault();
+    $(this).tab("show");
+    $(".opcLista").removeClass("show active");
+    $(data).addClass("show active");
+  });
 
   $(".BtnBottador").click(function () {
     var data = {
@@ -263,11 +239,10 @@ $(function() {
     Limpiar();
   });
 
-    $("#submitData").click(function() {
+  $("#submitData").click(function () {
+    //checkFormVals();
 
-        //checkFormVals();
-
-        //if (!allFormIsOK) return invalidFormData()
+    //if (!allFormIsOK) return invalidFormData()
 
     var data = {
       nombre: $("#nombre").val(),
@@ -293,60 +268,59 @@ $(function() {
     $("#addFormConfig").html(null);
   });
 
-    $("#btnAddEtapa").click(function() {
-        var nombre = $("#nombreEtapa");
-        var orden = $("#ordenEtapa");
-        var descripcion = $("#descEtapa");
-        var tipoTransaccion = $("#TipoTransaccion option:selected");
-        var intervalo;
-        $("#intervalo") ? (intervalo = $("#intervalo").val()) : (intervalo = "");
-        var periodo;
-        $("#periodo") ? (periodo = $("#periodo").val()) : (periodo = "");
-        var valor;
-        $("#valor") ? (valor = $("#valor").val()) : (valor = "");
+  $("#btnAddEtapa").click(function () {
+    var nombre = $("#nombreEtapa");
+    var orden = $("#ordenEtapa");
+    var descripcion = $("#descEtapa");
+    var tipoTransaccion = $("#TipoTransaccion option:selected");
+    var intervalo;
+    $("#intervalo") ? (intervalo = $("#intervalo").val()) : (intervalo = "");
+    var periodo;
+    $("#periodo") ? (periodo = $("#periodo").val()) : (periodo = "");
+    var valor;
+    $("#valor") ? (valor = $("#valor").val()) : (valor = "");
 
-        var nombreParticipacion;
+    var nombreParticipacion;
 
-        etapas.push({
-            nombre: nombre.val(),
-            orden: orden.val(),
-            descripcion: descripcion.val(),
-            tipoParticipacion: tipoTransaccion.val(),
-            intervalo: typeof intervalo != "undefined" ? intervalo : "",
-            periodo: typeof periodo != "undefined" ? periodo : "",
-            valorAcumulado: typeof valor != "undefined" ? valor : "",
+    etapas.push({
+      nombre: nombre.val(),
+      orden: orden.val(),
+      descripcion: descripcion.val(),
+      tipoParticipacion: tipoTransaccion.val(),
+      intervalo: typeof intervalo != "undefined" ? intervalo : "",
+      periodo: typeof periodo != "undefined" ? periodo : "",
+      valorAcumulado: typeof valor != "undefined" ? valor : "",
 
-            estado: 1,
-            premios: "",
-            parametros: "",
-            presupuestos: "",
-        });
+      estado: 1,
+      premios: "",
+      parametros: "",
+      presupuestos: "",
+    });
 
+    $("#tbetapas").html(null);
+    $(".etapaSelect").html(null);
+    $("#descEtapa").html(null);
 
-        $("#tbetapas").html(null);
-        $(".etapaSelect").html(null);
-        $("#descEtapa").html(null);
-
-        addConfig(index++, nombre.val());
+    addConfig(index++, nombre.val());
 
     etapas.forEach((element, index) => {
       var opc = `<option>${element.nombre}</option>`;
 
-            if (element.tipoParticipacion == 1) {
-                nombreParticipacion = "Por Transaccion";
-            } else if (element.tipoParticipacion == 2) {
-                nombreParticipacion = "Recurrente";
-            } else if (element.tipoParticipacion == 3) {
-                nombreParticipacion = "Acumular Transacciones";
-            } else if (element.tipoParticipacion == 4) {
-                nombreParticipacion = "Acumular Recurrente";
-            } else if (element.tipoParticipacion == 5) {
-                nombreParticipacion = "Acumular Valor";
-            } else if (element.tipoParticipacion == 6) {
-                nombreParticipacion = "Combinar Transacciones";
-            }
+      if (element.tipoParticipacion == 1) {
+        nombreParticipacion = "Por Transaccion";
+      } else if (element.tipoParticipacion == 2) {
+        nombreParticipacion = "Recurrente";
+      } else if (element.tipoParticipacion == 3) {
+        nombreParticipacion = "Acumular Transacciones";
+      } else if (element.tipoParticipacion == 4) {
+        nombreParticipacion = "Acumular Recurrente";
+      } else if (element.tipoParticipacion == 5) {
+        nombreParticipacion = "Acumular Valor";
+      } else if (element.tipoParticipacion == 6) {
+        nombreParticipacion = "Combinar Transacciones";
+      }
 
-            var tr = `<tr id='fila${index + 1}'>
+      var tr = `<tr id='fila${index + 1}'>
           <th>${index + 1}</th>
           <th>${element.nombre}</th>
           <th>${nombreParticipacion}</th>
@@ -357,42 +331,43 @@ $(function() {
           <div class="dropdown-menu dropdown-menu-right">
               <a href="#" class="btn_edit dropdown-item">
                   ${feather.icons["archive"].toSvg({
-        class: "font-small-4 mr-50",
-      })} Actualizar
+                    class: "font-small-4 mr-50",
+                  })} Actualizar
               </a>
           
           <div class="dropdown-menu dropdown-menu-right">
-              <a href="#" onclick="eliminarEtapa(${index + 1
-        })" class="btn_delete dropdown-item">
+              <a href="#" onclick="eliminarEtapa(${
+                index + 1
+              })" class="btn_delete dropdown-item">
                 ${feather.icons["trash-2"].toSvg({
-          class: "font-small-4 mr-50",
-        })} Inhabilitar
+                  class: "font-small-4 mr-50",
+                })} Inhabilitar
               </a>
           </div>
           </div>
         </div> </th>
       </tr>`;
 
-            $("#tbetapas").append(tr);
-            //console.log(index);
-            $(".etapaSelect").append(opc);
-            //$('#EtapaPremio').append(opc);
-        });
-
-        nombre.val(null);
-        orden.val(null);
-        descripcion.val(null);
-        $("#TipoTransaccion").val(0);
-        $("#intervalo").val(0);
+      $("#tbetapas").append(tr);
+      //console.log(index);
+      $(".etapaSelect").append(opc);
+      //$('#EtapaPremio').append(opc);
     });
+
+    nombre.val(null);
+    orden.val(null);
+    descripcion.val(null);
+    $("#TipoTransaccion").val(0);
+    $("#intervalo").val(0);
+  });
 });
 
 $("#TipoTransaccion").on("change", function () {
   var addConfig;
   let val = $("#TipoTransaccion").val();
 
-    if (val == 3 || val == 4) {
-        addConfig = `
+  if (val == 3 || val == 4) {
+    addConfig = `
       <label class="form-label" for="intervalo">Intervalo</label>
       <select class="form-control" id="intervalo">
       <option value="0" default selected disabled>Seleccione Un Intervalo</option>
@@ -403,37 +378,37 @@ $("#TipoTransaccion").on("change", function () {
       </select>
     `;
 
-        addPeriodo = `
+    addPeriodo = `
       <label for="periodo">Periodo</label>
       <input class="form-control" id="periodo"/>
     `;
 
-        $("#transaccionesDinamicas").html(addConfig);
-        $("#Periodo").html(addPeriodo);
+    $("#transaccionesDinamicas").html(addConfig);
+    $("#Periodo").html(addPeriodo);
 
-        isAddLimited = false;
-    } else if (val == 5) {
-        addConfig = `
+    isAddLimited = false;
+  } else if (val == 5) {
+    addConfig = `
       <label class="form-label" for="valor">Valor</label>
       <input class="form-control" id="valor" />
     
     `;
 
-        $("#transaccionesDinamicas").html(addConfig);
-        isAddLimited = false;
-    } else if (val == 2) {
-        addConfig = `
+    $("#transaccionesDinamicas").html(addConfig);
+    isAddLimited = false;
+  } else if (val == 2) {
+    addConfig = `
       <label class="form-label" for="valor">Valor</label>
       <input class="form-control" id="valor" />
       
     `;
-        $("#transaccionesDinamicas").html(addConfig);
-        isAddLimited = true;
-    } else {
-        $("#transaccionesDinamicas").html(null);
-        $("#Periodo").html(null);
-        isAddLimited = true;
-    }
+    $("#transaccionesDinamicas").html(addConfig);
+    isAddLimited = true;
+  } else {
+    $("#transaccionesDinamicas").html(null);
+    $("#Periodo").html(null);
+    isAddLimited = true;
+  }
 });
 
 /*const Usuario = () => {
@@ -456,68 +431,68 @@ function loadMenu(isEtapa) {
         // and the third with the if statement because the last line
         // can't seem to turn off when I press the first item. ¯\_(ツ)_/¯
 
-                for (var i = 0; i < index; i++) {
-                    line[i].classList.add("crossed");
+        for (var i = 0; i < index; i++) {
+          line[i].classList.add("crossed");
 
-                    for (var j = index; j < numberOfSteps; j++) {
-                        line[j].classList.remove("crossed");
-                    }
-                }
-                if (event.detail.to == 0) {
-                    for (var k = index; k < numberOfSteps; k++) {
-                        line[k].classList.remove("crossed");
-                    }
-                    line[0].classList.remove("crossed");
-                }
-            });
+          for (var j = index; j < numberOfSteps; j++) {
+            line[j].classList.remove("crossed");
+          }
         }
+        if (event.detail.to == 0) {
+          for (var k = index; k < numberOfSteps; k++) {
+            line[k].classList.remove("crossed");
+          }
+          line[0].classList.remove("crossed");
+        }
+      });
     }
+  }
 
-    // select2
-    select.each(function() {
-        var $this = $(this);
-        $this.wrap('<div class="position-relative"></div>');
-        $this.select2({
-            placeholder: "Select value",
-            dropdownParent: $this.parent(),
-        });
+  // select2
+  select.each(function () {
+    var $this = $(this);
+    $this.wrap('<div class="position-relative"></div>');
+    $this.select2({
+      placeholder: "Select value",
+      dropdownParent: $this.parent(),
     });
+  });
 
-    // Vertical Wizard
-    // --------------------------------------------------------------------
-    if (typeof verticalWizard !== undefined && verticalWizard !== null) {
-        var verticalStepper = new Stepper(verticalWizard, {
-            linear: false,
-        });
-        $(verticalWizard)
-            .find(".btn-next")
-            .on("click", function() {
-                verticalStepper.next();
-            });
-        $(verticalWizard)
-            .find(".btn-prev")
-            .on("click", function() {
-                verticalStepper.previous();
-            });
+  // Vertical Wizard
+  // --------------------------------------------------------------------
+  if (typeof verticalWizard !== undefined && verticalWizard !== null) {
+    var verticalStepper = new Stepper(verticalWizard, {
+      linear: false,
+    });
+    $(verticalWizard)
+      .find(".btn-next")
+      .on("click", function () {
+        verticalStepper.next();
+      });
+    $(verticalWizard)
+      .find(".btn-prev")
+      .on("click", function () {
+        verticalStepper.previous();
+      });
 
-        $(verticalWizard)
-            .find(".btn-submit")
-            .on("click", function() {
-                //Alert("Campaña Creada con Exito", "success");
-                ChangePanel(1);
-            });
-    }
+    $(verticalWizard)
+      .find(".btn-submit")
+      .on("click", function () {
+        //Alert("Campaña Creada con Exito", "success");
+        ChangePanel(1);
+      });
+  }
 
-    if (isEtapa) {
-        verticalStepper.reset();
-        verticalStepper.to(3);
-    }
+  if (isEtapa) {
+    verticalStepper.reset();
+    verticalStepper.to(3);
+  }
 }
 
 function addConfig(id, nombreEtapa) {
-    console.log(isAddLimited);
+  console.log(isAddLimited);
 
-    var configbuttons = `<div id="opc${id}" class="step" data-target="#social-links-vertical-${id}">
+  var configbuttons = `<div id="opc${id}" class="step" data-target="#social-links-vertical-${id}">
     <button type="button" class="step-trigger">
         <span class="bs-stepper-box">${numConfigButtons + 1}</span>
         <span class="bs-stepper-label">
@@ -527,7 +502,7 @@ function addConfig(id, nombreEtapa) {
     </button>
   </div>`;
 
-    var configForm = `<div id="social-links-vertical-${id}" class="content" style="height: auto;">
+  var configForm = `<div id="social-links-vertical-${id}" class="content" style="height: auto;">
   <div class="content-header">
       <h5 class="mb-0">Parametros De La Campaña</h5>
       <small></small>
@@ -563,14 +538,15 @@ function addConfig(id, nombreEtapa) {
           <label class="form-label" for="vAnterior${id}">Valor Anterior</label>
           <input type="number" id="vAnterior${id}" class="form-control" />
       </div>
-      ${isAddLimited
-      ? `<div class="form-group col-md-6">
+      ${
+        isAddLimited
+          ? `<div class="form-group col-md-6">
                           <label class="form-label" for="limiteParticipacion${id}">Límite
                               Participacion</label>
                           <input type="number" id="limiteParticipacion${id}" class="form-control" />
                        </div>`
-      : ""
-    }
+          : ""
+      }
       
   </div>
   <div class="row">
@@ -854,9 +830,9 @@ function addConfig(id, nombreEtapa) {
 
 const getDepartamentos = (id, isEdith = false) => {
   var requestOptions = {
-    method: 'GET',
-    redirect: 'follow',
-    headers: headers
+    method: "GET",
+    redirect: "follow",
+    headers: headers,
   };
 
   if (isEdith) {
@@ -873,12 +849,12 @@ const getDepartamentos = (id, isEdith = false) => {
     fetch(`${url}Departamento`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log("esto biene en departamentos",result);
+        console.log("esto biene en departamentos", result);
         result.forEach((element) => {
           var opc = `<option value="${element.id}">${element.nombre}</option>`;
           $("#departamento" + id).append(opc);
         });
-        $("#departamento" + id).on("change", function() {
+        $("#departamento" + id).on("change", function () {
           var id = $(this).val();
           console.log("Departamento seleccionado con jquery:", id);
           getMunicipios(id);
@@ -888,42 +864,40 @@ const getDepartamentos = (id, isEdith = false) => {
   }
 };
 
-
-
-
-
-
 const getMunicipios = (id, isEdit = false) => {
-  const departamentoId = isEdit ? document.querySelector('#departamentoActualizar').value : id;
+  const departamentoId = isEdit
+    ? document.querySelector("#departamentoActualizar").value
+    : id;
 
   fetch(`${url}Municipio/by/${departamentoId}`, {
-    method: 'GET',
-    redirect: 'follow',
-    headers: headers
+    method: "GET",
+    redirect: "follow",
+    headers: headers,
   })
     .then((response) => response.json())
     .then((result) => {
-      console.log("esto biene en munisipios",result);
-      const selectId = isEdit ? '#municipioEdit' : `#municipioSelect`;
-      
+      console.log("esto biene en munisipios", result);
+      const selectId = isEdit ? "#municipioEdit" : `#municipioSelect`;
+
       const municipioSelect = document.querySelector(selectId);
       if (!municipioSelect) {
-        console.error(`No se pudo encontrar el elemento select con el ID ${selectId}`);
+        console.error(
+          `No se pudo encontrar el elemento select con el ID ${selectId}`
+        );
         return;
       }
-      
+
       // Limpiar el select de municipios
       // $("#selectId").empty();
-      municipioSelect.innerHTML = '';
+      municipioSelect.innerHTML = "";
 
-      const defaultOption = document.createElement('option');
-      defaultOption.value = '0';
-      defaultOption.textContent = 'Todos los Municipios';
+      const defaultOption = document.createElement("option");
+      defaultOption.value = "0";
+      defaultOption.textContent = "Todos los Municipios";
       municipioSelect.appendChild(defaultOption);
 
-
       result.forEach((municipio) => {
-        const option = document.createElement('option');
+        const option = document.createElement("option");
         option.value = municipio.id;
         option.textContent = municipio.nombre;
         municipioSelect.appendChild(option);
@@ -931,17 +905,13 @@ const getMunicipios = (id, isEdit = false) => {
       console.log("Select de municipios después de llenar:", municipioSelect);
     })
     .catch((error) => console.log("error", error));
-}
-
-
-
-
+};
 
 const getTransacciones = (id, isEdit = false) => {
   var requestOptions = {
-    method: 'GET',
-    redirect: 'follow',
-    headers: headers
+    method: "GET",
+    redirect: "follow",
+    headers: headers,
   };
 
   if (isEdit) {
@@ -998,14 +968,14 @@ inputFile.addEventListener("change", function () {
             <div class="btn-group">
               <a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
                   ${feather.icons["more-vertical"].toSvg({
-          class: "font-small-4",
-        })}
+                    class: "font-small-4",
+                  })}
               </a>
               <div class="dropdown-menu dropdown-menu-right">
                   <a href="#" onclick="eliminarFila(${indexP})" id="delete" class="btn_delete dropdown-item">
                     ${feather.icons["trash-2"].toSvg({
-          class: "font-small-4 mr-50",
-        })} Inhabilitar
+                      class: "font-small-4 mr-50",
+                    })} Inhabilitar
                   </a>
               </div>
             </div>
@@ -1027,32 +997,31 @@ const eliminarFila = async (id) => {
   console.log(id);
 
   await fetch(`${url}Campania/${id}`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: headers,
-    redirect: 'follow',
+    redirect: "follow",
   })
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
-        Alert('Error al eliminar la campaña.', 'error');
-        throw new Error('Failed to fetch data');
+        Alert("Error al eliminar la campaña.", "error");
+        throw new Error("Failed to fetch data");
       }
       if (response.status === 200) {
         return response.json();
       } else {
-        Alert('Error al eliminar la campaña.', 'error');
-        throw new Error('Unexpected status code: ' + response.status);
+        Alert("Error al eliminar la campaña.", "error");
+        throw new Error("Unexpected status code: " + response.status);
       }
     })
-    .then(result => {
+    .then((result) => {
       getAllCampanias();
-      Alert('Campaña eliminada exitosamente.', 'success');
+      Alert("Campaña eliminada exitosamente.", "success");
     })
-    .catch(error => {
-      console.error('Error:', error);
-      Alert('Error al eliminar la campaña.', 'error');
-    })
-
-}
+    .catch((error) => {
+      console.error("Error:", error);
+      Alert("Error al eliminar la campaña.", "error");
+    });
+};
 
 function eliminarEtapa(id) {
   console.log("voy a eliminar");
@@ -1078,21 +1047,21 @@ inputFileBloqueados.addEventListener("change", function () {
             <div class="btn-group">
               <a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
                   ${feather.icons["more-vertical"].toSvg({
-          class: "font-small-4",
-        })}
+                    class: "font-small-4",
+                  })}
               </a>
               <div class="dropdown-menu dropdown-menu-right">
                   <a href="#" onclick="eliminarFila(${indexB})" class="btn_edit dropdown-item">
                       ${feather.icons["archive"].toSvg({
-          class: "font-small-4 mr-50",
-        })} Actualizar
+                        class: "font-small-4 mr-50",
+                      })} Actualizar
                   </a>
               
               <div class="dropdown-menu dropdown-menu-right">
                   <a href="#" onclick="eliminarFila(${indexB})" class="btn_delete dropdown-item">
                     ${feather.icons["trash-2"].toSvg({
-          class: "font-small-4 mr-50",
-        })} Inhabilitar
+                      class: "font-small-4 mr-50",
+                    })} Inhabilitar
                   </a>
               </div>
               </div>
@@ -1118,15 +1087,15 @@ function agregarUsuarioBloqueado() {
             <div class="btn-group">
               <a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
                   ${feather.icons["more-vertical"].toSvg({
-    class: "font-small-4",
-  })}
+                    class: "font-small-4",
+                  })}
               </a>
               
               <div class="dropdown-menu dropdown-menu-right">
                   <a href="#" onclick="eliminarFila(${indexB})" class="btn_delete dropdown-item">
                     ${feather.icons["trash-2"].toSvg({
-    class: "font-small-4 mr-50",
-  })} Inhabilitar
+                      class: "font-small-4 mr-50",
+                    })} Inhabilitar
                   </a>
               </div>
             </div>
@@ -1142,9 +1111,9 @@ function agregarUsuarioBloqueado() {
 
 const getAllCampanias = () => {
   var requestOptions = {
-    method: 'GET',
-    redirect: 'follow',
-    headers: headers
+    method: "GET",
+    redirect: "follow",
+    headers: headers,
   };
 
   fetch(`${url}Campania`, requestOptions)
@@ -1166,28 +1135,24 @@ const getAllCampanias = () => {
       let borrador = result.filter((x) => x.estado == 3);
       $("#textBorrador").text(borrador.length);
       table("tableBorrador", borrador);
-
     })
     .catch((error) => console.log("error", error));
 };
 
-
 //entendido
 const table = (table, data) => {
-
-
   $("#" + table).dataTable({
     destroy: true,
     data,
     columns: [
       {
-        data: null, render: function (data, type, row, meta) {
-
-          if (type === 'display') {
+        data: null,
+        render: function (data, type, row, meta) {
+          if (type === "display") {
             return meta.row + 1;
           }
           return meta.row + 1;
-        }
+        },
       },
 
       { data: "nombre" },
@@ -1230,8 +1195,8 @@ const table = (table, data) => {
             case 2:
               opcAdd += `<a href="#" onclick="pausarActualizarCampania(${data},1)" class="btn_activar dropdown-item">
                 ${feather.icons["play"].toSvg({
-                class: "font-small-4 mr-50",
-              })} Activar
+                  class: "font-small-4 mr-50",
+                })} Activar
               </a>`;
               break;
           }
@@ -1245,8 +1210,8 @@ const table = (table, data) => {
             })} Actualizar
             </a><a href="#" onclick="eliminarFila(${data})" class="btn_delete dropdown-item">
                 ${feather.icons["trash-2"].toSvg({
-              class: "font-small-4 mr-50",
-            })} Inhabilitar
+                  class: "font-small-4 mr-50",
+                })} Inhabilitar
                     </a>`;
           }
 
@@ -1254,8 +1219,8 @@ const table = (table, data) => {
           <div class="btn-group">
             <a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
                 ${feather.icons["more-vertical"].toSvg({
-            class: "font-small-4",
-          })}
+                  class: "font-small-4",
+                })}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                ${opcAdd}
@@ -1308,7 +1273,7 @@ const ChangePanel = (estado) => {
 };
 
 function saveLocal() {
-  let campaignsArray = JSON.parse(localStorage.getItem('campaigns')) || [];
+  let campaignsArray = JSON.parse(localStorage.getItem("campaigns")) || [];
   const data = {
     id: idData,
     campaña: $("#nombre").val(),
@@ -1320,22 +1285,20 @@ function saveLocal() {
   campaignsArray.push(data);
   console.log(campaignsArray);
 
-  localStorage.setItem('campaigns', JSON.stringify(campaignsArray));
+  localStorage.setItem("campaigns", JSON.stringify(campaignsArray));
 
   idData + 1;
 }
 
-
 //entendido
 const saveData = (data) => {
-
   var requestOptions = {
-    method: 'POST',
+    method: "POST",
     headers: headers,
     body: JSON.stringify(data),
-    redirect: 'follow'
+    redirect: "follow",
   };
-  console.log(data)
+  console.log(data);
 
   fetch(`${url}Campania`, requestOptions)
     .then((response) => response.json())
@@ -1377,8 +1340,8 @@ const Limpiar = (isEdith) => {
 
 const getPremios = (id, isEdit = false) => {
   var requestOptions = {
-    method: 'GET',
-    redirect: 'follow',
+    method: "GET",
+    redirect: "follow",
     headers: headers,
   };
 
@@ -1489,8 +1452,8 @@ const loadMenuEdit = (isEdit = false) => {
 
 const getParametros = (idEtapa) => {
   var requestOptions = {
-    method: 'GET',
-    redirect: 'follow',
+    method: "GET",
+    redirect: "follow",
     headers: headers,
   };
 
@@ -1515,23 +1478,25 @@ const getParametros = (idEtapa) => {
           <div class="btn-group">
             <a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
                 ${feather.icons["more-vertical"].toSvg({
-          class: "font-small-4",
-        })}
+                  class: "font-small-4",
+                })}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a href="#" onclick="cargarDatos(${element.id
-          }, ${1})" class="borrar btn_edit dropdown-item">
+                <a href="#" onclick="cargarDatos(${
+                  element.id
+                }, ${1})" class="borrar btn_edit dropdown-item">
                     ${feather.icons["archive"].toSvg({
-            class: "font-small-4 mr-50",
-          })} Actualizar
+                      class: "font-small-4 mr-50",
+                    })} Actualizar
                 </a>
             
             <div class="dropdown-menu dropdown-menu-right">
-                <a href="#" onclick="eliminarFila(${element.id
-          })" class="btn_delete dropdown-item">
+                <a href="#" onclick="eliminarFila(${
+                  element.id
+                })" class="btn_delete dropdown-item">
                   ${feather.icons["trash-2"].toSvg({
-            class: "font-small-4 mr-50",
-          })} Inhabilitar
+                    class: "font-small-4 mr-50",
+                  })} Inhabilitar
                 </a>
             </div>
             </div>
@@ -1546,8 +1511,8 @@ const getParametros = (idEtapa) => {
 
 const getPremiosEtapa = (idEtapa) => {
   var requestOptions = {
-    method: 'GET',
-    redirect: 'follow',
+    method: "GET",
+    redirect: "follow",
     headers: headers,
   };
 
@@ -1562,23 +1527,25 @@ const getPremiosEtapa = (idEtapa) => {
           <div class="btn-group">
             <a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
                 ${feather.icons["more-vertical"].toSvg({
-          class: "font-small-4",
-        })}
+                  class: "font-small-4",
+                })}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a href="#" onclick="cargarDatos(${element.id
-          }, ${2})" class="borrar btn_edit dropdown-item">
+                <a href="#" onclick="cargarDatos(${
+                  element.id
+                }, ${2})" class="borrar btn_edit dropdown-item">
                     ${feather.icons["archive"].toSvg({
-            class: "font-small-4 mr-50",
-          })} Actualizar
+                      class: "font-small-4 mr-50",
+                    })} Actualizar
                 </a>
             
             <div class="dropdown-menu dropdown-menu-right">
-                <a href="#" onclick="eliminarFila(${element.id
-          })" class="btn_delete dropdown-item">
+                <a href="#" onclick="eliminarFila(${
+                  element.id
+                })" class="btn_delete dropdown-item">
                   ${feather.icons["trash-2"].toSvg({
-            class: "font-small-4 mr-50",
-          })} Inhabilitar
+                    class: "font-small-4 mr-50",
+                  })} Inhabilitar
                 </a>
             </div>
             </div>
@@ -1593,8 +1560,8 @@ const getPremiosEtapa = (idEtapa) => {
 
 const getPresupuesto = (idEtapa) => {
   var requestOptions = {
-    method: 'GET',
-    redirect: 'follow',
+    method: "GET",
+    redirect: "follow",
     headers: headers,
   };
 
@@ -1610,23 +1577,25 @@ const getPresupuesto = (idEtapa) => {
           <div class="btn-group">
             <a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
                 ${feather.icons["more-vertical"].toSvg({
-          class: "font-small-4",
-        })}
+                  class: "font-small-4",
+                })}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a href="#" onclick="cargarDatos(${element.id
-          }, ${3})" class="borrar btn_edit dropdown-item">
+                <a href="#" onclick="cargarDatos(${
+                  element.id
+                }, ${3})" class="borrar btn_edit dropdown-item">
                     ${feather.icons["archive"].toSvg({
-            class: "font-small-4 mr-50",
-          })} Actualizar
+                      class: "font-small-4 mr-50",
+                    })} Actualizar
                 </a>
             
             <div class="dropdown-menu dropdown-menu-right">
-                <a href="#" onclick="eliminarFila(${element.id
-          })" class="btn_delete dropdown-item">
+                <a href="#" onclick="eliminarFila(${
+                  element.id
+                })" class="btn_delete dropdown-item">
                   ${feather.icons["trash-2"].toSvg({
-            class: "font-small-4 mr-50",
-          })} Inhabilitar
+                    class: "font-small-4 mr-50",
+                  })} Inhabilitar
                 </a>
             </div>
             </div>
@@ -1669,7 +1638,7 @@ const getPresupuesto = (idEtapa) => {
 //             class: "font-small-4 mr-50",
 //           })} Actualizar
 //                       </a>
-                  
+
 //                   <div class="dropdown-menu dropdown-menu-right">
 //                       <a href="#" onclick="eliminarFila(${index})" class="btn_delete dropdown-item">
 //                         ${feather.icons["trash-2"].toSvg({
@@ -1678,7 +1647,7 @@ const getPresupuesto = (idEtapa) => {
 //                       </a>
 //                   </div>
 //                   </div>
-//                 </div> 
+//                 </div>
 //               </td>
 //               </tr>`;
 
@@ -1688,12 +1657,10 @@ const getPresupuesto = (idEtapa) => {
 //     .catch((error) => console.log("error", error));
 // };
 
-
-
 const getEtapas = (id) => {
   var requestOptions = {
     method: "GET",
-    redirect: 'follow',
+    redirect: "follow",
     headers: headers,
   };
   console.log("ID de la campaña: " + id);
@@ -1742,18 +1709,14 @@ const getEtapas = (id) => {
     .catch((error) => console.log("Error al obtener las etapas:", error));
 };
 
-
-
-
 const OpenEdit = (id, index, idEtapa, isEtapa = false) => {
   if (isEtapa) {
     console.log("aca ira el formulario de etapas " + id, idEtapa);
-    
 
     var requestOptions = {
       method: "GET",
-      redirect: 'follow',
-      headers: headers
+      redirect: "follow",
+      headers: headers,
     };
     // $("#modaletapas").modal("toggle");
 
@@ -1765,10 +1728,10 @@ const OpenEdit = (id, index, idEtapa, isEtapa = false) => {
           console.error(`No se encontró la etapa con ID ${idEtapa}`);
           return;
         }
-        
+
         $("#idEtapa").val(etapa.id);
         $("#nombreEtapaEdith").val(etapa.nombre);
-        console.log('esta es el nombre de esta cosa',etapa.name)
+        console.log("esta es el nombre de esta cosa", etapa.name);
         $("#ordenEtapaEdith").val(etapa.orden);
         $("#descEtapaEdith").val(etapa.descripcion);
         $("#TipoTransaccionEdith").val(etapa.tipoParticipacion);
@@ -1781,9 +1744,6 @@ const OpenEdit = (id, index, idEtapa, isEtapa = false) => {
         getMunicipios(id, true);
 
         $("#modalEdit").modal("toggle");
-        
-
-        
       })
       .catch((error) => console.log("error", error));
 
@@ -1791,8 +1751,8 @@ const OpenEdit = (id, index, idEtapa, isEtapa = false) => {
   } else {
     var requestOptions = {
       method: "GET",
-      redirect: 'follow',
-      headers: headers
+      redirect: "follow",
+      headers: headers,
     };
 
     fetch(`${url}Campania/${id}`, requestOptions)
@@ -1820,7 +1780,7 @@ const OpenEdit = (id, index, idEtapa, isEtapa = false) => {
         getBloqueados(id);
 
         $("#modalEdit").modal("toggle");
-        console.log("aqui biene todo esto ",result)
+        console.log("aqui biene todo esto ", result);
       })
       .catch((error) => console.log("error", error));
     loadMenuEdit();
@@ -1830,8 +1790,8 @@ const OpenEdit = (id, index, idEtapa, isEtapa = false) => {
 const tipoDeTransaccion = (id) => {
   var requestOptions = {
     method: "GET",
-    redirect: 'follow',
-    headers: headers
+    redirect: "follow",
+    headers: headers,
   };
 
   let tipoTrans = $("#TipoTransaccion" + id).val();
@@ -1841,15 +1801,14 @@ const tipoDeTransaccion = (id) => {
   if (tipoTrans == "c") {
     $("#Transacciones" + id).html(null);
 
-    $('#Transacciones' + id).html(null);
+    $("#Transacciones" + id).html(null);
 
-    console.log("biene")
-    console.log("biene")
+    console.log("biene");
+    console.log("biene");
     fetch(`${url}categoria`, requestOptions)
-    
-      .then(response => response.json())
-      .then(result => {
-        result.forEach(element => {
+      .then((response) => response.json())
+      .then((result) => {
+        result.forEach((element) => {
           var opc = `<option value="${element.id}">${element.nombre}</option>`;
           $("#Transacciones" + id).append(opc);
         });
@@ -1864,8 +1823,8 @@ const tipoDeTransaccion = (id) => {
 $("#TipoTransaccionEdit").on("change", function () {
   var requestOptions = {
     method: "GET",
-    redirect: 'follow',
-    headers: headers
+    redirect: "follow",
+    headers: headers,
   };
 
   let tipoTrans = $("#TipoTransaccionEdit").val();
@@ -1875,12 +1834,12 @@ $("#TipoTransaccionEdit").on("change", function () {
   if (tipoTrans == "c") {
     $("#TransaccionesEdit").html(null);
 
-    $('#TransaccionesEdit').html(null);
+    $("#TransaccionesEdit").html(null);
 
     fetch(`${url}categoria`, requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        result.forEach(element => {
+      .then((response) => response.json())
+      .then((result) => {
+        result.forEach((element) => {
           var opc = `<option value="${element.id}">${element.nombre}</option>`;
           $("#TransaccionesEdit").append(opc);
         });
@@ -1895,8 +1854,8 @@ $("#TipoTransaccionEdit").on("change", function () {
 const cargarDatos = (id, opc) => {
   var requestOptions = {
     method: "GET",
-    redirect: 'follow',
-    headers: headers
+    redirect: "follow",
+    headers: headers,
   };
 
   switch (opc) {
@@ -1979,7 +1938,7 @@ const updateCampaña = (opc) => {
         method: "PUT",
         headers: headers,
         body: raw,
-        redirect: 'follow'
+        redirect: "follow",
       };
 
       fetch(`${url}parametros/update/${id}`, requestOptions)
@@ -2020,7 +1979,7 @@ const updateCampaña = (opc) => {
         method: "PUT",
         headers: headers,
         body: raw,
-        redirect: 'follow'
+        redirect: "follow",
       };
 
       fetch(`${url}premios/update/${id}`, requestOptions)
@@ -2058,7 +2017,7 @@ const updateCampaña = (opc) => {
         method: "PUT",
         headers: headers,
         body: raw,
-        redirect: 'follow'
+        redirect: "follow",
       };
 
       fetch(`${url}presupuesto/update/${id}`, requestOptions)
@@ -2088,7 +2047,6 @@ const updateCampaña = (opc) => {
 };
 
 $("#formEditEtapas").submit(function () {
-
   const id = $("#idEtapa").val();
   const idCamp = $("#id").val();
 
@@ -2103,7 +2061,7 @@ $("#formEditEtapas").submit(function () {
     method: "PUT",
     headers: headers,
     body: raw,
-    redirect: 'follow'
+    redirect: "follow",
   };
 
   fetch(`${url}etapa/update/${id}`, requestOptions)
@@ -2125,7 +2083,6 @@ $("#formEditEtapas").submit(function () {
 });
 
 $("#formEdit").submit(function () {
-
   const idCamp = $("#id").val();
   console.log(idCamp);
 
@@ -2153,7 +2110,7 @@ $("#formEdit").submit(function () {
     method: "PUT",
     headers: headers,
     body: raw,
-    redirect: 'follow'
+    redirect: "follow",
   };
 
   fetch(`${url}Campania/${idCamp}`, requestOptions)
@@ -2177,7 +2134,7 @@ const pausarActualizarCampania = (id, type) => {
   var requestOptions = {
     method: "PUT",
     headers: headers,
-    redirect: 'follow'
+    redirect: "follow",
   };
 
   fetch(
@@ -2203,7 +2160,7 @@ const getParticipantes = (idCampania) => {
   var requestOptions = {
     method: "GET",
     headers: headers,
-    redirect: 'follow'
+    redirect: "follow",
   };
 
   fetch(`${url}participantes/${idCampania}`, requestOptions)
@@ -2217,21 +2174,21 @@ const getParticipantes = (idCampania) => {
                 <div class="btn-group">
                   <a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
                       ${feather.icons["more-vertical"].toSvg({
-          class: "font-small-4",
-        })}
+                        class: "font-small-4",
+                      })}
                   </a>
                   <div class="dropdown-menu dropdown-menu-right">
                       <a href="#" onclick="" class="borrar btn_edit dropdown-item">
                           ${feather.icons["archive"].toSvg({
-          class: "font-small-4 mr-50",
-        })} Actualizar
+                            class: "font-small-4 mr-50",
+                          })} Actualizar
                       </a>
                   
                   <div class="dropdown-menu dropdown-menu-right">
                       <a href="#" onclick="eliminarFila(${index})" class="btn_delete dropdown-item">
                         ${feather.icons["trash-2"].toSvg({
-          class: "font-small-4 mr-50",
-        })} Inhabilitar
+                          class: "font-small-4 mr-50",
+                        })} Inhabilitar
                       </a>
                   </div>
                   </div>
@@ -2249,7 +2206,7 @@ const getBloqueados = (idCampania) => {
   var requestOptions = {
     method: "GET",
     headers: headers,
-    redirect: 'follow',
+    redirect: "follow",
   };
 
   fetch(`${url}Bloqueados/${idCampania}`, requestOptions)
@@ -2263,21 +2220,21 @@ const getBloqueados = (idCampania) => {
                 <div class="btn-group">
                   <a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
                       ${feather.icons["more-vertical"].toSvg({
-          class: "font-small-4",
-        })}
+                        class: "font-small-4",
+                      })}
                   </a>
                   <div class="dropdown-menu dropdown-menu-right">
                       <a href="#" onclick="" class="borrar btn_edit dropdown-item">
                           ${feather.icons["archive"].toSvg({
-          class: "font-small-4 mr-50",
-        })} Actualizar
+                            class: "font-small-4 mr-50",
+                          })} Actualizar
                       </a>
                   
                   <div class="dropdown-menu dropdown-menu-right">
                       <a href="#" onclick="eliminarFila(${index})" class="btn_delete dropdown-item">
                         ${feather.icons["trash-2"].toSvg({
-          class: "font-small-4 mr-50",
-        })} Inhabilitar
+                          class: "font-small-4 mr-50",
+                        })} Inhabilitar
                       </a>
                   </div>
                   </div>
@@ -2298,12 +2255,11 @@ const limpiarTablas = () => {
 };
 
 $("#btnAgregarParametros").on("click", function () {
-
   let idEtapa = $("#idEtapa").val();
   console.log(id);
 
   var requestOptions = {
-    method: 'POST',
+    method: "POST",
     headers: headers,
     body: JSON.stringify({
       limiteParticipacion: $("#limiteParticipacionEdit").val(),
@@ -2314,7 +2270,7 @@ $("#btnAgregarParametros").on("click", function () {
       valorAnterior: $("#vAnteriorEdit").val(),
       idEtapa: idEtapa,
     }),
-    redirect: 'follow'
+    redirect: "follow",
   };
 
   fetch(`${url}parametros`, requestOptions)
@@ -2342,18 +2298,17 @@ $("#btnAgregarParametros").on("click", function () {
 });
 
 $("#btnAgregarPremios").on("click", function () {
-
   let idEtapa = $("#idEtapa").val();
 
   var requestOptions = {
-    method: 'POST',
+    method: "POST",
     headers: headers,
     body: JSON.stringify({
       valor: $("#valorPEdit").val(),
       idPremio: $("#PremiosEdit option:selected").val(),
       idEtapa: idEtapa,
     }),
-    redirect: 'follow'
+    redirect: "follow",
   };
 
   fetch(`${url}premios`, requestOptions)
@@ -2378,11 +2333,10 @@ $("#btnAgregarPremios").on("click", function () {
 });
 
 $("#btnAgregarPresupuesto").on("click", function () {
-
   let idEtapa = $("#idEtapa").val();
 
   var requestOptions = {
-    method: 'POST',
+    method: "POST",
     headers: headers,
     body: JSON.stringify({
       idDepartamento: $("#departamentoEdit option:selected").val(),
@@ -2391,7 +2345,7 @@ $("#btnAgregarPresupuesto").on("click", function () {
       valor: $("#PresupuestoEdit").val(),
       idEtapa: idEtapa,
     }),
-    redirect: 'follow'
+    redirect: "follow",
   };
 
   fetch(`${url}presupuesto`, requestOptions)

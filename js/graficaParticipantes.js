@@ -1,7 +1,5 @@
 const url = "http://localhost:3000/";
-$(function () {
-  
-});
+$(function () {});
 
 $("#btnConsultar").click(function () {
   const headers = {
@@ -99,8 +97,6 @@ $("#btnConsultar").click(function () {
 let chartType = "bar"; // Variable para controlar el tipo de gráfico actual
 
 $("#btnGrafCircular").click(function () {
-
-  
   if (window.myChart) {
     // Destruir el gráfico existente
     window.myChart.destroy();
@@ -115,12 +111,16 @@ $("#btnGrafCircular").click(function () {
 
     let rowHTML = '<div class="row">';
     labels.forEach((label, index) => {
-      rowHTML += `<div class="col-md-3">Fecha: ${label.split(" - ")[1]}, Campaña: ${label.split(" - ")[0]}, Participantes: ${data[index]}</div>`;
+      rowHTML += `<div class="col-md-3">Fecha: ${
+        label.split(" - ")[1]
+      }, Campaña: ${label.split(" - ")[0]}, Participantes: ${
+        data[index]
+      }</div>`;
       if ((index + 1) % 4 === 0) {
         rowHTML += '</div><div class="row">';
       }
     });
-    rowHTML += '</div>';
+    rowHTML += "</div>";
     $("#listaDatos").html(rowHTML);
 
     // Crear el nuevo gráfico con maintainAspectRatio establecido en false
