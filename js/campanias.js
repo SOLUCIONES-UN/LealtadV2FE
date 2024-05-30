@@ -424,13 +424,13 @@ function initStepper() {
         $('#intervaloMensualDiv').hide();
 
         var rangoTiempo = $(this).val();
-        if (rangoTiempo === 'diaria') {
+        if (rangoTiempo === '0') {
             $('#intervaloDiarioDiv').show();
-        } else if (rangoTiempo === 'semanal') {
+        } else if (rangoTiempo === '1') {
             $('#intervaloSemanalDiv').show();
          
             $('#intervaloMensual').val('');
-        } else if (rangoTiempo === 'mensual') {
+        } else if (rangoTiempo === '2') {
             $('#intervaloMensualDiv').show();
       
             $('#intervaloSemanal').val('');

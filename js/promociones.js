@@ -1,6 +1,7 @@
 const url = "http://localhost:3000/";
 let codigos = [];
 let premios = [];
+let selectedCupones = [];
 let token = localStorage.getItem("token");
 
 const headers = {
@@ -151,7 +152,8 @@ $(function () {
           cantidad: parseInt(premio.cantidad, 10),
           valor: parseInt(premio.valor, 10),
           porcentaje: parseInt(premio.porcentaje, 10),
-          cupon: parseInt(premio.cupon, 10)
+          cupon: premio.cupon,
+          premioId: parseInt(premio.idPremio)
         }))
       };
       console.log(data);
@@ -249,11 +251,9 @@ $(function () {
   document.getElementById('cupon').addEventListener('input', function () {
     const cantidadCupones = parseInt(this.value, 10);
     if (!isNaN(cantidadCupones) && cantidadCupones > 0 && cantidadCupones <= codigos.length) {
-      const selectedCupones = codigos.slice(0, cantidadCupones);
-      DrawPremios(selectedCupones);
+      selectedCupones = codigos.slice(0, cantidadCupones);
     } else {
-      // Si la cantidad es inválida o fuera de rango, limpiar la tabla
-      DrawPremios([]);
+      selectedCupones = [];
     }
   });
   
@@ -351,7 +351,8 @@ $(function () {
             cantidad: parseInt(premio.cantidad, 10),
             valor: parseInt(premio.valor, 10),
             porcentaje: parseInt(premio.porcentaje, 10),
-            cupon: parseInt(premio.cupon, 10)
+         cupon: premio.cupon,
+          premioId: parseInt(premio.idPremio)
           }))
         };
 
@@ -386,6 +387,15 @@ $(function () {
 
     return false;
   });
+
+
+
+
+
+
+
+
+
 
   $("#formEdit").submit(function () {
     const id = $("#id").val();
@@ -847,11 +857,10 @@ const DrawCodigos = () => {
 const DrawPremios = (selectedCupones = premios) => {
   $("#detallePremios").html(null);
   $("#detallePremioRes").html(null);
-
   selectedCupones.forEach((element, index) => {
     var tr = `<tr>
         <td>${index + 1}</td>
-        <td>${element.cupon}</td>
+        <td>${element.cupon.cupon}</td>
         <td>${element.cantidad}</td>
         <td>${element.premioDescripcion}</td>
         <td>${element.valor || ''}</td>
@@ -860,7 +869,7 @@ const DrawPremios = (selectedCupones = premios) => {
     </tr>`;
     var tr2 = `<tr>
         <td>${index + 1}</td>
-        <td>${element.cupon}</td>
+        <td>${element.cupon.cupon}</td>
         <td>${element.cantidad}</td>
         <td>${element.premioDescripcion}</td>
         <td>${element.valor || ''}</td>
@@ -886,28 +895,34 @@ const DrawPremios = (selectedCupones = premios) => {
   //   $("#valorPremio").val(null);
   // });
 
-$("#BtnPremios").click(function () {
-  var cantidad = $("#cantidaPremio").val();
-  var premio = $("#premio option:selected").val();
-  var premioDescripcion = $("#premio option:selected").text();
-  var valor = $("#valorPremio").val();
-  var porcentaje = $("#porcentaje").val();
-  var cupon = $("#cupon").val();
+  $("#BtnPremios").click(function () {
+    var cantidad = $("#cantidaPremio").val();
+    var premio = $("#premio option:selected").val();
+    var premioDescripcion = $("#premio option:selected").text();
+    var idPremio = $("#premio option:selected").val()
+    var valor = $("#valorPremio").val();
+    var porcentaje = $("#porcentaje").val();
+    
+    if (cantidad && premio !== "0" && valor && porcentaje && selectedCupones.length > 0) {
+      selectedCupones.forEach(cupon => {
+        
+        var data = { cantidad, premio, premioDescripcion, valor, porcentaje, cupon, idPremio};
 
-  if (cantidad && premio !== "0" && valor && porcentaje && cupon) {
-    var data = { cantidad, premio, premioDescripcion, valor, porcentaje, cupon };
-    premios.push(data);
-    console.log("Premios agregados:", premios);
-    DrawPremios();
-    $("#cantidaPremio").val('');
-    $("#premio").val("0");
-    $("#valorPremio").val('');
-    $("#porcentaje").val('');
-    $("#cupon").val('');
-  } else {
-    alert("Todos los campos deben ser llenados");
-  }
-});
+        premios.push(data);
+      });
+      console.log("Premios agregados:", premios);
+      DrawPremios();
+      $("#cantidaPremio").val('');
+      $("#premio").val("0");
+      $("#valorPremio").val('');
+      $("#porcentaje").val('');
+      $("#cupon").val('');
+      selectedCupones = [];
+    } else {
+      alert("Todos los campos deben ser llenados");
+    }
+  });
+  
 
 
 const getPremios = () => {
@@ -930,11 +945,10 @@ const getPremios = () => {
       .catch((error) => console.log("error", error));
 };
 
-const removePremio = (index) => {
+function removePremio(index) {
   premios.splice(index, 1);
   DrawPremios();
-};
-
+}
 const loadMenuEdit = () => {
   var bsStepper = document.querySelectorAll(".bs-stepper"),
     select = $(".select2"),
