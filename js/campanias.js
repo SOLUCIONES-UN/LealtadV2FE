@@ -414,58 +414,55 @@ function initStepper() {
     }
   });
 
+    $(document).ready(function() {
+      $('#RangoTiempo').change(function() {
+          $('#intervaloDiarioDiv').hide();
+          $('#intervaloSemanalDiv').hide();
+          $('#intervaloMensualDiv').hide();
+          $('#diasResultadoDiv').hide();
 
-  $(document).ready(function() {
-  
-    $('#RangoTiempo').change(function() {
-     
-        $('#intervaloDiarioDiv').hide();
-        $('#intervaloSemanalDiv').hide();
-        $('#intervaloMensualDiv').hide();
+          var rangoTiempo = $(this).val();
+          if (rangoTiempo === '0') {
+              $('#intervaloDiarioDiv').show();
+          } else if (rangoTiempo === '1') {
+              $('#intervaloSemanalDiv').show();
+          } else if (rangoTiempo === '2') {
+              $('#intervaloMensualDiv').show();
+          }
+      });
 
-        var rangoTiempo = $(this).val();
-        if (rangoTiempo === '0') {
-            $('#intervaloDiarioDiv').show();
-        } else if (rangoTiempo === '1') {
-            $('#intervaloSemanalDiv').show();
-         
-            $('#intervaloMensual').val('');
-        } else if (rangoTiempo === '2') {
-            $('#intervaloMensualDiv').show();
-      
-            $('#intervaloSemanal').val('');
-        }
-    });
+      $('#intervaloSemanal').on('input', function() {
+          var semanas = $(this).val();
+          var dias = semanas * 7;
+          console.log("Días semanales:", dias);
+          $('#diasResultado').val(dias);
+          $('#diasResultadoDiv').show();
+          $('#intervalo').val(dias); // Actualiza el campo intervalo con días
+      });
 
+      $('#intervaloMensual').on('input', function() {
+          var meses = $(this).val();
+          var dias = meses * 30;
+          console.log("Días mensuales:", dias);
+          $('#diasResultado').val(dias);
+          $('#diasResultadoDiv').show();
+          $('#intervalo').val(dias); // Actualiza el campo intervalo con días
+      });
 
-    $('#intervaloSemanal').on('input', function() {
-      var semanas = $(this).val();
-      var dias = semanas * 7;
-      console.log("Días semanales:", dias);
-      $('#intervaloMensual').val(''); 
-  });
+      $('#RangoTiempo').trigger('change');
 
-  $('#intervaloMensual').on('input', function() {
-    var meses = $(this).val();
-    var dias = meses * 30;
-    console.log("Días mensuales:", dias);
-    $('#intervaloSemanal').val(''); 
-});
-   
-    $('#RangoTiempo').trigger('change');
-
-    $('#add-step-btn').click(function() {
-        var NombreEtapa = $('#NombreEtapa').val();
-        var orden = $('#orden').val();
-        var descripcionEtapa = $('#descripcionEtapa').val();
-        var tipoParticipacion = $('#tipoParticipacion').val();
-        var intervalo = $('#intervalo').val();
-        var intervaloSemanal = $('#intervaloSemanal').val();
-        var intervaloMensual = $('#intervaloMensual').val();
-        var rangoTiempo = $('#RangoTiempo').val();
-        var minimoTransaccion = parseFloat($('#minimoTransaccion').val());
-        var TotalMinimo = parseFloat($('#totalMinimo').val());
-
+      $('#add-step-btn').click(function() {
+          var NombreEtapa = $('#NombreEtapa').val();
+          var orden = $('#orden').val();
+          var descripcionEtapa = $('#descripcionEtapa').val();
+          var tipoParticipacion = $('#tipoParticipacion').val();
+          var intervalo = $('#intervalo').val();
+          var intervaloSemanal = $('#intervaloSemanal').val();
+          var intervaloMensual = $('#intervaloMensual').val();
+          var rangoTiempo = $('#RangoTiempo').val();
+          var minimoTransaccion = parseFloat($('#minimoTransaccion').val());
+          var TotalMinimo = parseFloat($('#totalMinimo').val());
+          
 
       if(validarCamposStep(actualStep)){
         getDepartamento();
