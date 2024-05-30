@@ -11,6 +11,9 @@ const headers = {
     'Content-Type': 'application/json'
 };
 
+
+let clickCount = 0; // Contador de clics en el botón de guardar
+
 $(function () {
     let tabla = getProyectos();
     getMunicipios();
@@ -65,6 +68,7 @@ $(function () {
 
     $('#modalNew').on('show.bs.modal', function () {
         limpiarFormulario();
+        clickCount++;
         $("#btnSubmit").attr("disabled", false);
     });
 
@@ -95,29 +99,29 @@ $(function () {
 
     $('#formNew').submit(function (event) {
         event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
-
+    
         const descripcion = $('#descripcion').val();
         const ruta = $('#ruta').val();
-
+    
         if (!validarDescripcion(descripcion) || !validarRuta(ruta)) {
             return false;
         }
-
+    
         $("#btnSubmit").attr("disabled", true);
-
+    
         var raw = JSON.stringify({
             "descripcion": descripcion,
             "ruta": ruta,
             "localidades": localidadesSeleccionadas // Incluir las localidades seleccionadas
         });
-
+    
         var requestOptions = {
             method: 'POST',
             headers: headers,
             body: raw,
             redirect: 'follow'
         };
-
+    
         fetch(`${url}projects`, requestOptions)
             .then(response => {
                 if (!response.ok) {
@@ -139,35 +143,35 @@ $(function () {
                 Alert(error.errors || 'Ha sucedido un error al intentar agregar un nuevo proyecto.', 'error');
                 $("#btnSubmit").attr("disabled", false);
             });
-
+    
         return false;
     });
-
+    
     $('#formEdit').submit(function (event) {
         event.preventDefault();
-
+    
         const descripcion = $('#descripcionEdit').val();
         const ruta = $('#rutaEdit').val();
-
+    
         if (!validarDescripcion(descripcion) || !validarRuta(ruta)) {
             return false;
         }
-
+    
         const id = $('#id').val();
-
+    
         var raw = JSON.stringify({
             "descripcion": descripcion,
             "ruta": ruta,
             "localidades": localidadesSeleccionadas // Incluir las localidades seleccionadas
         });
-
+    
         var requestOptions = {
             method: 'PUT',
             headers: headers,
             body: raw,
             redirect: 'follow'
         };
-
+    
         fetch(`${url}projects/${id}`, requestOptions)
             .then(response => {
                 if (!response.ok) {
@@ -189,10 +193,10 @@ $(function () {
                 Alert(error.errors || 'Ha sucedido un error al intentar actualizar el proyecto.', 'error');
                 $("#btnSubmEdit").attr("disabled", false);
             });
-
+    
         return false;
     });
-
+    
     $('#BtnDelete').click(function () {
         const id = $('#idDelete').val();
 
