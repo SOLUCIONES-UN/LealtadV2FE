@@ -188,6 +188,9 @@ $(function () {
     return false;
   });
 
+
+
+
   $('#formEdit').submit(function () {
     console.log('entro a el form edit')
     var myHeaders = new Headers();
@@ -3678,7 +3681,7 @@ const table = (table, data) => {
       '<"col-sm-12 col-md-6"p>' +
       ">",
     language: {
-      sLengthMenu: "Show _MENU_",
+      sLengthMenu: "Mostrar _MENU_",
       search: "Buscar",
       searchPlaceholder: "Buscar...",
     },
