@@ -218,4 +218,132 @@
     background-color: rgb(255, 255, 255);
     color: #43A047; /* Texto en blanco */
 }
-
+.nav-item .title {
+    text-align: center;
+    display: block;
+    margin-left: 400;
+    margin-right: 400;
+  }
+  
+  .nav-item .subtitle {
+    text-align: center;
+    display: block;
+    margin-left: 400;
+    margin-right: 400;
+  }
+  .custom-select {
+    position: relative; /* Enable positioning for child elements */
+    display: inline-block; /* Allow for inline display */
+  }
+  
+  .custom-select-trigger {
+    background-color: #fff; /* Set background color to white */
+    border: 1px solid #ccc; /* Add a border */
+    padding: 8px 12px; /* Add some padding */
+    cursor: pointer; /* Indicate clickable behavior */
+    display: flex; /* Allow for aligning content */
+    align-items: center; /* Center text vertically */
+    justify-content: space-between; /* Distribute content with spacing */
+    width: 150px; /* Set a width for the button */
+  }
+  
+  .custom-select-trigger:after {
+    content: ""; /* Add an empty content for after pseudo-element */
+    display: inline-block; /* Make it visible */
+    width: 0px; /* Set initial width */
+    height: 0px; /* Set initial height */
+    border-left: 5px solid transparent; /* Create a triangle */
+    border-right: 5px solid transparent;
+    border-bottom: 8px solid #ccc; /* Point the triangle down */
+    position: absolute; /* Position absolutely relative to the button */
+    right: 10px; /* Offset from the right edge */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust vertical position */
+    transition: transform 0.3s ease; /* Add smooth transition */
+  }
+  
+  .custom-select.open .custom-select-trigger:after {
+    transform: translateY(-50%) rotate(180deg); /* Rotate triangle on open */
+  }
+  
+  .custom-select-options {
+    display: none; /* Hide the options by default */
+    position: absolute; /* Make it positioned */
+    top: 10%; /* Position below the button */
+    left: 0; /* Align to the left edge */
+    background-color: #fff; /* Set background color */
+    width: 10%; /* Inherit width from the button */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Add a shadow */
+    transition: opacity 0.3s ease; /* Add smooth transition */
+  }
+  
+  .custom-select.open .custom-select-options {
+    display: block; /* Show the options on open */
+    opacity: 1; /* Set full opacity */
+  }
+  
+  .custom-select-options option {
+    padding: 10px 12px; /* Add padding to options */
+    cursor: pointer; /* Indicate clickable behavior */
+    background-color: #fff; /* Set background color to white */
+    color: #333; /* Set text color to black */
+  }
+  .navbar-container {
+    display: flex;
+    justify-content: space-between; /* This will distribute the elements evenly between the container's edges */
+  }
+  @media (max-width: 768px) {
+    .referral-report-container {
+      flex-direction: row; /* Arrange elements horizontally on smaller screens */
+      justify-content: space-between; /* Distribute elements evenly */
+    }
+  
+    .filter-text {
+      display: none; /* Hide filter text on smaller screens */
+    }
+  }
+  .graph-icon {
+    border: none; /* Removes the border around the SVG icon */
+  }
+  #selectcampana {
+    max-height: 200px; /* Establece la altura máxima */
+    overflow-y: auto; /* Agrega desplazamiento vertical si el contenido excede la altura máxima */
+}
+.icon-btn {
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Sin borde */
+    padding: 0; /* Sin relleno */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+  }
+  
+  .icon-btn img {
+    width: 32px; /* Ajusta el ancho de la imagen según tus necesidades */
+    height: 32px; /* Ajusta el alto de la imagen según tus necesidades */
+  }
+  
+.with-image {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD6klEQVR4nO3WfWgTZxwH8Gz+MRCGbrKXxOSe57neNXfPXXpJkzR1eblcNLZbbWOq0Vg3X7ouc1DKmBTT6ehgAzv/mGKrs66ronYNyjYcA6cV0T8mOGQDoQzHcLpJKLQVunWC//QZz+mVwNIulr5t9AdfOB6e554Pz3PP3ZlMC/V/KKtVWc6yJc/PKcLj8STDWui31Bvr7m3dErunqsGfJcn50qxD3GVlidfr4yN/DfeQmzcOkeyvn5HBu8dITXV0CBW7SiYY9iTDOJ4xYrfbn37YnFiU205D+xaMUcPB238OnSJj90+ThvpacqVvr379+y9HiaaFruUbY2NxACDptB6IvwYQD3Kc8zneWdYmh8ODysvRLI0YCA4XCUqqIAgAytK6TWuG6eQ0n59Mj2NoKldHspONR0h+gUH4EkXZbHaL3buife2RFrKh9wOy7dJBsmb/TsLKzqaCMGaze3E8XjE0EWblKvXuv0EYBmOApE4DU9u1h2w+u+/xMbTUcPCH2zc79cl7T7aQKxfb9Ourl/eNaVrwTG5fCEWfyWR6gmEEM4UgJBTrK5yDqTm8i9R2vzc1DM+7xGhUHej/sZ3Qh/jBSC+53Ld3LKQGblkswjKjH4NwI4DSRQBxVy7kIVJWOY57imJih9Jk3bEpYmhBKIKIFvo2GtXuaBH1jqYFTj06CeMQBuH9dFUglDYuZ0XelKcoJv7pblL3VdvUMZMVA3GKgdLHFGK0rbB7jkew97oRn730Gj3e+jYdbCZrD6enB2M2uxfT98X41iB8IBdCSxO9/bc2pMjI5kY9Dd5wdvyZmS6MxSIs008IwhkApLfzQQzMd7EtM4exWvGzAEp9CMklEIoxBuIP80EMzPX49pnBAKAsBRBfsLGyp5D+FJOpSEw/hmXdSxiEz+eDAGCHDONgjRhfdIoZSL41vRgDYkWS958Q/GJ5uXMo/Y46YMTnU/pnbGXou8M2wdbQm++o92evno+TB9lX9awMl84cZrKyPcIM/JScP5hveqtnD8PQnyAkrsoNfV4MzBcnqmYPUyS4G4PVDfertrf+QRNZ3zQqKMEDc4LhRV/Ta7uPk22tPSR94gZJfXSWSKXh9jnF7Oz6fv5g6po75w9mU/MneTETnaYvK5N5MbGOXSR+9N3HxwAglCPe2e1/ZSuJJJrI6rpmEqpJEV4sO0f/Y4IB12hrOkyMuNxKlkE44eKd2T3+CmLEL3hGaX9WLj3nTcaI/82kHndtFYHFjm46TwEYXGkDuAVxSiY3NiS9b2PlHUW81MPxcsYIy0kd+qRQ6mBZR8ZIESv10P50HOAcmdzQ+9N5Ct6qhVqo/0L9DToPgaRD5nDNAAAAAElFTkSuQmCC'); /* Replace with your Base64 data */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: transparent;
+  border: none; /* Remove any default button border */
+  padding: 0; /* Remove default button padding */
+  cursor: pointer; /* Make the button clickable */
+}
+.chart-container h2 {
+  text-align: center; /* Center the text within the chart container */
+  font-size: 24px; /* Set a larger font size for prominence */
+  font-weight: bold; /* Make the text bolder for emphasis */
+  margin-bottom: 20px; /* Add some margin below the heading */
+  color: #333; /* Set the text color to dark gray */
+}
+/* Estilo para centrar el texto del placeholder */
+.multiple-select-placeholder {
+  text-align: center; /* Centra horizontalmente el texto */
+}
+.navbar-container {
+  display: center;
+  justify-content: center;
+  align-items: center;
+}

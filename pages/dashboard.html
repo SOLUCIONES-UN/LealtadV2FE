@@ -42,6 +42,14 @@
     <link rel="stylesheet" type="text/css" href="../css/custom-ag.css">
     <!-- END: Custom CSS-->
 
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f7e8ff; /* Morado claro */
+        }
+    </style>
+
 </head>
 <!-- END: Head-->
 
@@ -190,7 +198,11 @@
                                         </div>
                                     </div>
                                     <div class="text-center">
-                                        <h1 class="mb-1 text-white">Felicitaciones Admin</h1>
+                                        <h1 class=" mb-1 text-white">BIENVENIDO</h1>
+                                        <h1 class=" user-name mb-1 text-white">Felicitaciones Admin</h1>
+                                        
+                                        
+                                        
                                         <p class="card-text m-auto w-75">
                                             Existe <strong>1</strong> proyecto activo.
                                         </p>
@@ -254,22 +266,92 @@
                                 </div>
                             </div>
                         </div>
+                      
 
-                        <div class="col-lg-6 col-md-6 col-sm-12 text-center">
-                            <div class="card ">
-                                <div class="card-body">
-                                    <canvas id="graficaCampanas1"></canvas>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col-lg-6 col-md-6 col-sm-12 text-center">
+                        <div class="col-lg-6 col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <canvas id="graficaCampanas2"></canvas>
+                                    <div class="row pb-50">
+                                        <div
+                                            class="col-sm-6 col-12 d-flex justify-content-between flex-column order-sm-1 order-2 mt-1 mt-sm-0">
+                                            <div class="mb-1 mb-sm-0">
+                                                <h4 class="card-title">Resumen</h4>
+                                                <h2 class="fw-bolder mb-25"> <span id="Transaccion"></span></h2>
+                                                <p class="card-text fw-bold mb-2">Transacciones</p>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="col-sm-6 col-12 d-flex justify-content-between flex-column text-end order-sm-2 order-1">
+                                            <div class="dropdown chart-dropdown">
+                                                <button class="btn btn-sm border-0 dropdown-toggle p-50" type="button"
+                                                    id="dropdownItem5" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                    Última Semana
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-end"
+                                                    aria-labelledby="dropdownItem5">
+                                                    <a class="dropdown-item" href="#">Last 28 Days</a>
+                                                    <a class="dropdown-item" href="#">Last Month</a>
+                                                    <a class="dropdown-item" href="#">Last Year</a>
+                                                </div>
+                                            </div>
+                                            <div id="avg-sessions-chart"></div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row avg-sessions pt-50">
+                                        <div class="col-6 mb-2">
+                                            <p class="mb-50">Nuevas campañas: <span id="sumaValor"></span></p>
+                                            <div class="progress progress-bar-primary" style="height: 6px">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="50"
+                                                    aria-valuemin="50" aria-valuemax="100" style="width: 50%">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-2">
+                                            <p class="mb-50">Nuevas promociones: <span id="clientesCount"></span> </p>
+                                            <div class="progress progress-bar-warning" style="height: 6px">
+                                                <div class="progress-bar" id="progressBar" role="progressbar"
+                                                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                                                    style="width: 0%">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-6 mb-2">
+                                                    <p class="mb-50">Clientes: 200</p>
+                                                    <div class="progress progress-bar-warning" style="height: 6px">
+                                                        <div class="progress-bar" role="progressbar" aria-valuenow="60"
+                                                            aria-valuemin="60" aria-valuemax="100" style="width: 60%">
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                        <div class="col-6">
+                                            <p class="mb-50">Referidos <span id="Teferidos"></span></p>
+                                            <div class="progress progress-bar-danger" style="height: 6px">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="70"
+                                                    aria-valuemin="70" aria-valuemax="100" style="width: 70%">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                       
                         <div class="row justify-content-center">
                             <div id="datosGrafica" class="row match-height">
                                 <!-- Greetings Card starts -->
@@ -283,54 +365,16 @@
                             </div>
                         </div>
                       
-                           
-                       
-                        <div class="col-lg-6 col-12">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between pb-0">
-                                    <h4 class="card-title">Resumen</h4>
-                                    <div class="dropdown chart-dropdown">
-                                        <button class="btn btn-sm border-0 dropdown-toggle p-50" type="button"
-                                            id="dropdownItem4" data-bs-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            Última semana
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownItem4">
-                                            <a class="dropdown-item" href="#">Últimos 28 Días</a>
-                                            <a class="dropdown-item" href="#">Último Mes</a>
-                                            <a class="dropdown-item" href="#">Último Año</a>
-                                        </div>
-                                    </div>
-                                </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 text-center">
+                            <div class="card ">
                                 <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-sm-2 col-12 d-flex flex-column flex-wrap text-center">
-                                            <h1 class="font-large-2 fw-bolder mt-2 mb-0">42</h1>
-                                            <p class="card-text">Transacciones</p>
-                                        </div>
-                                        <div class="col-sm-10 col-12 d-flex justify-content-center">
-                                            <div id="support-trackers-chart"></div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between mt-1">
-                                        <div class="text-center">
-                                            <p class="card-text mb-50">Nuevas Campañas</p>
-                                            <span class="font-large-1 fw-bold" id="num-campanas-last-week"></span>
-                                        </div>
-
-                                        <div class="text-center">
-                                            <p class="card-text mb-50">Nuevas Promociones</p>
-                                            <span class="font-large-1 fw-bold" id="num-promociones-last-week"></span>
-                                        </div>
-
-                                        <div class="text-center">
-                                            <p class="card-text mb-50">Referidos</p>
-                                            <span class="font-large-1 fw-bold">10</span>
-                                        </div>
-                                    </div>
+                                    <canvas id="graficaCampanas1"></canvas>
                                 </div>
                             </div>
                         </div>
+
+
                         <!-- Avg Sessions Chart Card starts -->
                         <div class="col-lg-6 col-12">
                             <div class="card">
@@ -341,13 +385,6 @@
                                             <div class="mb-1 mb-sm-0">
                                                 <h2 class="fw-bolder mb-25">122</h2>
                                                 <p class="card-text fw-bold mb-2">Clientes</p>
-                                                <div class="font-medium-2">
-                                                    <span class="text-success me-25">+1.2%</span>
-                                                    <span>última semana</span>
-                                                </div>
-                                                
-                                                <button id="ver-detalles-btn" type="button" class="btn btn-primary">Ver Detalles</button>
-                                               
                                             </div>
                                         </div>
                                         <div
@@ -421,56 +458,7 @@
                         <!-- Support Tracker Chart Card starts -->
                         
  
-                        <div class="col-12 col-md-4 col-lg-6">
-                            <div class="card mb-7 shadow">
-                              <div class="card-body text-center" style="justify-content: center ">
-                                <div class="col-12">
-                                    <h4 class="text-purple">Personas Ganadoras</h4>
-                                    
-                                </div>
-                                <div class="table-responsive custom-scroll">
-                                <table class="table table-striped">
-                                  <thead>
-                                    <tr>
-                                      <th>Cliente</th>
-                                      <th>Premio</th>
-                                    </tr>
-                                  </thead>
-                                  
-                                  <tbody id="personasGanadoras">
-                                    <tr><td>Bryan García  (50230349689)</td><td></td></tr>
-                                
-                                    <tr><td>Bryan García  (50230349689)</td><td></td></tr>
-                                
-                                    <tr><td>Bryan García  (50230349689)</td><td></td></tr>
-                                
-                                    <tr><td>Bryan García  (50230349689)</td><td></td></tr>
-                                
-                                    <tr><td>Bryan García  (50230349689)</td><td></td></tr>
-                                
-                                    <tr><td>Bryan García  (50230349689)</td><td></td></tr>
-                                
-                                    <tr><td>Bryan García  (50230349689)</td><td></td></tr>
-                                
-                                    <tr><td>Bryan García  (50230349689)</td><td></td></tr>
-                                
-                                    <tr><td>Bryan García  (50230349689)</td><td></td></tr>
-
-                                    <tr><td>Bryan García  (50230349689)</td><td></td></tr>
-
-                                    <tr><td>Bryan García  (50230349689)</td><td></td></tr>
-
-                                    <tr><td>Bryan García  (50230349689)</td><td></td></tr>
-                                    
-                                    <tr><td>Bryan García  (50230349689)</td><td></td></tr>
-                                    
-
-                                </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                     
  
                         <div class="col-12 col-md-6 col-lg-12">
                             <div class="card mb-7 shadow">
@@ -480,7 +468,7 @@
                                 
                                 </div>
                                 <div class="table-responsive custom-scroll" > 
-                                <table class="table table-striped">
+                                <table class="table table-striped" id="tableData">
                                   <thead>
                                     <tr>
                                       <th>No.</th>
@@ -490,27 +478,6 @@
                                     </tr>
                                   </thead>
                                   <tbody id="topUsuariosParticipantes">
-                                    <tr><td>1</td><td>Bryan García  (50230349689)</td><td>Prueba de campana acumulativa</td><td>26/01/2024</td></tr>
-                                
-                                    <tr><td>2</td><td>Bryan García  (50230349689)</td><td>Test 05 </td><td>26/01/2024</td></tr>
-                                
-                                    <tr><td>3</td><td>Bryan García  (50230349689)</td><td>Test 05 </td><td>26/01/2024</td></tr>
-                                
-                                    <tr><td>4</td><td>Bryan García  (50230349689)</td><td>Test 05 </td><td>26/01/2024</td></tr>
-                                
-                                    <tr><td>5</td><td>Bryan García  (50230349689)</td><td>Te devolvemos Q5.00 al pagar con tu billetera akisi</td><td>26/01/2024</td></tr>
-                                
-                                    <tr><td>6</td><td>Bryan García  (50230349689)</td><td>Test 04 acumulativa</td><td>26/01/2024</td></tr>
-                                
-                                    <tr><td>7</td><td>Bryan García  (50230349689)</td><td>Te devolvemos Q5.00 al pagar con tu billetera akisi</td><td>26/01/2024</td></tr>
-                                
-                                    <tr><td>8</td><td>Bryan García  (50230349689)</td><td>test02</td><td>26/01/2024</td></tr>
-                                
-                                    <tr><td>9</td><td>Bryan García  (50230349689)</td><td>Test 03</td><td>26/01/2024</td></tr>
-                                
-                                    <tr><td>10</td><td>Bryan García  (50230349689)</td><td>Te devolvemos Q5.00 al pagar con tu billetera akisi</td><td>26/01/2024</td></tr>
-
-                                    <tr><td>11</td><td>Bryan García  (50230349689)</td><td>Te devolvemos Q5.00 al pagar con tu billetera akisi</td><td>26/01/2024</td></tr>
                                 </tbody>
                                 </table>
                               </div>
@@ -518,71 +485,7 @@
                           </div>
  
                           
-                        <div class="col-12 col-md-6 col-lg-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <canvas id="graficaCampanas3"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <script >
-                            document.addEventListener("DOMContentLoaded", function () {
-                            const ctx = document.getElementById("graficaCampanas3").getContext("2d");
-
-                            // Datos para las 7 columnas
-                        const labels = ['Acumula y Gana (test)', 'test', 'test Acumulativa ', 'APITEST','Recarga y gana ', 'Acumula tus pagos de prestamos Genesis usando Akisí y podras ganar hasta Q1,500.00','Recarga tu billetera y tira penaltis para ganar', 'Refiere y Gana', 'Refiriendo','Test New Ventana' ];
-                            const data = [0, 0, 1, 1,1, 2,2, 7,10,15]; // Datos quemados
-                            const backgroundColors = [
-                            "rgba(255, 99, 132, 0.6)",  // Color más vibrante para la primera columna
-                            "rgba(253, 216, 53)",   // Color más vibrante para la segunda columna
-                            "rgba(79, 195, 247   )",
-                            "rgba(3, 169, 244 )",   
-                            "rgba(30, 136, 229 )",  // Color más vibrante para la quinta columna
-                            "rgba(21, 101, 192  )",
-                            "rgba(2, 119, 189 )",
-                            "rgba(156, 39, 176 )",
-                            "rgba(216, 27, 96)",
-                            "rgba(255, 112, 67)"
-
-
-                            ];
-                            // Configuración del gráfico
-                            const chartData = {
-                                labels: labels,
-                                datasets: [{
-                                    label: "",
-                                    data: data,
-                                    backgroundColor: backgroundColors,
-                                    borderColor: "rgba(54, 162, 235, 1)",
-                                    borderWidth: 1,
-                                }]
-                            };
-
-                            const chartOptions = {
-                                scales: {
-                                    xAxes: [{
-                                        ticks: {
-                                            autoSkip: false, // Evita que las etiquetas se recorten
-                                            maxRotation: 90, // Rotación máxima en grados
-                                            minRotation: 90 // Rotación mínima en grados
-                                        }
-                                    }],
-                                    yAxes: [{
-                                        ticks: {
-                                            beginAtZero: true
-                                        }
-                                    }]
-                                }
-                            };
-
-                            // Crear la gráfica
-                            new Chart(ctx, {
-                                type: "bar",
-                                data: chartData,
-                                options: chartOptions
-                            });
-                        });
-                    </script> 
+                       
                        
                     <script>
                         document.addEventListener("DOMContentLoaded", function () {
@@ -634,58 +537,7 @@
                                 options: chartOptions
                             });
                         });
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const ctx = document.getElementById("graficaCampanas2").getContext("2d");
-
-                            // Datos para las 7 columnas
-                            const labels = ['Testing', 'test', 'prueba de campaña APPSIP ', 'APITEST', 'Prueba Campaña Acumulativa', 'test 05'];
-                            const data = [0, 0, 0, 0, 5, 30]; // Datos quemados
-                            const backgroundColors = [
-                            "rgba(255, 99, 132, 0.6)",  // Color más vibrante para la primera columna
-                            "rgba(253, 216, 53)",   // Color más vibrante para la segunda columna
-                            "rgba(30, 136, 229  )",
-                            "rgba(30, 136, 229 )",   // Color más vibrante para la cuarta columna
-                            "rgba(30, 136, 229 )",  // Color más vibrante para la quinta columna
-                            "rgba(30, 136, 229 )",
-                            
-
-                            ];
-                            // Configuración del gráfico
-                            const chartData = {
-                                labels: labels,
-                                datasets: [{
-                                    label: "Número de Campañas",
-                                    data: data,
-                                    backgroundColor: backgroundColors,
-                                    borderColor: "rgba(54, 162, 235, 1)",
-                                    borderWidth: 1,
-                                }]
-                            };
-
-                            const chartOptions = {
-                                scales: {
-                                    xAxes: [{
-                                        ticks: {
-                                            autoSkip: false, // Evita que las etiquetas se recorten
-                                            maxRotation: 90, // Rotación máxima en grados
-                                            minRotation: 90 // Rotación mínima en grados
-                                        }
-                                    }],
-                                    yAxes: [{
-                                        ticks: {
-                                            beginAtZero: true
-                                        }
-                                    }]
-                                }
-                            };
-
-                            // Crear la gráfica
-                            new Chart(ctx, {
-                                type: "bar",
-                                data: chartData,
-                                options: chartOptions
-                            });
-                        });
+                      
                     </script> 
 
                 </section>
@@ -697,33 +549,7 @@
     </div>
     <!-- END: Content-->
 
-    <!-- Modal -->
- <!-- <div class="modal modal-slide-in new-user-modal fade" id="graficaModal">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="graficaModalLabel">Gráfica de Campañas</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="graficaCampañas"></div>
-                </div>
-                <div class="modal-footer">
-                    <button id="cerrar-modal-btn" type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">Cerrar</button>
 
-                </div>
-            </div>
-        </div>
-    </div>  -->
-
-    <!-- modal de creacion or Update -->
-    <!-- <div class="modal modal-slide-in new-user-modal fade" id="graficaModal">
-        <div class="modal-dialog">
-
-            <div id="graficaCampañas"></div>
-        </div>
-    </div> -->
 
     <!-- modal de creacion or Update -->
     <div class="modal modal-slide-in new-user-modal fade" id="modalNew">
@@ -872,6 +698,11 @@
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+
     <script src="../app-assets/vendors/js/extensions/moment.min.js"></script>
     <script src="../app-assets/vendors/js/tables/ag-grid/ag-grid-community.min.noStyle.js"></script>
     <!-- END: Page Vendor JS-->

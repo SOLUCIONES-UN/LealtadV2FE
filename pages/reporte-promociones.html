@@ -6,10 +6,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
-  <meta name="description"
-    content="Plataforma de lealtad a usuarios.">
-  <meta name="keywords"
-    content="Lealtad, fidelidad, préstamos.">
+  <meta name="description" content="Plataforma de lealtad a usuarios.">
+  <meta name="keywords" content="Lealtad, fidelidad, préstamos.">
   <meta name="author" content="SOLUCIONES-UN">
   <title>Invoice List - Lealtad V2</title>
   <link rel="apple-touch-icon" href="../app-assets/images/ico/apple-icon-120.png">
@@ -33,6 +31,7 @@
   <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/bordered-layout.min.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/semi-dark-layout.min.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/toastr.min.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/js/multipleselect/multiple-select.css">
 
   <!-- BEGIN: Page CSS-->
   <link rel="stylesheet" type="text/css" href="../app-assets/css/core/menu/menu-types/vertical-menu.min.css">
@@ -61,18 +60,18 @@
             </a>
           </li>
         </ul>
-        <ul class="nav navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link menu-toggle" href="javascript:void(0);">
-              <b>Reporte General  de Referidos</b>
-            </a>
-          </li>
+        <ul class="nav navbar-nav p-0">
+          <li class="nav-item" >
+            <div class="navbar-content text-center">
+                <div><b style="font-size: 20px;">Reporte de códigos Promocionales</b></div>
+                <div><b>Reporte de participantes de todas las promociones (solo ganadores)</b></div>
+            </div>
+        </li>
         </ul>
       </div>
       <ul class="nav navbar-nav align-items-center ml-auto">
         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
               data-feather="moon"></i></a></li>
-       
         <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link"
             id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -107,8 +106,7 @@
   <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="navbar-header">
       <ul class="nav navbar-nav flex-row">
-        <li class="nav-item mr-auto"><a class="navbar-brand"
-            href="./dashboard.html"><span class="brand-logo">
+        <li class="nav-item mr-auto"><a class="navbar-brand" href="./dashboard.html"><span class="brand-logo">
               <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
                 <defs>
@@ -151,7 +149,7 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
       <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-        
+
       </ul>
     </div>
   </div>
@@ -163,49 +161,64 @@
     <div class="header-navbar-shadow"></div>
     <div class="content-wrapper container-xxl p-0">
       <div class="content-header row">
+        
       </div>
-      <div class="content-body p-1">
+      <div class="content-body">
         <section class="card">
-            <div class="row p-2">
-                
-                <div class="col-md-4">
-                    <label for="fecha1">Fecha Inicio</label>
-                    <input  id="fecha1" class="form-control"  type="date" >
-                </div>
-                <div class="col-md-4">
-                    <label for="fecha2">Fecha Final</label>
-                    <input  id="fecha2" class="form-control"  type="date" >
-                </div>
-                <div class="col-md-2">
-                    <button id="ConsultarReferido" class="btn btn-info mt-2 btn-block" > Consultar </button>  
-                </div>
-                <div class="col-md-2">
-                    <button class="btn btn-success mt-2 btn-block" > Excel </button>  
-                </div>
+          <div class="row p-2">
+
+            <div class="form-group col-12 col-md-8 col-lg-8">
+              <label for="selectpromo">Promoción</label>
+              <select id="selectpromo" multiple="multiple" class="form-control">
+              </select>
             </div>
-            <div class="card-datatable table-responsive">
-              <table class="datatables-basic table" id="tableData">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>FECHA Y HORA</th>
-                    <th>CÓDIGO REFERIDO</th>
-                    <th>DESCRIPCION</th>
-                    <th>Nombre Referido</th> 
-                    <th>NUMERO DE TELÉFONO REFIRIENTE</th>
-                    <th>NUMERO DE TELÉFONO REFERIDO</th>
-                  </tr>
-                </thead>
-                <tbody  id="TablaReporteReferidos" >
-                
-                </tbody>
-              </table>
+
+            <div class="col-md-2">
+              <label for="FechaInicio">Fecha Inicio</label>
+              <input id="FechaInicio" class="form-control" type="date">
+            </div>
+            <div class="col-md-2">
+              <label for="FechaFin">Fecha Final</label>
+              <input id="FechaFin" class="form-control" type="date">
+            </div>
+
+            <div class="form-group col-8">
+              <button id="ConsultarPromo" class="btn btn-info mt-2 btn-block"> Consultar </button>
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-primary mt-2 btn-block" id="btnDescargarExcel"> Excel </button>
+              
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-primary mt-2 btn-block" id="PantallaInfo"> Mostar en Pantalla </button>
             </div>
           </div>
-        </section>
+          <div class="card-datatable table-responsive p-2">
+            <table class="datatables-basic table p-2" id="tableData">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Telefono</th>
+                  <th>Campaña</th>
+                  <th>Premio</th>
+                  <th>Monto</th>
+                  <th>Transaccion</th>
+                  <th>Codigo</th>
+                  <th>Monto Transaccion</th>
+                  <th>Fecha Acreditacion</th>
+                  <th>Fecha Participación</th>
+                </tr>
+              </thead>
+              <tbody id="TablaReportePromo">
 
+              </tbody>
+            </table>
+          </div>
+        </section>
       </div>
     </div>
+    </div>
+  </div>
   </div>
 
   <!-- END: Content-->
@@ -213,10 +226,10 @@
   <!-- End: Customizer-->
   <!-- BEGIN: Footer-->
   <footer class="footer footer-static footer-light">
-    <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">&copy; 2024<a
-          class="ml-25" href="#" target="_blank">LEALTAD</a><span
-          class="d-none d-sm-inline-block">, Reservados todos los derechos.</span></span><span
-        class="float-md-right d-none d-md-block">Desarrollado por: SOLUCIONES-UN<i data-feather="code"></i></span></p>
+    <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">&copy; 2024<a class="ml-25"
+          href="#" target="_blank">LEALTAD</a><span class="d-none d-sm-inline-block">, Reservados todos los
+          derechos.</span></span><span class="float-md-right d-none d-md-block">Desarrollado por: SOLUCIONES-UN<i
+          data-feather="code"></i></span></p>
   </footer>
   <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
   <!-- END: Footer-->
@@ -226,6 +239,11 @@
   <script src="../app-assets/vendors/js/vendors.min.js"></script>
   <!-- BEGIN Vendor JS-->
 
+  <!-- Agrega este enlace antes de tu script JavaScript -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script> -->
+  <script src="../assets/js/jszip.js"></script>
+  <script src="../assets/js/xlsx.js"></script>
+
   <!-- BEGIN: Page Vendor JS-->
   <script src="../app-assets/vendors/js/extensions/moment.min.js"></script>
   <script src="../app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
@@ -233,6 +251,7 @@
   <script src="../app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
   <script src="../app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
   <script src="../app-assets/vendors/js/tables/datatable/responsive.bootstrap4.min.js"></script>
+  <script src="../app-assets/vendors/js/multipleselect/multiple-select.js"></script>
   <!-- END: Page Vendor JS-->
   <script src="../app-assets/vendors/js/extensions/toastr.min.js"></script>
   <!-- BEGIN: Theme JS-->
@@ -240,7 +259,7 @@
   <script src="../app-assets/js/core/app.min.js"></script>
   <script src="../app-assets/js/scripts/customizer.min.js"></script>
   <!-- END: Theme JS-->
-  <script src="../js/reportGeneral.js"></script>
+  <script src="../js/ReportPromociones.js"></script>
   <!-- BEGIN: Page JS-->
   <script src="../js/menuDinamico.js"></script>
   <!-- END: Page JS-->

@@ -47,7 +47,7 @@
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click"
+<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static" data-open="click"
   data-menu="vertical-menu-modern" data-col="">
   <nav
     class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow container-xxl">
@@ -60,41 +60,49 @@
             </a>
           </li>
         </ul>
-        <ul class="nav navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link menu-toggle" href="javascript:void(0);">
-              <b>Reporte de Promociones</b>
-            </a>
+        <ul class="navbar-container p-0">
+          <!-- <li class="nav-item"> -->
+          <div class="navbar-content text-center">
+            <div><b style="font-size: 20px;">REPORTE DE NOTIFICACIONES CAMPAÑAS</b></div>
+            <div><b>Notificaciones enviadas con links de juegos</b></div>
+          </div>
           </li>
         </ul>
       </div>
       <ul class="nav navbar-nav align-items-center ml-auto">
-        <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
-              data-feather="moon"></i></a></li>
-        <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link"
-            id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            <div class="user-nav d-sm-flex d-none"><span class="user-name font-weight-bolder">John Doe</span><span
-                class="user-status">Admin</span></div><span class="avatar"><img class="round"
-                src="../../../app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40"
-                width="40"><span class="avatar-status-online"></span></span>
+        <li class="nav-item d-none d-lg-block">
+          <a class="nav-link nav-link-style"><i class="ficon" data-feather="moon"></i></a>
+        </li>
+        <li class="nav-item dropdown dropdown-user">
+          <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="user-nav d-sm-flex d-none">
+              <span class="user-name font-weight-bolder">John Doe</span>
+              <span class="user-status">Admin</span>
+            </div>
+            <span class="avatar">
+              <img class="round" src="../../../app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar"
+                height="40" width="40">
+              <span class="avatar-status-online"></span>
+            </span>
           </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user"><a class="dropdown-item"
-              href="page-profile.html"><i class="mr-50" data-feather="user"></i> Profile</a><a class="dropdown-item"
-              href="app-email.html"><i class="mr-50" data-feather="mail"></i> Inbox</a><a class="dropdown-item"
-              href="app-todo.html"><i class="mr-50" data-feather="check-square"></i> Task</a><a class="dropdown-item"
-              href="app-chat.html"><i class="mr-50" data-feather="message-square"></i> Chats</a>
-            <div class="dropdown-divider"></div><a class="dropdown-item" href="page-account-settings.html"><i
-                class="mr-50" data-feather="settings"></i> Settings</a><a class="dropdown-item"
-              href="page-pricing.html"><i class="mr-50" data-feather="credit-card"></i> Pricing</a><a
-              class="dropdown-item" href="page-faq.html"><i class="mr-50" data-feather="help-circle"></i> FAQ</a><a
-              class="dropdown-item" href="login.html"><i class="mr-50" data-feather="power"></i> Logout</a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user">
+            <a class="dropdown-item" href="page-profile.html"><i class="mr-50" data-feather="user"></i> Profile</a>
+            <a class="dropdown-item" href="app-email.html"><i class="mr-50" data-feather="mail"></i> Inbox</a>
+            <a class="dropdown-item" href="app-todo.html"><i class="mr-50" data-feather="check-square"></i> Task</a>
+            <a class="dropdown-item" href="app-chat.html"><i class="mr-50" data-feather="message-square"></i> Chats</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="page-account-settings.html"><i class="mr-50" data-feather="settings"></i>
+              Settings</a>
+            <a class="dropdown-item" href="page-pricing.html"><i class="mr-50" data-feather="credit-card"></i>
+              Pricing</a>
+            <a class="dropdown-item" href="page-faq.html"><i class="mr-50" data-feather="help-circle"></i> FAQ</a>
+            <a class="dropdown-item" href="login.html"><i class="mr-50" data-feather="power"></i> Logout</a>
           </div>
         </li>
       </ul>
     </div>
   </nav>
-
   <ul class="main-search-list-defaultlist-other-list d-none">
     <li class="auto-suggestion justify-content-between"><a
         class="d-flex align-items-center justify-content-between w-100 py-50">
@@ -148,78 +156,69 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
       <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-
       </ul>
     </div>
   </div>
   <!-- END: Main Menu-->
 
   <!-- BEGIN: Content-->
-  <div class="app-content content ">
+  <div class="app-content content">
     <div class="content-overlay"></div>
     <div class="header-navbar-shadow"></div>
     <div class="content-wrapper container-xxl p-0">
       <div class="content-header row">
       </div>
-      <div class="content-body p-1">
-        <section class="card">
+      <div class="content-body">
+        <section class="card p-1 ">
           <div class="row p-2">
 
-            <div class="form-group col-12 col-md-8 col-lg-8">
-              <label for="selectpromo">Promoción</label>
-              <select id="selectpromo" multiple="multiple" class="form-control">
-              </select>
+            <div class="col-md-4">
+              <label for="fechaInicio">Fecha Inicio</label>
+              <input id="fechaInicio" class="form-control" type="date">
             </div>
-
-            <div class="col-md-2">
-              <label for="FechaInicio">Fecha Inicio</label>
-              <input id="FechaInicio" class="form-control" type="date">
+            <div class="col-md-4">
+              <label for="fechaFin">Fecha Final</label>
+              <input id="fechaFin" class="form-control" type="date">
             </div>
             <div class="col-md-2">
-              <label for="FechaFin">Fecha Final</label>
-              <input id="FechaFin" class="form-control" type="date">
-            </div>
-
-            <div class="form-group col-8">
-              <button id="ConsultarPromo" class="btn btn-info mt-2 btn-block"> Consultar </button>
+              <button class="btn btn-primary mt-2 btn-block" id="btnDescargarExcel">Excel</button>
             </div>
             <div class="col-md-2">
-              <button class="btn btn-primary mt-2 btn-block" id="btnDescargarExcel"> Excel </button>
-              
+              <button class="btn btn-primary mt-2 btn-block" id="PantallaInfo">Mostrar en Pantalla</button>
+            </div>
+            <div class="col-md-8">
+              <button id="ConsultaParticipacion" class="btn btn-info mt-2 btn-block">Consultar</button>
             </div>
             <div class="col-md-2">
-              <button class="btn btn-primary mt-2 btn-block" id="PantallaInfo"> Mostar en Pantalla </button>
+              <button class="btn btn-primary mt-2 btn-block" id="Reenviar">Reenviar</button>
             </div>
           </div>
-          <div class="card-datatable table-responsive">
-            <table class="datatables-basic table" id="tableData">
+          <div class="card-datatable  p-2">
+            <table class="datatables-basic table table-responsive" id="tableData">
               <thead>
                 <tr>
-                  
-                  <th>Nombre</th>
-                  <th>Telefono</th>
-                  <th>Campaña</th>
-                  <th>Premio</th>
-                  <th>Monto</th>
-                  <th>Transaccion</th>
-                  <th>Codigo</th>
-                  <th>Monto Transaccion</th>
-                  <th>Fecha Acreditacion</th>
-                  <th>Fecha Participación</th>
+                  <th><input type="checkbox" id="selectAll"></th>
+                  <th>#</th>
+                  <th>TELÉFONO</th>
+                  <th>CLIENTE</th>
+                  <th>CAMPAÑA</th>
+                  <th>FECHA</th>
+                  <th>PREMIO</th>
+                  <th>TRANSACCIÓN</th>
+                  <th>VALOR TRANSACCIÓN</th>
                 </tr>
               </thead>
-              <tbody id="TablaReportePromo">
+              <tbody id="TbPararticipantes">
 
               </tbody>
             </table>
           </div>
       </div>
-      </section>
-
     </div>
+    </section>
   </div>
   </div>
-
+  </div>
   <!-- END: Content-->
   </div>
   <!-- End: Customizer-->
@@ -258,7 +257,8 @@
   <script src="../app-assets/js/core/app.min.js"></script>
   <script src="../app-assets/js/scripts/customizer.min.js"></script>
   <!-- END: Theme JS-->
-  <script src="../js/ReportPromociones.js"></script>
+  <!-- END: Theme JS-->
+  <script src="../js/reporteNotificaciones.js"></script>
   <!-- BEGIN: Page JS-->
   <script src="../js/menuDinamico.js"></script>
   <!-- END: Page JS-->

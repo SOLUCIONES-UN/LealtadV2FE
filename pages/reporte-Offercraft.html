@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chart.js Example</title>
+    <!-- Incluir Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <!-- Crear un lienzo (canvas) para el gráfico -->
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <!-- Agregar un botón para cambiar el tipo de gráfico -->
+    <button onclick="changeChartType()">Cambiar Tipo de Gráfico</button>
+
+    <script>
+      // Datos de ejemplo para el gráfico de líneas
+      var lineChartData = {
+        labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo"],
+        datasets: [
+          {
+            label: "Ventas",
+            data: [12, 19, 3, 5, 2],
+            backgroundColor: "rgba(255, 99, 132, 0.2)", // Color de fondo
+            borderColor: "rgba(255, 99, 132, 1)", // Color del borde
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      // Datos de ejemplo para el gráfico circular
+      var pieChartData = {
+        labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo"],
+        datasets: [
+          {
+            label: "Ventas",
+            data: [12, 19, 3, 5, 2],
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(255, 206, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+            ],
+            borderColor: [
+              "rgba(255, 99, 132, 1)",
+              "rgba(54, 162, 235, 1)",
+              "rgba(255, 206, 86, 1)",
+              "rgba(75, 192, 192, 1)",
+              "rgba(153, 102, 255, 1)",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      // Opciones comunes para los gráficos
+      var options = {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      };
+
+      // Crear el gráfico inicial (de líneas)
+      var ctx = document.getElementById("myChart").getContext("2d");
+      var myChart = new Chart(ctx, {
+        type: "line",
+        data: lineChartData,
+        options: options,
+      });
+
+      // Función para cambiar el tipo de gráfico al hacer clic en el botón
+      function changeChartType() {
+        // Obtener el tipo de gráfico actual
+        var currentType = myChart.config.type;
+        // Cambiar al tipo de gráfico opuesto
+        var newType = currentType === "line" ? "pie" : "line";
+        // Actualizar el tipo de gráfico
+        myChart.config.type = newType;
+        // Actualizar el gráfico
+        myChart.update();
+      }
+    </script>
+  </body>
+</html>

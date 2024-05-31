@@ -14,6 +14,26 @@ $(function () {
 
   getPromociones();
 
+
+
+  
+  function validarFechas() {
+    const FechaInicio = document.getElementById('FechaInicio').value;
+    const FechaFin = document.getElementById('FechaFin').value;
+  
+    if (FechaInicio === FechaFin) {
+        Alert('Las fechas de inicio y fin no pueden ser iguales.','error');
+    }
+  }
+  
+  window.onload = function() {
+    document.getElementById('FechaInicio').addEventListener('blur', validarFechas);
+    document.getElementById('FechaFin').addEventListener('blur', validarFechas);
+  }
+  
+
+
+
   $("#ConsultarPromo").on("click", function () {
     if (
       $("#selectpromo").val() !== null && // Verificar si se ha seleccionado al menos una opción
@@ -28,7 +48,7 @@ $(function () {
   });
 
   $("#PantallaInfo").on("click", function () {
-    if (datosObtenidos) {
+    if (datosObtenidos !== undefined && datosObtenidos !== null) {
       mostrarDatosEnTabla(datosObtenidos);
     } else {
       Alert("Primero debes obtener los datos", "error");
@@ -93,8 +113,7 @@ const getReport = () => {
       console.log("Datos del informe de promociones:", result);
       datosObtenidos = result;
       $("#btnDescargarExcel, #PantallaInfo").show(); // Mostrar botones después de obtener los datos
-    })
-    .catch((error) => {
+    }).catch((error) => {
       console.error("Error al obtener el informe de promociones:", error);
       alert(error, "error");
     });
@@ -102,35 +121,44 @@ const getReport = () => {
 
 function mostrarDatosEnTabla(datos) {
   console.log("Datos para mostrar en la tabla:", datos);
-  $("#TablaReportePromo").empty();
+  
+  // Inicializa la tabla con DataTables
+  let table = $('.datatables-basic').DataTable({
+      order: [[0, 'asc']],
+      ordering: true,
+      language: {
+          search: "Buscar:",
+          searchPlaceholder: "Buscar",
+          lengthMenu: "Mostrar _MENU_",
+      },
+      scrollX: true
+  });
+  
+  // Limpia cualquier dato existente en la tabla
+  table.clear().draw();
+  
   datos.forEach((element) => {
     const fecha = formatearFechaHora(element.fecha);
-    const { valor, } =
-      element.detallepromocion.premiopromocion;
-    const monto = parseFloat(
-      element.detallepromocion.premiopromocion.valor
-    ).toFixed(2);
-    const montoTransaccion =
-      element.detallepromocion.premiopromocion.cantidad * monto;
+    const { valor, } = element.detallepromocion.premiopromocion;
+    const monto = parseFloat(element.detallepromocion.premiopromocion.valor).toFixed(2);
+    const montoTransaccion = element.detallepromocion.premiopromocion.cantidad * monto;
 
-    const fila = `
-      <tr> 
-
-        <td>${element.descripcion}</td>
-        <td>${element.numeroTelefono}</td>
-        <td>${element.detallepromocion.premiopromocion.premio.premiocampania && element.detallepromocion.premiopromocion.premio.premiocampania[0] ? element.detallepromocion.premiopromocion.premio.premiocampania[0].etapa.campanium.nombre : ''}</td>
-        <td>${element.detallepromocion.premiopromocion.premio.descripcion}</td>
-        <td>${monto}</td>
-        <td></td>
-        <td>${element.detallepromocion.cupon}</td>
-        <td>-</td>
-        <td>${fecha}</td>
-        <td>${fecha}</td>
-      </tr>
-    `;
-    $("#TablaReportePromo").append(fila);
+    // Agrega una fila a la tabla
+    table.row.add([
+      element.descripcion,
+      element.numeroTelefono,
+      element.detallepromocion.premiopromocion.premio.premiocampania && element.detallepromocion.premiopromocion.premio.premiocampania[0] ? element.detallepromocion.premiopromocion.premio.premiocampania[0].etapa.campanium.nombre : '',
+      element.detallepromocion.premiopromocion.premio.descripcion,
+      monto,
+      '',
+      element.detallepromocion.cupon,
+      '-',
+      fecha,
+      fecha
+    ]).draw();
   });
 }
+
 
 document.getElementById("btnDescargarExcel").addEventListener("click", function () {
   console.log("Descargar Excel");
@@ -166,16 +194,16 @@ document.getElementById("btnDescargarExcel").addEventListener("click", function 
   const headerRow3 = [''];
   const headerRow4 = [
     '',
-    { v: 'Nombre', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-    { v: 'Telefono', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-    { v: 'Campaña', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-    { v: 'Premio', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-    { v: 'Monto Premio', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-    { v: 'Transaccion', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-    { v: 'Codigo', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-    { v: 'Monto Transaccion', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-    { v: 'Fecha Acreditacion', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-    { v: 'Fecha Participacion', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+    { v: 'NOMBRE', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+    { v: 'TELEFONO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+    { v: 'CAMPAÑA', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+    { v: 'PREMIO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+    { v: 'MONTO PREMIO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+    { v: 'TRANSACCIÓN', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+    { v: 'CÓDIGO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+    { v: 'MONTO TRANSACCIONES', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+    { v: 'FECHA ACREDITACIÓN', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+    { v: 'FECHA PARTICIPACIÓN', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
   ];
   data.unshift(headerRow1, headerRow2, headerRow3, headerRow4);
 

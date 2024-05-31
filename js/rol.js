@@ -5,7 +5,7 @@ $(function () {
     let tabla = getRoles();
     Usuario();
     function validarDescripcion(descripcion) {
-        const descripcionValida = /^[a-zA-Z0-9\s]+$/.test(descripcion.trim());
+        const descripcionValida = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+$/.test(descripcion.trim());
 
         if (!descripcionValida) {
             $('.descripcion').addClass('is-invalid');
@@ -40,12 +40,20 @@ $(function () {
     });
 
     //evento submit del formulairo
-    $('#formNew').submit(function () {
-        const descripcion = $('#descripcion').val();
+  //evento submit del formulario
+  $('#formNew').submit(function () {
 
-        if (!validarDescripcion(descripcion)) {
-            return false;
-        }
+       
+    $('#btnSubmit').prop('disabled', true);
+    const descripcion = $('#descripcion').val();
+   
+    
+    
+
+    if (!validarDescripcion(descripcion)) {
+        $('#btnSubmit').prop('disabled', false);
+        return false;
+    }
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -65,6 +73,7 @@ $(function () {
         fetch(`${url}Rol`, requestOptions)
             .then(response => response.json())
             .then(result => {
+                $('#btnSubmit').prop('disabled', false);
                 console.log(result)
                 if (result.code == "ok") {
                     limpiarFormulario();
@@ -189,24 +198,19 @@ const getRoles = () => {
             { data: "descripcion" },
             {
                 data: "id", render: function (data) {
-                    return `
-              <div class="btn-group">
-                <a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
-                    ${feather.icons['more-vertical'].toSvg({ class: 'font-small-4' })}
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="#" onclick="OpenEdit(${data})" class="btn_edit dropdown-item">
-                        ${feather.icons['archive'].toSvg({ class: 'font-small-4 mr-50' })} Actualizar
-                    </a>
-                
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="#" onclick="OpenDelete(${data})" class="btn_delete dropdown-item">
-                      ${feather.icons['trash-2'].toSvg({ class: 'font-small-4 mr-50' })} Inhabilitar
-                    </a>
-                </div>
-                </div>
-              </div> 
-            `;
+                    return '<div class="btn-group">' +
+                        '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
+                        feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
+                        '</a>' +
+                        '<div class="dropdown-menu dropdown-menu-right">' +
+                        '<a href="#" onclick="OpenEdit(' + data + ')" class="btn_edit dropdown-item">' +
+                        feather.icons['archive'].toSvg({ class: 'font-small-4 mr-50' }) + ' Actualizar' +
+                        '</a>' +
+                        '<a href="#" onclick="OpenDelete(' + data + ')" class="btn_delete dropdown-item">' +
+                        feather.icons['trash-2'].toSvg({ class: 'font-small-4 mr-50' }) + ' Inhabilitar' +
+                        '</a>' +
+                        '</div>' +
+                        '</div>';
                 }
             }
         ],

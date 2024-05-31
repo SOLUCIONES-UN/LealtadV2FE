@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <meta name="description" content="Plataforma de lealtad a usuarios.">
+    <meta name="keywords" content="Lealtad, fidelidad, préstamos.">
+    <meta name="author" content="SOLUCIONES-UN">
+    <title>Invoice List - Lealtad V2</title>
+    <link rel="apple-touch-icon" href="../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/tables/datatable/responsive.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/forms/select/select2.min.css">
+    <!-- END: Vendor CSS
+    <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/forms/wizard/bs-stepper.min.css">-->
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap-extended.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/colors.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/components.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/dark-layout.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/bordered-layout.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/semi-dark-layout.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/toastr.min.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/core/menu/menu-types/vertical-menu.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/pages/app-invoice-list.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/plugins/forms/form-wizard.min.css" />
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/plugins/forms/form-file-uploader.css">
+    <!--<link rel="stylesheet" href="ruta/a/bootstrap-timepicker.min.css">-->
+
+    <link rel="stylesheet" href="../css/stepper.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css">
+
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
+    <nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow container-xxl">
+        <div class="navbar-container d-flex content">
+            <div class="bookmark-wrapper d-flex align-items-center">
+                <ul class="nav navbar-nav d-xl-none">
+                    <li class="nav-item">
+                        <a class="nav-link menu-toggle" href="javascript:void(0);">
+                            <i class="ficon" data-feather="menu"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link menu-toggle" href="javascript:void(0);">
+                            <b>Campañas</b>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="nav navbar-nav align-items-center ml-auto">
+                <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
+                            data-feather="moon"></i></a></li>
+                <!-- <li class="nav-item dropdown dropdown-notification mr-25"><a class="nav-link" href="javascript:void(0);"
+                        data-toggle="dropdown"><i class="ficon" data-feather="bell"></i><span
+                            class="badge badge-pill badge-danger badge-up">5</span></a>
+                    <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+                        <li class="dropdown-menu-header">
+                            <div class="dropdown-header d-flex">
+                                <h4 class="notification-title mb-0 mr-auto">Notifications</h4>
+                                <div class="badge badge-pill badge-light-primary">6 New</div>
+                            </div>
+                        </li>
+                        <li class="scrollable-container media-list"><a class="d-flex" href="javascript:void(0)">
+                                <div class="media d-flex align-items-start">
+                                    <div class="media-left">
+                                        <div class="avatar"><img
+                                                src="../../../app-assets/images/portrait/small/avatar-s-15.jpg"
+                                                alt="avatar" width="32" height="32"></div>
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="media-heading"><span class="font-weight-bolder">Congratulation Sam
+                                                🎉</span>winner!</p>
+                                        <small class="notification-text"> Won the monthly best seller badge.</small>
+                                    </div>
+                                </div>
+                            </a><a class="d-flex" href="javascript:void(0)">
+                                <div class="media d-flex align-items-start">
+                                    <div class="media-left">
+                                        <div class="avatar"><img
+                                                src="../../../app-assets/images/portrait/small/avatar-s-3.jpg"
+                                                alt="avatar" width="32" height="32"></div>
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="media-heading"><span class="font-weight-bolder">New
+                                                message</span>&nbsp;received</p><small class="notification-text"> You
+                                            have 10 unread messages</small>
+                                    </div>
+                                </div>
+                            </a><a class="d-flex" href="javascript:void(0)">
+                                <div class="media d-flex align-items-start">
+                                    <div class="media-left">
+                                        <div class="avatar bg-light-danger">
+                                            <div class="avatar-content">MD</div>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="media-heading"><span class="font-weight-bolder">Revised Order
+                                                👋</span>&nbsp;checkout</p>
+                                        <small class="notification-text"> MD Inc. order updated</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="media d-flex align-items-center">
+                                <h6 class="font-weight-bolder mr-auto mb-0">System Notifications</h6>
+                                <div class="custom-control custom-control-primary custom-switch">
+                                    <input class="custom-control-input" id="systemNotification" type="checkbox"
+                                        checked="">
+                                    <label class="custom-control-label" for="systemNotification"></label>
+                                </div>
+                            </div><a class="d-flex" href="javascript:void(0)">
+                                <div class="media d-flex align-items-start">
+                                    <div class="media-left">
+                                        <div class="avatar bg-light-danger">
+                                            <div class="avatar-content"><i class="avatar-icon" data-feather="x"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="media-heading"><span class="font-weight-bolder">Server
+                                                down</span>&nbsp;registered</p>
+                                        <small class="notification-text"> USA Server is down due to hight CPU
+                                            usage</small>
+                                    </div>
+                                </div>
+                            </a><a class="d-flex" href="javascript:void(0)">
+                                <div class="media d-flex align-items-start">
+                                    <div class="media-left">
+                                        <div class="avatar bg-light-success">
+                                            <div class="avatar-content"><i class="avatar-icon" data-feather="check"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="media-heading"><span class="font-weight-bolder">Sales
+                                                report</span>&nbsp;generated</p>
+                                        <small class="notification-text"> Last month sales report generated</small>
+                                    </div>
+                                </div>
+                            </a><a class="d-flex" href="javascript:void(0)">
+                                <div class="media d-flex align-items-start">
+                                    <div class="media-left">
+                                        <div class="avatar bg-light-warning">
+                                            <div class="avatar-content"><i class="avatar-icon"
+                                                    data-feather="alert-triangle"></i></div>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="media-heading"><span class="font-weight-bolder">High
+                                                memory</span>&nbsp;usage</p><small class="notification-text"> BLR Server
+                                            using high memory</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="dropdown-menu-footer"><a class="btn btn-primary btn-block"
+                                href="javascript:void(0)">Read all
+                                notifications</a></li>
+                    </ul>
+                </li> -->
+                <li class="nav-item dropdown dropdown-user">
+                    <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="user-nav d-sm-flex d-none"><span class="user-name font-weight-bolder">Admin</span><span class="user-status">Admin</span>
+                        </div><span class="avatar"><img class="round"
+                                src="../../../app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40"
+                                width="40"><span class="avatar-status-online"></span></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user"><a class="dropdown-item" href="page-profile.html"><i class="mr-50" data-feather="user"></i>
+                            Profile</a><a class="dropdown-item" href="app-email.html"><i class="mr-50"
+                                data-feather="mail"></i> Inbox</a><a class="dropdown-item" href="app-todo.html"><i
+                                class="mr-50" data-feather="check-square"></i> Task</a><a class="dropdown-item" href="app-chat.html"><i class="mr-50" data-feather="message-square"></i> Chats</a>
+                        <div class="dropdown-divider"></div><a class="dropdown-item" href="page-account-settings.html"><i class="mr-50" data-feather="settings"></i>
+                            Settings</a><a class="dropdown-item" href="page-pricing.html"><i class="mr-50"
+                                data-feather="credit-card"></i> Pricing</a><a class="dropdown-item" href="page-faq.html"><i class="mr-50" data-feather="help-circle"></i> FAQ</a><a class="dropdown-item" href="login.html"><i class="mr-50" data-feather="power"></i>
+                            Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <ul class="main-search-list-defaultlist-other-list d-none">
+        <li class="auto-suggestion justify-content-between">
+            <a class="d-flex align-items-center justify-content-between w-100 py-50">
+                <div class="d-flex justify-content-start"><span class="mr-75" data-feather="alert-circle"></span><span>No se encontraron datos.</span></div>
+            </a>
+        </li>
+    </ul>
+    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav flex-row">
+                <li class="nav-item mr-auto"><a class="navbar-brand"
+                        href="./dashboard.html"><span class="brand-logo">
+                            <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
+                                <defs>
+                                    <lineargradient id="linearGradient-1" x1="100%" y1="10.5120544%" x2="50%"
+                                        y2="89.4879456%">
+                                        <stop stop-color="#000000" offset="0%"></stop>
+                                        <stop stop-color="#FFFFFF" offset="100%"></stop>
+                                    </lineargradient>
+                                    <lineargradient id="linearGradient-2" x1="64.0437835%" y1="46.3276743%"
+                                        x2="37.373316%" y2="100%">
+                                        <stop stop-color="#EEEEEE" stop-opacity="0" offset="0%"></stop>
+                                        <stop stop-color="#FFFFFF" offset="100%"></stop>
+                                    </lineargradient>
+                                </defs>
+                                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <g id="Artboard" transform="translate(-400.000000, -178.000000)">
+                                        <g id="Group" transform="translate(400.000000, 178.000000)">
+                                            <path class="text-primary" id="Path"
+                                                d="M-5.68434189e-14,2.84217094e-14 L39.1816085,2.84217094e-14 L69.3453773,32.2519224 L101.428699,2.84217094e-14 L138.784583,2.84217094e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L6.71554594,44.4188507 C2.46876683,39.9813776 0.345377275,35.1089553 0.345377275,29.8015838 C0.345377275,24.4942122 0.230251516,14.560351 -5.68434189e-14,2.84217094e-14 Z"
+                                                style="fill:currentColor"></path>
+                                            <path id="Path1"
+                                                d="M69.3453773,32.2519224 L101.428699,1.42108547e-14 L138.784583,1.42108547e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L32.8435758,70.5039241 L69.3453773,32.2519224 Z"
+                                                fill="url(#linearGradient-1)" opacity="0.2"></path>
+                                            <polygon id="Path-2" fill="#000000" opacity="0.049999997"
+                                                points="69.3922914 32.4202615 32.8435758 70.5039241 54.0490008 16.1851325">
+                                            </polygon>
+                                            <polygon id="Path-21" fill="#000000" opacity="0.099999994"
+                                                points="69.3922914 32.4202615 32.8435758 70.5039241 58.3683556 20.7402338">
+                                            </polygon>
+                                            <polygon id="Path-3" fill="url(#linearGradient-2)" opacity="0.099999994"
+                                                points="101.428699 0 83.0667527 94.1480575 130.378721 47.0740288">
+                                            </polygon>
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg></span>
+                        <h2 class="brand-text">LealtadV2</h2>
+                    </a></li>
+                <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i
+                            class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i
+                            class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary"
+                            data-feather="disc" data-ticon="disc"></i></a></li>
+            </ul>
+        </div>
+        <div class="shadow-bottom"></div>
+        <div class="main-menu-content">
+            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+                <!--  -->
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <section id="panelListado">
+                    <div class="card" style="min-height: 600px;">
+                        <div class="card-body">
+                            <div class="nav-tabs-shadow nav-align-top">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h5>Lista De Campañas</h5>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <ul class="nav nav-tabs" role="tablist" id="NavsOpc">
+                                            <li class="nav-item">
+                                                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#optTodas" aria-controls="optTodas" aria-selected="true">Todas(<span
+                                                        id="textTodas"></span>)</button>
+                                            </li>
+                                            <li class="nav-item">
+                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#opcActivas" aria-controls="opcActivas" aria-selected="false">Activas(<span
+                                                        id="textActivas"></span>)</button>
+                                            </li>
+                                            <li class="nav-item">
+                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#opcStop" aria-controls="opcStop" aria-selected="false">Pausadas(<span
+                                                        id="textPausadas"></span>)</button>
+                                            </li>
+                                            <li class="nav-item">
+                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#opcBorrador" aria-controls="opcBorrador" aria-selected="false">Borradores(<span
+                                                        id="textBorrador"></span>)</button>
+                                            </li>
+                                            <li class="nav-item">
+                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#opcArchivadas" aria-controls="opcArchivadas" aria-selected="false">Archivadas(<span
+                                                        id="textArchivo"></span>)</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active opcLista" id="optTodas" role="tabpanel">
+                                       <!--Tabla de todas las campañas--> 
+                                       <table class="datatables-basic table" id="tableTodas">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Campaña</th>
+                                                    <th>Estado</th>
+                                                    <th>Inicio</th>
+                                                    <th>Fin</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane fade opcLista" id="opcActivas" role="tabpanel">
+                                        <!--Tabla de todas las las campañas activas--> 
+                                        <table class="datatables-basic table" id="tableActivas">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Campaña</th>
+                                                    <th>Estado</th>
+                                                    <th>Inicio</th>
+                                                    <th>Fin</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane fade opcLista" id="opcStop" role="tabpanel">
+                                        <!--Tabla de todas las campañas pausadas--> 
+                                        <table class="datatables-basic table" id="tablePausada">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Campaña</th>
+                                                    <th>Estado</th>
+                                                    <th>Inicio</th>
+                                                    <th>Fin</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane fade opcLista" id="opcBorrador" role="tabpanel">
+                                        <!--Tabla de todas las campañas borradores--> 
+                                        <table class="datatables-basic table" id="tableBorrador">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Campaña</th>
+                                                    <th>Estado</th>
+                                                    <th>Inicio</th>
+                                                    <th>Fin</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane fade opcLista" id="opcArchivadas" role="tabpanel">
+                                        <!--Tabla de todas las campañas archivadas--> 
+                                        <table class="datatables-basic table" id="tableArchivo">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Campaña</th>
+                                                    <th>Estado</th>
+                                                    <th>Inicio</th>
+                                                    <th>Fin</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- END: Content-->
+
+<!--BEGIN: FormNew-->
+     <div class="modal modal-slide-in new-user-modal fade" id="modalNew">
+        <div class="modal-dialog w-50">
+          <form id="formNew" class="add-new-user modal-content pt-0" autocomplete="off">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+            <div class="modal-header mb-1">
+              <h5 class="modal-title" id="exampleModalLabel">Agregar Nueva Campaña</h5>
+            </div>
+            <div class="modal-body flex-grow-1 ">
+                <div class="d-flex justify-content-center step-buttons">
+                    <button class="step-progress mr-1 ml-1 step-btn-1">1</button>
+                    <button class="step-progress mr-1 step-btn-2">2</button>
+                    <button class="step-progress mr-1 step-btn-3">3</button>
+                </div>
+                <div class="divider">
+                    <div class="divider-text"></div>
+                </div>
+                <div id="stepper">
+                    <!--Stepper 1-->
+                    <div id="step1">
+                        <div class="form-step ">
+                            <div class="content-header mt-2 mb-1">
+                                <h4 class="mb-0">Configuración de Campaña</h4>
+                                <small class="text-muted">Ingresa los datos basicos de la Campaña.</small>
+                            </div>
+                            <div class="row mb-0">
+                                <div class="form-group col-md-6">
+                                  <label for="imgCampania">Icono de Campaña</label>
+                                  <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="imgCampania" onchange="previewImage(event, 'previewImg', 'imgCampaniaRequerimientos')">
+                                    <label class="custom-file-label" for="imgCampania">Seleccionar archivo</label>
+                                    <div id="imgCampaniaError" class="invalid-feedback imgCampania-error"></div>
+                                  </div>
+                                  <div class="requerimientos" id="imgCampaniaRequerimientos">
+                                    <small>Requerimientos: Tamaño máximo de 2MB, formato PNG o JPG.</small>
+                                  </div>
+                                  <div class="preview-container">
+                                    <img id="previewImg" src="#" alt="Preview" style="display: none;">
+                                    <div class="preview-overlay">
+                                      <i class="fas fa-edit"></i>
+                                      <span>Editar</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label for="imgNotificacion">Icono de Notificación</label>
+                                  <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="imgNotificacion" onchange="previewImage(event, 'previewNotificacion', 'imgNotificacionRequerimientos')">
+                                    <label class="custom-file-label" for="imgNotificacion">Seleccionar archivo</label>
+                                    <div id="imgNotificacionError" class="invalid-feedback imgNotificacion-error"></div>
+                                  </div>
+                                  <div class="requerimientos" id="imgNotificacionRequerimientos">
+                                    <small>Requerimientos: Tamaño máximo de 2MB, formato PNG o JPG.</small>
+                                  </div>
+                                  <div class="preview-container">
+                                    <img id="previewNotificacion" src="#" alt="Preview" style="display: none;">
+                                    <div class="preview-overlay">
+                                      <i class="fas fa-edit"></i>
+                                      <span>Editar</span>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="proyecto">Proyecto</label>
+                                    <select name="proyecto" aria-describedby="proyectoError"  id="proyecto" class="form-control proyecto">
+                                        <!-- <option disabled selected>Selecciona una opción</option> -->
+                                    </select>
+                                    <div id="proyectoError" class="invalid-feedback proyecto-error"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="tercerosCampania">Campaña de Terceros</label>
+                                    <select name="" aria-describedby="tercerosCampaniaError"  id="tercerosCampania" class="form-control tercerosCampania">
+                                        <option disabled selected>Selecciona una opción</option>
+                                        <option value="1">Sí</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                    <div id="tercerosCampaniaError" class="invalid-feedback tercerosCampania-error"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="restriccionUsuarios">Restricción de Usuarios</label>
+                                    <select name="restriccionUsuarios" aria-describedby="restriccionUsuariosError"  id="restriccionUsuarios" class="form-control restriccionUsuarios" onchange="userValidator(event, 'containerArchivo')">
+                                        <option disabled selected>Selecciona una opción</option>
+                                        <option value="0">Todos los Usuarios</option>
+                                        <option value="1">Usuarios Permitidos</option>
+                                        <option value="2">Usuarios Restringidos</option>
+                                    </select>
+                                    <div id="restriccionUsuariosError" class="invalid-feedback restriccionUsuarios-error"></div>
+                                </div>
+                                <div class="form-group col-md-6" id="containerArchivo">
+                                    <label class="form-label" for="Archivo">Archivo</label>
+                                    <input type="file" class="form-control" id="Archivo"/>
+                                    <div id="ArchivoError" class="invalid-feedback Archivo-error"></div>
+                                    <div class="requerimientos" id="requerimientosArchivo">
+                                        <small>Requerimientos: Tamaño máximo de 2MB, datos en la columna A.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="Bloqueo">
+                                <div class="row ">
+                                    <div class="form-group col-md-6 ml-1" >
+                                        <label class="form-label" for="usuarioBloqueo">Bloqueo de usuarios</label>
+                                        <input type="number" class="form-control" id="usuarioBloqueo"/>
+                                    </div>
+                                    <div class="form-group col-md-6" id="btnBloqueo">
+                                        <div class="btn-crear d-flex justify-content-end mt-2" >
+                                            <button type="button" class="btn btn-outline-secondary" style="margin-left: 0.5rem;" id="mostrar">Mostrar</button>
+                                            <button type="button" class="btn btn-outline-primary " style="margin-left: 0.5rem;" id="addBloqueo">Agregar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Tabla-->
+                                <div class="col-md-12">
+                                    <table class="datatables-basic mb-3 mt-2 stepper-table col-md-12 table" id="tablaBloqueo">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>NUMERO</th>
+                                                <th>ACCIONES</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" id="btnSiguiente" class="btn btn-primary next-btn">Siguiente</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Stepper 2-->
+                    <div id="step2" style="display: none;">  
+                        <div class="form-step ">
+                            <div class="content-header mt-2 mb-1">
+                                <h4 class="mb-0">Configuración de Campaña</h4>
+                                <small class="text-muted">Ingresa los datos basicos de la Campaña.</small>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="campania">Campaña</label>
+                                    <input type="text" aria-describedby="CampaniaError"   id="campania" class="form-control campania" placeholder="Ingresa el Nombre" />
+                                    <div id="campaniaError" class="invalid-feedback Campania-error"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="notificacion">Titulo de Notificación</label>
+                                    <input type="text" id="notificacion" aria-describedby="notificacionError"  class="form-control notificacion" placeholder="Ingresa el Nombre" />
+                                    <div id="notificacionError" class="invalid-feedback notificacion-error"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="descripcionCampania">Descripción de Campaña</label>
+                                    <textarea type="text" id="descripcionCampania"  aria-describedby="descripcionCampaniaError"  class="form-control" placeholder="Ingrese la descripcion" rows="2"></textarea>
+                                    <div id="descripcionCampaniaError" class="invalid-feedback descripcionCampania-error"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="descripcionNotificacion">Descripción de Notificación</label>
+                                    <textarea type="text" id="descripcionNotificacion" aria-describedby="descripcionNotificacionError"   class="form-control descripcionNotificacion" placeholder="Ingrese la descripcion" rows="2"></textarea>
+                                    <div id="descripcionNotificacionError" class="invalid-feedback descripcionNotificacion-error"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="Observaciones">Observaciones</label>
+                                    <textarea type="text" id="Observaciones"  aria-describedby="ObservacionesError"  class="form-control" placeholder="Ingrese las observaciones" rows="2"></textarea>
+                                    <div id="ObservacionesError" class="invalid-feedback Observaciones-error"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="terminosCondiciones">Terminos y Condiciones</label>
+                                    <textarea type="text" id="terminosCondiciones"  aria-describedby="terminosCondicionesError"  class="form-control" placeholder="Ingrese los terminos y Condiciones" rows="2"></textarea>
+                                    <div id="terminosCondicionesError" class="invalid-feedback terminosCondiciones-error"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="fechaRegistro">Fecha de Registro</label>
+                                    <input type="date" id="fechaRegistro" aria-describedby="fechaRegistroError"   class="form-control fechaRegistro" placeholder="Ingresa el Nombre" />
+                                    <div id="fechaRegistroError" class="invalid-feedback fechaRegistro-error"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="sexo">Sexo</label>
+                                    <select name="" id="sexo" aria-describedby="sexoError"   class="form-control">
+                                        <option disabled selected>Selecciona una opción</option>
+                                        <option value="0">Indefinido</option>
+                                        <option value="1">Femenino</option>
+                                        <option value="2">Masculino</option>
+                                    </select>
+                                    <div id="sexoError" class="invalid-feedback sexo-error"></div>
+                                </div>
+                            </div>
+
+                            <div class="row">  
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="usuarioPermitido">Usuarios Permitidos</label>
+                                    <select name="" id="usuarioPermitido" aria-describedby="usuarioPermitidoError"   class="form-control">
+                                        <option disabled selected>Selecciona una opción</option>
+                                        <option value="1">Usuarios Nuevos</option>
+                                        <option value="0">Usuarios Antiguos</option>
+                                    </select>
+                                    <div id="usuarioPermitidoError" class="invalid-feedback usuarioPermitido-error"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="tipoUsuarios">Tipo de Usuario</label>
+                                    <select name="" id="tipoUsuarios" aria-describedby="tipoUsuariosError"   class="form-control">
+                                        <option disabled selected>Selecciona una opción</option>
+                                        <option value="0">Todos los Usuarios</option>
+                                        <option value="1">Comercio Afiliado</option>
+                                        <option value="2">Final</option>
+                                    </select>
+                                    <div id="tipoUsuariosError" class="invalid-feedback tipoUsuarios-error"></div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="fechaInicial">Fecha Inicial</label>
+                                    <input type="date" id="fechaInicial" aria-describedby="fechaInicialError"   class="form-control" />
+                                    <div id="fechaInicialError" class="invalid-feedback fechaInicial-error"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="fechaFinal">Fecha Final</label>
+                                    <input type="date" id="fechaFinal" aria-describedby="fechaFinalError"   class="form-control"/>
+                                    <div id="fechaFinalError" class="invalid-feedback fechaFinal-error"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="edadInicial">Edad Inicial</label>
+                                    <input type="number" id="edadInicial" aria-describedby="edadInicialError"   class="form-control" />
+                                    <div id="edadInicialError" class="invalid-feedback edadInicial-error"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="edadFinal">Edad Final</label>
+                                    <input type="number" id="edadFinal" aria-describedby="edadFinalError"  class="form-control"/>
+                                    <div id="edadFinalError" class="invalid-feedback edadFinal-error"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="maximoParticipantes">Maximo de Participaciones</label>
+                                    <input type="number" id="maximoParticipantes" class="form-control" />
+                                    <div id="maximoParticipantesError" class="invalid-feedback maximoParticipantes-error"></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary prev-btn">Anterior</button>
+                                <button type="button" id="btnSiguiente" class="btn btn-primary next-btn">Siguiente</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Stepper 3-->
+                    <div id="step3" style="display: none;">
+                        <div class="form-step ">
+                            <div class="content-header mt-2 mb-1">
+                                <h4 class="mb-0">Configuración de Etapa</h4>
+                                <small class="text-muted">Ingresa los datos basicos de la Campaña.</small>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="NombreEtapa">Nombre</label>
+                                    <input type="text" id="NombreEtapa" aria-describedby="NombreEtapaError"  class="form-control" />
+                                    <div id="NombreEtapaError" class="invalid-feedback NombreEtapa-error"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="orden">Orden</label>
+                                    <input type="number" id="orden" class="form-control" aria-describedby="ordenError"  />
+                                    <div id="ordenError" class="invalid-feedback orden-error"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="descripcionEtapa">Descripcion de las Etapas</label>
+                                    <textarea type="text" id="descripcionEtapa" aria-describedby="descripcionEtapaError" class="form-control" placeholder="Ingrese la descripcion" rows="2"></textarea>
+                                    <div id="descripcionEtapaError" class="invalid-feedback descripcionEtapa-error"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="tipoParticipacion">Tipo de Participación</label>
+                                    <select name="tipoParticipacion" aria-describedby="tipoParticipacionError" id="tipoParticipacion" class="form-control">
+                                        <option disabled selected>Selecciona una opción</option>
+                                        <option value="0">Transacciones</option>
+                                        <option value="1">Recurrentes</option>
+                                        <option value="2">Acumular Transacciones</option>
+                                        <option value="3">Acumular Transacciones Recurrentes</option>
+                                        <option value="4">Acumular Valor</option>
+                                        <option value="5">Combinar Transacciones</option>
+                                    </select>
+                                    <div id="tipoParticipacionError" class="invalid-feedback tipoParticipacion-error"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="RangoTiempo">Rango de tiempo</label>
+                                    <select name="RangoTiempo" aria-describedby="RangoTiempoError" id="RangoTiempo" class="form-control">
+                                        <option disabled selected>Selecciona una opción</option>
+                                        <option value="0">Diaria</option>
+                                        <option value="1">Semanal</option>
+                                        <option value="2">Anual</option>
+                                    </select>
+                                    <div id="RangoTiempoError" class="invalid-feedback RangoTiempo-error"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="intervalo">Intervalo de Dias</label>
+                                    <input type="number" id="intervalo" class="form-control" aria-describedby="intervaloError" />
+                                    <div id="intervaloError" class="invalid-feedback intervalo-error"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <div id="inputsContainer">
+                                        <div id="inputsTipo0" style="display: none;">
+                                        <!-- Inputs para Acumuladas -->
+                                        <label class="form-label" for="minimoTransaccion">Mínimo Transacción</label>
+                                        <input type="text" id="minimoTransaccion" class="form-control" />
+                                        </div>
+                                        <div id="inputsTipo1" style="display: none;">
+                                        <!-- Inputs para Acumuladas -->
+                                        <label class="form-label" for="totalMinimo">Total Mínimo</label>
+                                        <input type="text" id="totalMinimo" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="btn-crear d-flex justify-content-end mb-1">
+                                        <button type="button" class="btn btn-outline-primary" id="add-step-btn">Crear</button>
+                                    </div>
+                                </div>
+                            
+                                <table class="datatables-basic stepper-table col-md-12 table" id="TablaEtapa">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>ETAPA</th>
+                                            <th>DESCRIPCION</th>
+                                            <th>ACCION</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>                          
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary prev-btn">Anterior</button>
+                                <button type="submit" class="btn btn-primary" id="btnSubmit">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div >
+            </form>
+        </div>
+      </div>
+    </div>
+    <!--END: FormNew-->
+
+
+    <!--BEGIN: FormEdit-->
+    <div class="modal modal-slide-in new-user-modal fade" id="modalEdit">
+        <div class="modal-dialog w-50">
+        <form id="formEdit" class="add-new-user modal-content pt-0" autocomplete="off">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+            <div class="modal-header mb-1">
+            <h5 class="modal-title" id="exampleModalLabel">Agregar Nueva Campaña</h5>
+            </div>
+            <div class="modal-body flex-grow-1 ">
+                <div class="d-flex justify-content-center step-buttonsEdit">
+                    <button class="step-progressEdit mr-1 ml-1 step-btn-1-edit">1</button>
+                    <button class="step-progressEdit mr-1 step-btn-2-edit">2</button>
+                    <button class="step-progressEdit mr-1 step-btn-3-edit">3</button>
+                </div>
+                <div class="divider">
+                    <div class="divider-text"></div>
+                </div>
+                <div class="modal-body">
+                    <!-- Contenido del modal -->
+                    <div class="spinner-container" style="display: none;">
+                      <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                      </div>
+                    </div>
+                </div>
+                <div id="stepperEdit">
+                    <!--Stepper 1-->
+                    <div id="step1Edit">
+                        <div class="form-step ">
+                            <div class="row">
+                                <div class="content-header mt-2 mb-1 col-md-8">
+                                  <h4 class="mb-0">Configuración de Campaña</h4>
+                                  <small class="text-muted">Ingresa los datos basicos de la Campaña.</small>
+                                </div>
+                                <div class="mt-2 mb-1 col-md-4">
+                                  <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input esArchivadaEdit" value="1" type="checkbox" id="esArchivadaEdit" />
+                                    <label class="custom-control-label" for="esArchivadaEdit">Archivar</label>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <input id="idCampania" type="hidden">
+                                <input id="fechaCreacion" type="hidden">
+                                <input id="estadoCampania" type="hidden">
+                                <div class="form-group col-md-6">
+                                    <label for="imgCampaniaEdit ">Icono de Campaña</label>
+                                    <input type="file" class="form-control " id="imgCampaniaEdit" onchange="previewImageEdit(event, 'previewImgEdit','imgCampaniaEdit')" >
+                                    <img id="previewImgEdit" src="#" alt="Preview" style="display: none; max-width: 270px; max-height: 270px;" />
+                                </div>                          
+                                <div class="form-group col-md-6">
+                                    <label for="imgNotificacionEdit">Imagen  de Notificación</label>
+                                    <input type="file" class="form-control" id="imgNotificacionEdit" onchange="previewImageEdit(event,'previewNotificacionEdit', 'imgNotificacionEdit')">
+                                    <img id="previewNotificacionEdit" src="#" alt="Preview" style="display: none; max-width: 270px; max-height: 270px;" />
+                                </div>
+                            </div> 
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="proyectoEdit">Proyecto</label>
+                                    <select name="proyectoEdit" aria-describedby="proyectoErrorEdit"  id="proyectoEdit" class="form-control proyectoEdit">
+                                        <option disabled selected>Selecciona una opción</option>
+                                    </select>
+                                    <div id="proyectoErrorEdit" class="invalid-feedback proyecto-errorEdit"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="tercerosCampaniaEdit">Campaña de Terceros</label>
+                                    <select name="" aria-describedby="tercerosCampaniaErrorEdit"  id="tercerosCampaniaEdit" class="form-control tercerosCampaniaEdit">
+                                        <option disabled selected>Selecciona una opción</option>
+                                        <option value="1">Sí</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                    <div id="tercerosCampaniaErrorEdit" class="invalid-feedback tercerosCampania-errorEdit"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                  <label class="form-label" for="restriccionUsuariosEdit">Restricción de Usuarios</label>
+                                  <select name="restriccionUsuarios" aria-describedby="restriccionUsuariosErrorEdit" id="restriccionUsuariosEdit" class="form-control restriccionUsuariosEdit" onchange="userValidator(event, 'containerArchivoEdit')">
+                                    <option disabled selected>Selecciona una opción</option>
+                                    <option value="0">Todos los Usuarios</option>
+                                    <option value="1">Usuarios Permitidos</option>
+                                    <option value="2">Usuarios Restringidos</option>
+                                  </select>
+                                  <div id="restriccionUsuariosErrorEdit" class="invalid-feedback restriccionUsuarios-errorEdit"></div>
+                                </div>
+                                <div class="form-group col-md-6" id="containerArchivoEdit">
+                                  <label class="form-label" for="ArchivoEdit">Archivo</label>
+                                  <input type="file" class="form-control" id="ArchivoEdit"/>
+                                </div>
+                              </div>
+                              <div id="BloqueoEdit" style="display: none;">
+                                <div class="row">
+                                  <div class="form-group col-md-6">
+                                    <label class="form-label" for="usuarioBloqueoEdit">Bloqueo de usuarios</label>
+                                    <input type="number" class="form-control" id="usuarioBloqueoEdit"/>
+                                  </div>
+                                  <div class="form-group col-md-6" id="btnBloqueoEdit">
+                                    <div class="btn-crear d-flex justify-content-end mt-2">
+                                      <button type="button" class="btn btn-outline-secondary" id="mostrarEdit">Mostrar</button>
+                                      <button type="button" class="btn btn-outline-primary ml-1" id="addBloqueoEdit">Agregar</button>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <table class="datatables-basic table mb-3 mt-2" id="tablaBloqueoEdit">
+                                      <thead>
+                                        <tr>
+                                          <th>#</th>
+                                          <th>NUMERO</th>
+                                          <th>ACCIONES</th>
+                                        </tr>
+                                      </thead>
+                                    </table>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="btnSiguienteEdit" class="btn btn-primary next-btn-edit">Siguiente</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Stepper 2-->
+                    <div id="step2Edit" style="display: none;">                  
+                        <div class="form-step ">
+                            <div class="content-header mt-2 mb-1">
+                                <h4 class="mb-0">Configuración de Campaña</h4>
+                                <small class="text-muted">Ingresa los datos basicos de la Campaña.</small>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="campaniaEdit">Campaña</label>
+                                    <input type="text" aria-describedby="CampaniaErrorEdit"   id="campaniaEdit" class="form-control campaniaEdit" placeholder="Ingresa el Nombre" />
+                                    <div id="CampaniaErrorEdit" class="invalid-feedback Campania-errorEdit"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="notificacionEdit">Titulo de Notificación</label>
+                                    <input type="text" id="notificacionEdit" aria-describedby="notificacionErrorEdit"  class="form-control notificacion" placeholder="Ingresa el Nombre" />
+                                    <div id="notificacionErrorEdit" class="invalid-feedback notificacion-errorEdit"></div>
+                                </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="descripcionCampaniaEdit">Descripción de Campaña</label>
+                                        <textarea type="text" id="descripcionCampaniaEdit"  aria-describedby="descripcionCampaniaErrorEdit"  class="form-control" placeholder="Ingrese la descripcion" rows="2"></textarea>
+                                        <div id="descripcionCampaniaErrorEdit" class="invalid-feedback descripcionCampania-errorEdit"></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="descripcionNotificacionEdit">Descripción de Notificación</label>
+                                        <textarea type="text" id="descripcionNotificacionEdit" aria-describedby="descripcionNotificacionErrorEdit"   class="form-control descripcionNotificacionEdit" placeholder="Ingrese la descripcion" rows="2"></textarea>
+                                        <div id="descripcionNotificacionErrorEdit" class="invalid-feedback descripcionNotificacion-errorEdit"></div>
+                                    </div>
+                                </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="ObservacionesEdit">Observaciones</label>
+                                    <textarea type="text" id="ObservacionesEdit"  aria-describedby="ObservacionesErrorEdit"  class="form-control" placeholder="Ingrese las observaciones" rows="2"></textarea>
+                                    <div id="ObservacionesErrorEdit" class="invalid-feedback Observaciones-errorEdit"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="terminosCondicionesEdit">Terminos y Condiciones</label>
+                                    <textarea type="text" id="terminosCondicionesEdit"  aria-describedby="terminosCondicionesErrorEdit"  class="form-control" placeholder="Ingrese los terminos y Condiciones" rows="2"></textarea>
+                                    <div id="terminosCondicionesErrorEdit" class="invalid-feedback terminosCondiciones-errorEdit"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="fechaRegistroEdit">Fecha de Registro</label>
+                                    <input type="date" id="fechaRegistroEdit" aria-describedby="fechaRegistroErrorEdit"   class="form-control fechaRegistroEdit" placeholder="Ingresa el Nombre" />
+                                    <div id="fechaRegistroErrorEdit" class="invalid-feedback fechaRegistro-errorEdit"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="sexoEdit">Sexo</label>
+                                    <select name="" id="sexoEdit" aria-describedby="sexoErrorEdit"   class="form-control">
+                                        <option disabled selected>Selecciona una opción</option>
+                                        <option value="0">Indefinido</option>
+                                        <option value="1">Femenino</option>
+                                        <option value="2">Masculino</option>
+                                    </select>
+                                    <div id="sexoErrorEdit" class="invalid-feedback sexo-errorEdit"></div>
+                                </div>
+                            </div>
+                            <div class="row">  
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="usuarioPermitidoEdit">Usuarios Permitidos</label>
+                                    <select name="" id="usuarioPermitidoEdit" aria-describedby="usuarioPermitidoErrorEdit"   class="form-control">
+                                        <option disabled selected>Selecciona una opción</option>
+                                        <option value="1">Usuarios Nuevos</option>
+                                        <option value="0">Usuarios Antiguos</option>
+                                    </select>
+                                    <div id="usuarioPermitidoErrorEdit" class="invalid-feedback usuarioPermitido-errorEdit"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="tipoUsuariosEdit">Tipo de Usuario</label>
+                                    <select name="" id="tipoUsuariosEdit" aria-describedby="tipoUsuariosErrorEdit"   class="form-control">
+                                        <option disabled selected>Selecciona una opción</option>
+                                        <option value="0">Todos los Usuarios</option>
+                                        <option value="1">Comercio Afiliado</option>
+                                        <option value="2">Final</option>
+                                    </select>
+                                    <div id="tipoUsuariosErrorEdit" class="invalid-feedback tipoUsuarios-errorEdit"></div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="fechaInicialEdit">Fecha Inicial</label>
+                                    <input type="date" id="fechaInicialEdit" aria-describedby="fechaInicialErrorEdit"   class="form-control" />
+                                    <div id="fechaInicialErrorEdit" class="invalid-feedback fechaInicial-errorEdit"></div>
+                                    </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="fechaFinalEdit">Fecha Final</label>
+                                    <input type="date" id="fechaFinalEdit" aria-describedby="fechaFinalError"   class="form-control"/>
+                                    <div id="fechaFinalErrorEdit" class="invalid-feedback fechaFinal-errorEdit"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="edadInicialEdit">Edad Inicial</label>
+                                    <input type="number" id="edadInicialEdit" aria-describedby="edadInicialErrorEdit"   class="form-control" />
+                                    <div id="edadInicialErrorEdit" class="invalid-feedback edadInicial-errorEdit"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="edadFinalEdit">Edad Final</label>
+                                    <input type="number" id="edadFinalEdit" aria-describedby="edadFinalErrorEdit"  class="form-control"/>
+                                    <div id="edadFinalErrorEdit" class="invalid-feedback edadFinal-errorEdit"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="maximoParticipantesEdit">Maximo de Participaciones</label>
+                                    <input type="number" id="maximoParticipantesEdit" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary prev-btn-edit">Anterior</button>
+                                <button type="button" id="btnSiguienteEdit" class="btn btn-primary next-btn-edit">Siguiente</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <!--Stepper 3-->
+                    <div id="step3Edit" style="display: none;">
+                        <div class="form-step ">
+                            <div class="content-header mt-2 mb-2 ">
+                                <h4 class="mb-0">Etapa registradas</h4>
+                                <small class="text-muted">Etapas registradas en esta campaña.</small>
+                            </div>
+                            <!-- <div class="d-flex justify-content-end "  style="display: none;">
+                                <button type="button" id="CrearEtapaBtn" class="btn btn-outline-primary">Crear Etapa</button>
+                            </div> -->
+                            <div id="CrearEtapa" style="display: none;">
+                                <div class="content-header mt-2 mb-1">
+                                    <h4 class="mb-0">Configuración de Etapa</h4>
+                                    <small class="text-muted">Ingresa los datos basicos de la Campaña.</small>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="NombreEtapa">Nombre</label>
+                                        <input type="text" id="NombreEtapa" aria-describedby="NombreEtapaError"  class="form-control" />
+                                        <div id="NombreEtapaError" class="invalid-feedback NombreEtapa-error"></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="orden">Orden</label>
+                                        <input type="number" id="orden" class="form-control" aria-describedby="ordenError"  />
+                                        <div id="ordenError" class="invalid-feedback orden-error"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="descripcionEtapa">Descripcion de las Etapas</label>
+                                        <textarea type="text" id="descripcionEtapa" aria-describedby="descripcionEtapaError" class="form-control" placeholder="Ingrese la descripcion" rows="2"></textarea>
+                                        <div id="descripcionEtapaError" class="invalid-feedback descripcionEtapa-error"></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="tipoParticipacion">Tipo de Participación</label>
+                                        <select name="tipoParticipacion" aria-describedby="tipoParticipacionError" id="tipoParticipacion" class="form-control">
+                                            <option disabled selected>Selecciona una opción</option>
+                                            <option value="0">Transacciones</option>
+                                            <option value="1">Recurrentes</option>
+                                            <option value="2">Acumular Transacciones</option>
+                                            <option value="3">Acumular Transacciones Recurrentes</option>
+                                            <option value="4">Acumular Valor</option>
+                                            <option value="5">Combinar Transacciones</option>
+                                        </select>
+                                        <div id="tipoParticipacionError" class="invalid-feedback tipoParticipacion-error"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="RangoTiempo">Tipo de Participación</label>
+                                        <select name="RangoTiempo" aria-describedby="RangoTiempoError" id="RangoTiempo" class="form-control">
+                                            <option disabled selected>Selecciona una opción</option>
+                                            <option value="0">Diaria</option>
+                                            <option value="1">Semanal</option>
+                                            <option value="2">Anual</option>
+                                        </select>
+                                        <div id="RangoTiempoError" class="invalid-feedback RangoTiempo-error"></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="intervalo">Intervalo de tiempo</label>
+                                        <input type="number" id="intervalo" class="form-control" aria-describedby="intervaloError"  />
+                                        <div id="intervaloError" class="invalid-feedback intervalo-error"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="inputsContainer">
+                                            <div id="inputsTipo0" style="display: none;">
+                                                <!-- Inputs para Aculadas -->
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label class="form-label" for="minimoTransaccion">Minimo Transaccion</label>
+                                                        <input type="text" id="minimoTransaccion" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                
+                                            <div id="inputsTipo1" style="display: none;">
+                                                <!-- Inputs para Acumuladas -->
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label class="form-label" for="TotalMinimo">Total Minimo</label>
+                                                        <input type="text" id="TotalMinimo" class="form-control" />
+                                                    </div>
+                                               
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div>   
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="btn-crear d-flex justify-content-end mt-2">
+                                            <button type="button" class="btn btn-outline-primary" id="add-step-btn">Crear</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="datatables-basic table mb-3 mt-2" id="TablaEtapaEdit">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>ETAPA</th>
+                                        <th>DESCRIPCION</th>
+                                        <th>ACCION</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary prev-btn-edit">Anterior</button>
+                                <button type="submit" class="btn btn-primary" id="btnSubmitEdit">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    <!--END: FormNew-->
+
+    <!--BEGING: FormDelete-->
+    <div class="modal modal-slide-in new-user-modal fade" id="modalDelete">
+        <div class="modal-dialog">
+          <form id="formDelete" class="add-new-user modal-content pt-0" autocomplete="off">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+            <div class="modal-header mb-1">
+              <h5 class="modal-title" id="exampleModalLabel">Inhabilitar un tabla</h5>
+            </div>
+            <div class="modal-body flex-grow-1">
+              <div class="form-group">
+                <input id="idDelete" type="hidden">
+                <p>¿Esta seguro que desea <b>¿esta seguro que desea inhabilitar esta tabla?</b></p>
+              </div>
+              <button id="BtnDelete" type="button" class="btn btn-danger mr-1 data-submit" >Confirmar</button>
+              <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+              
+            </div>
+          </form>
+        </div>
+    </div>
+    <!--END: FormDelete-->  
+
+
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light">
+        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">&copy; 2024<a class="ml-25"
+                    href="#" target="_blank">LEALTAD</a><span class="d-none d-sm-inline-block">, Reservados todos los
+                    derechos.</span></span><span class="float-md-right d-none d-md-block">Desarrollado por:
+                SOLUCIONES-UN<i data-feather="code"></i></span></p>
+    </footer>
+    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+    <!-- END: Footer-->
+
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
+
+    <script src="../app-assets/vendors/js/extensions/moment.min.js"></script>
+    <script src="../app-assets/vendors/js/forms/wizard/bs-stepper.min.js"></script>
+    <script src="../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="../app-assets/vendors/js/file-uploaders/dropzone.min.js"></script>
+    <script src="../app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
+    <script src="../app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
+    <script src="../app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
+    <script src="../app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
+    <script src="../app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
+    <script src="../app-assets/vendors/js/tables/datatable/responsive.bootstrap4.min.js"></script>
+    <!-- END: Page Vendor JS-->
+    <script src="../app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <!-- BEGIN: Theme JS-->
+    <script src="../app-assets/js/core/app-menu.min.js"></script>
+    <script src="../app-assets/js/core/app.min.js"></script>
+    <script src="../app-assets/js/scripts/customizer.min.js"></script>
+
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+
+    <script src="../js/functions.js"></script>
+    <script src="../js/campanias.js"></script>
+    <script src="../js/menuDinamico.js"></script>
+    <!-- END: Page JS-->
+
+    
+    <!-- leer excel-->
+    <script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
+    <!-- leer excel end-->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async() => {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        });
+    </script>
+</body>
+<!-- END: Body-->
+
+</html>
