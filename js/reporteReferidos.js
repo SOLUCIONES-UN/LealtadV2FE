@@ -136,16 +136,6 @@ const getReport = () => {
 };
 
 
-const Alert = function (message, status) {
-  toastr[`${status}`](message, `${status}`, {
-    closeButton: true,
-    tapToDismiss: false,
-    positionClass: "toast-top-right",
-    rtl: false,
-  });
-};
-
-
 function mostrarDatosEnTabla(datos) {
   console.log("Datos para mostrar en la tabla:", datos);
   if (!Array.isArray(datos)) {

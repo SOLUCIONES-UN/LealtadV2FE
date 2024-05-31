@@ -1,5 +1,6 @@
 const url = "http://localhost:3000/";
 $(function () {});
+$(function () {});
 
 $("#btnConsultar").click(function () {
   const headers = {
@@ -116,10 +117,16 @@ $("#btnGrafCircular").click(function () {
       }, Campaña: ${label.split(" - ")[0]}, Participantes: ${
         data[index]
       }</div>`;
+      rowHTML += `<div class="col-md-3">Fecha: ${
+        label.split(" - ")[1]
+      }, Campaña: ${label.split(" - ")[0]}, Participantes: ${
+        data[index]
+      }</div>`;
       if ((index + 1) % 4 === 0) {
         rowHTML += '</div><div class="row">';
       }
     });
+    rowHTML += "</div>";
     rowHTML += "</div>";
     $("#listaDatos").html(rowHTML);
 

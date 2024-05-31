@@ -103,6 +103,26 @@ $(document).ready(function () {
 
 
 
+
+
+  function validarFechas() {
+    const FechaInicio = document.getElementById('FechaInicio').value;
+    const FechaFin = document.getElementById('FechaFin').value;
+  
+    if (FechaInicio >= FechaFin) {
+        Alert('La fecha Fin debe ser mayor a la fecha inicio','error');
+    }
+  }
+  
+  window.onload = function() {
+    document.getElementById('FechaInicio').addEventListener('blur', validarFechas);
+    document.getElementById('FechaFin').addEventListener('blur', validarFechas);
+  }
+  
+
+
+
+
   
   const getReport = () => {
     var myHeaders = new Headers();

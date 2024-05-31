@@ -146,7 +146,7 @@ $(function () {
       idRol: $("#rolActualizar").val(),
     });
 
-    var requestOptions = {
+    var requestOptions = {  
       method: "PUT",
       headers: myHeaders,
       body: raw,
@@ -223,13 +223,11 @@ const getUsuarios = () => {
       dataSrc: "",
       headers: { Authorization: token },
     },
-
     columns: [
       { data: "username" },
       { data: "nombre" },
       { data: "rol.descripcion" },
-      { data: "tipoUsuario" },
-
+      { data: "tipoUsuario", defaultContent: "" },
       {
         data: "username",
         render: function (data) {
@@ -239,15 +237,11 @@ const getUsuarios = () => {
             feather.icons["more-vertical"].toSvg({ class: "font-small-4" }) +
             "</a>" +
             '<div class="dropdown-menu dropdown-menu-right">' +
-            '<a href="#" onclick="OpenEdit(' +
-            data +
-            ')" class="btn_edit dropdown-item">' +
+            '<a href="#" onclick="OpenEdit(\'' + data + '\')" class="btn_edit dropdown-item">' +
             feather.icons["archive"].toSvg({ class: "font-small-4 mr-50" }) +
             " Actualizar" +
             "</a>" +
-            '<a href="#" onclick="OpenDelete(' +
-            data +
-            ')" class="btn_delete dropdown-item">' +
+            '<a href="#" onclick="OpenDelete(\'' + data + '\')" class="btn_delete dropdown-item">' +
             feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" }) +
             " Inhabilitar" +
             "</a>" +
@@ -257,7 +251,6 @@ const getUsuarios = () => {
         },
       },
     ],
-    // order: [[1, 'asc']],
     dom:
       '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
       '<"col-lg-12 col-xl-6" l>' +
@@ -272,7 +265,6 @@ const getUsuarios = () => {
       search: "Buscar",
       searchPlaceholder: "Buscar...",
     },
-    // Buttons with Dropdown
     buttons: [
       {
         text: "Nuevo",
@@ -283,12 +275,12 @@ const getUsuarios = () => {
         },
         init: function (api, node, config) {
           $(node).removeClass("btn-secondary");
-          //Metodo para agregar un nuevo usuario
         },
       },
     ],
   });
 };
+
 
 // console.log (data);
 

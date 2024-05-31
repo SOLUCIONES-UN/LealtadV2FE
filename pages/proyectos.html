@@ -206,7 +206,7 @@
             </tbody>
           </table>
           <div class="d-flex justify-content-end">
-            <button id="btnSubmit" type="submit" class="btn btn-primary mr-1 data-submit">Agregar</button>
+            <button id="btnSubmit" type="submit" class="btn btn-primary mr-1 data-submit">Guardar</button>
             <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
           </div>
         </div>
@@ -219,6 +219,7 @@
   <div class="modal modal-slide-in new-user-modal fade" id="modalEdit">
     <div class="modal-dialog w-50">
         <form id="formEdit" class="add-new-user modal-content pt-0" autocomplete="off">
+            <input type="hidden" id="id" name="id">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
             <div class="modal-header mb-1">
                 <h5 class="modal-title" id="exampleModalLabel">Actualizar Proyecto</h5>
@@ -257,7 +258,7 @@
 
                 <!-- Tabla -->
                 <table class="datatables-basic table mb-3 mt-2 stepper-table" id="tableLocalidadEdit">
-                    <thead >
+                    <thead>
                         <tr>
                             <th>#</th>
                             <th>Departamento</th>
@@ -265,12 +266,11 @@
                             <th>Acción</th>
                         </tr>
                     </thead>
-
                     <tbody id="tbodyLocalidadEdith" name="tbodyLocalidadEdith">
                         <!-- Aquí se agregarán las filas dinámicamente -->
                     </tbody>
-                  
                 </table>
+
                 <div class="d-flex justify-content-end">
                     <button id="btnSubmEdit" type="submit" class="btn btn-primary mr-1 data-submit">Actualizar</button>
                     <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
@@ -278,7 +278,8 @@
             </div>
         </form>
     </div>
-  </div>
+</div>
+
 
 
   <div class="modal modal-slide-in new-user-modal fade" id="modalDelete">

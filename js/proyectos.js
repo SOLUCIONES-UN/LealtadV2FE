@@ -11,6 +11,8 @@ const headers = {
     'Content-Type': 'application/json'
 };
 
+let clickCount = 0; // Contador de clics en el botón de guardar
+
 $(function () {
     let tabla = getProyectos();
     getMunicipios();
@@ -65,6 +67,7 @@ $(function () {
 
     $('#modalNew').on('show.bs.modal', function () {
         limpiarFormulario();
+        clickCount++;
         $("#btnSubmit").attr("disabled", false);
     });
 
@@ -95,29 +98,29 @@ $(function () {
 
     $('#formNew').submit(function (event) {
         event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
-
+    
         const descripcion = $('#descripcion').val();
         const ruta = $('#ruta').val();
-
+    
         if (!validarDescripcion(descripcion) || !validarRuta(ruta)) {
             return false;
         }
-
+    
         $("#btnSubmit").attr("disabled", true);
-
+    
         var raw = JSON.stringify({
             "descripcion": descripcion,
             "ruta": ruta,
             "localidades": localidadesSeleccionadas // Incluir las localidades seleccionadas
         });
-
+    
         var requestOptions = {
             method: 'POST',
             headers: headers,
             body: raw,
             redirect: 'follow'
         };
-
+    
         fetch(`${url}projects`, requestOptions)
             .then(response => {
                 if (!response.ok) {
@@ -139,35 +142,36 @@ $(function () {
                 Alert(error.errors || 'Ha sucedido un error al intentar agregar un nuevo proyecto.', 'error');
                 $("#btnSubmit").attr("disabled", false);
             });
-
+    
         return false;
     });
-
+    
     $('#formEdit').submit(function (event) {
         event.preventDefault();
-
+    
         const descripcion = $('#descripcionEdit').val();
         const ruta = $('#rutaEdit').val();
-
+    
         if (!validarDescripcion(descripcion) || !validarRuta(ruta)) {
             return false;
         }
-
+    
         const id = $('#id').val();
-
+    
         var raw = JSON.stringify({
+            "id": id,
             "descripcion": descripcion,
             "ruta": ruta,
             "localidades": localidadesSeleccionadas // Incluir las localidades seleccionadas
         });
-
+    
         var requestOptions = {
             method: 'PUT',
             headers: headers,
             body: raw,
             redirect: 'follow'
         };
-
+    
         fetch(`${url}projects/${id}`, requestOptions)
             .then(response => {
                 if (!response.ok) {
@@ -180,7 +184,8 @@ $(function () {
                     limpiarFormulario();
                     $('#modalEdit').modal('toggle');
                     Alert(result.message, 'success');
-                    // No recargamos la tabla aquí
+                    // Aquí asegúrate de recargar la tabla si es necesario
+                    tabla.api().ajax.reload(); // Recargar la tabla después de actualizar
                 } else {
                     Alert(result.message, 'error');
                 }
@@ -189,10 +194,10 @@ $(function () {
                 Alert(error.errors || 'Ha sucedido un error al intentar actualizar el proyecto.', 'error');
                 $("#btnSubmEdit").attr("disabled", false);
             });
-
+    
         return false;
     });
-
+    
     $('#BtnDelete').click(function () {
         const id = $('#idDelete').val();
 
@@ -471,68 +476,46 @@ const getMunicipios = () => {
         .catch(error => console.log('error', error));
 }
 
+
+
+
+
 const OpenEdit = (id) => {
-
-    var table;
-
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", token);
+  
     var requestOptions = {
-        method: 'GET',
-        headers: {
-            'Authorization': token,
-        },
-        redirect: 'follow'
+      method: "GET",
+      redirect: "follow",
+      headers: myHeaders,
     };
-
-    // Obtener datos del proyecto
+  
     fetch(`${url}projects/${id}`, requestOptions)
-        .then(response => {
-            if (!response.ok) {
-                if (response.status === 401) {
-                    console.error("Error de autenticación: Token no válido o expirado.");
-                }
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(result => {
-            $('#tableLocalidadEdit').dataTable().fnDestroy();
-            console.log('Project Data:', result);
-            $('#id').val(id);
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        $("#id").val(id);
             $('#descripcionEdit').val(result.descripcion);
-            $('#rutaEdit').val(result.ruta);
-            dataTableEdith = result.departamento_proyectos; // Limpiar las localidades seleccionadas
+                        $('#rutaEdit').val(result.ruta);
+            dataTableEdith = result.departamento_proyectos;
+                        $('#tableLocalidadEdit tbody').empty(); // Limpiar la tabla de localidades en edición
 
-            //$('#tableLocalidadEdit tbody').empty();
+            localidadesSeleccionadas = [];
+            dataDepaAndMuni = [];
 
             result.departamento_proyectos.forEach((loc, index) => {
+                localidadesSeleccionadas.push({ departamentoId: loc.departamento.id, municipioId: loc.municipio.id });
+                dataDepaAndMuni.push({ departamentoId: loc.departamento.id, municipioId: loc.municipio.id });
 
-                localidadesSeleccionadas.push({ departamentoId: loc.departamento.id, municipioId: loc.municipio.id  });
-                dataDepaAndMuni.push({ departamentoId: loc.departamento.id, municipioId: loc.municipio.id});
-            });
+                var newRow = '<tr data-departamento-id="' + loc.departamento.id + '" data-municipio-id="' + loc.municipio.id + '">' +
+                    '<td>' + (index + 1) + '</td>' +
+                    '<td>' + loc.departamento.nombre + '</td>' +
+                    '<td>' + loc.municipio.nombre + '</td>' +
+                    '<td><a href="#" class="dropdown-item delete-row" onclick="deleteRow(' + loc.id + ')">' + feather.icons['trash-2'].toSvg({ class: 'font-small-4 ml-2 ' }) + '</a></td>' +
+                    '</tr>';
 
-            tableEditLocalidades = $('#tableLocalidadEdit').dataTable({
-                data: dataTableEdith,
-                searching: false,
-                paging: false,
-                columns: [
-                    {
-                        data: null,
-                        render: function (data, type, row, meta) {
-                            if (type === 'display') {
-                                return meta.row + 1;
-                            }
-                            return meta.row + 1;
-                        }
-                    },
-                    { data: "departamento.nombre" },
-                    { data: "municipio.nombre" },
-                    {
-                        data: "id",
-                        render: function (data) {
-                            return `<a href="#" class="dropdown-item delete-row" onclick="deleteRow(${data})">${feather.icons['trash-2'].toSvg({ class: 'font-small-4 ml-2 ' })}</a>`
-                        }
-                    }
-                ],
+                $('#tableLocalidadEdit tbody').append(newRow);
             });
 const url = 'http://localhost:3000/';
 let token = localStorage.getItem("token");
@@ -1094,16 +1077,20 @@ const OpenDelete = (id) => {
 
 
 
-            //table.reload();
-            $('#modalEdit').modal('toggle');
-            tableEditLocalidades.fnDraw();
+        $("#modalEdit").modal("toggle");
+      })
+      .catch((error) => console.log("error", error));
+  };
 
-        })
-        .catch(error => {
-            console.error("Error en la solicitud GET:", error);
-            Alert("Error al obtener datos del proyecto", 'error');
-        })
-}
+
+
+
+
+
+
+
+
+
 
 const deleteRow = (data) => {
     console.log('ID:', data);
