@@ -418,7 +418,7 @@
                 </div>
                 <div id="stepper">
                     <!--Stepper 1-->
-                    <div id="step1">
+                    <di id="step1">
                         <div class="form-step ">
                             <div class="content-header mt-2 mb-1">
                                 <h4 class="mb-0">Configuración de Campaña</h4>
@@ -443,6 +443,7 @@
                                     </div>
                                   </div>
                                 </div>
+
                                 <div class="form-group col-md-6">
                                   <label for="imgNotificacion">Icono de Notificación</label>
                                   <div class="custom-file">
@@ -531,7 +532,8 @@
                                 <button type="button" id="btnSiguiente" class="btn btn-primary next-btn">Siguiente</button>
                             </div>
                         </div>
-                    </div>
+                    </di
+                    v>
 
                     <!--Stepper 2-->
                     <div id="step2" style="display: none;">  
@@ -656,14 +658,16 @@
                     <!--Stepper 3-->
                     <div id="step3" style="display: none;">
                         <div class="form-step ">
+
+
+                            <!-- I'm here -->
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label class="form-label" for="notifiacionCorreo">¡Avisame cuando la Campaña este a punto de vencerse!</label>
-                                    <input type="text" id="correo" aria-describedby="NombreEtapaError"  class="form-control"  placeholder="Correo"/>
-                                    <div id="NombreEtapaError" class="invalid-feedback NombreEtapa-error"></div>
+                                    <h4 class="mb-0">¡Avisame cuando la Campaña este a punto de vencerse!</h4>
+                                    <input type="email" id="emails" aria-describedby="emailsError"  class="form-control"  placeholder="Correo"/>
+                                    <div id="emailsError" class="invalid-feedback">Por favor, introduce correos válidos.</div>
                                 </div>
                             </div>
-
 
                             <div class="content-header mt-2 mb-1">
                                 <h4 class="mb-0">Configuración de Etapa</h4>
@@ -702,21 +706,38 @@
                                 </div>
                             </div>
                             <div class="row">
+
                                 <div class="form-group col-md-6">
                                     <label class="form-label" for="RangoTiempo">Rango de tiempo</label>
                                     <select name="RangoTiempo" aria-describedby="RangoTiempoError" id="RangoTiempo" class="form-control">
                                         <option disabled selected>Selecciona una opción</option>
                                         <option value="0">Diaria</option>
                                         <option value="1">Semanal</option>
-                                        <option value="2">Anual</option>
+                                        <option value="2">Mensual</option>
                                     </select>
                                     <div id="RangoTiempoError" class="invalid-feedback RangoTiempo-error"></div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label class="form-label" for="intervalo">Intervalo de Dias</label>
-                                    <input type="number" id="intervalo" class="form-control" aria-describedby="intervaloError" />
-                                    <div id="intervaloError" class="invalid-feedback intervalo-error"></div>
+                                
+                                <div class="form-group col-md-6" id="intervaloDiarioDiv" style="display: none;">
+                                    <label class="form-label" for="intervalo">Intervalo de Días</label>
+                                    <input type="number" id="intervalo" class="form-control" aria-describedby="ordenError" />
+                                    <div id="ordenError" class="invalid-feedback orden-error"></div>
                                 </div>
+                                
+                                <div class="form-group col-md-6" id="intervaloSemanalDiv" style="display: none;">
+                                    <label class="form-label" for="intervaloSemanal">Intervalo Semanal</label>
+                                    <input type="number" id="intervaloSemanal" class="form-control" aria-describedby="ordenError" />
+                                    <div id="ordenError" class="invalid-feedback orden-error"></div>
+                                </div>
+                                
+                                <div class="form-group col-md-6" id="intervaloMensualDiv" style="display: none;">
+                                    <label class="form-label" for="intervaloMensual">Intervalo Mensual</label>
+                                    <input type="number" id="intervaloMensual" class="form-control" aria-describedby="ordenError" />
+                                    <div id="ordenError" class="invalid-feedback orden-error"></div>
+                                </div>
+                                
+                                
+                                
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
@@ -787,7 +808,7 @@
                     <!-- Contenido del modal -->
                     <div class="spinner-container" style="display: none;">
                       <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Cargando...</span>
+                        <span class="visually-hidden"></span>
                       </div>
                     </div>
                 </div>
@@ -1011,6 +1032,14 @@
                     <!--Stepper 3-->
                     <div id="step3Edit" style="display: none;">
                         <div class="form-step ">
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <h4 class="mb-0">¡Avisame cuando la Campaña este a punto de vencerse!</h4>
+                                    <input type="email" id="emailsEdit" aria-describedby="emailsErrorEdit"  class="form-control"  placeholder="Correo"/>
+                                    <div id="emailsErrorEdit" class="invalid-feedback">Por favor, introduce correos válidos.</div>
+                                </div>
+                            </div>
                             <div class="content-header mt-2 mb-2 ">
                                 <h4 class="mb-0">Etapa registradas</h4>
                                 <small class="text-muted">Etapas registradas en esta campaña.</small>
@@ -1062,14 +1091,29 @@
                                             <option disabled selected>Selecciona una opción</option>
                                             <option value="0">Diaria</option>
                                             <option value="1">Semanal</option>
-                                            <option value="2">Anual</option>
+                                            <option value="2">Mensual</option>
                                         </select>
                                         <div id="RangoTiempoError" class="invalid-feedback RangoTiempo-error"></div>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="form-label" for="intervalo">Intervalo de tiempo</label>
-                                        <input type="number" id="intervalo" class="form-control" aria-describedby="intervaloError"  />
+                                    <div class="form-group col-md-6" id="intervaloDiarioDiv" style="display: none;">
+                                        <label class="form-label" for="intervalo">Intervalo de Diario</label>
+                                        <input type="number" id="intervalo" class="form-control" aria-describedby="intervaloError" />
                                         <div id="intervaloError" class="invalid-feedback intervalo-error"></div>
+                                    </div>
+                                    <div class="form-group col-md-6" id="intervaloSemanalDiv" style="display: none;">
+                                        <label class="form-label" for="intervaloSemanal">Intervalo de Semanal</label>
+                                        <input type="number" id="intervaloSemanal" class="form-control" aria-describedby="intervaloSemanalError" />
+                                        <div id="intervaloSemanalError" class="invalid-feedback intervaloSemanal-error"></div>
+                                    </div>
+                                    <div class="form-group col-md-6" id="intervaloMensualDiv" style="display: none;">
+                                        <label class="form-label" for="intervaloMensual">Intervalo de Mensual</label>
+                                        <input type="number" id="intervaloMensual" class="form-control" aria-describedby="intervaloMensualError" />
+                                        <div id="intervaloMensualError" class="invalid-feedback intervaloMensual-error"></div>
+                                    </div>
+                                    <div class="form-group col-md-6" id="diasResultadoDiv" style="display: none;">
+                                        <label class="form-label" for="diasResultado">Días Resultantes</label>
+                                        <input type="number" id="diasResultado" class="form-control" aria-describedby="diasResultadoError" readonly />
+                                        <div id="diasResultadoError" class="invalid-feedback diasResultado-error"></div>
                                     </div>
                                 </div>
                                 <div class="row">
