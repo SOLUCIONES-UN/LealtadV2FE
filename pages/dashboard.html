@@ -56,7 +56,7 @@
         .card {
     background-color: #f9f9f9;
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
     padding: 20px;
     width: 100%; /* Ajusta el ancho según tus necesidades */
 }
@@ -76,7 +76,7 @@ canvas {
 
 .card {
         position: relative;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
         border-radius: 10px;
         transition: all 0.3s ease-in-out;
         border: 3px solid transparent; /* Borde transparente inicial */
@@ -91,9 +91,9 @@ canvas {
     }
 
     .card:hover {
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); */
         transform: translateY(-10px);
-        border: 3px solid rgba(0, 0, 0, 0.1); /* Borde visible al hacer hover */
+        /* border: 3px solid rgba(0, 0, 0, 0.1);  */
     }
 
     /* .avatar {
@@ -114,6 +114,40 @@ canvas {
         background-color: #9F97D5;
         margin-top: 20px
     }
+
+
+
+    .card-twodes {
+        /* background-color: #9F97D5; */
+        margin-top: 50px;
+    width: 100%; /* O cualquier otro valor que desees */
+    height: 390px; /* Ajusta este valor según tus necesidades */
+    }
+
+
+    
+    .card-twodesnew {
+        /* background-color: #9F97D5; */
+        margin-top: 30px;
+    width: 100%; /* O cualquier otro valor que desees */
+    height: 150px; /* Ajusta este valor según tus necesidades */
+    }
+
+
+
+    .card-twocard {
+        /* background-color: #9F97D5; */
+        margin-top: 30px;
+    width: 100%; /* O cualquier otro valor que desees */
+    height: 185px; /* Ajusta este valor según tus necesidades */
+    }
+
+
+
+
+
+
+
     .p-50 {
         padding: 50%;
     }
@@ -146,7 +180,7 @@ canvas {
     .texti {
         margin: 0;
         font-size: 1rem;
-        color: #060606;
+        color: white;
     }
     
 
@@ -327,7 +361,7 @@ canvas {
                             <div class="card justify-content-center">
                                 <div class="card-two card mb-7 shadow   justify-content-center">
                                     <div class="card-item" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
-                                        <div class="card-header flex-column align-items-start pb-0">
+                                        <div class="card-twodesnew  card-header flex-column align-items-start pb-0">
                                             <div class="avatar bg-light-primary p-20 m-0">
                                                 <div class="avatar-content">
                                                     <i data-feather="users" class="font-medium-5"></i>
@@ -349,7 +383,7 @@ canvas {
                             <div class=" card  justify-content-center justify-content-center ">
                             <div class="card-two card mb-7  shadow">
                                 <div class="card-item"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
-                                <div class="card-header flex-column align-items-start pb-0">
+                                <div class=" card-twodesnew card-header flex-column align-items-start pb-0">
                                     <div class="avatar bg-light-warning p-50 m-0">
                                         <div class="avatar-content">
                                             <i data-feather="package" class="font-medium-5"></i>
@@ -401,7 +435,7 @@ canvas {
 
                             <div class="card-two card   ">
                                 <div class="card-item"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
-                                <div class="card-body">
+                                <div class="card-twodes card-body">
                                     <div class="row pb-50">
                                         <div class="col-sm-6 col-12 d-flex justify-content-between flex-column order-sm-1 order-2 mt-1 mt-sm-0">
                                             <div class="mb-1 mb-sm-0">
@@ -486,13 +520,13 @@ canvas {
                             </div>
                         </div> -->
 
-                        <div class="col-lg-6 col-md-6 col-sm-12 text-center">
+                        <div class="col-lg-6 col-12">
                             <div class=" card   justify-content-center">
 
                             <div class="card-two card ">
                                 <div class="card-item"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
 
-                                <div class="card-body">
+                                <div class=" card-twocard card-body">
                                     <canvas id="graficaCampanas1"></canvas>
                                 </div>
                             </div>
@@ -509,7 +543,7 @@ canvas {
                                 <div class="card-item"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
 
                                 <div class="card-body">
-                                    <div class="row pb-50">
+                                    <div class="row pb-60">
                                         <div class="col-sm-6 col-12 d-flex justify-content-between flex-column order-sm-1 order-2 mt-1 mt-sm-0">
                                             <div class="mb-1 mb-sm-0">
                                                 <h2 class="fw-bolder mb-25">122</h2>
@@ -590,7 +624,7 @@ canvas {
 
                                 <div class="card-body ">
                                     <div class="text-center">
-                                        <h4 class="texti text-purple">Top 10 de Usuarios participantes</h4>
+                                        <h4 class="texti card-title">Top 10 de Usuarios participantes</h4>
 
                                     </div>
                                     <div class="table-responsive custom-scroll">
