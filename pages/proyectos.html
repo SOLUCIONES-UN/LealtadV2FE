@@ -54,6 +54,27 @@
  </style> 
 
 
+<style>
+/* Estilo para los elementos con la clase is-invalid */
+.is-invalid {
+    border-color: #dc3545;
+}
+
+/* Estilo para los mensajes de retroalimentación */
+.invalid-feedback {
+    display: none;
+    color: #dc3545;
+}
+
+/* Mostrar el mensaje de retroalimentación cuando el elemento tiene la clase is-invalid */
+.is-invalid + .invalid-feedback {
+    display: block;
+}
+
+   </style> 
+  
+
+
 
 </head>
 <!-- END: Head-->
@@ -254,27 +275,25 @@
                     <input type="text" class="form-control ruta" id="rutaEdit" placeholder="Ruta del proyecto" name="ruta" aria-describedby="ruta-error" required />
                     <div class="invalid-feedback ruta-error"></div>
                 </div>
-                <div class="form-row">
+                <div class="row">
                   <div class="form-group col-md-6">
                       <label class="form-label" for="departamentoEdit">Departamento</label>
                       <select name="departamento" id="departamentoEdit" aria-describedby="departamentoError" required class="form-control">
                           <option disabled selected>Selecciona una opción</option>
                       </select>
-                      <div id="departamentoErrorVacio" class="invalid-feedback">Por favor, seleccione un departamento.</div>
-                      <div id="departamentoErrorDuplicado" class="invalid-feedback">Departamento y municipio ya existen en la tabla.</div>
+                      <div id="departamentoErrorVacioedit" class="invalid-feedback">Por favor, seleccione un departamento.</div>
+                      <div id="departamentoErrorDuplicadoedit" class="invalid-feedback">Departamento ya existen en la tabla.</div>
                   </div>
                   <div class="form-group col-md-6">
                       <label class="form-label" for="municipioEdit">Municipio</label>
                       <select name="municipio" id="municipioEdit" aria-describedby="municipioError" required class="form-control">
-                          <option disabled selected value="0">Selecciona una opción</option>
+                          <option disabled selected>Selecciona una opción</option>
                       </select>
-                      <div id="municipioErrorVacio" class="invalid-feedback">Por favor, seleccione un municipio.</div>
-                      <div id="municipioErrorDuplicado" class="invalid-feedback">Departamento y municipio ya existen en la tabla.</div>
+                      <div id="municipioErrorVacioedit" class="invalid-feedback">Por favor, seleccione un municipio.</div>
+                      <div id="municipioErrorDuplicadoedit" class="invalid-feedback">municipio ya existen en la tabla.</div>
                   </div>
               </div>
               
-              <div id="generalError" class="invalid-feedback general-error"></div>
-
                 <div class="btn-crear d-flex justify-content-end">
                     <button type="button" class="btn btn-outline-primary" id="addLocalidadEdit">Agregar</button>
                 </div>
