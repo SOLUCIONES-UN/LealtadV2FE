@@ -324,6 +324,7 @@ $(function () {
         $('#departamentoErrorDuplicado').hide();
         $('#municipioErrorVacio').hide();
         $('#municipioErrorDuplicado').hide();
+        
     
         // Validar que los campos no estén vacíos
         if (!departamentoId || !municipioId) {
