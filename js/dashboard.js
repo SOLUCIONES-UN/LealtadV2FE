@@ -150,6 +150,7 @@ function getAllParticipaciones() {
     .catch((error) => console.log("Error al obtener participaciones:", error));
 }
 
+
 function getAllCountCoustomeName() {
   console.log("\n\n\n\n\n\n Estoy dentro de la funcion Count \n\n\n\n");
   const headers = {
