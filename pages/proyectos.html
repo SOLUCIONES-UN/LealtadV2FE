@@ -39,6 +39,22 @@
   <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
   <!-- END: Custom CSS-->
 
+ <style>
+.is-invalid {
+    border-color: #dc3545;
+}
+.invalid-feedback {
+    display: none;
+    color: #dc3545;
+}
+.is-invalid + .invalid-feedback {
+    display: block;
+}
+
+ </style> 
+
+
+
 </head>
 <!-- END: Head-->
 
@@ -172,20 +188,23 @@
           </div>
           <div class="row">
             <div class="form-group col-md-6">
-              <label class="form-label" for="departamento">Departamento</label>
-              <select name="" id="departamento" aria-describedby="departamentoError" required class="form-control">
-                <option disabled selected>Selecciona una opción</option>
-              </select>
-              <div id="departamentoError" class="invalid-feedback departamento-error"></div>
+                <label class="form-label" for="departamento">Departamento</label>
+                <select name="departamento" id="departamento" aria-describedby="departamentoError" required class="form-control">
+                    <option disabled selected>Selecciona una opción</option>
+                </select>
+                <div id="departamentoErrorVacio" class="invalid-feedback">Por favor, seleccione un departamento.</div>
+                <div id="departamentoErrorDuplicado" class="invalid-feedback">Departamento y municipio ya existen en la tabla.</div>
             </div>
             <div class="form-group col-md-6">
-              <label class="form-label" for="municipio">Municipio</label>
-              <select name="municipio" id="municipio" aria-describedby="municipioError" required class="form-control">
-                <option disabled selected>Selecciona una opción</option>
-              </select>
-              <div id="municipioError" class="invalid-feedback municipio-error"></div>
+                <label class="form-label" for="municipio">Municipio</label>
+                <select name="municipio" id="municipio" aria-describedby="municipioError" required class="form-control">
+                    <option disabled selected>Selecciona una opción</option>
+                </select>
+                <div id="municipioErrorVacio" class="invalid-feedback">Por favor, seleccione un municipio.</div>
+                <div id="municipioErrorDuplicado" class="invalid-feedback">Departamento y municipio ya existen en la tabla.</div>
             </div>
-          </div>
+        </div>
+        
 
           <div class="btn-crear d-flex justify-content-end">
             <button type="button" class="btn btn-outline-primary" id="addLocalidad">Agregar</button>
@@ -236,21 +255,26 @@
                     <div class="invalid-feedback ruta-error"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label class="form-label" for="departamentoEdit">Departamento</label>
-                        <select name="departamento" id="departamentoEdit" aria-describedby="departamentoError" required class="form-control">
-                            <option disabled selected>Selecciona una opción</option>
-                        </select>
-                        <div id="departamentoError" class="invalid-feedback departamento-error"></div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="form-label" for="municipioEdit">Municipio</label>
-                        <select name="municipio" id="municipioEdit" aria-describedby="municipioError" required class="form-control">
-                            <option disabled selected value="0">Selecciona una opción</option>
-                        </select>
-                        <div id="municipioError" class="invalid-feedback municipio-error"></div>
-                    </div>
-                </div>
+                  <div class="form-group col-md-6">
+                      <label class="form-label" for="departamentoEdit">Departamento</label>
+                      <select name="departamento" id="departamentoEdit" aria-describedby="departamentoError" required class="form-control">
+                          <option disabled selected>Selecciona una opción</option>
+                      </select>
+                      <div id="departamentoErrorVacio" class="invalid-feedback">Por favor, seleccione un departamento.</div>
+                      <div id="departamentoErrorDuplicado" class="invalid-feedback">Departamento y municipio ya existen en la tabla.</div>
+                  </div>
+                  <div class="form-group col-md-6">
+                      <label class="form-label" for="municipioEdit">Municipio</label>
+                      <select name="municipio" id="municipioEdit" aria-describedby="municipioError" required class="form-control">
+                          <option disabled selected value="0">Selecciona una opción</option>
+                      </select>
+                      <div id="municipioErrorVacio" class="invalid-feedback">Por favor, seleccione un municipio.</div>
+                      <div id="municipioErrorDuplicado" class="invalid-feedback">Departamento y municipio ya existen en la tabla.</div>
+                  </div>
+              </div>
+              
+              
+              <div id="generalError" class="invalid-feedback general-error"></div>
 
                 <div class="btn-crear d-flex justify-content-end">
                     <button type="button" class="btn btn-outline-primary" id="addLocalidadEdit">Agregar</button>

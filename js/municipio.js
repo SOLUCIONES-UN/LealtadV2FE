@@ -278,18 +278,18 @@ const getMunicipios = () => {
     },
     // Buttons with Dropdown
     buttons: [
-      {
-        text: "Nuevo",
-        className: "add-new btn btn-primary mt-50",
-        attr: {
-          "data-toggle": "modal",
-          "data-target": "#modalNew",
-        },
-        init: function (api, node, config) {
-          $(node).removeClass("btn-secondary");
-          //Metodo para agregar un nuevo usuario
-        },
-      },
+      // {
+      //   text: "Nuevo",
+      //   className: "add-new btn btn-primary mt-50",
+      //   attr: {
+      //     "data-toggle": "modal",
+      //     "data-target": "#modalNew",
+      //   },
+      //   init: function (api, node, config) {
+      //     $(node).removeClass("btn-secondary");
+      //     //Metodo para agregar un nuevo usuario
+      //   },
+      // },
     ],
   });
 };
