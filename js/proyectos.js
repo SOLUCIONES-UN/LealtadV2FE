@@ -11,7 +11,6 @@ const headers = {
     'Content-Type': 'application/json'
 };
 
-
 let clickCount = 0; // Contador de clics en el botón de guardar
 
 $(function () {
@@ -160,6 +159,7 @@ $(function () {
         const id = $('#id').val();
     
         var raw = JSON.stringify({
+            "id": id,
             "descripcion": descripcion,
             "ruta": ruta,
             "localidades": localidadesSeleccionadas // Incluir las localidades seleccionadas
@@ -184,7 +184,8 @@ $(function () {
                     limpiarFormulario();
                     $('#modalEdit').modal('toggle');
                     Alert(result.message, 'success');
-                    // No recargamos la tabla aquí
+                    // Aquí asegúrate de recargar la tabla si es necesario
+                    tabla.api().ajax.reload(); // Recargar la tabla después de actualizar
                 } else {
                     Alert(result.message, 'error');
                 }
@@ -230,13 +231,48 @@ $(function () {
     });
 
     $('#addLocalidad').click(function () {
-        var departamentoSeleccionado = $('#departamento option:selected').text();
-        var municipioSeleccionado = $('#municipio option:selected').text();
         var departamentoId = $('#departamento').val();
         var municipioId = $('#municipio').val();
-
+    
+        // Resetear los estilos de validación y mensajes de error
+        $('#departamento').removeClass('is-invalid');
+        $('#municipio').removeClass('is-invalid');
+        $('#departamentoErrorVacio').hide();
+        $('#departamentoErrorDuplicado').hide();
+        $('#municipioErrorVacio').hide();
+        $('#municipioErrorDuplicado').hide();
+    
+        // Validar que los campos no estén vacíos
+        if (!departamentoId || !municipioId) {
+            if (!departamentoId) {
+                $('#departamento').addClass('is-invalid');
+                $('#departamentoErrorVacio').show();
+            }
+            if (!municipioId) {
+                $('#municipio').addClass('is-invalid');
+                $('#municipioErrorVacio').show();
+            }
+            return;
+        }
+    
+        // Verificar si el registro ya existe
+        var registroExiste = $('#tableLocalidad tbody tr').filter(function() {
+            return $(this).data('departamento-id') == departamentoId && $(this).data('municipio-id') == municipioId;
+        }).length > 0;
+    
+        if (registroExiste) {
+            $('#departamento').addClass('is-invalid');
+            $('#municipio').addClass('is-invalid');
+            $('#departamentoErrorDuplicado').show();
+            $('#municipioErrorDuplicado').show();
+            return;
+        }
+    
+        var departamentoSeleccionado = $('#departamento option:selected').text();
+        var municipioSeleccionado = $('#municipio option:selected').text();
+    
         var rowCount = $('#tableLocalidad tbody tr').length;
-
+    
         var newRow = '<tr data-departamento-id="' + departamentoId + '" data-municipio-id="' + municipioId + '">' +
             '<td>' + (rowCount + 1) + '</td>' +
             '<td>' + departamentoSeleccionado + '</td>' +
@@ -245,11 +281,12 @@ $(function () {
             feather.icons['trash-2'].toSvg({ class: 'font-small-4 mr-50' }) +
             '</a></td>' +
             '</tr>';
-
+    
         $('#tableLocalidad tbody').append(newRow);
-
+    
         localidadesSeleccionadas.push({ departamentoId: departamentoId, municipioId: municipioId });
     });
+    
 
     $('#tableLocalidad').on('click', '.delete-row', function (event) {
         var rowIndex = $(this).closest('tr').index();
@@ -274,33 +311,68 @@ $(function () {
         });
     });
 
+
+
     $('#addLocalidadEdit').on('click', function () {
-
-        console.log('Localidades seleccionadas:', localidadesSeleccionadas);
-
-        var departamentoSeleccionado = $('#departamentoEdit option:selected').text();
-        var municipioSeleccionado = $('#municipioEdit option:selected').text();
         var departamentoId = $('#departamentoEdit').val();
         var municipioId = $('#municipioEdit').val();
-
+    
+        // Resetear los estilos de validación y mensajes de error
+        $('#departamentoEdit').removeClass('is-invalid');
+        $('#municipioEdit').removeClass('is-invalid');
+        $('#departamentoErrorVacio').hide();
+        $('#departamentoErrorDuplicado').hide();
+        $('#municipioErrorVacio').hide();
+        $('#municipioErrorDuplicado').hide();
+    
+        // Validar que los campos no estén vacíos
+        if (!departamentoId || !municipioId) {
+            if (!departamentoId) {
+                $('#departamentoEdit').addClass('is-invalid');
+                $('#departamentoErrorVacio').show();
+            }
+            if (!municipioId) {
+                $('#municipioEdit').addClass('is-invalid');
+                $('#municipioErrorVacio').show();
+            }
+            return;
+        }
+    
+        // Verificar si el registro ya existe
+        var registroExiste = $('#tableLocalidadEdit tbody tr').filter(function() {
+            return $(this).data('departamento-id') == departamentoId && $(this).data('municipio-id') == municipioId;
+        }).length > 0;
+    
+        if (registroExiste) {
+            $('#departamentoEdit').addClass('is-invalid');
+            $('#municipioEdit').addClass('is-invalid');
+            $('#departamentoErrorDuplicado').show();
+            $('#municipioErrorDuplicado').show();
+            return;
+        }
+    
+        var departamentoSeleccionado = $('#departamentoEdit option:selected').text();
+        var municipioSeleccionado = $('#municipioEdit option:selected').text();
+        console.log('Localidades seleccionadas:', localidadesSeleccionadas);
+    
         var rowCount = $('#tableLocalidadEdit tbody tr').length;
-
+    
         var newRow = '<tr data-departamento-id="' + departamentoId + '" data-municipio-id="' + municipioId + '">' +
             '<td>' + (rowCount + 1) + '</td>' +
             '<td>' + departamentoSeleccionado + '</td>' +
-            '<td>' + municipioSeleccionado + '</td>' 
-
-        newRow += '<td><a  class="dropdown-item delete-row" onclick="deleteRow(' + rowCount + ')">' + feather.icons['trash-2'].toSvg({ class: 'font-small-4 ' }) + '</a></td>';
+            '<td>' + municipioSeleccionado + '</td>';
+    
+        newRow += '<td><a class="dropdown-item delete-row" onclick="deleteRow(' + rowCount + ')">' + feather.icons['trash-2'].toSvg({ class: 'font-small-4 ' }) + '</a></td>';
         newRow += '</tr>';
-
+    
         $('#tableLocalidadEdit tbody').append(newRow);
-
+    
         localidadesSeleccionadas.push({ departamentoId: departamentoId, municipioId: municipioId });
         dataDepaAndMuni.push({ departamentoId: +departamentoId, municipioId: +municipioId });
-
+    
         console.log('Localidades seleccionadas:', dataDepaAndMuni);
-
     });
+    
 
 });
 
@@ -475,68 +547,46 @@ const getMunicipios = () => {
         .catch(error => console.log('error', error));
 }
 
+
+
+
+
 const OpenEdit = (id) => {
-
-    var table;
-
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", token);
+  
     var requestOptions = {
-        method: 'GET',
-        headers: {
-            'Authorization': token,
-        },
-        redirect: 'follow'
+      method: "GET",
+      redirect: "follow",
+      headers: myHeaders,
     };
-
-    // Obtener datos del proyecto
+  
     fetch(`${url}projects/${id}`, requestOptions)
-        .then(response => {
-            if (!response.ok) {
-                if (response.status === 401) {
-                    console.error("Error de autenticación: Token no válido o expirado.");
-                }
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(result => {
-            $('#tableLocalidadEdit').dataTable().fnDestroy();
-            console.log('Project Data:', result);
-            $('#id').val(id);
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        $("#id").val(id);
             $('#descripcionEdit').val(result.descripcion);
-            $('#rutaEdit').val(result.ruta);
-            dataTableEdith = result.departamento_proyectos; // Limpiar las localidades seleccionadas
+                        $('#rutaEdit').val(result.ruta);
+            dataTableEdith = result.departamento_proyectos;
+                        $('#tableLocalidadEdit tbody').empty(); // Limpiar la tabla de localidades en edición
 
-            //$('#tableLocalidadEdit tbody').empty();
+            localidadesSeleccionadas = [];
+            dataDepaAndMuni = [];
 
             result.departamento_proyectos.forEach((loc, index) => {
+                localidadesSeleccionadas.push({ departamentoId: loc.departamento.id, municipioId: loc.municipio.id });
+                dataDepaAndMuni.push({ departamentoId: loc.departamento.id, municipioId: loc.municipio.id });
 
-                localidadesSeleccionadas.push({ departamentoId: loc.departamento.id, municipioId: loc.municipio.id  });
-                dataDepaAndMuni.push({ departamentoId: loc.departamento.id, municipioId: loc.municipio.id});
-            });
+                var newRow = '<tr data-departamento-id="' + loc.departamento.id + '" data-municipio-id="' + loc.municipio.id + '">' +
+                    '<td>' + (index + 1) + '</td>' +
+                    '<td>' + loc.departamento.nombre + '</td>' +
+                    '<td>' + loc.municipio.nombre + '</td>' +
+                    '<td><a href="#" class="dropdown-item delete-row" onclick="deleteRow(' + loc.id + ')">' + feather.icons['trash-2'].toSvg({ class: 'font-small-4 ml-2 ' }) + '</a></td>' +
+                    '</tr>';
 
-            tableEditLocalidades = $('#tableLocalidadEdit').dataTable({
-                data: dataTableEdith,
-                searching: false,
-                paging: false,
-                columns: [
-                    {
-                        data: null,
-                        render: function (data, type, row, meta) {
-                            if (type === 'display') {
-                                return meta.row + 1;
-                            }
-                            return meta.row + 1;
-                        }
-                    },
-                    { data: "departamento.nombre" },
-                    { data: "municipio.nombre" },
-                    {
-                        data: "id",
-                        render: function (data) {
-                            return `<a href="#" class="dropdown-item delete-row" onclick="deleteRow(${data})">${feather.icons['trash-2'].toSvg({ class: 'font-small-4 ml-2 ' })}</a>`
-                        }
-                    }
-                ],
+                $('#tableLocalidadEdit tbody').append(newRow);
             });
 const url = 'http://localhost:3000/';
 let token = localStorage.getItem("token");
@@ -1098,16 +1148,20 @@ const OpenDelete = (id) => {
 
 
 
-            //table.reload();
-            $('#modalEdit').modal('toggle');
-            tableEditLocalidades.fnDraw();
+        $("#modalEdit").modal("toggle");
+      })
+      .catch((error) => console.log("error", error));
+  };
 
-        })
-        .catch(error => {
-            console.error("Error en la solicitud GET:", error);
-            Alert("Error al obtener datos del proyecto", 'error');
-        })
-}
+
+
+
+
+
+
+
+
+
 
 const deleteRow = (data) => {
     console.log('ID:', data);

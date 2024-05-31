@@ -24,6 +24,7 @@ const getCategorias = () => {
       result.forEach((element) => {
         var opc = `<option value="${element.id}">${element.nombre}</option>`;
         $("#categorias").append(opc);
+        console.log("Categorias para mostrar",result);
       });
     })
     .catch((error) => console.log("error", error));
@@ -52,7 +53,7 @@ const getTransaccionesAsignadas = () => {
         console.log(result);
         var opc = `<div class="form-check form-switch pl-2 pt-1">
             <input class="form-check-input permiso" type="checkbox" role="switch" id="checkpermisos${element.id}" value="${element.id}">
-            <label class="form-check-label label-Asignado" for="checkpermisos${element.id}" style="font-size: 1rem;">${element.transaccion.nombre}</label>
+            <label class="form-check-label label-Asignado" for="checkpermisos${element.id}" style="font-size: 1rem;">${element.transaccion.descripcion}</label>
             </div>`;
         $("#contenedor-derecho").append(opc);
       });
@@ -83,7 +84,7 @@ const getTransaccionesNoAsignadas = () => {
         console.log(result);
         var opc = `<div class="form-check form-switch pl-2 pt-1">
             <input class="form-check-input permiso" type="checkbox" role="switch" id="checkpermisos${element.id}" value="${element.id}">
-            <label class="form-check-label label-no-Asignado" for="checkpermisos${element.id}" style="font-size: 1rem;">${element.nombre}</label>
+            <label class="form-check-label label-no-Asignado" for="checkpermisos${element.id}" style="font-size: 1rem;">${element.descripcion}</label>
             </div>`;
         $("#contenedor-izquierdo").append(opc);
       });
