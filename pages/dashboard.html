@@ -17,9 +17,11 @@
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/vendors.min.css">
-    <link rel="stylesheet" href="../app-assets/vendors/js/tables/ag-grid/styles/ag-grid.css">
-    <link rel="stylesheet" href="../app-assets/vendors/js/tables/ag-grid/styles/ag-theme-quartz.css">
-
+    <!-- <link rel="stylesheet" href="../app-assets/vendors/js/tables/ag-grid/styles/ag-grid.css">
+    <link rel="stylesheet" href="../app-assets/vendors/js/tables/ag-grid/styles/ag-theme-quartz.css"> -->
+    <link rel="stylesheet" type="text/css"
+    href="../app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/tables/datatable/responsive.bootstrap.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -96,15 +98,7 @@ canvas {
         /* border: 3px solid rgba(0, 0, 0, 0.1);  */
     }
 
-    /* .avatar {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-        background-color: #007bff;
-        border-radius: 50%;
-        padding: 10px;
-    } */
+   
 
     .bg-light-primary {
         background-color: #9F97D5;
@@ -180,7 +174,7 @@ canvas {
     .texti {
         margin: 0;
         font-size: 1rem;
-        color: white;
+        color: rgb(15, 14, 14);
     }
     
 
@@ -192,7 +186,18 @@ canvas {
     .align-items-start {
         align-items: flex-start;
     }
-    
+    .paginate_button a {
+            color: #000 !important;  /* Cambia el texto a negro */
+            background-color: #fff !important;  /* Fondo blanco */
+        }
+        .paginate_button a:hover {
+            color: #fff !important;  /* Cambia el texto a blanco al pasar el ratón */
+            background-color: #000 !important;  /* Fondo negro al pasar el ratón */
+        }
+        .paginate_button.current a {
+            color: #fff !important;  /* Texto blanco para el botón activo */
+            background-color: #000 !important;  /* Fondo negro para el botón activo */
+        }
     
 
    
@@ -355,24 +360,25 @@ canvas {
 
 
 
-
-                    
-                        <div class="col-lg-3 col-2">
-                            <div class="card justify-content-center">
-                                <div class="card-two card mb-7 shadow   justify-content-center">
-                                    <div class="card-item" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
-                                        <div class="card-twodesnew  card-header flex-column align-items-start pb-0">
-                                            <div class="avatar bg-light-primary p-20 m-0">
-                                                <div class="avatar-content">
-                                                    <i data-feather="users" class="font-medium-5"></i>
-                                                </div>
-                                            </div>
-                                            <h2 class="fw-bolder mt-1" id="num-promociones"></h2>
-                                            <p class="card-text">Promociones Activas</p>
+                        <div class="col-lg-3 col-12">
+                            <div class=" card  justify-content-center justify-content-center ">
+                            <div class="card-two card mb-7  shadow">
+                                <div class="card-item"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+                                <div class=" card-twodesnew card-header flex-column align-items-start pb-0">
+                                    <div class="avatar bg-light-primary p-49 m-0">
+                                        <div class="avatar-content">
+                                            <i data-feather="users" class="font-medium-5"></i>
                                         </div>
-                                        <div id="gained-chart"></div>
                                     </div>
+                                    <h2 class="fw-bolder mt-1"  id="num-promociones"></h2>
+                                    <!-- Se agregó el signo de cierre ">" -->
+
+                                    <p class="card-text">Promociones Activas</p>
+                                    <!-- Cambio de "Campañas" a "Campañas Activas" -->
                                 </div>
+                                <div id="gained-chart"></div>
+                            </div>
+                            </div>
                             </div>
                         </div>
                         
@@ -384,15 +390,17 @@ canvas {
                             <div class="card-two card mb-7  shadow">
                                 <div class="card-item"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
                                 <div class=" card-twodesnew card-header flex-column align-items-start pb-0">
-                                    <div class="avatar bg-light-warning p-50 m-0">
+                                    <div class="avatar bg-light-warning p-70 m-0">
                                         <div class="avatar-content">
                                             <i data-feather="package" class="font-medium-5"></i>
                                         </div>
                                     </div>
-                                    <h2 class="fw-bolder mt-1" id="num-campanas"></h2>
+                                    
+                                    <h2 class="fw-bolder mt-1"  id="num-campanas"></h2>
                                     <!-- Se agregó el signo de cierre ">" -->
 
-                                    <p class="card-text">Campañas Activas</p>
+                                    <p class="card-text">Campañas</p>
+                                    <div><p class="card-text">Activas</p> </div>
                                     <!-- Cambio de "Campañas" a "Campañas Activas" -->
                                 </div>
                                 <div id="order-chart"></div>
@@ -409,7 +417,7 @@ canvas {
                             <div class=" card   ">
                             <div class="card-two card mb-7 shadow">
                                 <div class="card-item"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
-                                <div class="card-header d-flex justify-content-center pb-0">
+                                <div class="card-twodes card-header d-flex justify-content-center pb-0">
                                     <h4 class="card-title">Resumen de Campañas</h4>
                                     <div class="table-responsive custom-scroll">
                                         <table class="table table-striped" id="campaniatable">
@@ -474,14 +482,7 @@ canvas {
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="col-6 mb-2">
-                                                    <p class="mb-50">Clientes: 200</p>
-                                                    <div class="progress progress-bar-warning" style="height: 6px">
-                                                        <div class="progress-bar" role="progressbar" aria-valuenow="60"
-                                                            aria-valuemin="60" aria-valuemax="100" style="width: 60%">
-                                                        </div>
-                                                    </div>
-                                                </div> -->
+                                       
                                         <div class="col-6">
                                             <p class="mb-50">Referidos <span id="Referidos"></span>%</p>
                                             <div class="progress progress-bar-danger" style="height: 6px">
@@ -580,14 +581,8 @@ canvas {
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="col-6 mb-2">
-                                                    <p class="mb-50">Clientes: 200</p>
-                                                    <div class="progress progress-bar-warning" style="height: 6px">
-                                                        <div class="progress-bar" role="progressbar" aria-valuenow="60"
-                                                            aria-valuemin="60" aria-valuemax="100" style="width: 60%">
-                                                        </div>
-                                                    </div>
-                                                </div> -->
+                                        
+                                       
                                         <div class="col-6">
                                             <p class="mb-50">Numero de promociones:<span id="Promocion"></span>% </p>
                                             <div class="progress progress-bar-danger" style="height: 6px">
@@ -616,18 +611,18 @@ canvas {
 
 
 
-                        <div class="col-12 col-md-6 col-lg-12">
-                            <div class=" card">
+                        <div class=" col-md-6 col-lg-12">
+                            <div class="card-two card">
 
-                            <div class="card-two card mb-7 shadow">
-                                <!-- <div class="card-item"> -->
+                            <div class="  mb-7 ">
+                               
 
-                                <div class="card-body ">
+                                <div class="card ">
                                     <div class="text-center">
                                         <h4 class="texti card-title">Top 10 de Usuarios participantes</h4>
 
                                     </div>
-                                    <div class="table-responsive custom-scroll">
+                                    <div class="table-responsive ">
                                         <table class="table table-striped" id="tableData">
                                             <thead>
                                                 <tr>
@@ -641,7 +636,7 @@ canvas {
                                             </tbody>
                                         </table>
                                     </div>
-                                <!-- </div> -->
+                                
                                 </div>
                             </div>
                             </div>
@@ -847,10 +842,23 @@ canvas {
 
         <!-- BEGIN: Page Vendor JS-->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
+        <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" /> -->
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 
 
+
+
+        <!-- <script src="../app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script> -->
+        <!-- <script src="../app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script> -->
+        <script src="../app-assets/vendors/js/tables/datatable/datatables.bootstrap5.min.js"></script>
+        <!-- <script src="../app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script> -->
+        <!-- <script src="../app-assets/vendors/js/tables/datatable/responsive.bootstrap4.min.js"></script> -->
+
+
+
+
+
+        
         <script src="../app-assets/vendors/js/extensions/moment.min.js"></script>
         <script src="../app-assets/vendors/js/tables/ag-grid/ag-grid-community.min.noStyle.js"></script>
         <!-- END: Page Vendor JS-->
