@@ -1,0 +1,11 @@
+{
+  "name": "lealtadv2fe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cypress open "
+  },
+  "author": "elenagaal",
+  "license": "ISC"
+}
