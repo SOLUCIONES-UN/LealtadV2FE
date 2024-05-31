@@ -233,33 +233,33 @@ const getMunicipios = () => {
       },
       { data: "departamento.nombre" },
       { data: "nombre" },
-
-      {
-        data: "id",
-        render: function (data) {
-          return (
-            '<div class="btn-group">' +
-            '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
-            feather.icons["more-vertical"].toSvg({ class: "font-small-4" }) +
-            "</a>" +
-            '<div class="dropdown-menu dropdown-menu-right">' +
-            '<a href="#" onclick="OpenEdit(' +
-            data +
-            ')" class="btn_edit dropdown-item">' +
-            feather.icons["archive"].toSvg({ class: "font-small-4 mr-50" }) +
-            " Actualizar" +
-            "</a>" +
-            '<a href="#" onclick="OpenDelete(' +
-            data +
-            ')" class="btn_delete dropdown-item">' +
-            feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" }) +
-            " Inhabilitar" +
-            "</a>" +
-            "</div>" +
-            "</div>"
-          );
-        },
-      },
+      // Comentado para ocultar la columna de acciones
+      // {
+      //   data: "id",
+      //   render: function (data) {
+      //     return (
+      //       '<div class="btn-group">' +
+      //       '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
+      //       feather.icons["more-vertical"].toSvg({ class: "font-small-4" }) +
+      //       "</a>" +
+      //       '<div class="dropdown-menu dropdown-menu-right">' +
+      //       '<a href="#" onclick="OpenEdit(' +
+      //       data +
+      //       ')" class="btn_edit dropdown-item">' +
+      //       feather.icons["archive"].toSvg({ class: "font-small-4 mr-50" }) +
+      //       " Actualizar" +
+      //       "</a>" +
+      //       '<a href="#" onclick="OpenDelete(' +
+      //       data +
+      //       ')" class="btn_delete dropdown-item">' +
+      //       feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" }) +
+      //       " Inhabilitar" +
+      //       "</a>" +
+      //       "</div>" +
+      //       "</div>"
+      //     );
+      //   },
+      // },
     ],
     // order: [[1, 'asc']],
     dom:

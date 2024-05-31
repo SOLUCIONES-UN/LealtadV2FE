@@ -232,65 +232,81 @@ $(function () {
 
 
 
-    //funciona para crear 
-    $('#addLocalidad').click(function () {
-        var departamentoId = $('#departamento').val();
-        var municipioId = $('#municipio').val();
-    
-        // Resetear los estilos de validación y mensajes de error
-        $('#departamento').removeClass('is-invalid');
-        $('#municipio').removeClass('is-invalid');
-        $('#departamentoErrorVacio').hide();
-        $('#departamentoErrorDuplicado').hide();
-        $('#municipioErrorVacio').hide();
-        $('#municipioErrorDuplicado').hide();
-    
-        // Validar que los campos no estén vacíos
-        if (!departamentoId || !municipioId) {
-            if (!departamentoId) {
-                $('#departamento').addClass('is-invalid');
-                $('#departamentoErrorVacio').show();
-            }
-            if (!municipioId) {
-                $('#municipio').addClass('is-invalid');
-                $('#municipioErrorVacio').show();
-            }
-            return;
-        }
-    
-        // Verificar si el registro ya existe
-        var registroExiste = $('#tableLocalidad tbody tr').filter(function() {
-            return $(this).data('departamento-id') == departamentoId && $(this).data('municipio-id') == municipioId;
-        }).length > 0;
-    
-        if (registroExiste) {
-            $('#departamento').addClass('is-invalid');
-            $('#municipio').addClass('is-invalid');
-            $('#departamentoErrorDuplicado').show();
-            $('#municipioErrorDuplicado').show();
-            return;
-        }
-    
-        var departamentoSeleccionado = $('#departamento option:selected').text();
-        var municipioSeleccionado = $('#municipio option:selected').text();
-    
-        var rowCount = $('#tableLocalidad tbody tr').length;
-    
-        var newRow = '<tr data-departamento-id="' + departamentoId + '" data-municipio-id="' + municipioId + '">' +
-            '<td>' + (rowCount + 1) + '</td>' +
-            '<td>' + departamentoSeleccionado + '</td>' +
-            '<td>' + municipioSeleccionado + '</td>' +
-            '<td><a href="#" class="delete-row">' +
-            feather.icons['trash-2'].toSvg({ class: 'font-small-4 mr-50' }) +
-            '</a></td>' +
-            '</tr>';
-    
-        $('#tableLocalidad tbody').append(newRow);
-    
-        localidadesSeleccionadas.push({ departamentoId: departamentoId, municipioId: municipioId });
-    });
-    
+// Funciona para crear
+$('#addLocalidad').click(function () {
+    var departamentoId = $('#departamento').val();
+    var municipioId = $('#municipio').val();
 
+    // Resetear los estilos de validación y mensajes de error
+    $('#departamento').removeClass('is-invalid');
+    $('#municipio').removeClass('is-invalid');
+    $('#departamentoErrorVacio').hide();
+    $('#departamentoErrorDuplicado').hide();
+    $('#municipioErrorVacio').hide();
+    $('#municipioErrorDuplicado').hide();
+
+    // Validar que los campos no estén vacíos
+    if (!departamentoId || !municipioId) {
+        if (!departamentoId) {
+            $('#departamento').addClass('is-invalid');
+            $('#departamentoErrorVacio').show();
+        }
+        if (!municipioId) {
+            $('#municipio').addClass('is-invalid');
+            $('#municipioErrorVacio').show();
+        }
+
+        // Ocultar las validaciones después de 3 segundos
+        setTimeout(function() {
+            $('#departamento').removeClass('is-invalid');
+            $('#departamentoErrorVacio').hide();
+            $('#municipio').removeClass('is-invalid');
+            $('#municipioErrorVacio').hide();
+        }, 3000);
+
+        return;
+    }
+
+    // Verificar si el registro ya existe
+    var registroExiste = $('#tableLocalidad tbody tr').filter(function() {
+        return $(this).data('departamento-id') == departamentoId && $(this).data('municipio-id') == municipioId;
+    }).length > 0;
+
+    if (registroExiste) {
+        $('#departamento').addClass('is-invalid');
+        $('#municipio').addClass('is-invalid');
+        $('#departamentoErrorDuplicado').show();
+        $('#municipioErrorDuplicado').show();
+
+        // Ocultar las validaciones después de 3 segundos
+        setTimeout(function() {
+            $('#departamento').removeClass('is-invalid');
+            $('#departamentoErrorDuplicado').hide();
+            $('#municipio').removeClass('is-invalid');
+            $('#municipioErrorDuplicado').hide();
+        }, 3000);
+
+        return;
+    }
+
+    var departamentoSeleccionado = $('#departamento option:selected').text();
+    var municipioSeleccionado = $('#municipio option:selected').text();
+
+    var rowCount = $('#tableLocalidad tbody tr').length;
+
+    var newRow = '<tr data-departamento-id="' + departamentoId + '" data-municipio-id="' + municipioId + '">' +
+        '<td>' + (rowCount + 1) + '</td>' +
+        '<td>' + departamentoSeleccionado + '</td>' +
+        '<td>' + municipioSeleccionado + '</td>' +
+        '<td><a href="#" class="delete-row">' +
+        feather.icons['trash-2'].toSvg({ class: 'font-small-4 mr-50' }) +
+        '</a></td>' +
+        '</tr>';
+
+    $('#tableLocalidad tbody').append(newRow);
+
+    localidadesSeleccionadas.push({ departamentoId: departamentoId, municipioId: municipioId });
+});
 
 
 
@@ -326,7 +342,6 @@ $(function () {
         });
     });
 
-
     $('#addLocalidadEdit').click(function () {
         var departamentoId = $('#departamentoEdit').val();
         var municipioId = $('#municipioEdit').val();
@@ -349,6 +364,15 @@ $(function () {
                 $('#municipioEdit').addClass('is-invalid');
                 $('#municipioErrorVacioedit').show();
             }
+    
+            // Ocultar las validaciones después de 3 segundos
+            setTimeout(function() {
+                $('#departamentoEdit').removeClass('is-invalid');
+                $('#departamentoErrorVacioedit').hide();
+                $('#municipioEdit').removeClass('is-invalid');
+                $('#municipioErrorVacioedit').hide();
+            }, 3000);
+    
             return;
         }
     
@@ -362,6 +386,15 @@ $(function () {
             $('#municipioEdit').addClass('is-invalid');
             $('#departamentoErrorDuplicadoedit').show();
             $('#municipioErrorDuplicadoedit').show();
+    
+            // Ocultar las validaciones después de 3 segundos
+            setTimeout(function() {
+                $('#departamentoEdit').removeClass('is-invalid');
+                $('#departamentoErrorDuplicadoedit').hide();
+                $('#municipioEdit').removeClass('is-invalid');
+                $('#municipioErrorDuplicadoedit').hide();
+            }, 3000);
+    
             return;
         }
     
@@ -383,6 +416,7 @@ $(function () {
     
         localidadesSeleccionadas.push({ departamentoId: departamentoId, municipioId: municipioId });
     });
+    
     
     
 });
