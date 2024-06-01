@@ -4,7 +4,7 @@ let datosObtenidos = null; // Variable global para almacenar los datos obtenidos
 let archivadas = 0;
 
 
-$(document).ready(function () {
+$(function () {
     $("#btnDescargarExcel, #PantallaInfo, #tableData").hide();
     
     // Inicializar el plugin multiple-select
@@ -14,13 +14,6 @@ $(document).ready(function () {
       placeholder: "",
     });
   
-    
-
-
-
-
-
-
     getCampaniasActivas();
   
     $("#btnConsultar").click(function () {
@@ -84,7 +77,6 @@ $(document).ready(function () {
       });
   };
 
-
   function validarFechas() {
     const FechaInicio = document.getElementById('FechaInicio').value;
     const FechaFin = document.getElementById('FechaFin').value;
@@ -94,35 +86,6 @@ $(document).ready(function () {
     }
   }
   
-  window.onload = function() {
-    document.getElementById('FechaInicio').addEventListener('blur', validarFechas);
-    document.getElementById('FechaFin').addEventListener('blur', validarFechas);
-  }
-  
-
-
-
-
-
-
-  function validarFechas() {
-    const FechaInicio = document.getElementById('FechaInicio').value;
-    const FechaFin = document.getElementById('FechaFin').value;
-  
-    if (FechaInicio >= FechaFin) {
-        Alert('La fecha Fin debe ser mayor a la fecha inicio','error');
-    }
-  }
-  
-  window.onload = function() {
-    document.getElementById('FechaInicio').addEventListener('blur', validarFechas);
-    document.getElementById('FechaFin').addEventListener('blur', validarFechas);
-  }
-  
-
-
-
-
   
   const getReport = () => {
     var myHeaders = new Headers();
@@ -174,15 +137,6 @@ $(document).ready(function () {
       });
   };
 
-
-
-
-  
-
-
-
-
-  
   function mostrarDatosEnTabla(participantesCamp, infoCustom) {
     console.log("Datos para mostrar en la tabla:", participantesCamp, infoCustom);
   

@@ -44,6 +44,44 @@
 </head>
 <!-- END: Head-->
 
+<style>
+
+  /* Asegúrate de que el contenedor del dropdown tenga posición relativa */
+ 
+
+.btn-group {
+  position: absolute !important;
+}
+
+/* Ajusta la posición y el z-index del menú desplegable */
+.dropdown-menu {    
+  position: absolute !important;
+  top: 100%;
+  left:  0 !important;
+  margin-right:  100px !important;
+  z-index: 10 !important;
+  display: none; /* Ocultar por defecto */
+}
+
+/* Mostrar el menú desplegable al hacer clic en el botón */
+.btn-group.show .dropdown-menu {
+  position:absolute !important;
+  display: block;
+}
+
+  /* Ajusta el z-index de la tabla */
+   #tableData {
+    position: relative !important;
+    z-index: 0 !important;
+  }
+
+
+  .dropdown-toggle{
+    margin-top: -15px !important;
+  }
+
+</style>
+
 <!-- BEGIN: Body-->
 
 <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click"
@@ -306,8 +344,8 @@
               name="password2" required />
           </div>
           <div class="form-group">
-            <label class="form-label" for="telefono">Telefono</label>
-            <input type="text" class="form-control " id="telefono" placeholder="# de telefono" name="telefono"
+            <label class="form-label" for="telefono">Teléfono</label>
+            <input type="text" class="form-control " id="telefono" placeholder="# de teléfono" name="telefono"
               required />
           </div>
           <div class="form-group">
@@ -319,13 +357,14 @@
         <div class="form-group">
           <label class="form-label" for="tipoUsuario">Tipo De Usuario</label>
           <select type="text" class="form-control" id="tipoUsuario" name="tipoUsuario" required>
-            <option value="0" selected disabled>Seleccione una Opcion</option>
+            <option value="0" selected disabled>Seleccione una Opción</option>
             <option value="1">admin</option>
           </select>
         </div>
           <div class="form-group">
             <label class="form-label" for="rol">Roles</label>
             <select type="text" class="form-control" id="rol" name="rol" required></select>
+            
           </div>
           <button id="btnSubmitAdd" type="submit" class="btn btn-primary mr-1 data-submit">Agregar </button>
           <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
@@ -377,7 +416,7 @@
           <div class="form-group">
             <label class="form-label" for="tipoUsuarioEdit">Tipo De Usuario</label>
             <select type="text" class="form-control" id="tipoUsuarioEdit" name="tipoUsuarioEdit" required>
-              <option value="0" selected disabled>Seleccione una Opcion</option>
+              <option value="0" selected disabled>Seleccione una Opción</option>
               <option value="1">admin</option>
             </select>
           </div>

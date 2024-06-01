@@ -44,6 +44,45 @@
 </head>
 <!-- END: Head-->
 
+
+<style>
+
+  /* Asegúrate de que el contenedor del dropdown tenga posición relativa */
+ 
+
+.btn-group {
+  position: absolute !important;
+}
+
+/* Ajusta la posición y el z-index del menú desplegable */
+.dropdown-menu {    
+  position: absolute !important;
+  top: 100%;
+  left:  0 !important;
+  margin-right:  100px !important;
+  z-index: 10 !important;
+  display: none; /* Ocultar por defecto */
+}
+
+/* Mostrar el menú desplegable al hacer clic en el botón */
+.btn-group.show .dropdown-menu {
+  position:absolute !important;
+  display: block;
+}
+
+  /* Ajusta el z-index de la tabla */
+   #tableData {
+    position: relative !important;
+    z-index: 0 !important;
+  }
+
+
+  .dropdown-toggle{
+    margin-top: -15px !important;
+  }
+
+</style>
+
 <!-- BEGIN: Body-->
 
 <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click"

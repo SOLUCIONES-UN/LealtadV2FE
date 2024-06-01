@@ -262,6 +262,7 @@ const getMunicipios = () => {
       },
     ],
     // order: [[1, 'asc']],
+    
     dom:
       '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
       '<"col-lg-12 col-xl-6" l>' +
@@ -278,21 +279,50 @@ const getMunicipios = () => {
     },
     // Buttons with Dropdown
     buttons: [
-      // {
-      //   text: "Nuevo",
-      //   className: "add-new btn btn-primary mt-50",
-      //   attr: {
-      //     "data-toggle": "modal",
-      //     "data-target": "#modalNew",
-      //   },
-      //   init: function (api, node, config) {
-      //     $(node).removeClass("btn-secondary");
-      //     //Metodo para agregar un nuevo usuario
-      //   },
-      // },
+      {
+        text: "Nuevo",
+        className: "add-new btn btn-primary mt-50",
+        attr: {
+          "data-toggle": "modal",
+          "data-target": "#modalNew",
+        },
+        init: function (api, node, config) {
+          $(node).removeClass("btn-secondary");
+        },
+      },
     ],
+    initComplete: function (settings, json) {
+      // Añadir estilos CSS después de que la tabla esté completa
+      $("<style>")
+        .prop("type", "text/css")
+        .html(
+          `
+          .dropdown-menu {    
+            position: absolute !important;
+            top: 100%;
+            left: 5 !important;
+            margin-left:  50px !important;
+            z-index: 1051 !important; /* Incrementa z-index para superar la paginación */
+            display: none;
+            white-space: nowrap;
+          }
+          .btn-group.show .dropdown-menu {
+            display: block;
+          }
+          #tableData {
+            position: relative !important;
+            z-index: 0 !important;
+          }
+          #tableData_wrapper .row:last-child {
+            margin-top: 50px; /* Ajusta este valor según sea necesario */
+          }
+        `
+        )
+        .appendTo("head");
+    },
   });
 };
+
 
 function limpiarFormulario() {
   $("#formNew").trigger("reset");

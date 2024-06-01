@@ -258,10 +258,38 @@ const GetProfecion = () => {
         },
         init: function (api, node, config) {
           $(node).removeClass("btn-secondary");
-          //Metodo para agregar un nuevo usuario
         },
       },
     ],
+    initComplete: function (settings, json) {
+      // Añadir estilos CSS después de que la tabla esté completa
+      $("<style>")
+        .prop("type", "text/css")
+        .html(
+          `
+          .dropdown-menu {    
+            position: absolute !important;
+            top: 100%;
+            left: 5 !important;
+            margin-left:  50px !important;
+            z-index: 1051 !important; /* Incrementa z-index para superar la paginación */
+            display: none;
+            white-space: nowrap;
+          }
+          .btn-group.show .dropdown-menu {
+            display: block; 
+          }
+          #tableData {
+            position: relative !important;
+            z-index: 0 !important;
+          }
+          #tableData_wrapper .row:last-child {
+            margin-top: 50px; /* Ajusta este valor según sea necesario */
+          }
+        `
+        )
+        .appendTo("head");
+    },
   });
 };
 

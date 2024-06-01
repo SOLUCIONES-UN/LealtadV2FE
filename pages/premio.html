@@ -44,6 +44,45 @@
   <!-- END: Custom CSS-->
 
 </head>
+
+<style>
+
+  /* Asegúrate de que el contenedor del dropdown tenga posición relativa */
+ 
+
+.btn-group {
+  position: absolute !important;
+}
+
+/* Ajusta la posición y el z-index del menú desplegable */
+.dropdown-menu {    
+  position: absolute !important;
+  top: 100%;
+  left:  0 !important;
+  margin-right:  100px !important;
+  z-index: 10 !important;
+  display: none; /* Ocultar por defecto */
+}
+
+/* Mostrar el menú desplegable al hacer clic en el botón */
+.btn-group.show .dropdown-menu {
+  position:absolute !important;
+  display: block;
+}
+
+  /* Ajusta el z-index de la tabla */
+   #tableData {
+    position: relative !important;
+    z-index: 0 !important;
+  }
+
+
+  .dropdown-toggle{
+    margin-top: -15px !important;
+  }
+
+</style>
+
 <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click"
   data-menu="vertical-menu-modern" data-col="">
   <nav
@@ -168,7 +207,8 @@
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Descripcion</th>
+                    <th>DESCRIPCIÓN</th>
+                    <th>ACCIONES</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -190,10 +230,10 @@
         </div>
         <div class="modal-body flex-grow-1">
           <div class="form-group">
-                <label class="form-label" for="basic-icon-default-fullname">Tipo De Transaccion</label>
-                <select onchange="tipoTransaccionForm()" type="text" class="form-control dt-full-name" id="tipoTransaccion" placeholder="Transaccion"
-                  name="tipoTransaccion" aria-label="" aria-describedby="basic-icon-default-fullname2" required >
-                  <option value="0" selected disabled>Seleccione una Opcion</option>
+                <label class="form-label" for="basic-icon-default-fullname">Tipo De Transacción</label>
+                <select onchange="tipoTransaccionForm()" type="text" class="form-control dt-full-name" id="tipoTransacción" placeholder="Transaccion"
+                  name="tipoTransacción" aria-label="" aria-describedby="basic-icon-default-fullname2" required >
+                  <option value="0" selected disabled>Seleccione una Opción</option>
                   <option value="1">Transaccion</option>
                   <option value="2">Premio por Link</option>
                 </select>
@@ -221,10 +261,10 @@
         <div class="modal-body flex-grow-1">
           <input id="id" type="hidden">
           <div class="form-group">
-            <label class="form-label" for="basic-icon-default-fullname">Tipo De Transaccion</label>
-            <select onchange="tipoTransaccionFormEdit()" disabled type="text" class="form-control dt-full-name" id="tipoTransaccionEdit" placeholder="Transaccion"
+            <label class="form-label" for="basic-icon-default-fullname">Tipo De Transacción</label>
+            <select onchange="tipoTransaccionFormEdit()" disabled type="text" class="form-control dt-full-name" id="tipoTransaccionEdit" placeholder="Transacción"
               name="tipoTransaccionEdit" aria-label="" aria-describedby="basic-icon-default-fullname2" required >
-              <option value="0" selected disabled>Seleccione una Opcion</option>
+              <option value="0" selected disabled>Seleccione una Opción</option>
               <option value="1">Transaccion</option>
               <option value="2">Premio por Link</option>
             </select>

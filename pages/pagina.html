@@ -42,7 +42,46 @@
   <!-- END: Custom CSS-->
 
 </head>
-<!-- END: Head-->
+
+
+
+<style>
+
+  /* Asegúrate de que el contenedor del dropdown tenga posición relativa */
+ 
+
+.btn-group {
+  position: absolute !important;
+}
+
+/* Ajusta la posición y el z-index del menú desplegable */
+.dropdown-menu {    
+  position: absolute !important;
+  top: 100%;
+  left:  0 !important;
+  margin-right:  100px !important;
+  z-index: 10 !important;
+  display: none; /* Ocultar por defecto */
+}
+
+/* Mostrar el menú desplegable al hacer clic en el botón */
+.btn-group.show .dropdown-menu {
+  position:absolute !important;
+  display: block;
+}
+
+  /* Ajusta el z-index de la tabla */
+   #tableData {
+    position: relative !important;
+    z-index: 0 !important;
+  }
+
+
+  .dropdown-toggle{
+    margin-top: -15px !important;
+  }
+
+</style>
 
 <!-- BEGIN: Body-->
 
@@ -197,7 +236,8 @@
   <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="navbar-header">
       <ul class="nav navbar-nav flex-row">
-        <li class="nav-item mr-auto"><a class="navbar-brand" href="./dashboard.html"><span class="brand-logo">
+        <li class="nav-item mr-auto"><a class="navbar-brand"
+            href="./dashboard.html"><span class="brand-logo">
               <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
                 <defs>
@@ -261,10 +301,10 @@
                 <thead>
                   <tr>
                     <th>#</th>
-
-                    <th>Descripcion</th>
-                    <th>Encabezado</th>
-                    <th>Acciones</th>
+               
+                    <th>DESCRIPCIÓN</th>
+                    <th>ENCABEZADO</th>
+                    <th>ACCIONES</th>
                   </tr>
                 </thead>
               </table>
@@ -289,7 +329,7 @@
           <div class="form-group">
             <label class="form-label" for="Menu">Id_menu:</label>
             <select type="text" class="form-control" id="Menu" name="Menu" required>
-              <option value="0" default selected disabled>Selecciona una opcion</option>
+              <option value="0" default selected disabled>Selecciona una opción</option>
             </select>
           </div>
           <div class="form-group">
@@ -300,15 +340,15 @@
             <div id="descripcionError" class="descripcion-error invalid-feedback"></div>
           </div>
 
-
+        
           <div class="form-group">
             <label class="form-label" for="basic-icon-default-fullname">Dirección:</label>
-            <input type="text" class="form-control dt-full-name" id="path" placeholder="Direccion de la pagina"
-              name="path" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
+            <input type="text" class="form-control dt-full-name" id="path" placeholder="Dirección de la página" name="path"
+              aria-label="" aria-describedby="basic-icon-default-fullname2" required />
           </div>
           <div class="form-group">
             <label class="form-label" for="Icono">Icono:</label>
-            <input type="text" class="form-control dt-full-name" id="Icono" placeholder="Icono de la pagina"
+            <input type="text" class="form-control dt-full-name" id="Icono" placeholder="Icono de la página"
               name="Icono" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
           </div>
           <button id="btnSubmit" type="submit" class="btn btn-primary mr-1 data-submit">Agregar</button>
@@ -337,18 +377,17 @@
           <div class="form-group">
             <label class="form-label" for="MenuEdith">Menu</label>
             <select type="text" class="form-control" id="MenuEdith" name="MenuEdith" required>
-              <option value="0" default selected disabled>Selecciona una opcion</option>
+              <option value="0" default selected disabled>Selecciona una opción</option>
             </select>
           </div>
           <div class="form-group">
             <label class="form-label" for="basic-icon-default-fullname">Dirección:</label>
-            <input type="text" class="form-control dt-full-name" id="PathEdit"
-              placeholder="Nueva direccion de la pagina" name="PathEdit" aria-label=""
-              aria-describedby="basic-icon-default-fullname2" required />
+            <input type="text" class="form-control dt-full-name" id="PathEdit" placeholder="Nueva dirección de la página"
+              name="PathEdit" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
           </div>
           <div class="form-group">
             <label class="form-label" for="IconoEdith">Icono:</label>
-            <input type="text" class="form-control dt-full-name" id="IconoEdith" placeholder="Icono de la pagina"
+            <input type="text" class="form-control dt-full-name" id="IconoEdith" placeholder="Icono de la página"
               name="Icono" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
           </div>
           <button id="btnSubmitEdit" type="submit" class="btn btn-primary mr-1 data-submit">Actualizar</button>
@@ -393,16 +432,17 @@
   <!-- BEGIN: Vendor JS-->
   <script src="../app-assets/vendors/js/vendors.min.js"></script>
   <!-- BEGIN Vendor JS-->
-
-  <!-- BEGIN: Page Vendor JS-->
   <script src="../app-assets/vendors/js/extensions/moment.min.js"></script>
   <script src="../app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
   <script src="../app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
   <script src="../app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
   <script src="../app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
   <script src="../app-assets/vendors/js/tables/datatable/responsive.bootstrap4.min.js"></script>
+  <script src="../app-assets/vendors/js/multipleselect/multiple-select.js"></script>
   <!-- END: Page Vendor JS-->
   <script src="../app-assets/vendors/js/extensions/toastr.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
   <!-- BEGIN: Theme JS-->
   <script src="../app-assets/js/core/app-menu.min.js"></script>
   <script src="../app-assets/js/core/app.min.js"></script>
@@ -421,6 +461,11 @@
       }
     });
   </script>
+<!-- Code injected by live-server -->
+<script>
+	
+	// ]]>
+</script>
 </body>
 <!-- END: Body-->
 

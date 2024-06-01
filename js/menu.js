@@ -2,7 +2,7 @@ const url = "http://localhost:3000/";
 let tokenMenu = localStorage.getItem("token");
 
 $(function () {
-  let tabla = getMenus();
+  const tabla = getMenus();
   Usuario();
 
   function validarDescripcion(descripcion) {
@@ -82,7 +82,7 @@ $(function () {
         $("#btnSubmit").prop("disabled", false);
         if (result.code == "ok") {
           limpiarFormulario();
-          tabla._fnAjaxUpdate();
+          $("#tableData").dataTable()._fnAjaxUpdate();
           $("#modalNew").modal("toggle");
           Alert(result.message, "success");
         } else {
@@ -129,16 +129,16 @@ $(function () {
     fetch(`${url}Menu/${id}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        if (result.code == "ok") {
+        console.log(result.code);
+        if (result.code === "ok") {
           limpiarFormulario();
-          tabla._fnAjaxUpdate();
-          $("#modalEdit").modal("toggle");
+          $("#tableData").dataTable()._fnAjaxUpdate();
           Alert(result.message, "success");
+          $("#modalEdit").modal("toggle");
         } else {
           Alert(result.message, "error");
         }
       })
-
       .catch((error) => {
         Alert(error.errors, "error");
       });
@@ -162,7 +162,7 @@ $(function () {
       .then((result) => {
         if (result.code == "ok") {
           limpiarFormulario();
-          tabla._fnAjaxUpdate();
+          $("#tableData").dataTable()._fnAjaxUpdate();
           $("#modalDelete").modal("toggle");
           Alert(result.message, "success");
         } else {
@@ -175,22 +175,18 @@ $(function () {
   });
 });
 
-// const Usuario = () => {
-
-//     let usuario = JSON.parse(localStorage.getItem('infoUsuario'));
-//     console.log(usuario.nombre)
-//     $('.user-name').text(usuario.nombre);
-//     $('.user-status').text(usuario.rol.descripcion);
-// }
-
-//obtiene la lista de menus
 const getMenus = () => {
-  return $("#tableData").dataTable({
+  return $("#tableData").DataTable({
     ajax: {
       url: `${url}Menu`,
       type: "GET",
       datatype: "json",
-      dataSrc: "",
+      dataSrc: function (json) {
+        json.forEach((row) => {
+          console.log(row.descripcion);
+        });
+        return json;
+      },
       headers: { Authorization: tokenMenu },
     },
     columns: [
@@ -204,22 +200,19 @@ const getMenus = () => {
         },
       },
       { data: "descripcion" },
-      //    { data: "icono" },
-
       {
         data: "id",
-
         render: function (data) {
           return (
             '<div class="btn-group">' +
-            '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
+            '<button class="btn btn-sm dropdown-toggle hide-arrow" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
             feather.icons["more-vertical"].toSvg({ class: "font-small-4" }) +
-            "</a>" +
+            "</button>" +
             '<div class="dropdown-menu dropdown-menu-right">' +
             '<a href="#" onclick="OpenEdit(' +
             data +
             ')" class="btn_edit dropdown-item">' +
-            feather.icons["archive"].toSvg({ class: "font-small-4 mr-50" }) +
+            feather.icons["edit"].toSvg({ class: "font-small-4 mr-50" }) +
             " Actualizar" +
             "</a>" +
             '<a href="#" onclick="OpenDelete(' +
@@ -234,7 +227,6 @@ const getMenus = () => {
         },
       },
     ],
-    // order: [[1, 'asc']],
     dom:
       '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
       '<"col-lg-12 col-xl-6" l>' +
@@ -260,10 +252,38 @@ const getMenus = () => {
         },
         init: function (api, node, config) {
           $(node).removeClass("btn-secondary");
-          //Metodo para agregar un nuevo usuario
         },
       },
     ],
+    initComplete: function (settings, json) {
+      // Añadir estilos CSS después de que la tabla esté completa
+      $("<style>")
+        .prop("type", "text/css")
+        .html(
+          `
+          .dropdown-menu {    
+            position: absolute !important;
+            top: 100%;
+            left: 5 !important;
+            margin-left:  50px !important;
+            z-index: 1051 !important; /* Incrementa z-index para superar la paginación */
+            display: none;
+            white-space: nowrap;
+          }
+          .btn-group.show .dropdown-menu {
+            display: block; 
+          }
+          #tableData {
+            position: relative !important;
+            z-index: 0 !important;
+          }
+          #tableData_wrapper .row:last-child {
+            margin-top: 50px; /* Ajusta este valor según sea necesario */
+          }
+        `
+        )
+        .appendTo("head");
+    },
   });
 };
 
