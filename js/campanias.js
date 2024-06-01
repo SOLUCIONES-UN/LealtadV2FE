@@ -188,6 +188,9 @@ $(function () {
     return false;
   });
 
+
+
+
   $('#formEdit').submit(function () {
     console.log('entro a el form edit')
     var myHeaders = new Headers();
@@ -1039,7 +1042,9 @@ function initStepper() {
                 },
                 width: '15%'
               }
+              
             ]
+            
           });
           break;
 
@@ -1127,6 +1132,7 @@ function initStepper() {
                   `;
                   return opcDelete;
                 }
+                
               }
             ]
           });
@@ -1135,7 +1141,7 @@ function initStepper() {
         default:
           break;
       }
-
+      
     }
 
     $(document).on('click', '.btnEliminarLocalidad', function (e) {
@@ -3123,11 +3129,11 @@ function validarCamposStep(stepIndex) {
           return re.test(String(email).toLowerCase());
         }
 
-        if (!validarEmail(email)) {
-          alert("Por favor ingresa un email válido.");
-          $('#emails').focus(); // Enfocar el campo de email para que el usuario lo corrija
-          return; // Detener la ejecución adicional del código para evitar enviar un formulario con errores
-        }
+        // if (!validarEmail(email)) {
+        //   alert("Por favor ingresa un email válido.");
+        //   $('#emails').focus(); // Enfocar el campo de email para que el usuario lo corrija
+        //   return; // Detener la ejecución adicional del código para evitar enviar un formulario con errores
+        // }
 
 
 
@@ -3472,6 +3478,8 @@ const OpenEdit = (id) => {
       // Ocultar el spinner y mostrar el contenido del modal
       $('#modalEdit .modal-body').css('opacity', '1');
       $('#modalEdit .spinner-container').hide();
+      $('#proyectoEdit').val(result.idProyecto);
+
 
       $('#emailsEdit').val(result.emails);
 
@@ -3698,7 +3706,7 @@ const table = (table, data) => {
       '<"col-sm-12 col-md-6"p>' +
       ">",
     language: {
-      sLengthMenu: "Show _MENU_",
+      sLengthMenu: "Mostrar _MENU_",
       search: "Buscar",
       searchPlaceholder: "Buscar...",
     },

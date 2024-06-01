@@ -260,6 +260,63 @@ span{
 	overflow: auto;
 }
 
+/* Ajusta el ancho de todas las columnas al 25% del ancho total de la tabla */
+#tableTodas th {
+	width: 25%;
+}
+
+/* Asegura que el texto no se envuelva y se muestre en una sola línea */
+#tableTodas th, #tableTodas td {
+	white-space: nowrap;
+	overflow: auto;
+}
+
+/* Ajusta el ancho de todas las columnas al 25% del ancho total de la tabla */
+#tableActivas th {
+	width: 25%;
+}
+
+/* Asegura que el texto no se envuelva y se muestre en una sola línea */
+#tableActivas th, #tableActivas td {
+	white-space: nowrap;
+	overflow: auto;
+}
+
+/* Ajusta el ancho de todas las columnas al 25% del ancho total de la tabla */
+#tablePausada th {
+	width: 25%;
+}
+
+/* Asegura que el texto no se envuelva y se muestre en una sola línea */
+#tablePausada th, #tablePausada td {
+	white-space: nowrap;
+	overflow: auto;
+}
+
+/* Ajusta el ancho de todas las columnas al 25% del ancho total de la tabla */
+#tableBorrador th {
+	width: 25%;
+}
+
+/* Asegura que el texto no se envuelva y se muestre en una sola línea */
+#tableBorrador th, #tableBorrador td {
+	white-space: nowrap;
+	overflow: auto;
+}
+
+
+/* Ajusta el ancho de todas las columnas al 25% del ancho total de la tabla */
+#tableArchivo th {
+	width: 25%;
+}
+
+/* Asegura que el texto no se envuelva y se muestre en una sola línea */
+#tableArchivo th, #tableArchivo td {
+	white-space: nowrap;
+	overflow: auto;
+}
+
+
 textarea {
 	resize: none;
 }
