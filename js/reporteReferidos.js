@@ -9,7 +9,7 @@ $(function () {
   $('#selectcampana').multipleSelect({
     filter: true,
     selectAll: true, // Habilitar la opción de seleccionar todos los elementos
-    placeholder: "",
+    placeholder: "selecciona una opción",
   });
 
   getCampaniasActivas();
@@ -166,16 +166,22 @@ function mostrarDatosEnTabla(datos) {
 
   let contador = 1;
 
+  
   datos.forEach((element) => {
     const fechaHora = formatearFechaHora(element.fecha);
     const campanas = element.nombre_campania; // Nombre de la campaña
     const opcion = element.opcion_referido || "No aplica";
     const formatTelefonoGuatemala = element.telefono_usuario;
-    const nombreUsuario = element.nombre_usuario|| "No aplica";
-    const telefReferido = element.telref|| "No aplica";
-    const nombreref = element.nombreref|| "No aplica";
+    const nombreUsuario = element.nombre_usuario || "No aplica";
     const montopremio = element.valor || "No aplica";
-    const codigo = element.codigo_referido || "No aplica";
+    
+    // Asegúrate de que customerInfo tenga al menos un elemento antes de acceder a él
+    const customerInfo = (Array.isArray(element.customerInfo) && element.customerInfo.length > 0) ? element.customerInfo[0] : {};
+    const codigo = customerInfo.codigo || "No aplica";
+    const nombreReferido = customerInfo.nombreReferido || "No aplica";
+    const telefReferido = customerInfo.noreferido || "No aplica";
+   
+
     // Agrega una fila a la tabla
     table.row.add([
       contador++,
@@ -188,7 +194,7 @@ function mostrarDatosEnTabla(datos) {
       element.descripcionTrx,
       montopremio,
       telefReferido,
-      nombreref,
+      nombreReferido,
     ]).draw();
   });
 }
