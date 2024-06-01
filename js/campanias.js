@@ -413,10 +413,10 @@ function initStepper() {
   $("#tipoParticipacion").change(function () {
     var tipoSeleccionado = $(this).val();
 
-    // Ocultar todos los inputs
+  
     $("#inputsContainer > div").hide();
 
-    // Mostrar los inputs correspondientes al tipo seleccionado
+
     if (tipoSeleccionado === "2" || tipoSeleccionado === "3") {
       $("#inputsTipo0").show();
     } else if (tipoSeleccionado === "4") {
@@ -447,7 +447,7 @@ function initStepper() {
           console.log("Días semanales:", dias);
           $('#diasResultado').val(dias);
           $('#diasResultadoDiv').show();
-          $('#intervalo').val(dias); // Actualiza el campo intervalo con días
+          $('#intervalo').val(dias);
       });
 
       $('#intervaloMensual').on('input', function() {
@@ -456,7 +456,7 @@ function initStepper() {
           console.log("Días mensuales:", dias);
           $('#diasResultado').val(dias);
           $('#diasResultadoDiv').show();
-          $('#intervalo').val(dias); // Actualiza el campo intervalo con días
+          $('#intervalo').val(dias); 
       });
 
       $('#RangoTiempo').trigger('change');
@@ -707,29 +707,23 @@ function initStepper() {
     });
 
     totalSteps++;
-    var previousStep = actualStep; // Guardar el valor actual de actualStep
+    var previousStep = actualStep; 
     hideStep(actualStep);
     actualStep = totalSteps - 1;
     showStep(actualStep);
 
-    // // Deshabilitar y ocultar los botones de la barra
-    // $('.step-button').prop('disabled', true);
-    //     //borrar los arreglos para su reutilizacion
-    //     datosTablaParametro = [];
-    //     datosTablaLocalidad = [];
-    //     datosTablaPremio = [];
-    // Agregar evento de clic al botón "Borrar" del nuevo paso
+  
     newStep.find("#removeStepp").click(function (e) {
       e.preventDefault();
       if (totalSteps > 1) {
-        // Limpiar los datos de la etapa actual
+       
         nombresMunicipios = {};
         TEMP = [];
         datosTablaParametro = [];
         datosTablaLocalidad = [];
         datosTablaPremio = [];
         hideStep(actualStep);
-        actualStep = previousStep; // Establecer actualStep al valor guardado
+        actualStep = previousStep; 
         showStep(actualStep);
         newStep.html("");
         stepData = null;
@@ -750,7 +744,7 @@ function initStepper() {
         presupuesto: datosTablaLocalidad,
         premio: datosTablaPremio,
       };
-      // Guardar los datos de la etapa en el objeto correspondiente
+    
       if (
         datosTablaParametro.length != 0 &&
         datosTablaLocalidad.length != 0 &&
@@ -761,16 +755,15 @@ function initStepper() {
         getEtapasData();
         console.log(getEtapasData());
         mostrarDatosTabla("#TablaEtapa");
-        // Limpiar los datos de la etapa actual
+    
         nombresMunicipios = {};
         TEMP = [];
         datosTablaParametro = [];
         datosTablaLocalidad = [];
         datosTablaPremio = [];
 
-        //Funciones del stepp
         hideStep(actualStep);
-        actualStep = previousStep; // Establecer actualStep al valor guardado
+        actualStep = previousStep;
         showStep(actualStep);
         newStep.html("");
         stepData = null;

@@ -33,10 +33,6 @@ $(function () {
     return true;
   }
 
-  // $("#modalNew").on("show.bs.modal", function () {
-  //   limpiarFormulario();
-  //   $("#btnSubmit").attr("disabled", false);
-  // });
 
   $("#modalEdit").on("show.bs.modal", function () {
     $("#btnSubmitEdit").prop("disabled", false);
@@ -260,18 +256,7 @@ const getDepartamentos = () => {
 
     //Buttons with Dropdown
     buttons: [
-      // {
-      //   text: "Nuevo",
-      //   className: "add-new btn btn-primary mt-50",
-      //   attr: {
-      //     "data-toggle": "modal",
-      //     "data-target": "#modalNew",
-      //   },
-      //   init: function (api, node, config) {
-      //     $(node).removeClass("btn-secondary");
-      //     //Metodo para agregar un nuevo usuario
-      //   },
-      // },
+ 
     ],
   });
 };
