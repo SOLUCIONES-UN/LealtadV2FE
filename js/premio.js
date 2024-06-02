@@ -10,7 +10,7 @@ $(function () {
   let tabla = getPremios();
 
   function validarDescripcion(descripcion) {
-    const descValido = /^[a-zA-Z0-9\s]+$/.test(descripcion.trim());
+    const descValido = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+$/.test(descripcion.trim());
 
     if (!descValido) {
       $("#descripcion").addClass("is-invalid");
@@ -300,7 +300,7 @@ const getPremios = () => {
       '<"col-sm-12 col-md-6"p>' +
       ">",
     language: {
-      sLengthMenu: "Show _MENU_",
+      sLengthMenu: "Mostrar _MENU_",
       search: "Buscar",
       searchPlaceholder: "Buscar...",
     },
@@ -370,22 +370,6 @@ const OpenDelete = (id) => {
 };
 
 function tipoTransaccionForm() {
-  // <div class="form-group">
-  //     <label class="form-label" for="basic-icon-default-fullname">Nombre</label>
-  //     <input type="text" class="form-control dt-full-name" id="nombre" placeholder="Nombre del cliente"
-  //     name="nombre" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
-  // </div>
-
-  // <div class="form-group">
-  //     <label class="form-label" for="basic-icon-default-fullname">Descripcion</label>
-  //     <input type="text" class="form-control dt-full-name" id="descripcion" placeholder="Descripcion del premio"
-  //     name="descripcion" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
-  // </div>
-  // <div class="form-group">
-  //     <label class="form-label" for="basic-icon-default-fullname">Nombre</label>
-  //     <input type="text" class="form-control dt-full-name" id="nombre" placeholder="Nombre del cliente"
-  //     name="nombre" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
-  // </div>
 
   var valor = $("#tipoTransaccion").val();
 
@@ -410,7 +394,7 @@ function tipoTransaccionForm() {
 
       $("#tipoForm").append(`
                 <div class="form-group">
-                    <label class="form-label" for="basic-icon-default-fullname">Descripcion</label>
+                    <label class="form-label" for="basic-icon-default-fullname">Descripción</label>
                     <input type="text" class="form-control dt-full-name" id="descripcion" placeholder="Descripcion del premio"
                     name="descripcion" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
                     <div id="desc-error" class="invalid-feedback depa-error"></div>
@@ -433,16 +417,6 @@ function tipoTransaccionForm() {
 function tipoTransaccionFormEdit(idTransaccion) {
   var valor = $("#tipoTransaccionEdit").val();
 
-  // <div class="form-group">
-  //     <label class="form-label" for="basic-icon-default-fullname">Descripcion</label>
-  //     <input type="text" class="form-control dt-full-name" id="descripcionEditPremio" placeholder="Descripcion del premio"
-  //     name="descripcionEditPremio" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
-  // </div>
-  // <div class="form-group">
-  //     <label class="form-label" for="basic-icon-default-fullname">Nombre</label>
-  //     <input type="text" class="form-control dt-full-name" id="nombreEdit" placeholder="Nombre del cliente"
-  //     name="nombreEdit" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
-  // </div>
 
   if (valor !== "0") {
     if (valor === "1") {

@@ -7,8 +7,8 @@ $(function () {
   Usuario();
 
   function validarNombreYusername(nombre, username) {
-    const nombreValido = /^[a-zA-Z0-9\s]+$/.test(nombre.trim());
-    const usernameValida = /^[a-zA-Z0-9\s]+$/.test(username.trim());
+    const nombreValido = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+$/.test(nombre.trim());
+    const usernameValida = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+$/.test(username.trim());
 
     if (!nombreValido) {
       $("#nombre").addClass("is-invalid");

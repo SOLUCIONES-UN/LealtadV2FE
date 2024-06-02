@@ -243,7 +243,7 @@ const GetProfecion = () => {
       '<"col-sm-12 col-md-6"p>' +
       ">",
     language: {
-      sLengthMenu: "Show _MENU_",
+      sLengthMenu: "Mostrar _MENU_",
       search: "Buscar",
       searchPlaceholder: "Buscar...",
     },
@@ -313,10 +313,10 @@ const GetProjects = () => {
   };
 
   $("#proyecto").html(
-    '<option value="0" selected disabled>Selecciona una Opcion</option>'
+    '<option value="0" selected disabled>Selecciona una opción</option>'
   );
   $("#proyectoEdit").html(
-    '<option value="0" selected disabled>Selecciona una Opcion</option>'
+    '<option value="0" selected disabled>Selecciona una opción</option>'
   );
   fetch(`${url}projects`, requestOptions)
     .then((response) => response.json())

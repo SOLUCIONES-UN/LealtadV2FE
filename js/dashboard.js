@@ -20,13 +20,7 @@ $(function () {
 
 const cerrarModalBtn = document.getElementById("cerrar-modal-btn");
 
-// cerrarModalBtn.addEventListener("click", () => {
-
-//   const modalInstance = new bootstrap.Modal(
-//     document.getElementById("graficaModal")
-//   );
-//   modalInstance.hide();
-// });
+;
 
 function displayNumCampanas(numCampanas) {
   const numCampanasElement = document.getElementById("num-campanas");
