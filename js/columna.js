@@ -8,7 +8,9 @@ $(function () {
   getSelect();
   // funcion para validar el nombre
   function validarNombre(nombre) {
-    const nombreValido = /^[a-zA-Z0-9\s]+$/.test(nombre.trim());
+    const nombreValido = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+$/.test(nombre.trim());
+  
+
 
     if (!nombreValido) {
       $(".nombre").addClass("is-invalid");
@@ -70,7 +72,7 @@ $(function () {
       fila_insertada: $("#fInsertada").val(),
       fila_actualizada: $("#fActualizada").val(),
       idProyectos: $("#proyecto").val(),
-      idTablas: $("#tabla").val(),
+      idTabla: $("#tabla").val(),
     });
 
     var requestOptions = {
@@ -124,7 +126,7 @@ $(function () {
       nombre: $("#nombreEdit").val(),
       fila_insertada: $("#fInsertadaEdit").val(),
       fila_actualizada: $("#fActualizadaEdit").val(),
-      idTablas: $("#tablaEdit").val(),
+      idTabla: $("#tablaEdit").val(),
       idProyectos: $("#proyectoEdit").val(),
     });
 
@@ -143,6 +145,7 @@ $(function () {
         return response.json();
       })
       .then((result) => {
+        console.log(result); 
         if (result.code == "ok") {
           limpiarFormulario();
           tabla._fnAjaxUpdate();
@@ -220,30 +223,27 @@ const getColumnas = () => {
       {
         data: "id",
         render: function (data) {
-          return `
-              <div class="btn-group">
-                <a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
-                    ${feather.icons["more-vertical"].toSvg({
-                      class: "font-small-4",
-                    })}
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="#" onclick="OpenEdit(${data})" class="btn_edit dropdown-item">
-                        ${feather.icons["archive"].toSvg({
-                          class: "font-small-4 mr-50",
-                        })} Actualizar
-                    </a>
-                
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="#" onclick="OpenDelete(${data})" class="btn_delete dropdown-item">
-                      ${feather.icons["trash-2"].toSvg({
-                        class: "font-small-4 mr-50",
-                      })} Inhabilitar
-                    </a>
-                </div>
-                </div>
-              </div> 
-            `;
+          return (
+            '<div class="btn-group">' +
+            '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
+            feather.icons["more-vertical"].toSvg({ class: "font-small-4" }) +
+            "</a>" +
+            '<div class="dropdown-menu dropdown-menu-right">' +
+            '<a href="#" onclick="OpenEdit(' +
+            data +
+            ')" class="btn_edit dropdown-item">' +
+            feather.icons["archive"].toSvg({ class: "font-small-4 mr-50" }) +
+            " Actualizar" +
+            "</a>" +
+            '<a href="#" onclick="OpenDelete(' +
+            data +
+            ')" class="btn_delete dropdown-item">' +
+            feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" }) +
+            " Inhabilitar" +
+            "</a>" +
+            "</div>" +
+            "</div>"
+          );
         },
       },
     ],
@@ -257,7 +257,7 @@ const getColumnas = () => {
       '<"col-sm-12 col-md-6"p>' +
       ">",
     language: {
-      sLengthMenu: "Show _MENU_",
+      sLengthMenu: "Mostrar _MENU_",
       search: "Buscar",
       searchPlaceholder: "Buscar...",
     },
@@ -278,6 +278,8 @@ const getColumnas = () => {
     ],
   });
 };
+
+
 
 function limpiarFormulario() {
   $("#formNew").trigger("reset");
@@ -360,7 +362,7 @@ const getSelect = () => {
     headers: { Authorization: token },
   };
   $("#proyecto").html(
-    '<option value="0" selected disabled>Selecciona una Opcion</option>'
+    '<option value="0" selected disabled>Selecciona una opción</option>'
   );
   fetch(`${url}projects`, requestOptions)
     .then((response) => {
@@ -405,7 +407,7 @@ const getTablaDB = (id) => {
 
   // Agregar la opción de seleccionar una opción
   $("#tabla").append(
-    '<option value="0" selected disabled>Selecciona una Opción</option>'
+    '<option value="0" selected disabled>Selecciona una opción</option>'
   );
 
   fetch(`${url}tabla/${id}`, requestOptions)

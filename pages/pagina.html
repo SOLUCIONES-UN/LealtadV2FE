@@ -261,9 +261,8 @@
                 <thead>
                   <tr>
                     <th>#</th>
-
-                    <th>Descripcion</th>
                     <th>Encabezado</th>
+                    <th>DESCRIPCIÓN</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -282,14 +281,14 @@
       <form id="formNew" class="add-new-user modal-content pt-0" autocomplete="off">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
         <div class="modal-header mb-1">
-          <h5 class="modal-title" id="exampleModalLabel">Agregar Pagina</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Agregar Página</h5>
         </div>
         <div class="modal-body flex-grow-1">
 
           <div class="form-group">
-            <label class="form-label" for="Menu">Id_menu:</label>
+            <label class="form-label" for="Menu">Menu:</label>
             <select type="text" class="form-control" id="Menu" name="Menu" required>
-              <option value="0" default selected disabled>Selecciona una opcion</option>
+              <option selected disabled>Selecciona una opción </option>
             </select>
           </div>
           <div class="form-group">
@@ -303,12 +302,12 @@
 
           <div class="form-group">
             <label class="form-label" for="basic-icon-default-fullname">Dirección:</label>
-            <input type="text" class="form-control dt-full-name" id="path" placeholder="Direccion de la pagina"
+            <input type="text" class="form-control dt-full-name" id="path" placeholder="Dirección de la página"
               name="path" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
           </div>
           <div class="form-group">
             <label class="form-label" for="Icono">Icono:</label>
-            <input type="text" class="form-control dt-full-name" id="Icono" placeholder="Icono de la pagina"
+            <input type="text" class="form-control dt-full-name" id="Icono" placeholder="Icono de la página"
               name="Icono" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
           </div>
           <button id="btnSubmit" type="submit" class="btn btn-primary mr-1 data-submit">Agregar</button>
@@ -327,6 +326,12 @@
         </div>
         <div class="modal-body flex-grow-1">
           <div class="form-group">
+            <label class="form-label" for="MenuEdith">Id_menu:</label>
+            <select type="text" class="form-control" id="MenuEdith" name="MenuEdith" required>
+              <option value="0" default selected disabled>Selecciona una opción</option>
+            </select>
+          </div>
+          <div class="form-group">
             <input id="id" type="hidden">
             <label class="form-label" for="basic-icon-default-fullname">Descripción:</label>
             <input type="text" class="form-control dt-full-name descripcion" id="descripcionEdit"
@@ -334,21 +339,16 @@
               aria-describedby="basic-icon-default-fullname2" required />
             <div id="descripcionEditError" class="descripcion-error invalid-feedback"></div>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="MenuEdith">Menu</label>
-            <select type="text" class="form-control" id="MenuEdith" name="MenuEdith" required>
-              <option value="0" default selected disabled>Selecciona una opcion</option>
-            </select>
-          </div>
+
           <div class="form-group">
             <label class="form-label" for="basic-icon-default-fullname">Dirección:</label>
             <input type="text" class="form-control dt-full-name" id="PathEdit"
-              placeholder="Nueva direccion de la pagina" name="PathEdit" aria-label=""
+              placeholder="Nueva dirección de la página" name="PathEdit" aria-label=""
               aria-describedby="basic-icon-default-fullname2" required />
           </div>
           <div class="form-group">
             <label class="form-label" for="IconoEdith">Icono:</label>
-            <input type="text" class="form-control dt-full-name" id="IconoEdith" placeholder="Icono de la pagina"
+            <input type="text" class="form-control dt-full-name" id="IconoEdith" placeholder="Icono de la página"
               name="Icono" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
           </div>
           <button id="btnSubmitEdit" type="submit" class="btn btn-primary mr-1 data-submit">Actualizar</button>
@@ -368,7 +368,7 @@
         <div class="modal-body flex-grow-1">
           <div class="form-group">
             <input id="idDelete" type="hidden">
-            <p>¿Esta seguro que desea <b>¿esta seguro que desea inhabilitar esta página?</b></p>
+            <p>¿Está seguro que desea <b>inhabilitar esta página?</b></p>
           </div>
           <button id="BtnDelete" type="button" class="btn btn-danger mr-1 data-submit">Confirmar</button>
           <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>

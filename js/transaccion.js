@@ -9,7 +9,7 @@ $(function () {
   Usuario();
 
   function validarNombreYDescripcion(descripcion) {
-    const descripcionValida = /^[a-zA-Z0-9\s]+$/.test(descripcion.trim());
+    const descripcionValida = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+$/.test(descripcion.trim());
 
     if (!descripcionValida) {
       $(".descripcion").addClass("is-invalid");
@@ -232,7 +232,7 @@ const getTransaccions = () => {
       '<"col-sm-12 col-md-6"p>' +
       ">",
     language: {
-      sLengthMenu: "Show _MENU_",
+      sLengthMenu: "Mostrar_MENU_",
       search: "Buscar",
       searchPlaceholder: "Buscar...",
     },

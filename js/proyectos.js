@@ -426,7 +426,7 @@ const getProyectos = () => {
             '<"col-sm-12 col-md-6"p>' +
             '>',
         language: {
-            sLengthMenu: 'Show _MENU_',
+            sLengthMenu: 'Mostrar _MENU_',
             search: 'Buscar',
             searchPlaceholder: 'Buscar...',
         },

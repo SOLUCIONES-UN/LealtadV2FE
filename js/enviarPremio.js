@@ -10,7 +10,7 @@ $(function () {
 
   function validarDescripcion(descripcion) {
     console.log("esto biene ", descripcion);
-    const descripcionValida = /^[a-zA-Z0-9\s]+$/.test(descripcion.trim());
+    const descripcionValida = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+$/.test(descripcion.trim());
 
     if (!descripcionValida) {
       $(".descripcion").addClass("is-invalid");
@@ -223,7 +223,7 @@ const GetEnviaPremio = () => {
       '<"col-sm-12 col-md-6"p>' +
       ">",
     language: {
-      sLengthMenu: "Show _MENU_",
+      sLengthMenu: "Mostrar _MENU_",
       search: "Buscar",
       searchPlaceholder: "Buscar...",
     },

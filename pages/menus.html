@@ -70,6 +70,7 @@
       <ul class="nav navbar-nav align-items-center ml-auto">
         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
               data-feather="moon"></i></a></li>
+
         <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link"
             id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -104,8 +105,7 @@
   <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="navbar-header">
       <ul class="nav navbar-nav flex-row">
-        <li class="nav-item mr-auto"><a class="navbar-brand"
-            href="./dashboard.html"><span class="brand-logo">
+        <li class="nav-item mr-auto"><a class="navbar-brand" href="./dashboard.html"><span class="brand-logo">
               <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
                 <defs>
@@ -169,8 +169,8 @@
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Descripcion</th>
-            
+                    <th>DESCRIPCIÓN</th>
+
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -202,12 +202,11 @@
 
           <div class="form-group">
             <label class="form-label" for="basic-icon-default-fullname">Icono</label>
-            <input type="text" class="form-control dt-full-name icono" id="icono"
-              placeholder="Icono del menú" name="icono" aria-label=""
-              aria-describedby="basic-icon-default-fullname2" required />
+            <input type="text" class="form-control dt-full-name icono" id="icono" placeholder="Icono del menú"
+              name="icono" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
             <div id="iconoError" class="icono-error invalid-feedback"></div>
           </div>
-          
+
 
 
           <button id="btnSubmit" type="submit" class="btn btn-primary mr-1 data-submit">Agregar</button>
@@ -225,12 +224,6 @@
           <h5 class="modal-title" id="exampleModalLabel">Actualizar el Menu</h5>
         </div>
         <div class="modal-body flex-grow-1">
-          <!-- <div class="form-group">
-            <label class="form-label" for="descripcionEdit">Descripción</label>
-            <textarea class="form-control descripcion" id="descripcionEdit" placeholder="Descripción del menú"
-              name="descripcion" required rows="3"></textarea>
-            <div class="invalid-feedback descripcion-error"></div>
-          </div> -->
 
           <div class="form-group">
             <input id="id" type="hidden">
@@ -243,9 +236,8 @@
 
           <div class="form-group">
             <label class="form-label" for="iconoEdit">Icono</label>
-            <input type="text" class="form-control dt-full-name icono " id="iconoEdit"
-              placeholder="Icono del menú" name="icono" aria-label=""
-              aria-describedby="basic-icon-default-fullname2" required />
+            <input type="text" class="form-control dt-full-name icono " id="iconoEdit" placeholder="Icono del menú"
+              name="icono" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
             <div id="iconoError" class="icono-error invalid-feedback"></div>
           </div>
 
@@ -268,7 +260,7 @@
         <div class="modal-body flex-grow-1">
           <div class="form-group">
             <input id="idDelete" type="hidden">
-            <p>¿Esta seguro que desea <b>¿esta seguro que desea inhabilitar este menu?</b></p>
+            <p>¿Está   seguro que desea <b>inhabilitar este menu?</b></p>
           </div>
           <button id="BtnDelete" type="button" class="btn btn-danger mr-1 data-submit">Confirmar</button>
           <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>

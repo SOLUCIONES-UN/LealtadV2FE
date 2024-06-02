@@ -15,7 +15,7 @@ $(function () {
     getSelect();
 
     function validarDescripcion(descripcion) {
-        const descripcionValida = /^[a-zA-Z0-9\s_\-<>()!.,;:;"']+$/g.test(descripcion);
+        const descripcionValida = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+$/g.test(descripcion);
         if (!descripcionValida) {
             $('.descripcion').addClass('is-invalid');
             $('.descripcion-error').text('La descripción no debe contener caracteres especiales inesperados').addClass('text-danger');
@@ -226,7 +226,7 @@ const getTablaDb = () => {
             '<"col-sm-12 col-md-6"p>' +
             '>',
         language: {
-            sLengthMenu: 'Show _MENU_',
+            sLengthMenu: 'Mostrar_MENU_',
             search: 'Buscar',
             searchPlaceholder: 'Buscar...',
         },

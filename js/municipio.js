@@ -8,7 +8,7 @@ $(function () {
 
   Usuario();
   function validarNombre(nombre) {
-    const nombreValido = /^[a-zA-Z\s]+$/.test(nombre.trim());
+    const nombreValido = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+$/.test(nombre.trim());
 
     if (!nombreValido) {
       $(".nombre").addClass("is-invalid");
@@ -272,7 +272,7 @@ const getMunicipios = () => {
       '<"col-sm-12 col-md-6"p>' +
       ">",
     language: {
-      sLengthMenu: "Show _MENU_",
+      sLengthMenu: "Mostrar _MENU_",
       search: "Buscar",
       searchPlaceholder: "Buscar...",
     },
