@@ -6,10 +6,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
-  <meta name="description"
-    content="Plataforma de lealtad a usuarios.">
-  <meta name="keywords"
-    content="Lealtad, fidelidad, préstamos.">
+  <meta name="description" content="Plataforma de lealtad a usuarios.">
+  <meta name="keywords" content="Lealtad, fidelidad, préstamos.">
   <meta name="author" content="SOLUCIONES-UN">
   <title>Invoice List - Lealtad V2</title>
   <link rel="apple-touch-icon" href="../app-assets/images/ico/apple-icon-120.png">
@@ -33,6 +31,7 @@
   <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/bordered-layout.min.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/semi-dark-layout.min.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/toastr.min.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/js/multipleselect/multiple-select.css">
 
   <!-- BEGIN: Page CSS-->
   <link rel="stylesheet" type="text/css" href="../app-assets/css/core/menu/menu-types/vertical-menu.min.css">
@@ -48,7 +47,7 @@
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click"
+<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static" data-open="click"
   data-menu="vertical-menu-modern" data-col="">
   <nav
     class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow container-xxl">
@@ -61,42 +60,49 @@
             </a>
           </li>
         </ul>
-        <ul class="nav navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link menu-toggle" href="javascript:void(0);">
-              <b>Administración de Transacciones</b>
-            </a>
+        <ul class="navbar-container p-0">
+          <!-- <li class="nav-item"> -->
+          <div class="navbar-content text-center">
+            <div><b style="font-size: 20px;">REPORTE DE NOTIFICACIONES CAMPAÑAS</b></div>
+            <div><b>Notificaciones enviadas con links de juegos</b></div>
+          </div>
           </li>
         </ul>
       </div>
       <ul class="nav navbar-nav align-items-center ml-auto">
-        <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon"
-              data-feather="moon"></i></a></li>
-   
-        <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link"
-            id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            <div class="user-nav d-sm-flex d-none"><span class="user-name font-weight-bolder">John Doe</span><span
-                class="user-status">Admin</span></div><span class="avatar"><img class="round"
-                src="../../../app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40"
-                width="40"><span class="avatar-status-online"></span></span>
+        <li class="nav-item d-none d-lg-block">
+          <a class="nav-link nav-link-style"><i class="ficon" data-feather="moon"></i></a>
+        </li>
+        <li class="nav-item dropdown dropdown-user">
+          <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="user-nav d-sm-flex d-none">
+              <span class="user-name font-weight-bolder">John Doe</span>
+              <span class="user-status">Admin</span>
+            </div>
+            <span class="avatar">
+              <img class="round" src="../../../app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar"
+                height="40" width="40">
+              <span class="avatar-status-online"></span>
+            </span>
           </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user"><a class="dropdown-item"
-              href="page-profile.html"><i class="mr-50" data-feather="user"></i> Profile</a><a class="dropdown-item"
-              href="app-email.html"><i class="mr-50" data-feather="mail"></i> Inbox</a><a class="dropdown-item"
-              href="app-todo.html"><i class="mr-50" data-feather="check-square"></i> Task</a><a class="dropdown-item"
-              href="app-chat.html"><i class="mr-50" data-feather="message-square"></i> Chats</a>
-            <div class="dropdown-divider"></div><a class="dropdown-item" href="page-account-settings.html"><i
-                class="mr-50" data-feather="settings"></i> Settings</a><a class="dropdown-item"
-              href="page-pricing.html"><i class="mr-50" data-feather="credit-card"></i> Pricing</a><a
-              class="dropdown-item" href="page-faq.html"><i class="mr-50" data-feather="help-circle"></i> FAQ</a><a
-              class="dropdown-item" href="login.html"><i class="mr-50" data-feather="power"></i> Logout</a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user">
+            <a class="dropdown-item" href="page-profile.html"><i class="mr-50" data-feather="user"></i> Profile</a>
+            <a class="dropdown-item" href="app-email.html"><i class="mr-50" data-feather="mail"></i> Inbox</a>
+            <a class="dropdown-item" href="app-todo.html"><i class="mr-50" data-feather="check-square"></i> Task</a>
+            <a class="dropdown-item" href="app-chat.html"><i class="mr-50" data-feather="message-square"></i> Chats</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="page-account-settings.html"><i class="mr-50" data-feather="settings"></i>
+              Settings</a>
+            <a class="dropdown-item" href="page-pricing.html"><i class="mr-50" data-feather="credit-card"></i>
+              Pricing</a>
+            <a class="dropdown-item" href="page-faq.html"><i class="mr-50" data-feather="help-circle"></i> FAQ</a>
+            <a class="dropdown-item" href="login.html"><i class="mr-50" data-feather="power"></i> Logout</a>
           </div>
         </li>
       </ul>
     </div>
   </nav>
-
   <ul class="main-search-list-defaultlist-other-list d-none">
     <li class="auto-suggestion justify-content-between"><a
         class="d-flex align-items-center justify-content-between w-100 py-50">
@@ -107,8 +113,7 @@
   <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="navbar-header">
       <ul class="nav navbar-nav flex-row">
-        <li class="nav-item mr-auto"><a class="navbar-brand"
-            href="./dashboard.html"><span class="brand-logo">
+        <li class="nav-item mr-auto"><a class="navbar-brand" href="./dashboard.html"><span class="brand-logo">
               <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
                 <defs>
@@ -151,143 +156,78 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
       <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-        
       </ul>
     </div>
   </div>
   <!-- END: Main Menu-->
 
   <!-- BEGIN: Content-->
-  <div class="app-content content ">
+  <div class="app-content content">
     <div class="content-overlay"></div>
     <div class="header-navbar-shadow"></div>
     <div class="content-wrapper container-xxl p-0">
       <div class="content-header row">
       </div>
       <div class="content-body">
-        <section class="invoice-list-wrapper">
-          <div class="card">
-            <div class="card-datatable table-responsive">
-              <table class="datatables-basic table" id="tableData">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>DESCRIPCIÓN</th>
-                   
-                    <th>ACCIONES</th>
-                  </tr>
-                </thead>
-              </table>
+        <section class="card p-1 ">
+          <div class="row p-2">
+
+            <div class="col-md-4">
+              <label for="fechaInicio">Fecha Inicio</label>
+              <input id="fechaInicio" class="form-control" type="date">
+            </div>
+            <div class="col-md-4">
+              <label for="fechaFin">Fecha Final</label>
+              <input id="fechaFin" class="form-control" type="date">
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-primary mt-2 btn-block" id="btnDescargarExcel">Excel</button>
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-primary mt-2 btn-block" id="PantallaInfo">Mostrar en Pantalla</button>
+            </div>
+            <div class="col-md-8">
+              <button id="ConsultaParticipacion" class="btn btn-info mt-2 btn-block">Consultar</button>
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-primary mt-2 btn-block" id="Reenviar">Reenviar</button>
             </div>
           </div>
-        </section>
+          <div class="card-datatable  p-2">
+            <table class="datatables-basic table table-responsive" id="tableData">
+              <thead>
+                <tr>
+                  <th><input type="checkbox" id="selectAll"></th>
+                  <th>#</th>
+                  <th>TELÉFONO</th>
+                  <th>CLIENTE</th>
+                  <th>CAMPAÑA</th>
+                  <th>FECHA</th>
+                  <th>PREMIO</th>
+                  <th>TRANSACCIÓN</th>
+                  <th>VALOR TRANSACCIÓN</th>
+                </tr>
+              </thead>
+              <tbody id="TbPararticipantes">
 
+              </tbody>
+            </table>
+          </div>
       </div>
     </div>
+    </section>
   </div>
-  <!-- modal de creacion or Update -->
-  <div class="modal modal-slide-in new-user-modal fade" id="modalNew">
-    <div class="modal-dialog">
-      <form id="formNew" class="add-new-user modal-content pt-0" autocomplete="off">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-        <div class="modal-header mb-1">
-          <h5 class="modal-title" id="exampleModalLabel">Agregar Nueva Transacción</h5>
-        </div>
-        <div class="modal-body flex-grow-1">
-          
-          
-          <div class="form-group">
-            <label class="form-label" for="proyecto">Proyecto:</label>
-            <select type="text" class="form-control" id="proyecto" name="proyecto" required></select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="tabla">Tabla:</label>
-            <select type="text" class="form-control" id="tabla" name="tabla" required></select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="columna">Columna De Transacción:</label>
-            <select type="text" class="form-control" id="columna" name="columna" required></select>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="descripcion">Descripción</label>
-            <input class="form-control descripcion" id="descripcion" placeholder="Descripción de la Transacción" name="descripcion" required rows="3"></input>
-            <div class="invalid-feedback descripcion-error"></div>
-        </div>
-          
-          <button id="btnSubmit" type="submit" class="btn btn-primary mr-1 data-submit">Agregar </button>
-          <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-        </div>
-      </form>
-    </div>
   </div>
-
-  <div class="modal modal-slide-in new-user-modal fade" id="modalEdit">
-    <div class="modal-dialog">
-      <form id="formEdit" class="add-new-user modal-content pt-0" autocomplete="off">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-        <div class="modal-header mb-1">
-          <h5 class="modal-title" id="exampleModalLabel">Actualizar La Transacción</h5>
-        </div>
-        <div class="modal-body flex-grow-1">
-          <input type="hidden" id="id">
-          
-          
-         <div class="form-group">
-              <label class="form-label" for="proyectoEdit">Proyecto:</label>
-              <select type="text" class="form-control" id="proyectoEdit" name="proyectoEdit" required></select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="tablaEdit">Tabla:</label>
-              <select type="text" class="form-control" id="tablaEdit" name="tablaEdit" required></select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="columnaEdit">Columna De Transacción:</label>
-              <select type="text" class="form-control" id="columnaEdit" name="columnaEdit" required></select>
-            </div>
-          
-          <div class="form-group">
-            <label class="form-label" for="descripcionEdit">Descripción</label>
-            <input class="form-control descripcion" id="descripcionEdit" placeholder="Descripción de la Transacción" name="descripcion" required rows="3"></input>
-            <div class="invalid-feedback descripcion-error"></div>
-        </div>
-          <button id="btnSubmitEdit" type="submit" class="btn btn-primary mr-1 data-submit">Agregar </button>
-          <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <div class="modal modal-slide-in new-user-modal fade" id="modalDelete">
-    <div class="modal-dialog">
-      <form id="formDelete" class="add-new-user modal-content pt-0" autocomplete="off">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-        <div class="modal-header mb-1">
-          <h5 class="modal-title" id="exampleModalLabel">Inhabilitar La Transaccion</h5>
-        </div>
-        <div class="modal-body flex-grow-1">
-          <div class="form-group">
-            <input id="idDelete" type="hidden">
-            <p>¿Esta seguro que desea <b>Inhabilitar esta Transaccion?</b></p>
-          </div>
-          <button id="BtnDelete" type="button" class="btn btn-danger mr-1 data-submit">Confirmar </button>
-          <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-        </div>
-      </form>
-    </div>
   </div>
   <!-- END: Content-->
   </div>
   <!-- End: Customizer-->
   <!-- BEGIN: Footer-->
   <footer class="footer footer-static footer-light">
-    <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">&copy; 2024<a
-          class="ml-25" href="#" target="_blank">LEALTAD</a><span
-          class="d-none d-sm-inline-block">, Reservados todos los derechos.</span></span><span
-        class="float-md-right d-none d-md-block">Desarrollado por: SOLUCIONES-UN<i data-feather="code"></i></span></p>
+    <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">&copy; 2024<a class="ml-25"
+          href="#" target="_blank">LEALTAD</a><span class="d-none d-sm-inline-block">, Reservados todos los
+          derechos.</span></span><span class="float-md-right d-none d-md-block">Desarrollado por: SOLUCIONES-UN<i
+          data-feather="code"></i></span></p>
   </footer>
   <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
   <!-- END: Footer-->
@@ -297,6 +237,11 @@
   <script src="../app-assets/vendors/js/vendors.min.js"></script>
   <!-- BEGIN Vendor JS-->
 
+  <!-- Agrega este enlace antes de tu script JavaScript -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script> -->
+  <script src="../assets/js/jszip.js"></script>
+  <script src="../assets/js/xlsx.js"></script>
+
   <!-- BEGIN: Page Vendor JS-->
   <script src="../app-assets/vendors/js/extensions/moment.min.js"></script>
   <script src="../app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
@@ -304,6 +249,7 @@
   <script src="../app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
   <script src="../app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
   <script src="../app-assets/vendors/js/tables/datatable/responsive.bootstrap4.min.js"></script>
+  <script src="../app-assets/vendors/js/multipleselect/multiple-select.js"></script>
   <!-- END: Page Vendor JS-->
   <script src="../app-assets/vendors/js/extensions/toastr.min.js"></script>
   <!-- BEGIN: Theme JS-->
@@ -311,9 +257,9 @@
   <script src="../app-assets/js/core/app.min.js"></script>
   <script src="../app-assets/js/scripts/customizer.min.js"></script>
   <!-- END: Theme JS-->
-
+  <!-- END: Theme JS-->
+  <script src="../js/reporteNotificaciones.js"></script>
   <!-- BEGIN: Page JS-->
-  <script src="../js/transaccion.js"></script>
   <script src="../js/menuDinamico.js"></script>
   <!-- END: Page JS-->
 

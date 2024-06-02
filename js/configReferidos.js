@@ -235,7 +235,6 @@ const obtenerData = () => {
 };
 
 const updateConfigReferidos = (id, descripcion) => {
-
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Authorization", token);
@@ -287,8 +286,6 @@ const updateConfigReferidos = (id, descripcion) => {
     });
   boton.prop("disable", false);
 };
-
-
 
 const CreateConfigReferidos = (id, descripcion, estado) => {
   const myHeaders = new Headers();

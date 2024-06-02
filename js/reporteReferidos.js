@@ -3,7 +3,8 @@ let token = localStorage.getItem("token");
 let datosObtenidos = null; // Variable global para almacenar los datos obtenidos
 
 $(function () {
-  $("#btnDescargarExcel, #PantallaInfo, #tableData").hide(); 
+  $("#btnDescargarExcel, #PantallaInfo, #tableData").hide();
+  
   // Inicializar el plugin multiple-select
   $('#selectcampana').multipleSelect({
     filter: true,
@@ -12,37 +13,44 @@ $(function () {
   });
 
   getCampaniasActivas();
+  
+  function validarFechas() {
+    const FechaInicio = document.getElementById('FechaInicio').value;
+    const FechaFin = document.getElementById('FechaFin').value;
+  
+    if (FechaInicio === FechaFin) {
+        Alert('Las fechas de inicio y fin no pueden ser iguales.','error');
+    }
+  }
+  
+  window.onload = function() {
+    document.getElementById('FechaInicio').addEventListener('change', validarFechas);
+    document.getElementById('FechaFin').addEventListener('change', validarFechas);
+  }
+  
 
   $("#btnConsultar").click(function () {
-    getReport();
-    
     if (
       $("#selectcampana").val() !== null && // Verificar si se ha seleccionado al menos una opción
       $("#selectcampana").val().length > 0 && // Verificar si se ha seleccionado al menos una opción
       $("#FechaInicio").val() !== "" &&
       $("#FechaFin").val() !== ""
-      
     ) {
+      getReport();
       $("#btnDescargarExcel, #PantallaInfo").show();
-      
     } else {
-      alert("Necesita completar todos los campos.");
+      Alert("Necesita completar todos los campos.","error");
     }
-    
   });
-  
- 
-
 
   $("#PantallaInfo").click(function () {
     if (datosObtenidos) {
       $("#tableData").show(); // Mostrar la tabla con el ID correcto
       mostrarDatosEnTabla(datosObtenidos);
     } else {
-      alert("Primero debes obtener los datos"); 
+      Alert("Primero debes obtener los datos","error");
     }
   });
-  
 });
 
 const getCampaniasActivas = () => {
@@ -71,7 +79,7 @@ const getCampaniasActivas = () => {
     })
     .catch((error) => {
       console.error("Error al obtener campañas:", error);
-      Alert("Error al obtener campañas.", "error");
+      Alert("Error al obtener campañas.","error");
     });
 };
 
@@ -79,21 +87,27 @@ const getReport = () => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const fechaInicio = $("#FechaInicio").val();
-  const fechaFin = $("#FechaFin").val();
-  const nombreCampania=$("#nombre").val();
+  const FechaInicio = $("#FechaInicio").val();
+  const FechaFin = $("#FechaFin").val();
+  const nombreCampania = $("#nombre").val();
 
-  if (!fechaInicio || !fechaFin) {
-    console.error("Las fechas de inicio y fin son obligatorias.");
-    return;
+  // Convertir las cadenas de fecha en objetos Date para la comparación
+  const dateInicio = new Date(FechaInicio);
+  const dateFin = new Date(FechaFin);
+
+  // Comprueba si la fecha de inicio es mayor que la fecha de fin
+  if (dateInicio > dateFin) {
+    Alert("La Fecha Final no puede ser menor a fecha Inicial", "error");
+    return; // Evitar hacer la llamada al servidor si la fecha de inicio es mayor
   }
 
   var raw = JSON.stringify({
-    fechaInicio: fechaInicio,
-    fechaFin: fechaFin,
-    nombreCampania: nombreCampania, 
+    fechaInicio: FechaInicio,
+    fechaFin: FechaFin,
+    nombreCampania: nombreCampania,
     campanas: $("#selectcampana").val(),
   });
+
   var requestOptions = {
     method: "POST",
     headers: myHeaders,
@@ -106,16 +120,21 @@ const getReport = () => {
   fetch(`${url}reporteReferidos/referidos`, requestOptions)
     .then((response) => response.json())
     .then((data) => {
-     
       datosObtenidos = data;
-      
-      $("#PantallaInfo").prop("disabled", false);
+      // Habilitar el botón PantallaInfo solo si hay datos
+      if (datosObtenidos && datosObtenidos.length > 0) {
+        $("#PantallaInfo").prop("disabled", false);
+      } else {
+        Alert("No se encontraron datos para las fechas seleccionadas.","error");
+        $("#PantallaInfo").prop("disabled", true);
+      }
     })
     .catch((error) => {
       console.error("Error al obtener reporte de referidos:", error);
-      Alert("Error al obtener reporte de referidos.", "error");
+      Alert("Error al obtener reporte de referidos.","error");
     });
 };
+
 
 function mostrarDatosEnTabla(datos) {
   console.log("Datos para mostrar en la tabla:", datos);
@@ -125,7 +144,6 @@ function mostrarDatosEnTabla(datos) {
   }
 
   if (!$.fn.DataTable.isDataTable('#tableData')) {
-   
     $('#tableData').DataTable({
       columnDefs: [
         { "defaultContent": "-", "targets": "_all" }
@@ -148,42 +166,39 @@ function mostrarDatosEnTabla(datos) {
 
   let contador = 1;
 
-    datos.forEach((element) => {
-      
-    
-      
-      const fechaHora= formatearFechaHora(element.fecha);
-      const campanas = element.nombre_campania; // Nombre de la campaña
-      const opcion = element.opcion_referido; // Opción
-      const telefono = element.telefono_usuario;
-      const nombreUsuario = element.nombre_usuario;
-      const telefReferido = element.telref;
-      const nombreref = element.nombreref;
-      const montopremio = element.valor;
-      const codigo = element.codigo_referido;
-      // Agrega una fila a la tabla
-      if (datosObtenidos.some(data => data.customerId === element.customerId)) 
-      table.row.add([
-        contador++,
-        opcion,
-        campanas,
-       codigo,
-       telefono,
-       nombreUsuario,
-       fechaHora,  
-        element.descripcionTrx,
-        montopremio,
-        telefReferido,
-        nombreref,
-        // Agregado un guión como valor por defecto
-        // Utiliza la fecha formateada
-      ]).draw();
-    
-    });
+  datos.forEach((element) => {
+    const fechaHora = formatearFechaHora(element.fecha);
+    const campanas = element.nombre_campania; // Nombre de la campaña
+    const opcion = element.opcion_referido || "No aplica";
+    const formatTelefonoGuatemala = element.telefono_usuario;
+    const nombreUsuario = element.nombre_usuario|| "No aplica";
+    const telefReferido = element.telref|| "No aplica";
+    const nombreref = element.nombreref|| "No aplica";
+    const montopremio = element.valor || "No aplica";
+    const codigo = element.codigo_referido || "No aplica";
+    // Agrega una fila a la tabla
+    table.row.add([
+      contador++,
+      opcion,
+      campanas,
+      codigo,
+      formatTelefonoGuatemala,
+      nombreUsuario,
+      fechaHora,
+      element.descripcionTrx,
+      montopremio,
+      telefReferido,
+      nombreref,
+    ]).draw();
+  });
 }
 
- 
-
+const formatTelefonoGuatemala = (telefono) => {
+  const codigoPais = telefono.slice(0, 3); // Código de país (502)
+  const parte1 = telefono.slice(3, 7);    // Primeros 4 dígitos
+  const parte2 = telefono.slice(7);       // Últimos 4 dígitos
+  return `(${codigoPais}) ${parte1}-${parte2}`; // Formato (502) 1234-5678
+};
 
 document.getElementById("btnDescargarExcel").addEventListener("click", function () {
   console.log("Descargar Excel");
@@ -222,13 +237,13 @@ document.getElementById("btnDescargarExcel").addEventListener("click", function 
     { v: '#', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
     { v: 'MEDIO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
     { v: 'CAMPAÑA', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-    { v: 'CODIGO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-    { v: 'TELEFONO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+    { v: 'CÓDIGO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+    { v: 'TELÉFONO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
     { v: 'NOMBRE USUARIO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
     { v: 'FECHA y HORA', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-    { v: 'TRANSACCION', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+    { v: 'TRANSACCIÓN', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
     { v: 'MONTO PREMIO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
-    { v: 'TELEFONO REFERIDO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
+    { v: 'TELÉFONO REFERIDO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
     { v: 'NOMBRE REFERIDO', t: 's', s: { font: { bold: true, color: { rgb: 'FFFFFF' } }, alignment: { horizontal: 'center' }, fill: { fgColor: { rgb: '808080' } } } },
 
   ];
@@ -263,3 +278,14 @@ function formatearFechaHora(fechaHora) {
   const minutos = fecha.getMinutes().toString().padStart(2, "0");
   return `${dia}/${mes}/${año} ${horas}:${minutos}`;
 }
+const Alert = function (
+  message,
+  status // si se proceso correctamente la solicitud
+) {
+  toastr[`${status}`](message, `${status}`, {
+    closeButton: true,
+    tapToDismiss: false,
+    positionClass: "toast-top-right",
+    rtl: false,
+  });
+};

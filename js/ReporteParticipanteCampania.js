@@ -3,7 +3,8 @@ let token = localStorage.getItem("token");
 let datosObtenidos = null; // Variable global para almacenar los datos obtenidos
 let archivadas = 0;
 
-$(function () {
+
+$(document).ready(function () {
     $("#btnDescargarExcel, #PantallaInfo, #tableData").hide();
     
     // Inicializar el plugin multiple-select
@@ -13,6 +14,13 @@ $(function () {
       placeholder: "",
     });
   
+    
+
+
+
+
+
+
     getCampaniasActivas();
   
     $("#btnConsultar").click(function () {
@@ -75,20 +83,68 @@ $(function () {
         alert("Error al obtener campañas.");
       });
   };
+
+
+  function validarFechas() {
+    const FechaInicio = document.getElementById('FechaInicio').value;
+    const FechaFin = document.getElementById('FechaFin').value;
+  
+    if (FechaInicio >= FechaFin) {
+        Alert('La fecha Fin debe ser mayor a la fecha inicio','error');
+    }
+  }
+  
+  window.onload = function() {
+    document.getElementById('FechaInicio').addEventListener('blur', validarFechas);
+    document.getElementById('FechaFin').addEventListener('blur', validarFechas);
+  }
+  
+
+
+
+
+
+
+  function validarFechas() {
+    const FechaInicio = document.getElementById('FechaInicio').value;
+    const FechaFin = document.getElementById('FechaFin').value;
+  
+    if (FechaInicio >= FechaFin) {
+        Alert('La fecha Fin debe ser mayor a la fecha inicio','error');
+    }
+  }
+  
+  window.onload = function() {
+    document.getElementById('FechaInicio').addEventListener('blur', validarFechas);
+    document.getElementById('FechaFin').addEventListener('blur', validarFechas);
+  }
+  
+
+
+
+
   
   const getReport = () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-  
-    const fechaInicio = $("#FechaInicio").val();
-    const fechaFin = $("#FechaFin").val();
+    const fechaInicio = $("#fechaInicio").val();
+    const fechaFin = $("#fechaFin").val();    
     const campanias = $("#selecCampania").val();
     const archivadas = $("#checkboxArchivadas").val();
   
-    if (!fechaInicio || !fechaFin) {
-      console.error("Las fechas de inicio y fin son obligatorias.");
-      return;
-    }
+    const dateInicio = new Date(fechaInicio);
+    const dateFin = new Date(fechaFin);
+  
+    // Comprueba si la fecha de inicio es mayor que la fecha de fin
+    if (dateInicio > dateFin) {
+      Alert("La Fecha Final no puede ser menor a fecha Inicial", "error");
+      return; // Evitar hacer la llamada al servidor si la fecha de inicio es mayor
+     } else if (dateInicio.getTime() === dateFin.getTime()) {
+      Alert("Las fechas de inicio y fin son iguales", "error");
+      return; // Evitar hacer la llamada al servidor si las fechas son iguales
+  }
+
+
   
     var raw = JSON.stringify({
       campanias: campanias,
@@ -113,10 +169,19 @@ $(function () {
         $("#PantallaInfo").prop("disabled", false);
       })
       .catch((error) => {
-        console.error("Error al obtener reporte de referidos:", error);
-        alert("Error al obtener reporte de referidos.");
+        console.error("Error al obtener reporte de participantes:", error);
+        alert("Error al obtener reporte de participantes.");
       });
   };
+
+
+
+
+  
+
+
+
+
   
   function mostrarDatosEnTabla(participantesCamp, infoCustom) {
     console.log("Datos para mostrar en la tabla:", participantesCamp, infoCustom);
@@ -147,12 +212,12 @@ $(function () {
     participantesCamp.forEach((element) => {
       const fechaParticipacion = formatearFechaHora(element.fechaParticipacion);
       const campanas = element.nombre_campania;
-      const telefono_usuario = element.telefono_usuario;
+      const telefono_usuario = element.telefono_usuario ;
       const nombre_usuario = element.nombre_usuario;
-      const montopremio = element.valor;
-      const codigo = element.codigo;
-      const descripcion = element.premio;
-      const descripcionTrx = element.descripcionTrx;
+      const montopremio = element.valor ||"No aplica";
+      const codigo = element.codigo ||"No aplica";
+      const descripcion = element.descripcion ||"No aplica";
+      const descripcionTrx = element.descripcionTrx ||"No aplica";
       // const montoTransaccion = element.montoTransaccion;
   
       table.row.add([
@@ -170,10 +235,8 @@ $(function () {
 
       ]).draw();
     });
+
   }
- 
-
-
 document.getElementById("btnDescargarExcel").addEventListener("click", function () {
     console.log("Descargar Excel");
   
@@ -209,16 +272,16 @@ document.getElementById("btnDescargarExcel").addEventListener("click", function 
   const headerRow4 = [
     '',
     { v: '#', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
-    { v: 'Fecha Acreditacion', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
-    { v: 'Telefono', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
-    { v: 'Nombre', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
-    { v: 'Campaña', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
-    { v: 'Premio', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
-    { v: 'Monto Premio', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
-    { v: 'Transaccion', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
-    { v: 'Monto Transaccion', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
-    { v: 'Codigo', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
-    { v: 'Fecha Participacion', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
+    { v: 'FECHA ACREDITACIÓN', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
+    { v: 'TELÉFONO', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
+    { v: 'NOMBRE', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
+    { v: 'CAMPAÑA', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
+    { v: 'PREMIO', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
+    { v: 'MONTO PREMIO', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
+    { v: 'TRANSACCIÓN', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
+    { v: 'MONTO TRANSACCIÓN', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
+    { v: 'CÓDIGO', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
+    { v: 'FECHA PARTICIPACIÓN', t: 's', s: { font: { bold: true, color: { rgb: 'ffffff' } }, alignment: { horizontal:'center' }, fill: { fgColor: { rgb: '595959' } } } },
 ];
   data.unshift(headerRow1, headerRow2, headerRow3, headerRow4);
 
@@ -251,3 +314,14 @@ function formatearFechaHora(fechaHora) {
   const minutos = fecha.getMinutes().toString().padStart(2, "0");
   return `${dia}/${mes}/${año} ${horas}:${minutos}`;
 }
+const Alert = function (
+  message,
+  status // si se proceso correctamente la solicitud
+) {
+  toastr[`${status}`](message, `${status}`, {
+    closeButton: true,
+    tapToDismiss: false,
+    positionClass: "toast-top-right",
+    rtl: false,
+  });
+};

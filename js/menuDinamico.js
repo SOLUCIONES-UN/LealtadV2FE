@@ -10,44 +10,38 @@ $(function () {
   Usuario();
 });
 
-
-
 const Usuario = () => {
-  let usuario = JSON.parse(localStorage.getItem('infoUsuario'));
+  let usuario = JSON.parse(localStorage.getItem("infoUsuario"));
   if (usuario !== null && usuario.username !== null) {
-      console.log(usuario.username);
-      $('.user-name').text(usuario.nombre);
-      $('.user-status').text(usuario.rol.descripcion);
+    console.log(usuario.username);
+    $(".user-name").text(usuario.nombre);
+    $(".user-status").text(usuario.rol.descripcion);
   } else {
-      console.log('El objeto de usuario o su propiedad "nombre" es null.');
-      // Aquí puedes manejar el caso en el que el objeto de usuario o su propiedad "nombre" sean null
+    console.log('El objeto de usuario o su propiedad "nombre" es null.');
+    // Aquí puedes manejar el caso en el que el objeto de usuario o su propiedad "nombre" sean null
   }
-}
+};
 
 const verifytoken = () => {
-  tokenMenu = localStorage.getItem('token');
+  tokenMenu = localStorage.getItem("token");
 
   if (tokenMenu == null) {
-    window.location.href = 'login.html';
+    window.location.href = "login.html";
   } else {
-    const partes = tokenMenu.split('.');
+    const partes = tokenMenu.split(".");
     if (partes.length !== 3) {
-      window.location.href = 'login.html';
+      window.location.href = "login.html";
     }
   }
-}
-
+};
 
 const verifyLogin = () => {
-
-  tokenMenu = localStorage.getItem('token');
+  tokenMenu = localStorage.getItem("token");
 
   if (tokenMenu == null) {
-    window.location.href = 'login.html';
-  } 
-  else{
-
-    const partes = tokenMenu.split('.');
+    window.location.href = "login.html";
+  } else {
+    const partes = tokenMenu.split(".");
 
     // Decodificar el payload (parte intermedia en base64)
     const payloadBase64 = partes[1];
@@ -58,50 +52,39 @@ const verifyLogin = () => {
       const expiracion = new Date(payload.exp * 1000); // El tiempo está en segundos, convertir a milisegundos
       const currentTime = new Date();
 
-      let tiempoRestante = ((expiracion - currentTime) / 1000) / 60;
+      let tiempoRestante = (expiracion - currentTime) / 1000 / 60;
 
       console.log(tiempoRestante);
-      if (tiempoRestante <= 4 && !addListeners ) 
-      {
-        AlertSession('Su sesión está a punto de caducar', 'warning');
+      if (tiempoRestante <= 4 && !addListeners) {
+        AlertSession("Su sesión está a punto de caducar", "warning");
         addListeners = true;
 
         $(document).on("mousedown", scrollHandler);
         $(document).on("keydown", scrollHandler);
         $(document).on("scroll", scrollHandler);
-          
       }
 
-
       if (tiempoRestante <= 1) {
-
-        AlertSession('Session Caducada', 'error');
+        AlertSession("Session Caducada", "error");
 
         setTimeout(() => {
-          localStorage.removeItem('token');
-          window.location.href = 'login.html';
+          localStorage.removeItem("token");
+          window.location.href = "login.html";
         }, 1000 * 3);
-      }else{
+      } else {
         return;
       }
     } else {
-      throw new Error('El tokenMenu no tiene una fecha de expiración');
+      throw new Error("El tokenMenu no tiene una fecha de expiración");
     }
   }
-
-}
+};
 
 const validateSesion = () => {
-
   setInterval(() => {
-      verifyLogin();
-  }, 1000 * 10); 
-
-}
-
-
-
-
+    verifyLogin();
+  }, 1000 * 10);
+};
 
 function scrollHandler() {
   console.log("scroll");
@@ -109,8 +92,6 @@ function scrollHandler() {
 }
 
 const refreshSession = async (tokenMenu) => {
-
-
   $(document).off("mousedown", scrollHandler);
   $(document).off("keydown", scrollHandler);
   $(document).off("scroll", scrollHandler);
@@ -119,33 +100,28 @@ const refreshSession = async (tokenMenu) => {
   var requestOptions = {
     method: "GET",
     redirect: "follow",
-    headers: { "Authorization": tokenMenu }
+    headers: { Authorization: tokenMenu },
   };
 
   fetch(`${url}loggin/getSession`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
       console.log(result);
-      localStorage.setItem('token', result.token);
+      localStorage.setItem("token", result.token);
     })
     .catch((error) => {
-      console.log("error", error)
+      console.log("error", error);
     });
-
-}
+};
 
 const AlertSession = function (message, status) {
   toastr[`${status}`](message, `${status}`, {
-      closeButton: true,
-      tapToDismiss: false,
-      positionClass: 'toast-top-right',
-      rtl: false
+    closeButton: true,
+    tapToDismiss: false,
+    positionClass: "toast-top-right",
+    rtl: false,
   });
-}
-
-
-
-
+};
 
 const getMenuAccesible = () => {
   let menu;
@@ -154,7 +130,7 @@ const getMenuAccesible = () => {
   var requestOptions = {
     method: "GET",
     redirect: "follow",
-    headers: { "Authorization": tokenMenu }
+    headers: { Authorization: tokenMenu },
   };
 
   fetch(`${url}permisosUsuario/${usuario.username}`, requestOptions)

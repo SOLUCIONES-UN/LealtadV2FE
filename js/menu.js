@@ -4,8 +4,11 @@ let tokenMenu = localStorage.getItem("token");
 $(function () {
   let tabla = getMenus();
   Usuario();
+
   function validarDescripcion(descripcion) {
-    const descripcionValida = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+$/.test(descripcion.trim());
+    const descripcionValida = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+$/.test(
+      descripcion.trim()
+    );
 
     if (!descripcionValida) {
       $(".descripcion").addClass("is-invalid");
@@ -47,16 +50,14 @@ $(function () {
       limpiarFormulario();
     });
 
- //evento submit del formulario
- $('#formNew').submit(function () {
+  //evento submit del formulario
+  $("#formNew").submit(function () {
+    $("#btnSubmit").prop("disabled", true);
+    const descripcion = $("#descripcion").val();
 
-       
-    $('#btnSubmit').prop('disabled', true);
-    const descripcion = $('#descripcion').val();
-   
     if (!validarDescripcion(descripcion)) {
-        $('#btnSubmit').prop('disabled', false);
-        return false;
+      $("#btnSubmit").prop("disabled", false);
+      return false;
     }
 
     var myHeaders = new Headers();
@@ -78,7 +79,7 @@ $(function () {
     fetch(`${url}Menu`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        $('#btnSubmit').prop('disabled', false);
+        $("#btnSubmit").prop("disabled", false);
         if (result.code == "ok") {
           limpiarFormulario();
           tabla._fnAjaxUpdate();
@@ -174,15 +175,7 @@ $(function () {
   });
 });
 
-// const Usuario = () => {
 
-//     let usuario = JSON.parse(localStorage.getItem('infoUsuario'));
-//     console.log(usuario.nombre)
-//     $('.user-name').text(usuario.nombre);
-//     $('.user-status').text(usuario.rol.descripcion);
-// }
-
-//obtiene la lista de menus
 const getMenus = () => {
   return $("#tableData").dataTable({
     ajax: {

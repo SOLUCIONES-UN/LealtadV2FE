@@ -197,30 +197,27 @@ const getTransaccions = () => {
       {
         data: "id",
         render: function (data) {
-          return `
-              <div class="btn-group">
-                <a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
-                    ${feather.icons["more-vertical"].toSvg({
-                      class: "font-small-4",
-                    })}
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="#" onclick="OpenEdit(${data})" class="btn_edit dropdown-item">
-                        ${feather.icons["archive"].toSvg({
-                          class: "font-small-4 mr-50",
-                        })} Actualizar
-                    </a>
-                
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="#" onclick="OpenDelete(${data})" class="btn_delete dropdown-item">
-                      ${feather.icons["trash-2"].toSvg({
-                        class: "font-small-4 mr-50",
-                      })} Inhabilitar
-                    </a>
-                </div>
-                </div>
-              </div> 
-            `;
+          return (
+            '<div class="btn-group">' +
+            '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
+            feather.icons["more-vertical"].toSvg({ class: "font-small-4" }) +
+            "</a>" +
+            '<div class="dropdown-menu dropdown-menu-right">' +
+            '<a href="#" onclick="OpenEdit(' +
+            data +
+            ')" class="btn_edit dropdown-item">' +
+            feather.icons["archive"].toSvg({ class: "font-small-4 mr-50" }) +
+            " Actualizar" +
+            "</a>" +
+            '<a href="#" onclick="OpenDelete(' +
+            data +
+            ')" class="btn_delete dropdown-item">' +
+            feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" }) +
+            " Inhabilitar" +
+            "</a>" +
+            "</div>" +
+            "</div>"
+          );
         },
       },
     ],
@@ -277,82 +274,80 @@ const Alert = function (
 };
 
 const OpenEdit = (id) => {
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
-      headers: { Authorization: token },
-    };
-  
-    fetch(`${url}Transaccion/${id}`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-        $("#id").val(id);
-        $("#descripcionEdit").val(result.descripcion);
-        $("#proyectoEdit").val(result.columna.idProyectos);
-        $("#tablaEdit").val(result.columna.idTablas);
-        $("#columnaEdit").val(result.idColumna);
-  
-        // Llamar a GetProjects y getTablaDB con la bandera de edición
-        GetProjects(true);
-        getTablaDB(result.columna.idTablas, true);
-  
-        $("#modalEdit").modal("toggle");
-      })
-      .catch((error) => console.log("error", error));
+  var requestOptions = {
+    method: "GET",
+    redirect: "follow",
+    headers: { Authorization: token },
   };
+
+  fetch(`${url}Transaccion/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+      $("#id").val(id);
+      $("#descripcionEdit").val(result.descripcion);
+      $("#proyectoEdit").val(result.columna.idProyectos);
+      $("#tablaEdit").val(result.columna.idTablas);
+      $("#columnaEdit").val(result.idColumna);
+
+      // Llamar a GetProjects y getTablaDB con la bandera de edición
+      GetProjects(true);
+      getTablaDB(result.columna.idTablas, true);
+
+      $("#modalEdit").modal("toggle");
+    })
+    .catch((error) => console.log("error", error));
+};
 
 const OpenDelete = (id) => {
   $("#idDelete").val(id);
   $("#modalDelete").modal("toggle");
 };
 
-
 const GetProjects = (isEdit = false) => {
-    $("#proyecto").html(null);
-    $("#proyectoEdit").html(null);
-  
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
-      headers: { Authorization: token },
-    };
-  
-    $("#proyecto").html(
-      '<option value="0" selected disabled>Selecciona una Opcion</option>'
-    );
-    fetch(`${url}projects`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        result.forEach((element) => {
-          var option = `<option value="${element.id}">${element.descripcion}</option>`;
-          $("#proyecto").append(option);
-          $("#proyectoEdit").append(option);
-        });
-        var selectProyecto = document.getElementById("proyecto");
-        var selectProyectoEdit = document.getElementById("proyectoEdit");
-  
-        if (isEdit) {
-          // Si estamos en modo de edición, seleccionamos el proyecto actual
-          var currentProjectId = $("#proyectoEdit").val();
-          getTablaDB(currentProjectId, true);
-        } else {
-          // Si no estamos en modo de edición, configuramos los eventos de cambio
-          selectProyecto.addEventListener("change", function () {
-            var selectedId = this.value;
-            getTablaDB(selectedId);
-          });
-  
-          selectProyectoEdit.addEventListener("change", function () {
-            var selectedId = this.value;
-            getTablaDB(selectedId);
-          });
-        }
-      })
-      .catch((err) => console.log("error", err));
-  };
-const getTablaDB = (id, isEdith = false) => {
+  $("#proyecto").html(null);
+  $("#proyectoEdit").html(null);
 
+  var requestOptions = {
+    method: "GET",
+    redirect: "follow",
+    headers: { Authorization: token },
+  };
+
+  $("#proyecto").html(
+    '<option value="0" selected disabled>Selecciona una Opcion</option>'
+  );
+  fetch(`${url}projects`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      result.forEach((element) => {
+        var option = `<option value="${element.id}">${element.descripcion}</option>`;
+        $("#proyecto").append(option);
+        $("#proyectoEdit").append(option);
+      });
+      var selectProyecto = document.getElementById("proyecto");
+      var selectProyectoEdit = document.getElementById("proyectoEdit");
+
+      if (isEdit) {
+        // Si estamos en modo de edición, seleccionamos el proyecto actual
+        var currentProjectId = $("#proyectoEdit").val();
+        getTablaDB(currentProjectId, true);
+      } else {
+        // Si no estamos en modo de edición, configuramos los eventos de cambio
+        selectProyecto.addEventListener("change", function () {
+          var selectedId = this.value;
+          getTablaDB(selectedId);
+        });
+
+        selectProyectoEdit.addEventListener("change", function () {
+          var selectedId = this.value;
+          getTablaDB(selectedId);
+        });
+      }
+    })
+    .catch((err) => console.log("error", err));
+};
+const getTablaDB = (id, isEdith = false) => {
   $("#tabla").html(null);
   $("#tablaEdit").html(null);
 
@@ -433,7 +428,7 @@ $("#tabla").on("change", function () {
   var selectedId2 = $(this).val();
   getColumnas(selectedId2);
 });
- 
+
 $("#tablaEdit").on("change", function () {
   var selectedId2 = $(this).val();
   getColumnas(selectedId2);

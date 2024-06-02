@@ -37,6 +37,23 @@ $(function() {
         }
     });
 
+
+
+    function validarFechas() {
+        const fechaInicio = document.getElementById('FechaInicio').value;
+        const fechaFin = document.getElementById('FechaFin').value;
+    
+        if (fechaInicio && fechaFin && fechaInicio >= fechaFin) {
+            Alert('La fecha fin debe ser mayor que la fecha de inicio.', 'error');
+        }
+    }
+    
+    window.onload = function() {
+        document.getElementById('FechaInicio').addEventListener('blur', validarFechas);
+        document.getElementById('FechaFin').addEventListener('blur', validarFechas);
+    }
+
+
     // Agregar evento de escucha al checkbox
     $("#checkboxArchivadas").on("change", function() {
         // Obtener el valor del checkbox

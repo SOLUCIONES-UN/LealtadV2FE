@@ -1,7 +1,6 @@
 const url = "http://localhost:3000/";
-$(function () {
-  
-});
+$(function () {});
+$(function () {});
 
 $("#btnConsultar").click(function () {
   const headers = {
@@ -9,107 +8,96 @@ $("#btnConsultar").click(function () {
   };
 
   
-  const fechaInicio = $("#fechaInicio").val();
-  const fechaFin = $("#fechaFin").val();
+   const FechaInicio = $("#fechaInicio").val();
+  const FechaFin = $("#fechaFin").val();
 
 
-  if (!fechaInicio || fechaInicio === "0") {
-    alert("Seleccione una fecha de inicio");
-    return; 
+  // Convertir las cadenas de fecha en objetos Date para la comparación
+  const dateInicio = new Date(FechaInicio);
+  const dateFin = new Date(FechaFin);
+
+  // Comprueba si la fecha de inicio es mayor que la fecha de fin
+  if (dateInicio > dateFin) {
+    Alert("La Fecha Final no puede ser menor a fecha Inicial", "error");
+    return; // Evitar hacer la llamada al servidor si la fecha de inicio es mayor
   }
 
-  if (!fechaFin || fechaFin === "0") {
-    alert("Seleccione una fecha de fin");
-    return; 
-  }
+    const raw = JSON.stringify({
+      fechaInicio: FechaInicio,
+      fechaFin: FechaFin,
+    });
 
-  
-  var raw = JSON.stringify({
-    fechaInicio: fechaInicio,
-    fechaFin: fechaFin,
-  });
-
-  if ($("#fechaInicio").val() == "0") {
-    alert("Seleccione una fecha de inicio");
-  } else if ($("#fechaFin").val() == "0") {
-    alert("Seleccione una fecha de fin");
-  } else {
-    var requestOptions = {
+    const requestOptions = {
       method: "POST",
       headers: headers,
       body: raw,
       redirect: "follow",
     };
 
-    fetch(`${url}ReporteParticipantes/ObtenerParticipacionesByFecha`,requestOptions)
+    fetch(`${url}ReporteParticipantes/ObtenerParticipacionesByFecha`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         console.log("Datos de campañas:", data);
-
-   
-        
-        const canvas = document.getElementById("graficaParticipantes");
-       ; 
-        const ctx = canvas.getContext("2d");
-
-        
-        if (window.myChart) {
-          window.myChart.destroy();
+        if (data.length === 0) {
+          Alert("No hay participaciones para las fechas seleccionadas", "error");
+          return;
         }
 
-        // Obtener datos para el gráfico
-        const dataLabels = data.map((p) => `${p.nombre} - ${p.fecha}`); // Combinar nombre y fecha como etiquetas
-        const participantes = data.map((p) => p.participantes);
-        
-        // Configuración del gráfico
-        const chartData = {
-          labels: dataLabels,
-          datasets: [
-            {
-              label: "Participantes",
-              data: participantes,
-              backgroundColor: [
-                "rgba(41, 182, 246)",
-                "rgba(129, 199, 132)",
-                "rgba(21, 101, 192)",
-                "rgba(165, 105, 189 )",
-                "rgba(102, 102, 255)",
-                "rgba(255, 159, 64, 0.2)",
-              ],
-              borderColor: "rgba(54, 162, 235, 1)",
-              borderWidth: 1,
-            },
-          ],
-        };
+        const canvas = document.getElementById("graficaParticipantes");
+        const ctx = canvas.getContext("2d");
 
-        const chartOptions = {
-          maintainAspectRatio: true,
-          responsive: false,// Establecer en false para mantener el tamaño constante
-          scales: {
-            y: {
-              beginAtZero: true, // Empezar el eje Y desde cero
+        const dataLabels = data.map((p) => `${p.nombre} - ${p.fecha}`);
+        const participantes = data.map((p) => p.participantes);
+
+        if (window.myChart) {
+          window.myChart.data.labels = dataLabels;
+          window.myChart.data.datasets[0].data = participantes;
+          window.myChart.update();
+        } else {
+          const chartData = {
+            labels: dataLabels,
+            datasets: [
+              {
+                label: "Participantes",
+                data: participantes,
+                backgroundColor: [
+                  "rgba(41, 182, 246)",
+                  "rgba(129, 199, 132)",
+                  "rgba(21, 101, 192)",
+                  "rgba(165, 105, 189)",
+                  "rgba(102, 102, 255)",
+                  "rgba(255, 159, 64, 0.2)",
+                ],
+                borderColor: "rgba(54, 162, 235, 1)",
+                borderWidth: 1,
+              },
+            ],
+          };
+
+          const chartOptions = {
+            maintainAspectRatio: true,
+            responsive: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
             },
-          },
-        };
-        
-        // Crear el gráfico
-        window.myChart = new Chart(ctx, {
-          type: "bar",
-          data: chartData,
-          options: chartOptions,
-        });
-        
+          };
+
+          window.myChart = new Chart(ctx, {
+            type: "bar",
+            data: chartData,
+            options: chartOptions,
+          });
+        }
       })
       .catch((error) =>
         console.error("Error al obtener los datos de las campañas:", error)
       );
-  }
-});
+  });
 let chartType = "bar"; // Variable para controlar el tipo de gráfico actual
 
 $("#btnGrafCircular").click(function () {
-
-  
   if (window.myChart) {
     // Destruir el gráfico existente
     window.myChart.destroy();
@@ -124,12 +112,22 @@ $("#btnGrafCircular").click(function () {
 
     let rowHTML = '<div class="row">';
     labels.forEach((label, index) => {
-      rowHTML += `<div class="col-md-3">Fecha: ${label.split(" - ")[1]}, Campaña: ${label.split(" - ")[0]}, Participantes: ${data[index]}</div>`;
+      rowHTML += `<div class="col-md-3">Fecha: ${
+        label.split(" - ")[1]
+      }, Campaña: ${label.split(" - ")[0]}, Participantes: ${
+        data[index]
+      }</div>`;
+      rowHTML += `<div class="col-md-3">Fecha: ${
+        label.split(" - ")[1]
+      }, Campaña: ${label.split(" - ")[0]}, Participantes: ${
+        data[index]
+      }</div>`;
       if ((index + 1) % 4 === 0) {
         rowHTML += '</div><div class="row">';
       }
     });
-    rowHTML += '</div>';
+    rowHTML += "</div>";
+    rowHTML += "</div>";
     $("#listaDatos").html(rowHTML);
 
     // Crear el nuevo gráfico con maintainAspectRatio establecido en false
@@ -178,3 +176,14 @@ document.getElementById('btnGrafCircular').addEventListener('click', function() 
       container.style.display = 'none'; // Ocultar el contenedor
   }
 });
+const Alert = function (
+  message,
+  status // si se proceso correctamente la solicitud
+) {
+  toastr[`${status}`](message, `${status}`, {
+    closeButton: true,
+    tapToDismiss: false,
+    positionClass: "toast-top-right",
+    rtl: false,
+  });
+};

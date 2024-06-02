@@ -304,6 +304,25 @@ span{
 	overflow: auto;
 }
 
+.navbar-content {
+	margin-left: 300px;
+	text-align: center;
+}
+@media (max-width: 1080px) {
+	.navbar-content {
+		margin-left: 0;
+	}
+}
+
+#tableData th {
+	width: 25%;
+}
+
+/* Asegura que el texto no se envuelva y se muestre en una sola línea */
+#tableData th, #tableData td {
+	white-space: nowrap;
+	overflow: auto;
+}
 
 /* Ajusta el ancho de todas las columnas al 25% del ancho total de la tabla */
 #tableArchivo th {
@@ -316,7 +335,44 @@ span{
 	overflow: auto;
 }
 
+total de la tabla */
+    #tableData th {
+        width: 10%;
+    }
 
+    /* Ajusta el ancho de la columna 'Nombre' al 20% del ancho total de la tabla */
+    #tableData th:nth-child(1) {
+        width: 20%;
+    }
+
+    /* Ajusta el ancho de la columna 'Teléfono' al 15% del ancho total de la tabla */
+    #tableData th:nth-child(2) {
+        width: 15%;
+    }
+
+<<<<<<< HEAD
 textarea {
 	resize: none;
 }
+=======
+
+	#tableData th, #tableData td {
+        white-space: nowrap;
+        overflow: auto;
+    }
+	#nextPageButton, #searchBar {
+		position: sticky;
+		top: 0; /* Ajusta la posición vertical según tus necesidades */
+		left: 0; /* Ajusta la posición horizontal según tus necesidades */
+		z-index: 1000; /* Asegura que los elementos estén por encima del contenido */
+	  }
+	  
+	  .table-responsive {
+		overflow-x: auto;
+	}
+	
+	.dataTables_wrapper .dataTables_scroll {
+		clear: both;
+	}
+
+>>>>>>> fb72d149d29df8ef84394c5d6fc45d6ce04ec5bc

@@ -1042,9 +1042,7 @@ function initStepper() {
                 },
                 width: '15%'
               }
-              
             ]
-            
           });
           break;
 
@@ -1132,7 +1130,6 @@ function initStepper() {
                   `;
                   return opcDelete;
                 }
-                
               }
             ]
           });
@@ -1141,7 +1138,7 @@ function initStepper() {
         default:
           break;
       }
-      
+
     }
 
     $(document).on('click', '.btnEliminarLocalidad', function (e) {

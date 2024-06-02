@@ -3,75 +3,78 @@ let token = localStorage.getItem("token");
 
 $(function () {
   let tabla = getDepartamentos();
- 
+
   Usuario();
-  
+
   function validarNombre(nombre) {
-    const descripcionValida =/^[a-zA-Z]+(?:\s[a-zA-Z]+)*$/.test(nombre);
+    const descripcionValida = /^[a-zA-Z]+(?:\s[a-zA-Z]+)*$/.test(nombre);
     if (!descripcionValida) {
-        $('.nombre').addClass('is-invalid');
-        $('.nombre-error').text('La descripción no admite caracteres especiales ni espacios en blanco solo debe contener letras').addClass('text-danger');
-        return false;
+      $(".nombre").addClass("is-invalid");
+      $(".nombre-error")
+        .text(
+          "La descripción no admite caracteres especiales ni espacios en blanco solo debe contener letras"
+        )
+        .addClass("text-danger");
+      return false;
     }
     return true;
-}
-  
-function validaIdLocal(IdLocal) {
-  const IdLocalValido = /^\d+$/.test(IdLocal.trim());
-
-  if (!IdLocalValido) {
-      $('#IdLocal').addClass('is-invalid');
-      $('#IdLocal-error').text('El ID local solo puede contener números y no puede estar vacío').addClass('text-danger');
-      return false;
   }
-  return true;
-}
 
-  $('#modalNew').on('show.bs.modal', function () {
-    limpiarFormulario();
-    $("#btnSubmit").attr("disabled", false);
-    
-  });
+  function validaIdLocal(IdLocal) {
+    const IdLocalValido = /^\d+$/.test(IdLocal.trim());
 
-  $('#modalEdit').on('show.bs.modal', function () {
+    if (!IdLocalValido) {
+      $("#IdLocal").addClass("is-invalid");
+      $("#IdLocal-error")
+        .text("El ID local solo puede contener números y no puede estar vacío")
+        .addClass("text-danger");
+      return false;
+    }
+    return true;
+  }
+
+  // $("#modalNew").on("show.bs.modal", function () {
+  //   limpiarFormulario();
+  //   $("#btnSubmit").attr("disabled", false);
+  // });
+
+  $("#modalEdit").on("show.bs.modal", function () {
     $("#btnSubmitEdit").prop("disabled", false);
   });
-  
-  $('#modalNew').on('hidden.bs.modal', function () {
-    limpiarFormulario();
-    $("#btnSubmit").attr("disabled", false);
-  });
 
-  $('#modalEdit').on('hidden.bs.modal', function () {
-    limpiarFormulario();
-    $("#btnSubmitEdit").prop("disabled", false);
-  });
-
-
-
-  $('#modalNew').find('[data-dismiss="modal"]').click(function () {
+  $("#modalNew").on("hidden.bs.modal", function () {
     limpiarFormulario();
     $("#btnSubmit").attr("disabled", false);
   });
 
-
-  $('#modalEdit').find('[data-dismiss="modal"]').click(function () {
+  $("#modalEdit").on("hidden.bs.modal", function () {
     limpiarFormulario();
     $("#btnSubmitEdit").prop("disabled", false);
   });
+
+  $("#modalNew")
+    .find('[data-dismiss="modal"]')
+    .click(function () {
+      limpiarFormulario();
+      $("#btnSubmit").attr("disabled", false);
+    });
+
+  $("#modalEdit")
+    .find('[data-dismiss="modal"]')
+    .click(function () {
+      limpiarFormulario();
+      $("#btnSubmitEdit").prop("disabled", false);
+    });
 
   //evento submit del formulairo
   $("#formNew").submit(function () {
-    const nombre = $('#nombre').val();
-    const IdLocal = $('#IdLocal').val();
-
+    const nombre = $("#nombre").val();
+    const IdLocal = $("#IdLocal").val();
 
     if (!validarNombre(nombre)) {
-      
       return false;
     }
     if (!validaIdLocal(IdLocal)) {
-      
       return false;
     }
     $("#btnSubmit").attr("disabled", true);
@@ -80,11 +83,10 @@ function validaIdLocal(IdLocal) {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", token);
 
-
     var raw = JSON.stringify({
       nombre: $("#nombre").val(),
       IdLocal: $("#IdLocal").val(),
-      idProyecto: $('#proyecto').val(),
+      idProyecto: $("#proyecto").val(),
     });
 
     var requestOptions = {
@@ -105,30 +107,25 @@ function validaIdLocal(IdLocal) {
           Alert(result.message, "success");
         } else {
           Alert(result.message, "error");
-          
         }
       })
       .catch((error) => {
         Alert(error, "error");
       });
-      
+
     return false;
   });
 
   $("#formEdit").submit(function () {
-
-    const nombre = $('#nombreEdit').val();
-    const IdLocal = $('#IdLocalEdit').val();
+    const nombre = $("#nombreEdit").val();
+    const IdLocal = $("#IdLocalEdit").val();
 
     if (!validarNombre(nombre)) {
-      
       return false;
     }
     if (!validaIdLocal(IdLocal)) {
-      
       return false;
     }
- 
 
     $("#btnSubmitEdit").attr("disabled", true);
 
@@ -139,11 +136,9 @@ function validaIdLocal(IdLocal) {
     const id = $("#id").val();
 
     var raw = JSON.stringify({
-      "nombre": $('#nombreEdit').val(),
-      "IdLocal": $('#IdLocalEdit').val(),
-      
+      nombre: $("#nombreEdit").val(),
+      IdLocal: $("#IdLocalEdit").val(),
     });
-
 
     var requestOptions = {
       method: "PUT",
@@ -160,7 +155,6 @@ function validaIdLocal(IdLocal) {
           tabla._fnAjaxUpdate();
           $("#modalEdit").modal("toggle");
           Alert(result.message, "success");
-          
         } else {
           Alert(result.message, "error");
         }
@@ -168,7 +162,7 @@ function validaIdLocal(IdLocal) {
       .catch((error) => {
         Alert(error.errors, "error");
       });
-    
+
     return false;
   });
 
@@ -181,7 +175,7 @@ function validaIdLocal(IdLocal) {
     var requestOptions = {
       method: "DELETE",
       headers: myHeaders,
-      redirect: "follow"
+      redirect: "follow",
     };
 
     fetch(`${url}Departamento/${id}`, requestOptions)
@@ -209,46 +203,43 @@ const getDepartamentos = () => {
       type: "GET",
       datatype: "json",
       dataSrc: "",
-      headers: { "Authorization": token }
+      headers: { Authorization: token },
     },
     columns: [
       {
-        data: null, render: function (data, type, row, meta) {
-
-          if (type === 'display') {
+        data: null,
+        render: function (data, type, row, meta) {
+          if (type === "display") {
             return meta.row + 1;
           }
           return meta.row + 1;
-        }
+        },
       },
       { data: "nombre" },
       {
-        data: "id", render: function (data) {
-
-          return `
-              <div class="btn-group">
-                <a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
-                    ${feather.icons["more-vertical"].toSvg({
-            class: "font-small-4",
-          })}
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="#" onclick="OpenEdit(${data})" class="btn_edit dropdown-item">
-                        ${feather.icons["archive"].toSvg({
-            class: "font-small-4 mr-50",
-          })} Actualizar
-                    </a>
-                
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="#" onclick="OpenDelete(${data})" class="btn_delete dropdown-item">
-                      ${feather.icons["trash-2"].toSvg({
-            class: "font-small-4 mr-50",
-          })} Inhabilitar
-                    </a>
-                </div>
-                </div>
-              </div> 
-            `;
+        data: "id",
+        render: function (data) {
+          return (
+            '<div class="btn-group">' +
+            '<a class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">' +
+            feather.icons["more-vertical"].toSvg({ class: "font-small-4" }) +
+            "</a>" +
+            '<div class="dropdown-menu dropdown-menu-right">' +
+            '<a href="#" onclick="OpenEdit(' +
+            data +
+            ')" class="btn_edit dropdown-item">' +
+            feather.icons["archive"].toSvg({ class: "font-small-4 mr-50" }) +
+            " Actualizar" +
+            "</a>" +
+            '<a href="#" onclick="OpenDelete(' +
+            data +
+            ')" class="btn_delete dropdown-item">' +
+            feather.icons["trash-2"].toSvg({ class: "font-small-4 mr-50" }) +
+            " Inhabilitar" +
+            "</a>" +
+            "</div>" +
+            "</div>"
+          );
         },
       },
     ],
@@ -269,32 +260,31 @@ const getDepartamentos = () => {
 
     //Buttons with Dropdown
     buttons: [
-      {
-        text: "Nuevo",
-        className: "add-new btn btn-primary mt-50",
-        attr: {
-          "data-toggle": "modal",
-          "data-target": "#modalNew",
-        },
-        init: function (api, node, config) {
-          $(node).removeClass("btn-secondary");
-          //Metodo para agregar un nuevo usuario
-        },
-      },
+      // {
+      //   text: "Nuevo",
+      //   className: "add-new btn btn-primary mt-50",
+      //   attr: {
+      //     "data-toggle": "modal",
+      //     "data-target": "#modalNew",
+      //   },
+      //   init: function (api, node, config) {
+      //     $(node).removeClass("btn-secondary");
+      //     //Metodo para agregar un nuevo usuario
+      //   },
+      // },
     ],
   });
 };
 
 function limpiarFormulario() {
-  $('#nombre').val('');
-  $('.nombre').removeClass('is-invalid');
-  $('.nombre-error').empty().removeClass('text-danger');
-  $('#IdLocal').val('');
-  $('.IdLocal').removeClass('is-invalid');
-  $('.IdLocal-error').empty().removeClass('text-danger');
-  $('#IdLocalEdit').val('');
+  $("#nombre").val("");
+  $(".nombre").removeClass("is-invalid");
+  $(".nombre-error").empty().removeClass("text-danger");
+  $("#IdLocal").val("");
+  $(".IdLocal").removeClass("is-invalid");
+  $(".IdLocal-error").empty().removeClass("text-danger");
+  $("#IdLocalEdit").val("");
 }
-
 
 const Alert = function (message, status) {
   toastr[`${status}`](message, `${status}`, {
@@ -306,18 +296,14 @@ const Alert = function (message, status) {
 };
 
 const OpenEdit = (id) => {
-
-
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Authorization", token);
-
 
   var requestOptions = {
     method: "GET",
     redirect: "follow",
     headers: myHeaders,
-
   };
 
   fetch(`${url}Departamento/${id}`, requestOptions)
@@ -327,7 +313,7 @@ const OpenEdit = (id) => {
       $("#id").val(id);
       $("#nombreEdit").val(result.nombre);
       $("#IdLocalEdit").val(result.IdLocal);
-      $("#proyectoEdit").val(result.idProyecto); 
+      $("#proyectoEdit").val(result.idProyecto);
       $("#modalEdit").modal("toggle");
     })
     .catch((error) => console.log("error", error));
@@ -355,8 +341,6 @@ const GetProjects = (isEdit = false) => {
       });
       var selectProyecto = document.getElementById("proyecto");
       var selectProyectoEdit = document.getElementById("proyectoEdit");
-
-      
     })
     .catch((err) => console.log("error", err));
 };

@@ -197,8 +197,7 @@
   <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="navbar-header">
       <ul class="nav navbar-nav flex-row">
-        <li class="nav-item mr-auto"><a class="navbar-brand"
-            href="./dashboard.html"><span class="brand-logo">
+        <li class="nav-item mr-auto"><a class="navbar-brand" href="./dashboard.html"><span class="brand-logo">
               <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
                 <defs>
@@ -262,8 +261,9 @@
                 <thead>
                   <tr>
                     <th>#</th>
+
+                    <th>Descripcion</th>
                     <th>Encabezado</th>
-                    <th>Descripción</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -282,15 +282,14 @@
       <form id="formNew" class="add-new-user modal-content pt-0" autocomplete="off">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
         <div class="modal-header mb-1">
-          <h5 class="modal-title" id="exampleModalLabel">Agregar Página</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Agregar Pagina</h5>
         </div>
         <div class="modal-body flex-grow-1">
 
           <div class="form-group">
             <label class="form-label" for="Menu">Id_menu:</label>
-            <select type="text" class="form-control" id="idMenu" name="Menu" required>
-
-              <option value="0" default selected disabled>Selecciona una opción</option>
+            <select type="text" class="form-control" id="Menu" name="Menu" required>
+              <option value="0" default selected disabled>Selecciona una opcion</option>
             </select>
           </div>
           <div class="form-group">
@@ -301,15 +300,15 @@
             <div id="descripcionError" class="descripcion-error invalid-feedback"></div>
           </div>
 
-        
+
           <div class="form-group">
             <label class="form-label" for="basic-icon-default-fullname">Dirección:</label>
-            <input type="text" class="form-control dt-full-name" id="path" placeholder="Dirección de la página" name="path"
-              aria-label="" aria-describedby="basic-icon-default-fullname2" required />
+            <input type="text" class="form-control dt-full-name" id="path" placeholder="Direccion de la pagina"
+              name="path" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
           </div>
           <div class="form-group">
             <label class="form-label" for="Icono">Icono:</label>
-            <input type="text" class="form-control dt-full-name" id="Icono" placeholder="Icono de la página"
+            <input type="text" class="form-control dt-full-name" id="Icono" placeholder="Icono de la pagina"
               name="Icono" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
           </div>
           <button id="btnSubmit" type="submit" class="btn btn-primary mr-1 data-submit">Agregar</button>
@@ -328,12 +327,6 @@
         </div>
         <div class="modal-body flex-grow-1">
           <div class="form-group">
-            <label class="form-label" for="MenuEdith">Id_menu:</label>
-            <select type="text" class="form-control" id="MenuEdith" name="MenuEdith" required>
-              <option value="0" default selected disabled>Selecciona una opción</option>
-            </select>
-          </div>
-          <div class="form-group">
             <input id="id" type="hidden">
             <label class="form-label" for="basic-icon-default-fullname">Descripción:</label>
             <input type="text" class="form-control dt-full-name descripcion" id="descripcionEdit"
@@ -341,15 +334,21 @@
               aria-describedby="basic-icon-default-fullname2" required />
             <div id="descripcionEditError" class="descripcion-error invalid-feedback"></div>
           </div>
-       
+          <div class="form-group">
+            <label class="form-label" for="MenuEdith">Menu</label>
+            <select type="text" class="form-control" id="MenuEdith" name="MenuEdith" required>
+              <option value="0" default selected disabled>Selecciona una opcion</option>
+            </select>
+          </div>
           <div class="form-group">
             <label class="form-label" for="basic-icon-default-fullname">Dirección:</label>
-            <input type="text" class="form-control dt-full-name" id="PathEdit" placeholder="Nueva dirección de la página"
-              name="PathEdit" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
+            <input type="text" class="form-control dt-full-name" id="PathEdit"
+              placeholder="Nueva direccion de la pagina" name="PathEdit" aria-label=""
+              aria-describedby="basic-icon-default-fullname2" required />
           </div>
           <div class="form-group">
             <label class="form-label" for="IconoEdith">Icono:</label>
-            <input type="text" class="form-control dt-full-name" id="IconoEdith" placeholder="Icono de la página"
+            <input type="text" class="form-control dt-full-name" id="IconoEdith" placeholder="Icono de la pagina"
               name="Icono" aria-label="" aria-describedby="basic-icon-default-fullname2" required />
           </div>
           <button id="btnSubmitEdit" type="submit" class="btn btn-primary mr-1 data-submit">Actualizar</button>

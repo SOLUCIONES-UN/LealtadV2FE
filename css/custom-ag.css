@@ -342,3 +342,8 @@
 .multiple-select-placeholder {
   text-align: center; /* Centra horizontalmente el texto */
 }
+.navbar-container {
+  display: center;
+  justify-content: center;
+  align-items: center;
+}
