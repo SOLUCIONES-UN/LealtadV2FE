@@ -55,11 +55,12 @@ $(function () {
     myHeaders.append("Authorization", token);
 
     var raw = JSON.stringify({
-      descripcion: descripcion,
+      descripcion: $("descripcion").val(),
       puntos: $("#puntos").val(),
       columna: $("#columna").val(),
       proyecto: $("#proyecto").val(),
       botton: $("#botton").val(),
+
     });
 
     var requestOptions = {
@@ -392,6 +393,8 @@ const getTablaDB = (id, isEdith = false) => {
   );
 
   fetch(`${url}tabla/${id}`, requestOptions)
+
+  console.log("SI ES AQUI ")
     .then((response) => response.json())
     .then((result) => {
       result.forEach((element) => {
@@ -399,7 +402,7 @@ const getTablaDB = (id, isEdith = false) => {
         $("#tabla").append(opc);
         $("#tablaEdit").append(opc);
       });
-      var selectTablaDb = document.getElementById("tabla");
+      var selectTablaDb = document.getElementById("tabladb");
       var selectTablaDbEdit = document.getElementById("tablaEdit");
 
       if (isEdith) getColumnas(selectTablaDbEdit.value);
@@ -431,7 +434,7 @@ const getColumnas = (id_tabla) => {
     '<option value="0" selected disabled>Selecciona una Opción</option>'
   );
 
-  fetch(`${url}Columnabytablas/${id_tabla}`, requestOptions) // Filter by id_tabla=1
+  fetch(`${url}bytablas/:idTablas${id_tabla}`, requestOptions) // Filter by id_tabla=1
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -452,7 +455,7 @@ const getColumnas = (id_tabla) => {
 };
 
 // Evento de cambio del selector de tablas
-$("#tabla").on("change", function () {
+$("#tablad").on("change", function () {
   var selectedId2 = $(this).val();
   getColumnas(selectedId2);
 });

@@ -39,56 +39,44 @@
   <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
   <!-- END: Custom CSS-->
 
- <style>
-.is-invalid {
-    border-color: #dc3545;
-}
-.invalid-feedback {
-    display: none;
-    color: #dc3545;
-}
-.is-invalid + .invalid-feedback {
+
+  <style>
+
+    /* Asegúrate de que el contenedor del dropdown tenga posición relativa */
+   
+  
+  .btn-group {
+    position: absolute !important;
+  }
+  
+  /* Ajusta la posición y el z-index del menú desplegable */
+  .dropdown-menu {    
+    position: absolute !important;
+    top: 100%;
+    left:  0 !important;
+    margin-right:  100px !important;
+    z-index: 10 !important;
+    display: none; /* Ocultar por defecto */
+  }
+  
+  /* Mostrar el menú desplegable al hacer clic en el botón */
+  .btn-group.show .dropdown-menu {
+    position:absolute !important;
     display: block;
-}
-/* Asegúrate de que el contenedor del dropdown tenga posición relativa */
-
-
-.btn-group {
-position: absolute !important;
-}
-
-/* Ajusta la posición y el z-index del menú desplegable */
-.dropdown-menu {    
-position: absolute !important;
-top: 100%;
-left:  0 !important;
-margin-right:  100px !important;
-z-index: 10 !important;
-display: none; /* Ocultar por defecto */
-}
-
-/* Mostrar el menú desplegable al hacer clic en el botón */
-.btn-group.show .dropdown-menu {
-position:absolute !important;
-display: block;
-}
-
-/* Ajusta el z-index de la tabla */
- #tableData {
-  position: relative !important;
-  z-index: 0 !important;
-}
-
-
-.dropdown-toggle{
-  margin-top: -15px !important;
-}
-
-</style>
-
-
-
-</head>
+  }
+  
+    /* Ajusta el z-index de la tabla */
+     #tableData {
+      position: relative !important;
+      z-index: 0 !important;
+    }
+  
+  
+    .dropdown-toggle{
+      margin-top: -15px !important;
+    }
+  
+  </style>
 <!-- END: Head-->
 
 <!-- BEGIN: Body-->
