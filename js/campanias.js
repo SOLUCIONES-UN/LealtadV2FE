@@ -1042,9 +1042,9 @@ function initStepper() {
                 },
                 width: '15%'
               }
-              
+
             ]
-            
+
           });
           break;
 
@@ -1132,7 +1132,7 @@ function initStepper() {
                   `;
                   return opcDelete;
                 }
-                
+
               }
             ]
           });
@@ -1141,7 +1141,7 @@ function initStepper() {
         default:
           break;
       }
-      
+
     }
 
     $(document).on('click', '.btnEliminarLocalidad', function (e) {
@@ -3416,8 +3416,8 @@ function limpiarFormulario() {
   $('#usuarioBloqueoEdit').val('');
   $('#emails').val(''),
 
-  // Limpiar las tablas
-  $('#TablaEtapaEdit').DataTable().clear().destroy();
+    // Limpiar las tablas
+    $('#TablaEtapaEdit').DataTable().clear().destroy();
   $('#tablaBloqueoEdit').DataTable().clear().destroy();
 
   // Limpiar los arreglos
@@ -3697,7 +3697,8 @@ const table = (table, data) => {
       },
     ],
     // order: [[1, 'asc']],
-    dom: '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
+    dom:
+      '<"d-flex justify-content-between align-items-center header-actions mx-1 row mt-75"' +
       '<"col-lg-12 col-xl-6" l>' +
       '<"col-lg-12 col-xl-6 pl-xl-75 pl-0"<"dt-action-buttons text-xl-right text-lg-left text-md-right text-left d-flex align-items-center justify-content-lg-end align-items-center flex-sm-nowrap flex-wrap mr-1"<"mr-1"f>B>>' +
       ">t" +
@@ -3706,25 +3707,53 @@ const table = (table, data) => {
       '<"col-sm-12 col-md-6"p>' +
       ">",
     language: {
-      sLengthMenu: "Mostrar _MENU_",
+      sLengthMenu: "Show MENU",
       search: "Buscar",
       searchPlaceholder: "Buscar...",
     },
     // Buttons with Dropdown
     buttons: [
       {
-        text: 'Nuevo',
-        className: 'add-new btn btn-primary mt-50',
+        text: "Nuevo",
+        className: "add-new btn btn-primary mt-50",
         attr: {
-          'data-toggle': 'modal',
-          'data-target': '#modalNew',
+          "data-toggle": "modal",
+          "data-target": "#modalNew",
         },
         init: function (api, node, config) {
-          $(node).removeClass('btn-secondary');
-          //Metodo para agregar un nuevo usuario
-        }
+          $(node).removeClass("btn-secondary");
+        },
       },
     ],
+    initComplete: function (settings, json) {
+      // Añadir estilos CSS después de que la tabla esté completa
+      $("<style>")
+        .prop("type", "text/css")
+        .html(
+          `
+                          .dropdown-menu {    
+                            position: absolute !important;
+                            top: 100%;
+                            left: 5 !important;
+                            margin-left:  50px !important;
+                            z-index: 1051 !important; /* Incrementa z-index para superar la paginación */
+                            display: none;
+                            white-space: nowrap;
+                          }
+                          .btn-group.show .dropdown-menu {
+                            display: block;
+                          }
+                          #tableData {
+                            position: relative !important;
+                            z-index: 0 !important;
+                          }
+                          #tableData_wrapper .row:last-child {
+                            margin-top: 50px; /* Ajusta este valor según sea necesario */
+                          }
+                        `
+        )
+        .appendTo("head");
+    },
   });
 };
 
