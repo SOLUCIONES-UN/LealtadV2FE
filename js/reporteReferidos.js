@@ -13,21 +13,19 @@ $(function () {
   });
 
   getCampaniasActivas();
-  
   function validarFechas() {
-    const FechaInicio = document.getElementById('FechaInicio').value;
-    const FechaFin = document.getElementById('FechaFin').value;
-  
-    if (FechaInicio === FechaFin) {
-        Alert('Las fechas de inicio y fin no pueden ser iguales.','error');
+    const fechaInicio = document.getElementById('FechaInicio').value;
+    const fechaFin = document.getElementById('FechaFin').value;
+
+    if (fechaInicio && fechaFin && fechaInicio >= fechaFin) {
+        Alert('La fecha fin debe ser mayor que la fecha de inicio.', 'error');
     }
-  }
-  
-  window.onload = function() {
-    document.getElementById('FechaInicio').addEventListener('change', validarFechas);
-    document.getElementById('FechaFin').addEventListener('change', validarFechas);
-  }
-  
+}
+
+window.onload = function() {
+    document.getElementById('FechaInicio').addEventListener('blur', validarFechas);
+    document.getElementById('FechaFin').addEventListener('blur', validarFechas);
+}
 
   $("#btnConsultar").click(function () {
     if (
@@ -166,12 +164,11 @@ function mostrarDatosEnTabla(datos) {
 
   let contador = 1;
 
-  
   datos.forEach((element) => {
     const fechaHora = formatearFechaHora(element.fecha);
     const campanas = element.nombre_campania; // Nombre de la campaña
     const opcion = element.opcion_referido || "No aplica";
-    const formatTelefonoGuatemala = element.telefono_usuario;
+    const formatTelefonoGuatemala = `(502) ${element.telefono_usuario}`; // Añade el prefijo (502)
     const nombreUsuario = element.nombre_usuario || "No aplica";
     const montopremio = element.valor || "No aplica";
     
@@ -179,9 +176,8 @@ function mostrarDatosEnTabla(datos) {
     const customerInfo = (Array.isArray(element.customerInfo) && element.customerInfo.length > 0) ? element.customerInfo[0] : {};
     const codigo = customerInfo.codigo || "No aplica";
     const nombreReferido = customerInfo.nombreReferido || "No aplica";
-    const telefReferido = customerInfo.noreferido || "No aplica";
-   
-
+    const telefReferido = customerInfo.noreferido ? `(502) ${customerInfo.noreferido}` : "No aplica"; // Añade el prefijo (502) si hay un número de referido
+    
     // Agrega una fila a la tabla
     table.row.add([
       contador++,
@@ -198,6 +194,7 @@ function mostrarDatosEnTabla(datos) {
     ]).draw();
   });
 }
+
 
 const formatTelefonoGuatemala = (telefono) => {
   const codigoPais = telefono.slice(0, 3); // Código de país (502)

@@ -141,7 +141,9 @@ function mostrarDatosEnTabla(datos) {
     datos.forEach((element) => {
         element.participaciones.forEach((participacion) => {
             const fecha = formatearFechaHora(participacion.fecha);
-            const telefono = participacion.customerInfo ? participacion.customerInfo.telno : "Desconocido";
+            const telefono = participacion.customerInfo && participacion.customerInfo.telno
+                ? participacion.customerInfo.telno.replace(/^502/, "(502) ")
+                : "Desconocido";
             const descripcionTrx = participacion.descripcionTrx || "Sin descripción";
             const valor = participacion.valor || "Sin valor";
             const nombre = participacion.customerInfo ? participacion.customerInfo.fname : "Sin nombre";
@@ -149,28 +151,29 @@ function mostrarDatosEnTabla(datos) {
             const nombreCampania = participacion.campanium ? participacion.campanium.nombre : "Sin campaña";
             const fechaCreacion = participacion.campanium ? participacion.campanium.fechaCreacion : "Sin fecha";
             const premioDescripcion = participacion.premioDescripcion || "Sin premio";
-            const premioMonto = participacion.detallepromocion && participacion.detallepromocion.premiopromocion ? parseFloat(participacion.detallepromocion.premiopromocion.valor).toFixed(2) : "0.00";
+            const premioMonto = participacion.detallepromocion && participacion.detallepromocion.premiopromocion
+                ? parseFloat(participacion.detallepromocion.premiopromocion.valor).toFixed(2)
+                : "0.00";
             const cupon = participacion.detallepromocion ? participacion.detallepromocion.cupon : "Sin cupón";
 
             tabla += `
-        <tr> 
-          <td>${fechaCreacion}</td>
-          <td>${telefono}</td>
-          <td>${nombre}</td>
-          <td>${nombreCampania}</td>
-          <td>${premioDescripcion}</td>
-          <td>${valor}</td>
-          <td>${descripcionTrx}</td>
-          <td>${codigo}</td>
-          <td>${premioMonto}</td>
-          <td>${fecha}</td>
-        </tr>
-      `;
+                <tr> 
+                    <td>${fechaCreacion}</td>
+                    <td>${telefono}</td>
+                    <td>${nombre}</td>
+                    <td>${nombreCampania}</td>
+                    <td>${premioDescripcion}</td>
+                    <td>${valor}</td>
+                    <td>${descripcionTrx}</td>
+                    <td>${codigo}</td>
+                    <td>${premioMonto}</td>
+                    <td>${fecha}</td>
+                </tr>
+            `;
         });
     });
     $('.datatables-basic tbody').html(tabla);
     $('.datatables-basic').DataTable({
-
         order: [
             [0, 'asc']
         ],
@@ -179,7 +182,6 @@ function mostrarDatosEnTabla(datos) {
             search: "Buscar:",
             searchPlaceholder: "Buscar",
             lengthMenu: "Mostrar _MENU_",
-
         },
         scrollX: true
     });

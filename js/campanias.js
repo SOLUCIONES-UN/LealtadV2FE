@@ -306,48 +306,27 @@ function initStepper() {
   var visitedSteps = [];
   const containerBloqueo = document.querySelector("#Bloqueo");
   containerBloqueo.style.display = "none";
-  // var previousStep;
-  // var newStep;
 
   showStep(actualStep);
 
-  // $(".next-btn").click(function (e) {
-  //   e.preventDefault();
-  //   console.log(actualStep, "antes");
-
-  //   if (actualStep < totalSteps - 1) {
-  //     // Validar el paso actual antes de avanzar
-  //     if (validarCamposStep(actualStep)) {
-  //       hideStep(actualStep);
-  //       actualStep++;
-  //       showStep(actualStep);
-  //       updateButtonsState(actualStep);
-  //       console.log(actualStep);
-  //       return;
-  //     } else {
-  //       console.log("Error en la validación del paso " + (actualStep + 1));
-  //     }
-
-
-  //     if (actualStep < totalSteps - 1) {
-  //       hideStep(actualStep);
-  //       actualStep++;
-  //       showStep(actualStep);
-  //       console.log(actualStep);
-      
-  //   } else {
-  //     console.log("Error");
-  //   }
-  // });
-
-
   $(".next-btn").click(function (e) {
-    e.preventDefault(); // Detener el comportamiento predeterminado
-    if (actualStepEdit < totalStepsEdits - 1) {
-      hideStep(actualStepEdit);
-      actualStepEdit++;
-      showStep(actualStepEdit);
-      console.log(actualStepEdit);
+    e.preventDefault();
+    console.log(actualStep, "antes");
+
+    if (actualStep < totalSteps - 1) {
+      // Validar el paso actual antes de avanzar
+      if (validarCamposStep(actualStep)) {
+        hideStep(actualStep);
+        actualStep++;
+        showStep(actualStep);
+        updateButtonsState(actualStep);
+        console.log(actualStep);
+        return;
+      } else {
+        console.log("Error en la validación del paso " + (actualStep + 1));
+      }
+    } else {
+      console.log("Error");
     }
   });
 
@@ -3339,8 +3318,8 @@ function limpiarFormulario() {
   $("#tipoUsuarios").val("");
   $("#notificacion").val("");
   $("#descripcionNotificacion").val("");
-  $("#imgCampania").val("");
-  $("#imgNotificacion").val("");
+  // $("#imgCampania").val(null); 
+  // $("#imgNotificacion").val(null); 
   $("#maximoParticipantes").val("");
   $("#tercerosCampania").val("");
   $("#allday").prop("checked", false);
@@ -3418,6 +3397,17 @@ function limpiarFormulario() {
   dataDeptoView = [];
   dataPremioView = [];
   datatransaccionView = [];
+  $("#imgCampania").val(null); 
+  $("#imgNotificacion").val(null);
+
+  $("#previewImg").attr("src", "#").hide();
+  $("#previewNotificacion").attr("src", "#").hide();
+  $(".custom-file-label[for='imgCampania']").text("Seleccionar archivo");
+  $(".custom-file-label[for='imgNotificacion']").text("Seleccionar archivo");
+  // Limpiar los inputs de archivos
+ 
+
+  
 }
 
 const OpenEdit = (id) => {
