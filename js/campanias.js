@@ -75,7 +75,6 @@ $(function () {
   });
 
   $("#modalNew").on("show.bs.modal", function () {
-    resetSteps();
     limpiarFormulario();
   });
 
@@ -98,7 +97,6 @@ $(function () {
     });
 
   $("#modalEdit").on("show.bs.modal", function () {
-    resetStepsEdit();
     limpiarFormulario();
     // Verificar si los datos han sido cargados
     if (isDataLoaded) {
@@ -121,6 +119,10 @@ $(function () {
       limpiarFormulario();
       $("#btnSubmitEdit").attr("disabled", false);
     });
+
+
+
+
 
   $("#formNew").submit(function () {
     const valor = $("#tipoUsuarios").val();
@@ -173,9 +175,10 @@ $(function () {
       .then((response) => response.json())
       .then((result) => {
         if (result.code == "ok") {
-          limpiarFormulario();
-          getAllCampanias();
+         
           $("#modalNew").modal("toggle"); // Mover esta línea aquí
+          limpiarFormulario();
+          resetSteps();
           Alert(result.message, "success");
           console.log(result);
         } else {
@@ -246,6 +249,7 @@ $(function () {
           $("#modalEdit").modal("toggle");
           getAllCampanias();
           limpiarFormulario();
+          resetSteps();
           Alert(result.message, "success");
         } else {
           Alert(result.message, "error");
@@ -295,32 +299,55 @@ $(function () {
 function initStepper() {
   actualStep = 0;
   var steps = $("#stepper").children(); // Obtener todos los elementos hijos del contenedor #stepper
+  steps.hide();
   var totalSteps = steps.length;
+
   DataEtapa = [];
   var visitedSteps = [];
   const containerBloqueo = document.querySelector("#Bloqueo");
   containerBloqueo.style.display = "none";
+  // var previousStep;
+  // var newStep;
 
   showStep(actualStep);
 
-  $(".next-btn").click(function (e) {
-    e.preventDefault();
-    console.log(actualStep, "antes");
+  // $(".next-btn").click(function (e) {
+  //   e.preventDefault();
+  //   console.log(actualStep, "antes");
 
-    if (actualStep < totalSteps - 1) {
-      // Validar el paso actual antes de avanzar
-      if (validarCamposStep(actualStep)) {
-        hideStep(actualStep);
-        actualStep++;
-        showStep(actualStep);
-        updateButtonsState(actualStep);
-        console.log(actualStep);
-        return;
-      } else {
-        console.log("Error en la validación del paso " + (actualStep + 1));
-      }
-    } else {
-      console.log("Error");
+  //   if (actualStep < totalSteps - 1) {
+  //     // Validar el paso actual antes de avanzar
+  //     if (validarCamposStep(actualStep)) {
+  //       hideStep(actualStep);
+  //       actualStep++;
+  //       showStep(actualStep);
+  //       updateButtonsState(actualStep);
+  //       console.log(actualStep);
+  //       return;
+  //     } else {
+  //       console.log("Error en la validación del paso " + (actualStep + 1));
+  //     }
+
+
+  //     if (actualStep < totalSteps - 1) {
+  //       hideStep(actualStep);
+  //       actualStep++;
+  //       showStep(actualStep);
+  //       console.log(actualStep);
+      
+  //   } else {
+  //     console.log("Error");
+  //   }
+  // });
+
+
+  $(".next-btn").click(function (e) {
+    e.preventDefault(); // Detener el comportamiento predeterminado
+    if (actualStepEdit < totalStepsEdits - 1) {
+      hideStep(actualStepEdit);
+      actualStepEdit++;
+      showStep(actualStepEdit);
+      console.log(actualStepEdit);
     }
   });
 
@@ -3275,8 +3302,8 @@ function resetStepsEdit() {
   dataEditEtapa = [];
 
   // Reiniciar las variables relacionadas con los pasos
-  totalStepsEdits = 0; // Inicializar totalStepsEdits a 0
-  previousStep = null; // Reiniciar previousStep a null
+  totalStepsEdits = 0; 
+  previousStep = null; 
 
   // Limpiar las tablas relacionadas con los steps de edición
   $("#TablaEtapaEdit").DataTable().clear().destroy();
@@ -3295,8 +3322,10 @@ function resetStepsEdit() {
 //limpiar el form
 function limpiarFormulario() {
   // Limpiar los steps y reiniciar los datos relacionados
-  resetSteps();
+  // resetSteps();
   resetStepsEdit();
+  resetSteps();
+
   $("#campania").val("");
   $("#descripcionCampania").val("");
   $("#fechaRegistro").val("");

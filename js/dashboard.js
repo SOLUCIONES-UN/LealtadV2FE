@@ -518,7 +518,7 @@ function getAllPromocionesActivas() {
 //clientes 
 function displayNumClientes(numClientes) {
     const numClientesElement = document.getElementById("numclientes");
-    numClientesElement.textContent = numClientes;
+    numClientesElement.textContent = parseInt(numClientes); 
 }
 
 function getAllclientes() {
@@ -545,11 +545,10 @@ function getAllclientes() {
             const porcentaje = (cantidad / maxCantidad) * 100;
 
             document.getElementById('numclientes').textContent = cantidad;
-            document.getElementById('numclientes-porcentaje').textContent = porcentaje.toFixed(2);
-
-            const progressBarClientes = document.getElementById('progressBarClientes');
-            progressBarClientes.style.width = porcentaje + '%';
-            progressBarClientes.setAttribute('aria-valuenow', porcentaje);
+document.getElementById('numclientes-porcentaje').textContent = Math.round(porcentaje); // Redondear el porcentaje
+const progressBarClientes = document.getElementById('progressBarClientes');
+progressBarClientes.style.width = porcentaje + '%';
+progressBarClientes.setAttribute('aria-valuenow', porcentaje);
         })
         .catch((error) => console.log("error", error));
 }

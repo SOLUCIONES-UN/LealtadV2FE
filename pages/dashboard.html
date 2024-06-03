@@ -133,10 +133,16 @@ canvas {
     width: 100%; /* O cualquier otro valor que desees */
     height: 390px; /* Ajusta este valor según tus necesidades */
     }
-
-
+    
+    .card-treees {
+        /* background-color: #9F97D5; */
+        margin-top: 50px;
+    width: 100%; /* O cualquier otro valor que desees */
+    height: 159px; /* Ajusta este valor según tus necesidades */
+    }
     
     .card-twodesnew {
+        
         /* background-color: #9F97D5; */
         margin-top: 30px;
     width: 100%; /* O cualquier otro valor que desees */
@@ -215,7 +221,14 @@ canvas {
             background-color: #000 !important;  /* Fondo negro para el botón activo */
         }
     
+        .Res {
+            margin: 0;
+        font-size: 1rem;
+        color: rgb(15, 14, 14);
 
+
+        margin-top: -57px; /* Puedes ajustar este valor según tu preferencia */
+    }
    
     
     </style>
@@ -357,11 +370,9 @@ canvas {
                                         <h1 class=" mb-1 text-white">BIENVENIDO</h1>
                                         <h1 class=" user-name mb-1 text-white">Felicitaciones Admin</h1>
 
-
-
                                         <p class="card-text m-auto w-75">
+                                            <h1 class="texti  card-title">Proyectos Activos</h1> 
                                             <h1 id="Proyectos"></h1> 
-                                            <h1 class="texti">proyectos activos</h1> 
                                         </p>
                                     </div>
                                 </div>
@@ -434,7 +445,7 @@ canvas {
                             <div class="card-two card mb-7 shadow">
                                 <div class="card-item"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
                                 <div class="card-twodes card-header d-flex justify-content-center pb-0">
-                                    <h4 class="texti card-title">Resumen de Campañas</h4>
+                                    <h4 class="Res card-title">Resumen de Campañas</h4>
                                     <div class="table-responsive custom-scroll">
                                         <table class="table  table-striped" id="campaniatable">
                                             <thead>
@@ -463,7 +474,7 @@ canvas {
                                     <div class="row pb-50">
                                         <div class="col-sm-6 col-12 d-flex justify-content-between flex-column order-sm-1 order-2 mt-1 mt-sm-0">
                                             <div class="mb-1 mb-sm-0">
-                                                <h4 class="card-title">Resumen</h4>
+                                                <h4 class="texti card-title">Resumen</h4>
                                                 <h2 class="fw-bolder mb-25"> <span id="Transaccion"></span></h2>
                                                 <p class="card-text fw-bold mb-2">Transacciones</p>
                                             </div>
@@ -473,11 +484,7 @@ canvas {
                                                 <button class="btn btn-sm border-0 dropdown-toggle p-50" type="button" id="dropdownItem5" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     Última Semana
                                                 </button>
-                                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownItem5">
-                                                    <a class="dropdown-item" href="#">Last 28 Days</a>
-                                                    <a class="dropdown-item" href="#">Last Month</a>
-                                                    <a class="dropdown-item" href="#">Last Year</a>
-                                                </div>
+                                             
                                             </div>
                                             <div id="avg-sessions-chart"></div>
                                         </div>
@@ -485,13 +492,13 @@ canvas {
                                     <hr />
                                     <div class="row avg-sessions pt-50">
                                         <div class="col-6 mb-2">
-                                            <p class="mb-50">Nuevas campañas: <span id="newcampanias"></span>.00%</p>
+                                            <p class="mb-50">Nuevas campañas: <span id="newcampanias"></span></p>
                                             <div class="progress progress-bar-primary" style="height: 6px">
                                                 <div class="progress-bar" id="progresbarcampania" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
                                             </div>
                                         </div>
                                         <div class="col-6 mb-2">
-                                            <p class="mb-50">Nuevas promociones: <span id="Promocion"></span>.00%</p>
+                                            <p class="mb-50">Nuevas promociones: <span id="Promocion"></span></p>
                                             <div class="progress progress-bar-warning" style="height: 6px">
                                                 <div class="progress-bar" id="progressBarxx" role="progressBarxx" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                                                 </div>
@@ -499,7 +506,7 @@ canvas {
                                         </div>
                                        
                                         <div class="col-6">
-                                            <p class="mb-50">Referidos <span id="Referidos"></span>.00%</p>
+                                            <p class="mb-50">Referidos <span id="Referidos"></span></p>
                                             <div class="progress progress-bar-danger" style="height: 6px">
                                                 <div class="progress-bar" id="progressBar" role="progressBar" aria-valuenow="70" aria-valuemin="70" aria-valuemax="100" style="width: 70%">
                                                 </div>
@@ -511,10 +518,6 @@ canvas {
                             </div>
                             </div>
                         </div>
-
-
-
-
 
 
                         <div class="row justify-content-center">
@@ -530,26 +533,21 @@ canvas {
                             </div>
                         </div>
 
-                        <!-- <div class="card">
-                            <div class="card-body">
-                                <canvas id="graficaCampanas1"></canvas>
-                            </div>
-                        </div> -->
+                        
 
                         <div class="col-lg-6 col-12">
-                            <div class=" card   justify-content-center">
-
-                            <div class="card-two card ">
-                                <div class="card-item"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
-
-                                <div class=" card-twocard card-body">
-                                    <canvas id="graficaCampanas1"></canvas>
+                            <div class="card justify-content-center">
+                                <div class="card-two card">
+                                    <div class="card-item" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+                                        <div class="card-twocard card-body d-flex justify-content-center align-items-center">
+                                            <canvas id="graficaCampanas1"></canvas>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            </div>
                             </div>
                         </div>
 
+                   
 
                         <!-- Avg Sessions Chart Card starts -->
                         <div class="col-lg-6 col-12">
@@ -558,7 +556,7 @@ canvas {
                             <div class="card-two card">
                                 <div class="card-item"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
 
-                                <div class="card-body">
+                                <div class="card-treees   card-body">
                                     <div class="row pb-60">
                                         <div class="col-sm-6 col-12 d-flex justify-content-between flex-column order-sm-1 order-2 mt-1 mt-sm-0">
                                             <div class="mb-1 mb-sm-0">
@@ -571,11 +569,7 @@ canvas {
                                                 <button class="btn btn-sm border-0 dropdown-toggle p-50" type="button" id="dropdownItem5" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     Última Semana
                                                 </button>
-                                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownItem5">
-                                                    <a class="dropdown-item" href="#">Last 28 Days</a>
-                                                    <a class="dropdown-item" href="#">Last Month</a>
-                                                    <a class="dropdown-item" href="#">Last Year</a>
-                                                </div>
+                                            
                                             </div>
                                             <div id="avg-sessions-chart"></div>
                                         </div>
@@ -583,7 +577,7 @@ canvas {
                                     <hr />
                                     <div class="row avg-sessions pt-50">
                                         <div class="col-6 mb-2">
-                                            <p class="mb-50">Clientes <span id="numclientes-porcentaje"></span>%</p>
+                                            <p class="mb-50">Clientes <span id="numclientes-porcentaje"></span></p>
                                             <div class="progress progress-bar-warning" style="height: 6px">
                                                 <div class="progress-bar" id="progressBarClientes" role="progressBarClientes" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                                                 </div>
@@ -592,19 +586,13 @@ canvas {
                                         
                                        
                                         <div class="col-6">
-                                            <p class="mb-50">Numero de promociones:<span id="numpromociones"></span>.00%</p>
+                                            <p class="mb-50">Numero de promociones: <span id="numpromociones"></span></p>
                                             <div class="progress progress-bar-danger" style="height: 6px">
                                                 <div class="progress-bar" id="progressBarprom" role="progressBarprom" aria-valuenow="70" aria-valuemin="70" aria-valuemax="100" style="width: 70%">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-6">
-                                            <p class="mb-50">Duración: 11 meses</p>
-                                            <div class="progress progress-bar-success" style="height: 6px">
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="90" aria-valuemax="100" style="width: 90%">
-                                                </div>
-                                            </div>
-                                        </div>
+                                       
                                     </div>
                                 </div>
                             </div>
