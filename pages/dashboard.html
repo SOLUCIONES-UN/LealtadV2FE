@@ -46,10 +46,25 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #f7e8ff;
-            /* Morado claro */
-        }
+       
+
+
+/* Estilo para la primera tabla */
+#campaniatable.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #9F97D5; /* Morado claro */
+}
+
+/* Estilo para la segunda tabla */
+#tableData.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f7e8ff; /* Verde claro */
+}
+
+
+
+
+
+
+        
         .dash {
             background-color: #F1EFFF;
             /* Morado claro */
@@ -109,6 +124,7 @@ canvas {
         margin-top: 20px
     }
 
+ 
 
 
     .card-twodes {
@@ -344,7 +360,8 @@ canvas {
 
 
                                         <p class="card-text m-auto w-75">
-                                            Existe <strong>1</strong> proyecto activo.
+                                            <h1 id="Proyectos"></h1> 
+                                            <h1 class="texti">proyectos activos</h1> 
                                         </p>
                                     </div>
                                 </div>
@@ -399,8 +416,7 @@ canvas {
                                     <h2 class="fw-bolder mt-1"  id="num-campanas"></h2>
                                     <!-- Se agregó el signo de cierre ">" -->
 
-                                    <p class="card-text">Campañas</p>
-                                    <div><p class="card-text">Activas</p> </div>
+                                    <p class="card-text">Campañas Activas</p>
                                     <!-- Cambio de "Campañas" a "Campañas Activas" -->
                                 </div>
                                 <div id="order-chart"></div>
@@ -418,9 +434,9 @@ canvas {
                             <div class="card-two card mb-7 shadow">
                                 <div class="card-item"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
                                 <div class="card-twodes card-header d-flex justify-content-center pb-0">
-                                    <h4 class="card-title">Resumen de Campañas</h4>
+                                    <h4 class="texti card-title">Resumen de Campañas</h4>
                                     <div class="table-responsive custom-scroll">
-                                        <table class="table table-striped" id="campaniatable">
+                                        <table class="table  table-striped" id="campaniatable">
                                             <thead>
                                                 <!-- <tr>
                                                     <th>Nombre de la Campaña</th>
@@ -469,24 +485,23 @@ canvas {
                                     <hr />
                                     <div class="row avg-sessions pt-50">
                                         <div class="col-6 mb-2">
-                                            <p class="mb-50">Nuevas campañas: <span id="sumaValor"></span></p>
+                                            <p class="mb-50">Nuevas campañas: <span id="newcampanias"></span>.00%</p>
                                             <div class="progress progress-bar-primary" style="height: 6px">
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="50" aria-valuemax="100" style="width: 50%">
-                                                </div>
+                                                <div class="progress-bar" id="progresbarcampania" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
                                             </div>
                                         </div>
                                         <div class="col-6 mb-2">
-                                            <p class="mb-50">Nuevas promociones: <span id="clientesCount"></span> </p>
+                                            <p class="mb-50">Nuevas promociones: <span id="Promocion"></span>.00%</p>
                                             <div class="progress progress-bar-warning" style="height: 6px">
-                                                <div class="progress-bar" id="progressBarxx" role="progressbarxx" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                                <div class="progress-bar" id="progressBarxx" role="progressBarxx" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                                                 </div>
                                             </div>
                                         </div>
                                        
                                         <div class="col-6">
-                                            <p class="mb-50">Referidos <span id="Referidos"></span>%</p>
+                                            <p class="mb-50">Referidos <span id="Referidos"></span>.00%</p>
                                             <div class="progress progress-bar-danger" style="height: 6px">
-                                                <div class="progress-bar" id="progressBar" role="progressbar" aria-valuenow="70" aria-valuemin="70" aria-valuemax="100" style="width: 70%">
+                                                <div class="progress-bar" id="progressBar" role="progressBar" aria-valuenow="70" aria-valuemin="70" aria-valuemax="100" style="width: 70%">
                                                 </div>
                                             </div>
                                         </div>
@@ -547,7 +562,7 @@ canvas {
                                     <div class="row pb-60">
                                         <div class="col-sm-6 col-12 d-flex justify-content-between flex-column order-sm-1 order-2 mt-1 mt-sm-0">
                                             <div class="mb-1 mb-sm-0">
-                                                <h2 class="fw-bolder mb-25">122</h2>
+                                                <h2 class="fw-bolder mt-1"  id="numclientes"></h2>
                                                 <p class="card-text fw-bold mb-2">Clientes</p>
                                             </div>
                                         </div>
@@ -568,23 +583,16 @@ canvas {
                                     <hr />
                                     <div class="row avg-sessions pt-50">
                                         <div class="col-6 mb-2">
-                                            <p class="mb-50">Beneficios esperados: <span id="sumaValor"></span></p>
-                                            <div class="progress progress-bar-primary" style="height: 6px">
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="50" aria-valuemax="100" style="width: 50%">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 mb-2">
-                                            <p class="mb-50">Clientes: <span id="clientesCount"></span> </p>
+                                            <p class="mb-50">Clientes <span id="numclientes-porcentaje"></span>%</p>
                                             <div class="progress progress-bar-warning" style="height: 6px">
-                                                <div class="progress-bar" id="progressBar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                                <div class="progress-bar" id="progressBarClientes" role="progressBarClientes" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                                                 </div>
                                             </div>
                                         </div>
                                         
                                        
                                         <div class="col-6">
-                                            <p class="mb-50">Numero de promociones:<span id="Promocion"></span>% </p>
+                                            <p class="mb-50">Numero de promociones:<span id="numpromociones"></span>.00%</p>
                                             <div class="progress progress-bar-danger" style="height: 6px">
                                                 <div class="progress-bar" id="progressBarprom" role="progressBarprom" aria-valuenow="70" aria-valuemin="70" aria-valuemax="100" style="width: 70%">
                                                 </div>
@@ -623,7 +631,7 @@ canvas {
 
                                     </div>
                                     <div class="table-responsive ">
-                                        <table class="table table-striped" id="tableData">
+                                        <table class="table two table-striped" id="tableData">
                                             <thead>
                                                 <tr>
                                                     <th>No.</th>
@@ -644,57 +652,7 @@ canvas {
 
 
 
-                            <script>
-                                document.addEventListener("DOMContentLoaded", function() {
-                                    const ctx = document.getElementById("graficaCampanas1").getContext("2d");
-
-                                    // Datos para las 12 columnas
-                                    const labels = [];
-                                    for (let i = 1; i <= 6; i++) {
-                                        labels.push(' ' + i);
-                                    }
-                                    const data = [25, 20, 15, 10, 5, 3]; // Datos quemados
-
-                                    const backgroundColors = [
-                                        "rgba(255	112	67)", // Color más vibrante para la primera columna
-                                        "rgba(240	98	146  )", // Color más vibrante para la segunda columna
-                                        "rgba(115	103	240	 )", // Color más vibrante para la tercera columna
-                                        "rgba(57, 73, 171  )", // Color más vibrante para la cuarta columna
-                                        "rgba(57, 73, 171  )", // Color más vibrante para la quinta columna
-                                        "rgba(41, 182, 246 )" // Color para la sexta columna
-                                    ];
-
-
-                                    // Configuración del gráfico
-                                    const chartData = {
-                                        labels: labels,
-                                        datasets: [{
-                                            label: "Número de Campañas",
-                                            data: data,
-                                            backgroundColor: backgroundColors,
-                                            borderColor: "rgba(54, 162, 235, 1)",
-                                            borderWidth: 1,
-                                        }]
-                                    };
-
-                                    const chartOptions = {
-                                        scales: {
-                                            yAxes: [{
-                                                ticks: {
-                                                    beginAtZero: true
-                                                }
-                                            }]
-                                        }
-                                    };
-
-                                    // Crear la gráfica
-                                    new Chart(ctx, {
-                                        type: "bar",
-                                        data: chartData,
-                                        options: chartOptions
-                                    });
-                                });
-                            </script>
+                      
 
                 </section>
                 <!-- Dashboard Analytics end -->
@@ -707,117 +665,9 @@ canvas {
 
 
 
-            <!-- modal de creacion or Update -->
-            <div class="modal modal-slide-in new-user-modal fade" id="modalNew">
-                <div class="modal-dialog">
-                    <form id="formNew" class="add-new-user modal-content pt-0" autocomplete="off">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-                        <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="exampleModalLabel">Agregar Nuevo Usuario</h5>
-                        </div>
-                        <div class="modal-body flex-grow-1">
-                            <div class="form-group">
-                                <label class="form-label" for="username">Nombre Usuario</label>
-                                <input type="text" class="form-control " id="username" placeholder="Nombre del usuario" name="username" required />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="nombre">Nombre</label>
-                                <input type="text" class="form-control " id="nombre" placeholder="Nombre" name="nombre" required />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="password">Contraseña</label>
-                                <input type="password" alt="strongPass" class="form-control " id="password" placeholder="Contraseña" name="password" required />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="password2">Confirmar Contraseña</label>
-                                <input type="password" alt="strongPass" class="form-control " id="password2" placeholder="Contraseña" name="password2" required />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="telefono">Telefono</label>
-                                <input type="text" class="form-control " id="telefono" placeholder="# de telefono" name="telefono" required />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="emailNotification">E-mail</label>
-                                <input type="text" class="form-control " id="emailNotification" placeholder="E-mail" name="emailNotification" required />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="rol">Roles</label>
-                                <select type="text" class="form-control" id="rol" name="rol" required></select>
-                            </div>
-                            <button id="btnSubmitAdd" type="submit" class="btn btn-primary mr-1 data-submit">Agregar </button>
-                            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
 
-            <div class="modal modal-slide-in new-user-modal fade" id="modalEdit">
-                <div class="modal-dialog">
-                    <form id="formEdit" class="add-new-user modal-content pt-0" autocomplete="off">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-                        <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="exampleModalLabel">Actualizar el ususario</h5>
-                        </div>
-                        <div class="modal-body flex-grow-1">
-                            <div class="form-group">
-                                <label class="form-label" for="usernameEdit">Nombre Usuario</label>
-                                <input type="text" class="form-control " id="usernameEdit" placeholder="Nombre del usuario" name="usernameEdit" required />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="nombreEdit">Nombre</label>
-                                <input type="text" class="form-control " id="nombreEdit" placeholder="Nombre" name="nombreEdit" required />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="passwordEdit">Contraseña</label>
-                                <input type="password" alt="strongPass" class="form-control " id="passwordEdit" placeholder="Contraseña" name="passwordEdit" required />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="passwordEdit2">Confirmar Contraseña</label>
-                                <input type="password" alt="strongPass" class="form-control " id="passwordEdit2" placeholder="Contraseña" name="passwordEdit2" required />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="telefonoEdit">Telefono</label>
-                                <input type="text" class="form-control " id="telefonoEdit" placeholder="# de telefono" name="telefonoEdit" required />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="emailEdit">E-mail</label>
-                                <input type="text" class="form-control " id="emailEdit" placeholder="E-mail" name="emailEdit" required />
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="rolActualizar">Rol</label>
-                                <select type="text" class="form-control" id="rolActualizar" name="rolActualizar" required></select>
-                            </div>
-                            <button id="btnSubmitEdit" type="submit" class="btn btn-primary mr-1 data-submit">Agregar </button>
-                            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="modal modal-slide-in new-user-modal fade" id="modalDelete">
-                <div class="modal-dialog">
-                    <form id="formDelete" class="add-new-user modal-content pt-0" autocomplete="off">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-                        <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="exampleModalLabel">Inhabilitar el usuario</h5>
-                        </div>
-                        <div class="modal-body flex-grow-1">
-                            <div class="form-group">
-                                <input id="usernameDelete" type="hidden">
-                                <p>¿Esta seguro que desea <b>Inhabilitar este usuario?</b></p>
-                            </div>
-                            <button id="BtnDelete" type="button" class="btn btn-danger mr-1 data-submit">Confirmar </button>
-                            <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal modal-slide-in new-user-modal fade" id="graficaModal">
-                <div class="modal-dialog">
-                    <h3>Thony gay</h3>
-                </div>
-            </div>
-            <!-- END: Content-->
+       
+           
         </div>
         <!-- End: Customizer-->
         <!-- BEGIN: Footer-->

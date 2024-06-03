@@ -14,8 +14,8 @@ $(function () {
   });
   $("#selecCampaniaEdit").multipleSelect({
     filter: true,
-    // selectAll: false,
-    single: true,
+    selectAll: false,
+    // single: true,
     placeholder: "Elige una campaña",
   });
 
