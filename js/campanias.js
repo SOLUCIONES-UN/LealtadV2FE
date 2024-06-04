@@ -72,26 +72,33 @@ $(function () {
 
     // Enviar el formulario
     $("#formEdit").submit();
+
   });
 
   $("#modalNew").on("show.bs.modal", function () {
+    resetSteps();
+    initStepper();
     limpiarFormulario();
   });
 
   $("#modalNew").on("hidden.bs.modal", function () {
     limpiarFormulario();
+    
   });
 
   $("#modalNew")
     .find('[data-dismiss="modal"]')
     .click(function () {
+      
       limpiarFormulario();
       $("#btnSubmit").attr("disabled", false);
     });
 
   $("#modalNew")
     .find('[data-dismiss="modal"]')
+    
     .click(function () {
+      
       limpiarFormulario();
       $("#btnSubmit").attr("disabled", false);
     });
@@ -298,7 +305,7 @@ $(function () {
 //Funcion del stepper
 function initStepper() {
   actualStep = 0;
-  var steps = $("#stepper").children(); // Obtener todos los elementos hijos del contenedor #stepper
+  var steps = $("#stepper ").children(); // Obtener todos los elementos hijos del contenedor #stepper
   steps.hide();
   var totalSteps = steps.length;
 
@@ -334,7 +341,7 @@ function initStepper() {
     e.preventDefault();
     if (actualStep > 0) {
       hideStep(actualStep);
-      actualStep--;
+      actualStep;
       showStep(actualStep);
       updateButtonsState(actualStep);
     }
@@ -645,11 +652,11 @@ function initStepper() {
     var newStep = $(`<div class="step"></div>`).html(content);
     $("#stepper").append(newStep);
     // Bloquear la tecla "Enter" en los campos de entrada
-    newStep.find("input").on("keydown", function (e) {
-      if (e.key === "Enter") {
-        e.preventDefault();
-      }
-    });
+    // newStep.find("input").on("keydown", function (e) {
+    //   if (e.key === "Enter") {
+    //     e.preventDefault();
+    //   }
+    // });
 
     totalSteps++;
     var previousStep = actualStep; // Guardar el valor actual de actualStep
@@ -3300,8 +3307,7 @@ function resetStepsEdit() {
 
 //limpiar el form
 function limpiarFormulario() {
-  // Limpiar los steps y reiniciar los datos relacionados
-  // resetSteps();
+  
   resetStepsEdit();
   resetSteps();
 
@@ -3318,8 +3324,6 @@ function limpiarFormulario() {
   $("#tipoUsuarios").val("");
   $("#notificacion").val("");
   $("#descripcionNotificacion").val("");
-  // $("#imgCampania").val(null); 
-  // $("#imgNotificacion").val(null); 
   $("#maximoParticipantes").val("");
   $("#tercerosCampania").val("");
   $("#allday").prop("checked", false);
@@ -3370,18 +3374,10 @@ function limpiarFormulario() {
   $("#TablaEtapaEdit").DataTable().clear().destroy();
   $("#tablaBloqueoEdit").DataTable().clear().destroy();
 
-  // Limpiar los arreglos
-  // TEMP = [];
-  // DataEtapa = [];
-  // bloqueadosUsuarios = [];
-  // dataEditEtapa=[]
+
 
   saveDataParams = [];
-  // Arreglo para almacenar los datos guardados de la tabla
-  // datosTablaLocalidad = [];
-  // datosTablaPremio = [];
-  // datosTablaParametro = [];
-  // datosTablaParticipacion= [];
+  
   permitidoUsuario = [];
 
   // datosBloqueados = [];
@@ -3404,6 +3400,7 @@ function limpiarFormulario() {
   $("#previewNotificacion").attr("src", "#").hide();
   $(".custom-file-label[for='imgCampania']").text("Seleccionar archivo");
   $(".custom-file-label[for='imgNotificacion']").text("Seleccionar archivo");
+  
   // Limpiar los inputs de archivos
  
 
@@ -3476,16 +3473,7 @@ const OpenEdit = (id) => {
       };
       userValidator(event, "containerArchivoEdit");
 
-      // Asignar las imágenes si existen
-      // if (result.imgPush) {
-      //   $('#previewImgEdit').attr('src', `ruta/a/la/imagen/${result.imgPush}`);
-      //   $('#previewImgEdit').show();
-      // }
-      // if (result.imgAkisi) {
-      //   $('#previewNotificacionEdit').attr('src', `ruta/a/la/imagen/${result.imgAkisi}`);
-      //   $('#previewNotificacionEdit').show();
-      // }
-
+      
       $("#maximoParticipantesEdit").val(result.maximoParticipaciones);
       $("#tercerosCampaniaEdit").val(result.campaniaTerceros);
       $("#esArchivadaEdit").prop("checked", result.esArchivada === 1);
