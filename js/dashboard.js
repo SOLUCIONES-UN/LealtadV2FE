@@ -1,5 +1,5 @@
 let usuarioDashboardDashboard = JSON.parse(
-  localStorage.getItem("infousuarioDashboard")
+    localStorage.getItem("infousuarioDashboard")
 );
 
 const token = localStorage.getItem("token");
@@ -57,8 +57,8 @@ function getnewCampanias() {
             $('#progresbarcampania').css('width', porcentaje + '%');
             $('#progresbarcampania').attr('aria-valuenow', porcentaje);
 
-           
-           
+
+
         })
         .catch((error) => console.log("Error al obtener las nuevas campañas:", error));
 }
@@ -132,7 +132,7 @@ function getAllCampanasSEm() {
 
             // Mostrar las campañas ordenadas en la tabla
             displayCampanas(datosCampañas);
-           
+
 
         })
         .catch((error) => console.log("Error al obtener las campañas activas:", error));
@@ -268,7 +268,7 @@ function displayCampanas(campanas) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     getAllCampanasSEm();
 });
 
@@ -518,7 +518,7 @@ function getAllPromocionesActivas() {
 //clientes 
 function displayNumClientes(numClientes) {
     const numClientesElement = document.getElementById("numclientes");
-    numClientesElement.textContent = parseInt(numClientes); 
+    numClientesElement.textContent = parseInt(numClientes);
 }
 
 function getAllclientes() {
@@ -545,10 +545,10 @@ function getAllclientes() {
             const porcentaje = (cantidad / maxCantidad) * 100;
 
             document.getElementById('numclientes').textContent = cantidad;
-document.getElementById('numclientes-porcentaje').textContent = Math.round(porcentaje); // Redondear el porcentaje
-const progressBarClientes = document.getElementById('progressBarClientes');
-progressBarClientes.style.width = porcentaje + '%';
-progressBarClientes.setAttribute('aria-valuenow', porcentaje);
+            document.getElementById('numclientes-porcentaje').textContent = Math.round(porcentaje); // Redondear el porcentaje
+            const progressBarClientes = document.getElementById('progressBarClientes');
+            progressBarClientes.style.width = porcentaje + '%';
+            progressBarClientes.setAttribute('aria-valuenow', porcentaje);
         })
         .catch((error) => console.log("error", error));
 }
@@ -727,8 +727,7 @@ const getparticipantes = () => {
             },
             headers: headers
         },
-        columns: [
-            {
+        columns: [{
                 data: null,
                 render: function(data, type, row, meta) {
                     if (type === 'display') {
@@ -767,3 +766,14 @@ const getparticipantes = () => {
     });
 }
 
+const Alert = function(
+    message,
+    status // si se proceso correctamente la solicitud
+) {
+    toastr[`${status}`](message, `${status}`, {
+        closeButton: true,
+        tapToDismiss: false,
+        positionClass: "toast-top-right",
+        rtl: false,
+    });
+};
