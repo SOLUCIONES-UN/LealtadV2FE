@@ -33,6 +33,7 @@ let imgAkisiEdit = null;
 
 let actualStepEdit = 0;
 let previousStep = null;
+var muestraEtapa = [];
 
 //valor para poder editar etapas
 var dataEditEtapa = [];
@@ -431,8 +432,9 @@ function initStepper() {
         var tipoParticipacion = $("#tipoParticipacion").val();
         var intervalo = parseInt($("#intervalo").val());
         var rangoTiempo = parseInt($("#RangoTiempo").val());
-        var minimoTransaccion = parseFloat($("minimoTransaccion").val());
-        var TotalMinimo = parseFloat($("#totalMinimo").val());
+        var minimoTransaccion = parseFloat($("#minimoTransaccion").val()) || 0;
+        var TotalMinimo = parseFloat($("#totalMinimo").val()) || 0;
+
 
         if (validarCamposStep(actualStep)) {
             getDepartamento();
@@ -631,7 +633,7 @@ function initStepper() {
                 estado: 1,
             };
             TEMP.push(nuevo);
-            //muestraEtapa.push(TEMP)
+            muestraEtapa.push(TEMP)
 
             $("#NombreEtapa").val("");
             $("#orden").val("");
@@ -645,6 +647,16 @@ function initStepper() {
             Alert("No se pudo crear la etapa, por falta de datos", "error");
         }
     });
+
+
+
+
+
+
+
+
+
+
 
     function addStep(content) {
         $(".step-progress").addClass("blocked");
